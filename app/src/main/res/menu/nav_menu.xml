@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item
+        android:id="@+id/itemRooms"
+        android:title="Rooms" />
+    <item
+        android:id="@+id/itemPreferences"
+        android:title="Preferences" />
+    <item
+        android:id="@+id/itemSetUp"
+        android:title="Set up room / device" />
+    <item
+        android:id="@+id/itemTipsFacts"
+        android:title="Tips and Facts" />
+    <item
+        android:id="@+id/itemAccount"
+        android:title="Account" />
+    <item
+        android:id="@+id/itemLogOut"
+        android:title="Log out" />
+</menu>
