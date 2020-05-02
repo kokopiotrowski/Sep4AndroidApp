@@ -1,4 +1,4 @@
-package com.example.sep4androidapp.fragments;
+package com.example.sep4androidapp.fragments.preferencesFragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,12 +11,12 @@ import androidx.fragment.app.Fragment;
 
 import com.example.sep4androidapp.R;
 
-public class FragmentTemperature extends Fragment {
+public class PreferencesFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_temperature, container, false);
+        View view = inflater.inflate(R.layout.fragment_preferences, container, false);
 
-        return v;
+        return view;
     }
 }

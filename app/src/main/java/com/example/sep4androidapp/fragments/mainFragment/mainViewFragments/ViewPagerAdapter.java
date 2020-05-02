@@ -1,4 +1,4 @@
-package com.example.sep4androidapp.fragments;
+package com.example.sep4androidapp.fragments.mainFragment.mainViewFragments;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

@@ -7,10 +7,24 @@
     android:id="@+id/drawer"
     tools:context=".MainActivity">
 
-    <include
-        android:layout_height="match_parent"
+    <LinearLayout
         android:layout_width="match_parent"
-        layout="@layout/nav_content"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="#46A14A" />
+
+        <FrameLayout
+            android:id="@+id/fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView
         android:layout_width="310dp"
