@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             public void onComplete(@NonNull Task< Void > task) {
                                 Toast.makeText(getApplicationContext(),"You are now signed out",
                                         Toast.LENGTH_LONG).show();
+                                startActivity(new Intent(getApplicationContext(), Firebase_Login.class));
                                 finish();
                             }
                         }
