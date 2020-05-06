@@ -8,7 +8,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
+ import com.example.sep4androidapp.MainActivity;
  import com.example.sep4androidapp.R;
+ import com.example.sep4androidapp.fragments.mainFragment.MainFragment;
  import com.firebase.ui.auth.AuthUI;
  import com.firebase.ui.auth.IdpResponse;
  import com.google.android.gms.tasks.OnCompleteListener;
@@ -46,7 +48,7 @@ public class Firebase_Login  extends AppCompatActivity  {
                 public void onAuthStateChanged(FirebaseAuth firebaseAuth){
                     // check if  the user is signed in
                     if( user != null){
-                        Toast.makeText(getApplicationContext(),"welcome, You are now logged in",
+                        Toast.makeText(getApplicationContext(),"welcome, You are already logged in",
                                 Toast.LENGTH_SHORT).show();
                     }else{
                         // Create and launch sign-in intent
@@ -83,6 +85,9 @@ public class Firebase_Login  extends AppCompatActivity  {
             if (resultCode == RESULT_OK) {
                 // Successfully signed in
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                Toast.makeText(Firebase_Login.this,"You are now signed in",
+                        Toast.LENGTH_LONG).show();
+                startActivity(new Intent(this, MainFragment.class));
                 // ...
             } else {
                 // Sign in failed.
