@@ -1,6 +1,12 @@
 package com.example.sep4androidapp.Entities;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "preferences_table")
 public class Preferences {
+
+    @PrimaryKey(autoGenerate = true)
     private int deviceId;
     private boolean regulationEnabled;
     private int co2Max;
