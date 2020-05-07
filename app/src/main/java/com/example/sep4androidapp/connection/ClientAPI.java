@@ -1,16 +1,32 @@
 package com.example.sep4androidapp.connection;
 
-import com.google.android.gms.common.api.Api;
+import android.os.AsyncTask;
+
+import com.google.android.gms.common.api.Api.*;
 import com.google.gson.JsonElement;
 
-public class ClientAPI {
+public class ClientAPI{
+
+
+    /*
+    -------COPY TO MANIFEST FILE (not needed on API>22)-------
+    <uses-permission android:name="android.permission.INTERNET" />
+
+     */
+
 
     private static ClientAPI INSTANCE = new ClientAPI();
 
-    private final String MAIN = "";
-
+    private final String URI = "https://zzleep-api.herokuapp.com/";
+    private Client client;
 
     private ClientAPI()
+    {
+
+    }
+
+
+    private void init()
     {
 
     }
@@ -29,6 +45,7 @@ public class ClientAPI {
 
     public void request(String address, JsonElement element)
     {
+
 
     }
 
