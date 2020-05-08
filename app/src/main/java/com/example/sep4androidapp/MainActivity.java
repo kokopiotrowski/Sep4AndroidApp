@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, ).commit();
                 break;
             case R.id.itemLogOut:
-//                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, ).commit();
+
                 break;
 
         }
