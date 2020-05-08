@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "168673906761",
+    "firebase_url": "https://zzleep-3adef.firebaseio.com",
+    "project_id": "zzleep-3adef",
+    "storage_bucket": "zzleep-3adef.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:168673906761:android:02d044938a1d2977b32f98",
+        "android_client_info": {
+          "package_name": "com.example.sep4androidapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "168673906761-c7ko7sncp5bck9shsdvb6c5i9cocj2da.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqHMG8pBNrYikxf7E3NoPsCLMU7wx4x50"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "168673906761-c7ko7sncp5bck9shsdvb6c5i9cocj2da.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

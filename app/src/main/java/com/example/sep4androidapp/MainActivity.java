@@ -14,9 +14,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.sep4androidapp.Firebase.Firebase_Login;
 import com.example.sep4androidapp.fragments.mainFragment.MainFragment;
 import com.example.sep4androidapp.fragments.preferencesFragment.PreferencesFragment;
 import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -25,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ActionBarDrawerToggle toggle;
     NavigationView navigationView;
     DrawerLayout drawerLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +75,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, ).commit();
                 break;
             case R.id.itemLogOut:
-
+                AuthUI.getInstance().signOut(this).addOnCompleteListener(
+                        new OnCompleteListener< Void >() {
+                            @Override
+                            public void onComplete(@NonNull Task< Void > task) {
+                                Toast.makeText(getApplicationContext(),"You are now signed out",
+                                        Toast.LENGTH_LONG).show();
+                                startActivity(new Intent(getApplicationContext(), Firebase_Login.class));
+                                finish();
+                            }
+                        }
+                );
+//                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, ).commit();
                 break;
 
         }
