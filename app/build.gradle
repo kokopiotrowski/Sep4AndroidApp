@@ -50,9 +50,4 @@ dependencies {
 
 
     implementation 'com.firebaseui:firebase-ui-auth:6.2.0'
-
-    //noinspection GradleCompatible
-    implementation 'com.android.support:cardview-v7:28.0.0'
-    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.2'
-
 }
