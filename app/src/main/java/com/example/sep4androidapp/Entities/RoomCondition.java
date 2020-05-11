@@ -1,5 +1,7 @@
 package com.example.sep4androidapp.Entities;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 
 public class RoomCondition {
@@ -10,6 +12,7 @@ public class RoomCondition {
     private double sound;
     private double humidity;
 
+
     public RoomCondition(int sleepId, Date timeStamp, double temperature, double co2, double sound, double humidity) {
         this.sleepId = sleepId;
         this.timeStamp = timeStamp;
@@ -17,6 +20,7 @@ public class RoomCondition {
         this.co2 = co2;
         this.sound = sound;
         this.humidity = humidity;
+
     }
 
     public int getSleepId() {
