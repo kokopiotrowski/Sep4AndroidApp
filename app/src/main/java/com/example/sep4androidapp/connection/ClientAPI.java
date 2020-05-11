@@ -2,6 +2,7 @@ package com.example.sep4androidapp.connection;
 
 import android.os.AsyncTask;
 
+import com.example.sep4androidapp.Entities.User;
 import com.google.android.gms.common.api.Api.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -9,6 +10,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
+import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 
@@ -30,6 +32,7 @@ public class ClientAPI{  // BTW, THIS CLASS IS POINTLESS, JUST IGNORE IT, I DID 
 
     private ClientAPI()
     {
+
 
     }
 

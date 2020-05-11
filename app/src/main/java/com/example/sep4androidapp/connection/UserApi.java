@@ -14,14 +14,13 @@ import retrofit2.http.Path;
 
 public interface UserApi {
 
-    final String URI = "https://zzleep-api.herokuapp.com/";
-
-    @POST(URI + "user/create")
+    @POST("user/create")
     @FormUrlEncoded
     Call createUser();
 
-    @GET(URI + "user/get/{id}")
+    @GET("user/get/{id}")
     Call getUser(@Path("id") int id);
+
 
 
 }

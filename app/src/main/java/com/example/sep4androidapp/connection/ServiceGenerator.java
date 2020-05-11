@@ -8,12 +8,13 @@ public class ServiceGenerator {
     private static Retrofit retrofit = retrofitBuilder.build();
 
     private static UserApi userApi = retrofit.create(UserApi.class);
-
+    private static ReportApi reportApi = retrofit.create(ReportApi.class);
 
     public static UserApi getUserApi()
     {
         return userApi;
     }
+
 
     /*
     COPY THIS METHOD TO THE REGISTER THAT USES UserApi
