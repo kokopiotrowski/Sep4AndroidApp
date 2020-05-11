@@ -64,7 +64,6 @@ public class Firebase_Login extends AppCompatActivity {
         IdpResponse response = IdpResponse.fromResultIntent(data);
         if (requestCode == RC_SIGN_IN) {
 
-
             if (resultCode == RESULT_OK) {
                 Toast.makeText(Firebase_Login.this, "You are now signed in",
                         Toast.LENGTH_LONG).show();
