@@ -3,9 +3,16 @@ package com.example.sep4androidapp.connection;
 import android.os.AsyncTask;
 
 import com.google.android.gms.common.api.Api.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 
-public class ClientAPI{
+import retrofit2.http.GET;
+import retrofit2.http.POST;
+
+public class ClientAPI{  // BTW, THIS CLASS IS POINTLESS, JUST IGNORE IT, I DID SOMETHING THAT I THOUGHT WILL BE USED BUT IT WILL NOT. FUCKING PIECE OF CRAP
 
 
     /*
@@ -18,6 +25,7 @@ public class ClientAPI{
     private static ClientAPI INSTANCE = new ClientAPI();
 
     private final String URI = "https://zzleep-api.herokuapp.com/";
+    private String extraAddress = "";
     private Client client;
 
     private ClientAPI()
@@ -43,11 +51,6 @@ public class ClientAPI{
         return INSTANCE;
     }
 
-    public void request(String address, JsonElement element)
-    {
-
-
-    }
 
 
 

@@ -48,6 +48,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:17.4.0'
     implementation 'com.firebaseui:firebase-ui-auth:4.3.1'
 
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    implementation 'com.google.code.gson:gson:2.8.6'
+    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
 
     implementation 'com.firebaseui:firebase-ui-auth:6.2.0'
 }
