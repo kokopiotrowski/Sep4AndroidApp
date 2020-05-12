@@ -28,6 +28,10 @@ public class FragmentFirstPage extends Fragment implements View.OnClickListener 
     TextView textView5;
     TextView textView6;
     Button button;
+
+    int dummy = 1;
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -73,7 +77,7 @@ public class FragmentFirstPage extends Fragment implements View.OnClickListener 
 
         switch(v.getId()){
             case R.id.buttonTest:
-                viewModel.updateRoomCondition();
+                viewModel.updateRoomCondition(dummy);
             break;
         }
 

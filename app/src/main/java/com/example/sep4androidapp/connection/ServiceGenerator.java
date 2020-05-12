@@ -8,11 +8,15 @@ public class ServiceGenerator {
     private static Retrofit retrofit = retrofitBuilder.build();
 
     private static UserApi userApi = retrofit.create(UserApi.class);
-    private static ReportApi reportApi = retrofit.create(ReportApi.class);
+    private static RoomConditionApi roomConditionApi = retrofit.create(RoomConditionApi.class);
 
     public static UserApi getUserApi()
     {
         return userApi;
+    }
+    public static RoomConditionApi getRoomConditionApi()
+    {
+        return roomConditionApi;
     }
 
 

@@ -21,7 +21,7 @@ public class ReportViewModel extends ViewModel {
        return repository.getRoomCondition();
     }
 
-    public void updateRoomCondition(){
-        repository.updateRoomCondition();
+    public void updateRoomCondition(int deviceId){
+        repository.updateRoomCondition(deviceId);
     }
 }

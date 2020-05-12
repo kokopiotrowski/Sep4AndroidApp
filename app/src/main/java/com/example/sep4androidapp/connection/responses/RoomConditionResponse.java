@@ -1,4 +1,6 @@
-package com.example.sep4androidapp.Entities;
+package com.example.sep4androidapp.connection.responses;
+
+import com.example.sep4androidapp.Entities.RoomCondition;
 
 import java.util.Date;
 
