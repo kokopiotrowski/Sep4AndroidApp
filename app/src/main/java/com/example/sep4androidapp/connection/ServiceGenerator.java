@@ -4,7 +4,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ServiceGenerator {
-    private static Retrofit.Builder retrofitBuilder = new Retrofit.Builder().baseUrl("https://zzleep-api.herokuapp.com/api").addConverterFactory(GsonConverterFactory.create());
+    private static Retrofit.Builder retrofitBuilder = new Retrofit.Builder().baseUrl("https://zzleep-api-dev.herokuapp.com/api").addConverterFactory(GsonConverterFactory.create());
     private static Retrofit retrofit = retrofitBuilder.build();
 
     private static UserApi userApi = retrofit.create(UserApi.class);
