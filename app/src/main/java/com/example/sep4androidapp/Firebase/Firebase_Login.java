@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.sep4androidapp.MainActivity;
+import com.example.sep4androidapp.Profile;
 import com.example.sep4androidapp.R;
 import com.example.sep4androidapp.fragments.mainFragment.MainFragment;
 import com.firebase.ui.auth.AuthUI;
@@ -40,13 +41,14 @@ public class Firebase_Login extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main);
         _mFirebaseAuth = FirebaseAuth.getInstance();
         user = _mFirebaseAuth.getCurrentUser();
 
         if (user != null) {
             Toast.makeText(getApplicationContext(), "welcome, You are already logged in",
                     Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, MainActivity.class));
         } else {
             // Create and launch sign-in intent
             startActivityForResult(
@@ -63,7 +65,6 @@ public class Firebase_Login extends AppCompatActivity {
 
         IdpResponse response = IdpResponse.fromResultIntent(data);
         if (requestCode == RC_SIGN_IN) {
-
 
             if (resultCode == RESULT_OK) {
                 Toast.makeText(Firebase_Login.this, "You are now signed in",
