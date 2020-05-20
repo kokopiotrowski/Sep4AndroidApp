@@ -51,16 +51,16 @@ public class FragmentFirstPage extends Fragment implements View.OnClickListener 
         viewModel.getRoomCondition().observe(getViewLifecycleOwner(), new Observer<RoomCondition>() {
             @Override
             public void onChanged(RoomCondition roomCondition) {
-                textView1.setText(roomCondition.getSleepId());
+                /*textView1.setText(roomCondition.getSleepId());
                 textView2.setText(roomCondition.getTimeStamp().toString());
                 String co2 = Double.toString(roomCondition.getCo2());
                 textView3.setText(co2);
                 String humidity = Double.toString(roomCondition.getHumidity());
-                textView4.setText(humidity);
+                textView4.setText(humidity);*/
                 String temperature = Double.toString(roomCondition.getTemperature());
                 textView4.setText(temperature);
-                String sound = Double.toString(roomCondition.getSound());
-                textView4.setText(sound);
+               /* String sound = Double.toString(roomCondition.getSound());
+                textView4.setText(sound);*/
             }
         });
 
@@ -77,7 +77,7 @@ public class FragmentFirstPage extends Fragment implements View.OnClickListener 
 
         switch(v.getId()){
             case R.id.buttonTest:
-                viewModel.updateRoomCondition(dummy);
+                viewModel.updateRoomCondition();
             break;
         }
 

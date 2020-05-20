@@ -2,18 +2,19 @@ package com.example.sep4androidapp.Entities;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class RoomCondition {
     private int sleepId;
-    private Date timeStamp;
+    private LocalDateTime timeStamp;
     private double temperature;
     private double co2;
     private double sound;
     private double humidity;
 
 
-    public RoomCondition(int sleepId, Date timeStamp, double temperature, double co2, double sound, double humidity) {
+    public RoomCondition(int sleepId, LocalDateTime timeStamp, double temperature, double co2, double sound, double humidity) {
         this.sleepId = sleepId;
         this.timeStamp = timeStamp;
         this.temperature = temperature;
@@ -31,11 +32,11 @@ public class RoomCondition {
         this.sleepId = sleepId;
     }
 
-    public Date getTimeStamp() {
+    public LocalDateTime getTimeStamp() {
         return timeStamp;
     }
 
-    public void setTimeStamp(Date timeStamp) {
+    public void setTimeStamp(LocalDateTime timeStamp) {
         this.timeStamp = timeStamp;
     }
 

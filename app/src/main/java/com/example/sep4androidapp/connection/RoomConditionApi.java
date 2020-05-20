@@ -13,7 +13,6 @@ import retrofit2.http.Path;
 
 public interface RoomConditionApi {
 
-    @GET("roomConditions/get/deviceId={id}")
-    @FormUrlEncoded
-    public Call<RoomConditionResponse> getRoomCondition(@Path("id") int id);
+    @GET("roomConditions/device1")
+    public Call<RoomConditionResponse> getRoomCondition();
 }
