@@ -12,21 +12,21 @@ public class ServiceGenerator {
     private static RoomConditionApi roomConditionApi = retrofit.create(RoomConditionApi.class);
     private static AccountDevicesApi accountDevicesApi = retrofit.create(AccountDevicesApi.class);
     private static FactApi factApi = retrofit.create(FactApi.class);
+    private static PreferenceApi preferenceApi = retrofit.create(PreferenceApi.class);
 
     public static UserApi getUserApi()
     {
         return userApi;
     }
-
     public static ReportApi getReportApi() {
         return reportApi;
     }
-
     public static RoomConditionApi getRoomConditionApi() {
         return roomConditionApi;
     }
-
     public static AccountDevicesApi getAccountDevicesApi() {return accountDevicesApi; }
+    public static FactApi getFactApi() { return factApi; }
+    public static PreferenceApi getPreferenceApi() { return preferenceApi; }
 
     /*
     COPY THIS METHOD TO THE REGISTER THAT USES UserApi
