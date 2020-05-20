@@ -5,13 +5,14 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class RoomCondition implements Serializable {
     @SerializedName("sleepId")
     private int sleepId;
     @SerializedName("timeStamp")
-    private Date timeStamp;
+    private LocalDateTime timeStamp;
     @SerializedName("temperature")
     private double temperature;
     @SerializedName("co2")
@@ -22,7 +23,7 @@ public class RoomCondition implements Serializable {
     private double humidity;
 
 
-    public RoomCondition(int sleepId, Date timeStamp, double temperature, double co2, double sound, double humidity) {
+    public RoomCondition(int sleepId, LocalDateTime timeStamp, double temperature, double co2, double sound, double humidity) {
         this.sleepId = sleepId;
         this.timeStamp = timeStamp;
         this.temperature = temperature;
@@ -40,11 +41,11 @@ public class RoomCondition implements Serializable {
         this.sleepId = sleepId;
     }
 
-    public Date getTimeStamp() {
+    public LocalDateTime getTimeStamp() {
         return timeStamp;
     }
 
-    public void setTimeStamp(Date timeStamp) {
+    public void setTimeStamp(LocalDateTime timeStamp) {
         this.timeStamp = timeStamp;
     }
 

@@ -42,15 +42,9 @@ public class ReportRepository {
         call.enqueue(new Callback<RoomConditionResponse>() {
             @Override
             public void onResponse(Call<RoomConditionResponse> call, Response<RoomConditionResponse> response) {
-                Log.i("kldfnsakldmnsakl", "YO");
                 if (response.code() == 200){
 
                     roomCondition.setValue(response.body().getRoomCondition());
-                }
-else {
-
-    Log.i("dsadsa",String.valueOf(response.code()));
-
                 }
             }
 
