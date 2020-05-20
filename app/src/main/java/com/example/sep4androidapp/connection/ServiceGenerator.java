@@ -14,6 +14,7 @@ public class ServiceGenerator {
     private static FactApi factApi = retrofit.create(FactApi.class);
     private static PreferenceApi preferenceApi = retrofit.create(PreferenceApi.class);
 
+
     public static UserApi getUserApi()
     {
         return userApi;
