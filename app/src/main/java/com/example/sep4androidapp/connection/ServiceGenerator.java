@@ -10,6 +10,7 @@ public class ServiceGenerator {
     private static UserApi userApi = retrofit.create(UserApi.class);
     private static ReportApi reportApi = retrofit.create(ReportApi.class);
     private static RoomConditionApi roomConditionApi = retrofit.create(RoomConditionApi.class);
+    private static AccountDevicesApi accountDevicesApi = retrofit.create(AccountDevicesApi.class);
 
     public static UserApi getUserApi()
     {
@@ -23,6 +24,8 @@ public class ServiceGenerator {
     public static RoomConditionApi getRoomConditionApi() {
         return roomConditionApi;
     }
+
+    public static AccountDevicesApi getAccountDevicesApi() {return accountDevicesApi; }
 
     /*
     COPY THIS METHOD TO THE REGISTER THAT USES UserApi
