@@ -1,34 +1,50 @@
 {
   "project_info": {
-    "project_number": "168673906761",
-    "firebase_url": "https://zzleep-3adef.firebaseio.com",
-    "project_id": "zzleep-3adef",
-    "storage_bucket": "zzleep-3adef.appspot.com"
+    "project_number": "639131683478",
+    "firebase_url": "https://zzleep-sep4-d4bad.firebaseio.com",
+    "project_id": "zzleep-sep4-d4bad",
+    "storage_bucket": "zzleep-sep4-d4bad.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:168673906761:android:02d044938a1d2977b32f98",
+        "mobilesdk_app_id": "1:639131683478:android:3f523e2c936ff5d1ced0b7",
         "android_client_info": {
           "package_name": "com.example.sep4androidapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "168673906761-c7ko7sncp5bck9shsdvb6c5i9cocj2da.apps.googleusercontent.com",
+          "client_id": "639131683478-nq88r48bl394am5mnop2b73o5hs2146e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sep4androidapp",
+            "certificate_hash": "e15be280e51a48af3081c45086ac4013ed15c527"
+          }
+        },
+        {
+          "client_id": "639131683478-v0nctj6v6eiktla96ic8v1rciumnrqeo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sep4androidapp",
+            "certificate_hash": "a64909d5ede7e8a1a2653631595a07d539f56100"
+          }
+        },
+        {
+          "client_id": "639131683478-5ne2s2a3kltc29h98qcs1phoao6sid2q.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBqHMG8pBNrYikxf7E3NoPsCLMU7wx4x50"
+          "current_key": "AIzaSyD2p3HJlKrALCh0-EZCX5PJ-iyO9j7SGCs"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "168673906761-c7ko7sncp5bck9shsdvb6c5i9cocj2da.apps.googleusercontent.com",
+              "client_id": "639131683478-5ne2s2a3kltc29h98qcs1phoao6sid2q.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
