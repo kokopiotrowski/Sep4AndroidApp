@@ -2,6 +2,7 @@ package com.example.sep4androidapp.connection;
 
 
 import com.example.sep4androidapp.Entities.RoomCondition;
+import com.example.sep4androidapp.connection.responses.RoomConditionResponse;
 
 import retrofit2.Call;
 import retrofit2.http.FormUrlEncoded;
@@ -14,5 +15,5 @@ public interface RoomConditionApi {
 
     @GET("roomConditions/get/deviceId={id}")
     @FormUrlEncoded
-    public Call<RoomCondition> getRoomConditions(@Path("id") int id);
+    public Call<RoomConditionResponse> getRoomCondition(@Path("id") int id);
 }
