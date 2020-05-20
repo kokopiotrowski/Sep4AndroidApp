@@ -1,18 +1,17 @@
-package com.example.sep4androidapp.Entities;
+package com.example.sep4androidapp.connection.responses;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class Device implements Serializable {
-
+public class DeviceResponse implements Serializable {
     @SerializedName("deviceId")
     private int deviceId;
 
     @SerializedName("name")
     private String name;
 
-    public Device(int deviceId, String name) {
+    public DeviceResponse(int deviceId, String name) {
         this.deviceId = deviceId;
         this.name = name;
     }
