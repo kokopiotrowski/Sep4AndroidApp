@@ -10,6 +10,5 @@ import retrofit2.http.Path;
 public interface ReportApi {
 
     @GET("report/get/{id}")
-    @FormUrlEncoded
     Call getReport(@Path("id") int id);
 }

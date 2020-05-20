@@ -11,6 +11,7 @@ public class ServiceGenerator {
     private static ReportApi reportApi = retrofit.create(ReportApi.class);
     private static RoomConditionApi roomConditionApi = retrofit.create(RoomConditionApi.class);
     private static AccountDevicesApi accountDevicesApi = retrofit.create(AccountDevicesApi.class);
+    private static FactApi factApi = retrofit.create(FactApi.class);
 
     public static UserApi getUserApi()
     {

@@ -1,15 +1,24 @@
 package com.example.sep4androidapp.Entities;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 
-public class RoomCondition {
+public class RoomCondition implements Serializable {
+    @SerializedName("sleepId")
     private int sleepId;
+    @SerializedName("timeStamp")
     private Date timeStamp;
+    @SerializedName("temperature")
     private double temperature;
+    @SerializedName("co2")
     private double co2;
+    @SerializedName("sound")
     private double sound;
+    @SerializedName("humidity")
     private double humidity;
 
 
