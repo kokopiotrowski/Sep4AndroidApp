@@ -16,12 +16,9 @@ public class StatStopViewModel {
         repository = StartStopRepository.getInstance();
     }
 
+    public LiveData<StartStop> getstarStop() {
 
-    /*
-    public LiveData< StartStop > ????() {
-
-        return repository.????();
+        return repository.getStartStop();
     }
-
-*/
+    
 }

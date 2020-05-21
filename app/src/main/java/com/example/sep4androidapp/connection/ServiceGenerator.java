@@ -13,15 +13,13 @@ public class ServiceGenerator {
     private static AccountDevicesApi accountDevicesApi = retrofit.create(AccountDevicesApi.class);
     private static FactApi factApi = retrofit.create(FactApi.class);
     private static PreferenceApi preferenceApi = retrofit.create(PreferenceApi.class);
-
+    private static SleepTrackingApi sleepTrackingApi = retrofit.create(SleepTrackingApi.class);
 
     public static UserApi getUserApi() {
         return userApi;
     }
 
-    public static ReportApi getReportApi() {
-        return reportApi;
-    }
+    public static ReportApi getReportApi() {return reportApi;}
 
     public static RoomConditionApi getRoomConditionApi() {
         return roomConditionApi;
@@ -38,6 +36,8 @@ public class ServiceGenerator {
     public static PreferenceApi getPreferenceApi() {
         return preferenceApi;
     }
+
+    public static SleepTrackingApi getSleepTrackingApi() {return sleepTrackingApi;}
 
     /*
     COPY THIS METHOD TO THE REGISTER THAT USES UserApi
