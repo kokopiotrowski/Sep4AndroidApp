@@ -50,7 +50,7 @@ public class ReportRepository {
 
             @Override
             public void onFailure(Call<RoomConditionResponse> call, Throwable t) {
-                Log.i("Retrofit", "Something went wrong :(");
+                Log.i("Retrofit", "Failed on getting room condition");
             }
         });
 

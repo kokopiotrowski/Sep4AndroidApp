@@ -1,13 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.mainFragment.ReportFragment">
+    tools:context=".fragments.reportFragment.ReportFragment">
 
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello" />
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/reportTextView"
+            android:layout_width="131dp"
+            android:layout_height="46dp"
+            android:autoText="false"
+            android:text="Report"
+            android:textAlignment="center"
+            android:textSize="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkedButton="@id/reportLastWeekRadioButton"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/reportTextView">
+
+            <RadioButton
+                android:id="@+id/reportLastWeekRadioButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Last week" />
+
+            <RadioButton
+                android:id="@+id/reportLastWeeekRadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Last month" />
+
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/reportPowerBiTextField"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Power BI (future implementation)"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

@@ -7,18 +7,14 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import com.example.sep4androidapp.Firebase.Firebase_Login;
-import com.example.sep4androidapp.connection.PreferenceApi;
 import com.example.sep4androidapp.fragments.mainFragment.MainFragment;
-import com.example.sep4androidapp.fragments.mainFragment.ReportFragment;
+import com.example.sep4androidapp.fragments.reportFragment.ReportFragment;
 import com.example.sep4androidapp.fragments.preferencesFragment.PreferencesFragment;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;

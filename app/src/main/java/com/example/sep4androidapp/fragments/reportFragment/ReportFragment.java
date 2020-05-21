@@ -1,4 +1,4 @@
-package com.example.sep4androidapp.fragments.mainFragment;
+package com.example.sep4androidapp.fragments.reportFragment;
 
 import androidx.lifecycle.ViewModelProviders;
 
@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.sep4androidapp.R;
+import com.example.sep4androidapp.fragments.mainFragment.ReportViewModel;
 
 public class ReportFragment extends Fragment {
 
