@@ -1,10 +1,19 @@
 package com.example.sep4androidapp.Entities;
 
-public class IdealRoomConditions {
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
+
+public class IdealRoomConditions implements Serializable {
+    @SerializedName("maxCo2")
     private int maxCo2;
+    @SerializedName("minHumidity")
     private double minHumidity;
+    @SerializedName("maxHumidity")
     private double maxHumidity;
+    @SerializedName("minTemperature")
     private double minTemperature;
+    @SerializedName("maxTemperature")
     private double maxTemperature;
 
     public IdealRoomConditions(int maxCo2, double minHumidity, double maxHumidity, double minTemperature, double maxTemperature) {

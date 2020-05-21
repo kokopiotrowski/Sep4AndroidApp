@@ -1,8 +1,15 @@
 package com.example.sep4androidapp.Entities;
 
-public class User {
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
+
+public class User implements Serializable {
+    @SerializedName("userId")
     private int userId;
+    @SerializedName("email")
     private String email;
+    @SerializedName("name")
     private String name;
 
     public User(int userId, String email, String name) {
