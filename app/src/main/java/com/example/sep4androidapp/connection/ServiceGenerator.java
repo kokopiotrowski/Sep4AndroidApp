@@ -15,19 +15,29 @@ public class ServiceGenerator {
     private static PreferenceApi preferenceApi = retrofit.create(PreferenceApi.class);
 
 
-    public static UserApi getUserApi()
-    {
+    public static UserApi getUserApi() {
         return userApi;
     }
+
     public static ReportApi getReportApi() {
         return reportApi;
     }
+
     public static RoomConditionApi getRoomConditionApi() {
         return roomConditionApi;
     }
-    public static AccountDevicesApi getAccountDevicesApi() {return accountDevicesApi; }
-    public static FactApi getFactApi() { return factApi; }
-    public static PreferenceApi getPreferenceApi() { return preferenceApi; }
+
+    public static AccountDevicesApi getAccountDevicesApi() {
+        return accountDevicesApi;
+    }
+
+    public static FactApi getFactApi() {
+        return factApi;
+    }
+
+    public static PreferenceApi getPreferenceApi() {
+        return preferenceApi;
+    }
 
     /*
     COPY THIS METHOD TO THE REGISTER THAT USES UserApi

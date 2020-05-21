@@ -24,7 +24,7 @@ import com.example.sep4androidapp.ViewModels.ReportViewModel;
 public class PreferencesFragment extends Fragment {
 
     Spinner spinner;
-    PreferencesViewModel viewModel;
+    //PreferencesViewModel viewModel;
     Button tempApply,humApply, CO2Apply;
     EditText tempEditText, humEditText, co2EditText;
 
@@ -48,7 +48,7 @@ public class PreferencesFragment extends Fragment {
         String newHum = humEditText.getText().toString();
         String newCO2 = co2EditText.getText().toString();
 
-
+/*
 
         viewModel = new ViewModelProvider(this).get(PreferencesViewModel.class);
         viewModel.getPrefrences().observe(getViewLifecycleOwner(), new Observer< Preferences >() {
@@ -59,13 +59,14 @@ public class PreferencesFragment extends Fragment {
             }
         });
 
-
+*/
         tempApply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
             }
         });
+
 
 
         return view;
