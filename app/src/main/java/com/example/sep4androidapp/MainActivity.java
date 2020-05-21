@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,7 +16,9 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.sep4androidapp.Firebase.Firebase_Login;
+import com.example.sep4androidapp.connection.PreferenceApi;
 import com.example.sep4androidapp.fragments.mainFragment.MainFragment;
+import com.example.sep4androidapp.fragments.mainFragment.ReportFragment;
 import com.example.sep4androidapp.fragments.preferencesFragment.PreferencesFragment;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -28,6 +31,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ActionBarDrawerToggle toggle;
     NavigationView navigationView;
     DrawerLayout drawerLayout;
+    MainFragment mainFragment;
+    ReportFragment reportFragment;
+    PreferencesFragment preferencesFragment;
+
 
 
     @Override
@@ -46,24 +53,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
+        mainFragment = new MainFragment();
+        reportFragment = new ReportFragment();
+        preferencesFragment = new PreferencesFragment();
+
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainFragment()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, mainFragment).commit();
             navigationView.setCheckedItem(R.id.itemMain);
         }
     }
+
 
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case R.id.itemMain:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, mainFragment).commit();
+                break;
+            case R.id.itemReports:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, reportFragment).commit();
                 break;
             case R.id.itemRooms:
 //                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, ).commit();
                 break;
             case R.id.itemPreferences:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PreferencesFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, preferencesFragment).commit();
                 break;
             case R.id.itemSetUp:
 //                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, ).commit();
