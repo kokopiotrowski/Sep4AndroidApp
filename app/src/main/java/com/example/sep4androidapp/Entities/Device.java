@@ -5,11 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
 public class Device implements Serializable {
-
-    @SerializedName("deviceId")
     private int deviceId;
-
-    @SerializedName("name")
     private String name;
 
     public Device(int deviceId, String name) {

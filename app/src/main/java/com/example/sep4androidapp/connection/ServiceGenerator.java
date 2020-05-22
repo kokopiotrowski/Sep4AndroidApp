@@ -1,14 +1,45 @@
 package com.example.sep4androidapp.connection;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
+
+import java.lang.reflect.Type;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class ServiceGenerator {
-    private static Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
-    private static Retrofit.Builder retrofitBuilder = new Retrofit.Builder().baseUrl("https://zzleep-api-dev.herokuapp.com/api/").addConverterFactory(GsonConverterFactory.create(gson));
+    //    private static Gson gson = new GsonBuilder().
+//            setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+    private static Gson gson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class, new JsonDeserializer<LocalDateTime>() {
+        @Override
+        public LocalDateTime deserialize(JsonElement json, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+//            Instant instant = Instant.ofEpochMilli(json.getAsJsonPrimitive().getAsLong());
+//            return LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
+//            return ZonedDateTime.parse(json.getAsJsonPrimitive().getAsString()).toLocalDateTime();
+//            return LocalDateTime.now();
+            String str = json.getAsJsonPrimitive().getAsString();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
+            return dateTime;
+        }
+    }).create();
+    private static Retrofit.Builder retrofitBuilder = new Retrofit.Builder().
+            baseUrl("https://zzleep-api-dev.herokuapp.com/api/").addConverterFactory(GsonConverterFactory.create(gson));
     private static Retrofit retrofit = retrofitBuilder.build();
 
     private static UserApi userApi = retrofit.create(UserApi.class);
@@ -23,7 +54,9 @@ public class ServiceGenerator {
         return userApi;
     }
 
-    public static ReportApi getReportApi() {return reportApi;}
+    public static ReportApi getReportApi() {
+        return reportApi;
+    }
 
     public static RoomConditionApi getRoomConditionApi() {
         return roomConditionApi;
@@ -41,7 +74,9 @@ public class ServiceGenerator {
         return preferenceApi;
     }
 
-    public static SleepTrackingApi getSleepTrackingApi() {return sleepTrackingApi;}
+    public static SleepTrackingApi getSleepTrackingApi() {
+        return sleepTrackingApi;
+    }
 
     /*
     COPY THIS METHOD TO THE REGISTER THAT USES UserApi

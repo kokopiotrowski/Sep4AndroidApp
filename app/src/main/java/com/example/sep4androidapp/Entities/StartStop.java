@@ -6,19 +6,10 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 public class StartStop implements Serializable {
-    @SerializedName("dateTimeFinish")
    private LocalDateTime dateTimeFinish;
-
-    @SerializedName("dateTimeStart")
     private LocalDateTime dateTimeStart;
-
-    @SerializedName("deviceId")
     private String deviceId;
-
-    @SerializedName("rating")
     private double rating;
-
-    @SerializedName("sleepId")
     private double sleepId;
 
     public StartStop(LocalDateTime dateTimeFinish, LocalDateTime dateTimeStart, String deviceId, double rating, double sleepId) {

@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class SleepDataResponse {
+    @SerializedName("roomConditions")
     private List<RoomCondition> roomConditions;
     private int sleepId;
     private String deviceId;

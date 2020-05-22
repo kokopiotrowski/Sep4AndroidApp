@@ -1,7 +1,9 @@
 package com.example.sep4androidapp.Repositories;
 
+import android.os.Build;
 import android.util.Log;
 
+import androidx.annotation.RequiresApi;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -42,6 +44,7 @@ public class ReportRepository {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void updateRoomCondition(){
 
         RoomConditionApi roomConditionApi = ServiceGenerator.getRoomConditionApi();
@@ -57,7 +60,7 @@ public class ReportRepository {
 
             @Override
             public void onFailure(Call<RoomConditionResponse> call, Throwable t) {
-                Log.i("Retrofit", "Something went wrong :(");
+                Log.i("Retrofit", t.getMessage());
 
             }
         });
