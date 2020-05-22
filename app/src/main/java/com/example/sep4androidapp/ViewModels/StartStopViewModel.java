@@ -11,13 +11,7 @@ public class StartStopViewModel extends ViewModel {
     private StartStopRepository repository;
 
     public StartStopViewModel() {
-
         repository = StartStopRepository.getInstance();
-    }
-
-    public LiveData<StartStop> getstartStop() {
-
-        return repository.getStartStop();
     }
 
     public void start() {
