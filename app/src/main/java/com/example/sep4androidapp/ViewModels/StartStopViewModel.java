@@ -9,10 +9,10 @@ import com.example.sep4androidapp.Entities.StartStop;
 import com.example.sep4androidapp.Repositories.ReportRepository;
 import com.example.sep4androidapp.Repositories.StartStopRepository;
 
-public class StatStopViewModel extends ViewModel {
-    StartStopRepository repository;
+public class StartStopViewModel extends ViewModel {
+    private StartStopRepository repository;
 
-    public StatStopViewModel() {
+    public StartStopViewModel() {
 
         repository = StartStopRepository.getInstance();
     }

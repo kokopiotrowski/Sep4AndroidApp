@@ -13,25 +13,14 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface SleepTrackingApi {
-
-    //start
-   // @POST("tracking/start/{deviceId}")
-    //Call< StartStopResponse > startDevice(@Path("deviceId") int deviceId);
-
-
-
     @POST("tracking/start/device1")
     Call< StartStopResponse > startDevice();
 
     @PUT("tracking/stop/device1")
     Call< StartStopResponse > stopDevice();
 
-    //stop
-    /*
-    @PUT("tracking/stop/{deviceId}")
-    Call< StartStopResponse > stopDevice(@Path("deviceId") int deviceId);
+    
 
-*/
     Call< StartStopResponse> getStartStopTrackingApi();
 
 

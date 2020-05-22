@@ -48,16 +48,16 @@ public class StartStopRepository {
             public void onResponse(Call< StartStopResponse > call, Response< StartStopResponse > response) {
                 Log.i(TAG, "Zolly0.");
                 if (response.code() == 200) {
-                    Log.i(TAG, "Zolly1." + response.code());
+                    Log.i(TAG, "Zolly1 " + response.code());
 
                 } else {
-                    Log.i(TAG, "Zolly2" + response.code());
+                    Log.i(TAG, "Zolly2 " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call< StartStopResponse > call, Throwable t) {
-                Log.e(TAG, "Zolly3");
+                Log.e(TAG, "Zolly3 ");
             }
         });
 
@@ -90,18 +90,18 @@ public class StartStopRepository {
         call.enqueue(new Callback< StartStopResponse >() {
             @Override
             public void onResponse(Call< StartStopResponse > call, Response< StartStopResponse > response) {
-                Log.i(TAG, "Zolly0.");
+                Log.i(TAG, "Zolly0 ");
                 if (response.code() == 200) {
-                    Log.i(TAG, "Zolly1" + response.code());
+                    Log.i(TAG, "Zolly1 " + response.code());
 
                 } else {
-                  Log.i(TAG, "Zolly2" + response.code());
+                  Log.i(TAG, "Zolly2 " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call< StartStopResponse > call, Throwable t) {
-                Log.e(TAG, "Zolly3");
+                Log.e(TAG, "Zolly3 ");
             }
         });
 

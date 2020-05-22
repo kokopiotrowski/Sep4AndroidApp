@@ -9,12 +9,11 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import com.example.sep4androidapp.Firebase.Firebase_Login;
+import com.example.sep4androidapp.ViewModels.StartStopViewModel;
 import com.example.sep4androidapp.fragments.mainFragment.MainFragment;
 import com.example.sep4androidapp.fragments.preferencesFragment.PreferencesFragment;
 import com.example.sep4androidapp.fragments.sleepFragment.SleepFragment;
@@ -29,6 +28,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ActionBarDrawerToggle toggle;
     NavigationView navigationView;
     DrawerLayout drawerLayout;
+    StartStopViewModel viewModel;
+
 
 
     @Override

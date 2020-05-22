@@ -6,21 +6,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.sep4androidapp.Entities.RoomCondition;
 import com.example.sep4androidapp.R;
 import com.example.sep4androidapp.ViewModels.ReportViewModel;
+import com.example.sep4androidapp.ViewModels.StartStopViewModel;
 
 public class FragmentFirstPage extends Fragment {
     Spinner spinner;
     ReportViewModel viewModel;
+    StartStopViewModel temporaryViewModel; //Temporary, usage will be moved later
     TextView currentTemperature, currentHumidity, currentCO2, currentSound, timeStamp;
 //    Button updateButton;
 
@@ -54,14 +55,16 @@ public class FragmentFirstPage extends Fragment {
                 timeStamp.setText("Updated: " + roomCondition.getTimestamp());
         });
 
-//        updateButton = v.findViewById(R.id.updateButton);
-//        updateButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Log.i("TAG", "BUTTON");
-//                viewModel.updateRoomCondition();
-//            }
-//        });
+        temporaryViewModel = new ViewModelProvider(this).get(StartStopViewModel.class);
+        Switch switchBtn = v.findViewById(R.id.switchBtn);
+        switchBtn.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if(switchBtn.isChecked())
+            {
+                temporaryViewModel.start();
+            }else{
+                temporaryViewModel.stop();
+            }
+        });
 
         viewModel.update();
 
