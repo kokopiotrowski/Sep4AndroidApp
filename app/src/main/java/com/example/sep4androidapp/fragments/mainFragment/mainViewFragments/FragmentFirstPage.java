@@ -55,13 +55,23 @@ public class FragmentFirstPage extends Fragment {
                 timeStamp.setText("Updated: " + roomCondition.getTimestamp());
         });
 
-        temporaryViewModel = new ViewModelProvider(this).get(StartStopViewModel.class);
         Switch switchBtn = v.findViewById(R.id.switchBtn);
+        temporaryViewModel = new ViewModelProvider(this).get(StartStopViewModel.class);
+        temporaryViewModel.receiveStatus();
+        temporaryViewModel.getStatus().observe(getViewLifecycleOwner(), aBoolean -> {
+            switchBtn.setChecked(aBoolean);
+        });
+
+
+
+
         switchBtn.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if(switchBtn.isChecked())
             {
+
                 temporaryViewModel.start();
             }else{
+
                 temporaryViewModel.stop();
             }
         });

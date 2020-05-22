@@ -1,17 +1,13 @@
 package com.example.sep4androidapp.Repositories;
 
 import android.util.Log;
-import android.view.View;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.sep4androidapp.Entities.RoomCondition;
 import com.example.sep4androidapp.Entities.StartStop;
-import com.example.sep4androidapp.connection.RoomConditionApi;
 import com.example.sep4androidapp.connection.ServiceGenerator;
 import com.example.sep4androidapp.connection.SleepTrackingApi;
-import com.example.sep4androidapp.connection.responses.RoomConditionResponse;
 import com.example.sep4androidapp.connection.responses.StartStopResponse;
 
 import retrofit2.Call;
@@ -22,12 +18,14 @@ import static android.content.ContentValues.TAG;
 
 public class StartStopRepository {
     private static StartStopRepository instance;
-    private MutableLiveData< StartStop > startStop;
+    private MutableLiveData<StartStop> startStop;
     private SleepTrackingApi sleepTrackingApi = ServiceGenerator.getSleepTrackingApi();
+    private MutableLiveData<Boolean> status;
+
 
     private StartStopRepository() {
+        status = new MutableLiveData<>();
         startStop = new MutableLiveData<>();
-
     }
 
     public static synchronized StartStopRepository getInstance() {
@@ -40,12 +38,11 @@ public class StartStopRepository {
     //https://code.tutsplus.com/tutorials/sending-data-with-retrofit-2-http-client-for-android--cms-27845
 
     public void start() {
-
         SleepTrackingApi sleepTrackingApi = ServiceGenerator.getSleepTrackingApi();
-        Call< StartStopResponse > call = sleepTrackingApi.startDevice();
-        call.enqueue(new Callback< StartStopResponse >() {
+        Call<StartStopResponse> call = sleepTrackingApi.startDevice();
+        call.enqueue(new Callback<StartStopResponse>() {
             @Override
-            public void onResponse(Call< StartStopResponse > call, Response< StartStopResponse > response) {
+            public void onResponse(Call<StartStopResponse> call, Response<StartStopResponse> response) {
                 Log.i(TAG, "Zolly0.");
                 if (response.code() == 200) {
                     Log.i(TAG, "Zolly1 " + response.code());
@@ -56,61 +53,66 @@ public class StartStopRepository {
             }
 
             @Override
-            public void onFailure(Call< StartStopResponse > call, Throwable t) {
+            public void onFailure(Call<StartStopResponse> call, Throwable t) {
                 Log.e(TAG, "Zolly3 ");
             }
         });
-
-        /*
-        sleepTrackingApi.startDevice(1).enqueue(new Callback<StartStopResponse>() {
-            @Override
-            public void onResponse(Call<StartStopResponse> call, Response<StartStopResponse> response) {
-                Log.i(TAG, "Zolly0." );
-                if(response.isSuccessful()) {
-
-                    //startStop.setValue(response.body().getStartStop());
-
-                    Log.i(TAG, "Zolly1." + response.code());
-                }else
-                {
-                    Log.i(TAG,"Zolly2" +response.code());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<StartStopResponse> call, Throwable t) {
-                Log.e(TAG, "Zolly3");
-            }
-        });*/
     }
 
     public void stop() {
         SleepTrackingApi sleepTrackingApi = ServiceGenerator.getSleepTrackingApi();
-        Call< StartStopResponse > call = sleepTrackingApi.stopDevice();
-        call.enqueue(new Callback< StartStopResponse >() {
+        Call<StartStopResponse> call = sleepTrackingApi.stopDevice();
+        call.enqueue(new Callback<StartStopResponse>() {
             @Override
-            public void onResponse(Call< StartStopResponse > call, Response< StartStopResponse > response) {
+            public void onResponse(Call<StartStopResponse> call, Response<StartStopResponse> response) {
                 Log.i(TAG, "Zolly0 ");
                 if (response.code() == 200) {
                     Log.i(TAG, "Zolly1 " + response.code());
 
                 } else {
-                  Log.i(TAG, "Zolly2 " + response.code());
+                    Log.i(TAG, "Zolly2 " + response.code());
                 }
             }
 
             @Override
-            public void onFailure(Call< StartStopResponse > call, Throwable t) {
+            public void onFailure(Call<StartStopResponse> call, Throwable t) {
                 Log.e(TAG, "Zolly3 ");
             }
         });
+    }
 
+    public void receiveStatus() {
+        SleepTrackingApi sleepTrackingApi = ServiceGenerator.getSleepTrackingApi();
+        Call<Boolean> call = sleepTrackingApi.getStatus();
 
+        call.enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                Log.i("TAG", "zollyresponserepo: " + response.code() + " " +  response.body());
+                if(response.code() == 200)
+                {
+                    Log.i("TAG", "kkStatus received: " + response.body());
+                    status.setValue(response.body());
+                    Log.i("TAG", "kkStatus placed: " + status);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+                Log.i("TAG", "response: " + t.getMessage());
+            }
+        });
 
     }
 
-    public LiveData< StartStop > getStartStop() {
-
+    public LiveData<StartStop> getStartStop() {
         return startStop;
     }
+
+    public MutableLiveData<Boolean> getStatus()
+    {
+        Log.i("TAG", "kkStatus to return: " + status);
+        return status;
+    }
+
 }
