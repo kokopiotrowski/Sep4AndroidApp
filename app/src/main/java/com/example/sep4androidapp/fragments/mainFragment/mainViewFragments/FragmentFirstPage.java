@@ -1,6 +1,7 @@
 package com.example.sep4androidapp.fragments.mainFragment.mainViewFragments;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,11 +21,16 @@ import com.example.sep4androidapp.Entities.RoomCondition;
 import com.example.sep4androidapp.R;
 import com.example.sep4androidapp.ViewModels.ReportViewModel;
 
+import java.util.Calendar;
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class FragmentFirstPage extends Fragment {
     Spinner spinner;
     ReportViewModel viewModel;
     TextView currentTemperature, currentHumidity, currentCO2, currentSound, timeStamp;
-    Button updateButton;
+//    Button updateButton;
+
 
     @Nullable
     @Override
@@ -57,15 +63,20 @@ public class FragmentFirstPage extends Fragment {
             }
         });
 
-        updateButton = v.findViewById(R.id.updateButton);
-        updateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                viewModel.updateRoomCondition();
-            }
-        });
+//        updateButton = v.findViewById(R.id.updateButton);
+//        updateButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Log.i("TAG", "BUTTON");
+//                viewModel.updateRoomCondition();
+//            }
+//        });
 
+        viewModel.update();
 
         return v;
     }
+
+
+
 }
