@@ -23,6 +23,9 @@
         android:id="@+id/itemAccount"
         android:title="Account" />
     <item
+        android:id="@+id/itemSleep"
+        android:title="Sleep Session" />
+    <item
         android:id="@+id/itemLogOut"
         android:title="Log out" />
 

@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModel;
 import androidx.room.Room;
 
 import com.example.sep4androidapp.Entities.RoomCondition;
+import com.example.sep4androidapp.Entities.SleepData;
+import com.example.sep4androidapp.Entities.SleepSession;
 import com.example.sep4androidapp.Repositories.ReportRepository;
 
 public class ReportViewModel extends ViewModel {
@@ -23,5 +25,14 @@ public class ReportViewModel extends ViewModel {
 
     public void updateRoomCondition(){
         repository.updateRoomCondition();
+    }
+
+    public LiveData<SleepData> getSleepData(){
+        return repository.getSleepData();
+    }
+
+    public void updateSleepData(){
+
+        repository.updateSleepData();
     }
 }

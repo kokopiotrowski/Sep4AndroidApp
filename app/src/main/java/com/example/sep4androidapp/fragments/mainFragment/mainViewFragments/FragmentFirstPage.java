@@ -54,6 +54,7 @@ public class FragmentFirstPage extends Fragment {
                   currentCO2.setText(String.format("%.0f", roomCondition.getCo2()) + " ppm");
                   currentHumidity.setText(String.format("%.0f", roomCondition.getHumidity()) + "%");
                   currentSound.setText(String.format("%.0f", roomCondition.getSound()) + "dB");
+
             }
         });
 
