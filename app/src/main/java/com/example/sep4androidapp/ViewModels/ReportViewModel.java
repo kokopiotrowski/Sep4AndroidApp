@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.room.Room;
 
 import com.example.sep4androidapp.Entities.RoomCondition;
+import com.example.sep4androidapp.Entities.SleepData;
 import com.example.sep4androidapp.Repositories.ReportRepository;
 
 import java.util.Calendar;
@@ -44,5 +45,13 @@ public class ReportViewModel extends ViewModel {
                 });
             }
         }, 0, 1000);
+    }
+
+    public LiveData<SleepData> getSleepData() {
+        return repository.getSleepData();
+    }
+
+    public void updateSleepData() {
+        repository.updateSleepData();
     }
 }
