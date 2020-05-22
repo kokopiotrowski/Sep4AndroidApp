@@ -3,10 +3,8 @@ package com.example.sep4androidapp.Entities;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
+
 
 public class RoomCondition implements Serializable {
     @SerializedName("sleepId")

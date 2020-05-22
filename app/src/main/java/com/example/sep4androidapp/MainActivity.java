@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.example.sep4androidapp.Firebase.Firebase_Login;
 import com.example.sep4androidapp.fragments.mainFragment.MainFragment;
 import com.example.sep4androidapp.fragments.preferencesFragment.PreferencesFragment;
+import com.example.sep4androidapp.fragments.sleepFragment.SleepFragment;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -73,6 +74,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.itemAccount:
 //                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, ).commit();
+                break;
+            case R.id.itemSleep:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SleepFragment()).commit();
                 break;
             case R.id.itemLogOut:
                 AuthUI.getInstance().signOut(this).addOnCompleteListener(

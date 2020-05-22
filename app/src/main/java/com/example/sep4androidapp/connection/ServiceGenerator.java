@@ -1,10 +1,14 @@
 package com.example.sep4androidapp.connection;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ServiceGenerator {
-    private static Retrofit.Builder retrofitBuilder = new Retrofit.Builder().baseUrl("https://zzleep-api-dev.herokuapp.com/api/").addConverterFactory(GsonConverterFactory.create());
+    private static Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+    private static Retrofit.Builder retrofitBuilder = new Retrofit.Builder().baseUrl("https://zzleep-api-dev.herokuapp.com/api/").addConverterFactory(GsonConverterFactory.create(gson));
     private static Retrofit retrofit = retrofitBuilder.build();
 
     private static UserApi userApi = retrofit.create(UserApi.class);
