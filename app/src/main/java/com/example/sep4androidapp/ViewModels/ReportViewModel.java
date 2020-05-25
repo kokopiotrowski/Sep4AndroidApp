@@ -36,15 +36,21 @@ public class ReportViewModel extends ViewModel {
     }
 
     public void update() {
-        timer.schedule(new TimerTask() {
+        timer = new Timer();
+                timer.schedule(new TimerTask() {
             @Override
             public void run() {
                 handler.post(()-> {
-                        Log.i("TAG", String.valueOf(Calendar.getInstance().getTime()));
+                        Log.i("TAG", "Timer: " + String.valueOf(Calendar.getInstance().getTime()));
                         updateRoomCondition();
                 });
             }
         }, 0, 1000);
+    }
+
+    public void stopTimer()
+    {
+        timer.cancel();
     }
 
     public LiveData<SleepData> getSleepData() {
@@ -54,4 +60,6 @@ public class ReportViewModel extends ViewModel {
     public void updateSleepData() {
         repository.updateSleepData();
     }
+
+
 }
