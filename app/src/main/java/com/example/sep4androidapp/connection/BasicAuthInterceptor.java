@@ -16,12 +16,15 @@ public class BasicAuthInterceptor implements Interceptor {
     private String userId;
 
     public BasicAuthInterceptor() {
-        userId = "temp";
-;    }
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+        userId = user.getUid();
+    }
 
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
+
         request = request.newBuilder().header("Authorization", Credentials.basic(userId, "1234")).build();
         return chain.proceed(request);
     }
