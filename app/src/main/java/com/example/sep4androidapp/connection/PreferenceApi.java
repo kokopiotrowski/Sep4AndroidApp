@@ -2,6 +2,7 @@ package com.example.sep4androidapp.connection;
 
 import com.example.sep4androidapp.Entities.Preferences;
 import com.example.sep4androidapp.connection.responses.PreferencesResponse;
+import com.example.sep4androidapp.connection.responses.RoomConditionResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -20,6 +21,8 @@ public interface PreferenceApi {
     @Headers("Content-Type: application/json")
     @PUT("preferences")
     Call updatePreferences(@Body Preferences preferences);
+
+
 
 
 }

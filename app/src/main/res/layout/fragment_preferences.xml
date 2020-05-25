@@ -15,7 +15,7 @@
 
         <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/prefrencesSpinner"
-            android:layout_width="100dp"
+            android:layout_width="155dp"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:textStyle="bold" />
@@ -30,10 +30,22 @@
         android:layout_marginEnd="10dp">
 
         <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="165dp"
             android:padding="8dp">
 
+
+            <TextView
+                android:id="@+id/tempMax"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/temperatureImage"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="127dp"
+                android:layout_marginTop="24dp"
+                android:text="Maximum: "
+                android:textSize="10dp"
+                android:textStyle="bold" />
 
             <ImageView
                 android:id="@+id/temperatureImage"
@@ -59,22 +71,26 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/tempEditText"
-                android:layout_width="47dp"
-                android:layout_height="40dp"
+                android:id="@+id/minTempEditText"
+                android:layout_width="31dp"
+                android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/tempText"
-                android:layout_marginLeft="114dp"
-                android:layout_marginTop="10dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="58dp"
+                android:layout_marginLeft="-30dp"
+                android:layout_marginTop="75dp"
+                android:layout_marginEnd="295dp"
                 android:hint="18"
-                android:textSize="16dp"
-                android:inputType="number" />
+                android:inputType="number"
+                android:textSize="14dp" />
 
             <Button
                 android:id="@+id/Tempbutton"
                 android:layout_width="81dp"
                 android:layout_height="35dp"
-                android:layout_alignLeft="@+id/tempEditText"
-                android:layout_marginLeft="96dp"
+                android:layout_marginLeft="225dp"
                 android:layout_marginTop="16dp"
                 android:text="Apply"
                 android:textSize="12dp" />
@@ -82,14 +98,45 @@
             <TextView
                 android:id="@+id/suggestionTemp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="29dp"
                 android:layout_below="@id/tempText"
                 android:layout_alignParentEnd="true"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="70dp"
-                android:text="Suggested temperature is 18 grade"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="65dp"
+                android:layout_marginEnd="212dp"
+                android:layout_marginBottom="13dp"
+                android:text="Suggested temperature is: "
                 android:textColor="#4CAF50"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tempMin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/temperatureImage"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="14dp"
+                android:layout_marginTop="22dp"
+                android:text="Minimum: "
+                android:textSize="10dp"
+                android:textStyle="bold" />
+
+
+            <EditText
+                android:id="@+id/MaxTempEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="-2dp"
+                android:layout_marginEnd="174dp"
+                android:layout_marginBottom="33dp"
+                android:layout_toEndOf="@+id/tempMax"
+                android:hint="24"
+                android:inputType="number"
+                android:textSize="14dp" />
+
+
         </RelativeLayout>
 
     </androidx.cardview.widget.CardView>
@@ -102,18 +149,30 @@
         android:layout_marginEnd="10dp">
 
         <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="165dp"
             android:padding="8dp">
 
 
+            <TextView
+                android:id="@+id/humMax"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/humImage"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="127dp"
+                android:layout_marginTop="24dp"
+                android:text="Maximum: "
+                android:textSize="10dp"
+                android:textStyle="bold" />
+
             <ImageView
-                android:id="@+id/humidityImage"
-                android:layout_width="49dp"
-                android:layout_height="48dp"
+                android:id="@+id/humImage"
+                android:layout_width="44dp"
+                android:layout_height="51dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginStart="15dp"
+                android:layout_marginStart="14dp"
                 android:layout_marginTop="15dp"
                 android:padding="0dp"
                 android:scaleType="fitXY"
@@ -123,49 +182,83 @@
                 android:id="@+id/humText"
                 android:layout_width="99dp"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/humidityImage"
+                android:layout_alignLeft="@+id/humImage"
                 android:layout_alignParentTop="true"
-                android:layout_marginLeft="78dp"
-                android:layout_marginTop="25dp"
+                android:layout_marginLeft="70dp"
+                android:layout_marginTop="31dp"
                 android:text="Humidity"
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/humEditText"
-                android:layout_width="47dp"
-                android:layout_height="40dp"
+                android:id="@+id/minHumEditText"
+                android:layout_width="31dp"
+                android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/humText"
-                android:layout_marginLeft="100dp"
-                android:layout_marginTop="10dp"
-                android:hint="40"
-                android:textSize="16dp"
-                android:inputType="number" />
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="58dp"
+                android:layout_marginLeft="-30dp"
+                android:layout_marginTop="75dp"
+                android:layout_marginEnd="295dp"
+                android:hint="18"
+                android:inputType="number"
+                android:textSize="14dp" />
 
             <Button
-                android:id="@+id/humbutton"
+                android:id="@+id/Humbutton"
                 android:layout_width="81dp"
                 android:layout_height="35dp"
-                android:layout_alignLeft="@+id/humEditText"
-                android:layout_marginLeft="96dp"
+                android:layout_marginLeft="225dp"
                 android:layout_marginTop="16dp"
                 android:text="Apply"
                 android:textSize="12dp" />
 
+
             <TextView
                 android:id="@+id/suggestionHum"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="23dp"
                 android:layout_below="@id/humText"
                 android:layout_alignParentEnd="true"
-                android:layout_marginTop="12dp"
-                android:layout_marginEnd="35dp"
-                android:text="Suggested humidity is between 30%-50%"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="67dp"
+                android:layout_marginEnd="233dp"
+                android:layout_marginBottom="16dp"
+                android:text="Suggested Humidity is: "
                 android:textColor="#4CAF50"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/humMin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/humImage"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="19dp"
+                android:layout_marginTop="22dp"
+                android:text="Minimum: "
+                android:textSize="10dp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/MaxHumEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="-2dp"
+                android:layout_marginEnd="174dp"
+                android:layout_marginBottom="33dp"
+                android:layout_toEndOf="@+id/humMax"
+                android:hint="24"
+                android:inputType="number"
+                android:textSize="14dp" />
+
+
         </RelativeLayout>
 
     </androidx.cardview.widget.CardView>
-
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -174,18 +267,34 @@
         android:layout_marginEnd="10dp">
 
         <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="165dp"
             android:padding="8dp">
+
+
+            <TextView
+                android:id="@+id/co2Max"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/co2Image"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="127dp"
+                android:layout_marginTop="24dp"
+                android:text="Maximum: "
+                android:textSize="10dp"
+                android:textStyle="bold" />
 
             <ImageView
                 android:id="@+id/co2Image"
-                android:layout_width="88dp"
-                android:layout_height="79dp"
+                android:layout_width="53dp"
+                android:layout_height="67dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="9dp"
+                android:layout_marginTop="2dp"
                 android:padding="0dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/co2" />
-
 
             <TextView
                 android:id="@+id/co2Text"
@@ -193,50 +302,86 @@
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/co2Image"
                 android:layout_alignParentTop="true"
-                android:layout_marginLeft="93dp"
-                android:layout_marginTop="23dp"
+                android:layout_marginLeft="70dp"
+                android:layout_marginTop="31dp"
                 android:text="CO2"
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/co2EditText"
-                android:layout_width="47dp"
-                android:layout_height="40dp"
+                android:id="@+id/minCo2EditText"
+                android:layout_width="31dp"
+                android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/co2Text"
-                android:layout_marginLeft="100dp"
-                android:layout_marginTop="10dp"
-                android:hint="1000"
-                android:textSize="16dp"
-                android:inputType="number" />
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="58dp"
+                android:layout_marginLeft="-30dp"
+                android:layout_marginTop="75dp"
+                android:layout_marginEnd="295dp"
+                android:hint="18"
+                android:inputType="number"
+                android:textSize="14dp" />
 
             <Button
                 android:id="@+id/co2button"
                 android:layout_width="81dp"
                 android:layout_height="35dp"
-                android:layout_alignLeft="@+id/co2EditText"
-                android:layout_marginLeft="96dp"
+                android:layout_marginLeft="225dp"
                 android:layout_marginTop="16dp"
                 android:text="Apply"
                 android:textSize="12dp" />
 
+
             <TextView
-                android:id="@+id/suggestionCO2"
+                android:id="@+id/suggestionCo2"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="31dp"
                 android:layout_below="@id/co2Text"
                 android:layout_alignParentEnd="true"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="70dp"
-                android:text="Suggested CO2 is about 1,000 ppm"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="62dp"
+                android:layout_marginEnd="250dp"
+                android:layout_marginBottom="13dp"
+                android:text="Suggested CO2 is: "
                 android:textColor="#4CAF50"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/co2Min"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/co2Image"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="14dp"
+                android:layout_marginTop="22dp"
+                android:text="Minimum: "
+                android:textSize="10dp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/MaxCo2EditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="-2dp"
+                android:layout_marginEnd="174dp"
+                android:layout_marginBottom="33dp"
+                android:layout_toEndOf="@+id/co2Max"
+                android:hint="24"
+                android:inputType="number"
+                android:textSize="14dp" />
+
+
         </RelativeLayout>
 
     </androidx.cardview.widget.CardView>
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="300dp"
         android:layout_gravity="center"
         android:orientation="horizontal"
         android:padding="20dp">
@@ -249,9 +394,10 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.694"
+            app:layout_constraintHorizontal_bias="0.668"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.256" />
 
         <Button
             android:id="@+id/button5"
@@ -261,9 +407,10 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.295"
+            app:layout_constraintHorizontal_bias="0.321"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.256" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
