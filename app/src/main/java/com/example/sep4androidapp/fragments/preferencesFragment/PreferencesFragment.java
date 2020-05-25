@@ -26,7 +26,8 @@ public class PreferencesFragment extends Fragment {
     Spinner spinner;
     //PreferencesViewModel viewModel;
     Button tempApply,humApply, CO2Apply;
-    EditText tempEditText, humEditText, co2EditText;
+    EditText MintempEditText, MinhumEditText, Minco2EditText,
+            MaxtempEditText, MaxhumEditText, Maxco2EditText;
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_preferences, container, false);
@@ -36,17 +37,24 @@ public class PreferencesFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
-        tempEditText = view.findViewById(R.id.tempEditText);
-        humEditText = view.findViewById(R.id.humEditText);
-        co2EditText = view.findViewById(R.id.co2EditText);
+        MintempEditText = view.findViewById(R.id.minTempEditText);
+        MinhumEditText = view.findViewById(R.id.minHumEditText);
+        Minco2EditText = view.findViewById(R.id.minCo2EditText);
+
+        MaxtempEditText = view.findViewById(R.id.MaxTempEditText);
+        MaxhumEditText = view.findViewById(R.id.MaxHumEditText);
+        Maxco2EditText = view.findViewById(R.id.MaxCo2EditText);
 
         tempApply = view.findViewById(R.id.Tempbutton);
-        humApply = view.findViewById(R.id.humbutton);
+        humApply = view.findViewById(R.id.Humbutton);
         CO2Apply = view.findViewById(R.id.co2button);
 
-        String newTep =  tempEditText.getText().toString();
-        String newHum = humEditText.getText().toString();
-        String newCO2 = co2EditText.getText().toString();
+        String newMinTemp =  MintempEditText.getText().toString();
+        String newMinHum = MinhumEditText.getText().toString();
+        String newMinCO2 = Minco2EditText.getText().toString();
+        String newMaxTemp =  MaxtempEditText.getText().toString();
+        String newMaxHum = MaxhumEditText.getText().toString();
+        String newMaxCO2 = Maxco2EditText.getText().toString();
 
 /*
 

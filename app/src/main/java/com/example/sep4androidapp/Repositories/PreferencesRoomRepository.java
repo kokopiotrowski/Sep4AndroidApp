@@ -103,6 +103,7 @@ public class PreferencesRoomRepository {
     //_________________________________________________________________________
 
 
+    // GET API
     public void showPrefrences() {
         PreferenceApi preferenceApi = ServiceGenerator.getPreferenceApi();
         Call< PreferencesResponse > call = preferenceApi.getPreferences(1);
@@ -127,9 +128,7 @@ public class PreferencesRoomRepository {
 
 
 
-   /*
-
-
+    // PUT API
     public void updatePrefrences(){
 
         PreferenceApi preferenceApi = ServiceGenerator.getPreferenceApi();
@@ -139,7 +138,7 @@ public class PreferencesRoomRepository {
             public void onResponse(Call<PreferencesResponse> call, Response<PreferencesResponse> response) {
                 if (response.code() == 200){
 
-                    allPreferences.setValue(response.body().getRoomCondition());
+                    allPreferences.getValue(response.body().)
                 }
             }
 
@@ -153,7 +152,7 @@ public class PreferencesRoomRepository {
 
     }
 
-    */
+
 
 
 }
