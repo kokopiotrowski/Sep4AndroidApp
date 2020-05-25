@@ -12,6 +12,8 @@ public class PreferencesResponse implements Serializable {
     @SerializedName("co2Max")
     private int co2Max;
     @SerializedName("humidityMax")
+    private int co2Min;
+    @SerializedName("humidityMin")
     private int humidityMax;
     @SerializedName("humidityMin")
     private int humidityMin;
@@ -54,6 +56,14 @@ public class PreferencesResponse implements Serializable {
         this.co2Max = co2Max;
     }
 
+    public int getCo2Min() {
+        return co2Min;
+    }
+
+    public void setCo2Min(int co2Max) {
+        this.co2Max = co2Min;
+    }
+
     public int getHumidityMax() {
         return humidityMax;
     }
@@ -85,4 +95,6 @@ public class PreferencesResponse implements Serializable {
     public void setTemperatureMax(double temperatureMax) {
         this.temperatureMax = temperatureMax;
     }
+
+
 }

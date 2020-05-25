@@ -55,7 +55,6 @@ public class ReportRepository {
                 if (response.code() == 200){
 
                     roomCondition.setValue(response.body().getRoomCondition());
-
                 }
             }
 

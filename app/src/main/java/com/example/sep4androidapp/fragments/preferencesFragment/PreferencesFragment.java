@@ -1,6 +1,7 @@
 package com.example.sep4androidapp.fragments.preferencesFragment;
 
 import android.os.Bundle;
+import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,7 +9,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,15 +17,16 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sep4androidapp.Entities.Preferences;
-import com.example.sep4androidapp.Entities.RoomCondition;
 import com.example.sep4androidapp.R;
-import com.example.sep4androidapp.ViewModels.ReportViewModel;
+import com.example.sep4androidapp.ViewModels.PrefrencesViewModel;
+
+import java.util.List;
 
 public class PreferencesFragment extends Fragment {
 
     Spinner spinner;
-    //PreferencesViewModel viewModel;
-    Button tempApply,humApply, CO2Apply;
+    PrefrencesViewModel viewModel;
+    Button tempApply,humApply, CO2Apply, save, cancel;
     EditText MintempEditText, MinhumEditText, Minco2EditText,
             MaxtempEditText, MaxhumEditText, Maxco2EditText;
 
@@ -48,30 +49,67 @@ public class PreferencesFragment extends Fragment {
         tempApply = view.findViewById(R.id.Tempbutton);
         humApply = view.findViewById(R.id.Humbutton);
         CO2Apply = view.findViewById(R.id.co2button);
+        save = view.findViewById(R.id.buttonSave);
+        cancel = view.findViewById(R.id.buttonCancel);
 
-        String newMinTemp =  MintempEditText.getText().toString();
-        String newMinHum = MinhumEditText.getText().toString();
-        String newMinCO2 = Minco2EditText.getText().toString();
-        String newMaxTemp =  MaxtempEditText.getText().toString();
-        String newMaxHum = MaxhumEditText.getText().toString();
-        String newMaxCO2 = Maxco2EditText.getText().toString();
+        double newMinTemp = Double.parseDouble(MintempEditText.getText().toString());
+        double newMaxTemp =Double.parseDouble(MaxtempEditText.getText().toString());
+        int newMinHum = Integer.parseInt( MinhumEditText.getText().toString());
+        int newMaxHum = Integer.parseInt(MaxhumEditText.getText().toString());
+        int newMinCO2 = Integer.parseInt( Minco2EditText.getText().toString());
+        int newMaxCO2 = Integer.parseInt(Maxco2EditText.getText().toString());
 
-/*
 
-        viewModel = new ViewModelProvider(this).get(PreferencesViewModel.class);
-        viewModel.getPrefrences().observe(getViewLifecycleOwner(), new Observer< Preferences >() {
+        viewModel = new ViewModelProvider(this).get(PrefrencesViewModel.class);
+        viewModel.getPrefrences().observe(getViewLifecycleOwner(), new Observer< List< Preferences > >() {
+                    @Override
+                    public void onChanged(List< Preferences > preferences) {
 
-            @Override
-            public void onChanged(Preferences preferences) {
-
-            }
+                    }
         });
 
-*/
+
         tempApply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+            }
+        });
+
+        humApply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        CO2Apply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+          Preferences preference = new Preferences(1,
+                                 true,
+                                            newMaxCO2,
+                                            newMinCO2,
+                                            newMinHum,
+                                            newMaxHum,
+                                            newMinTemp,
+                                            newMaxTemp);
+          viewModel.updatePrefrences(preference);
+
+            }
+        });
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewModel.showPrefrences();
             }
         });
 
