@@ -41,6 +41,14 @@ public class PreferencesRoomRepository {
         new UpdatePreferencesAsync(preferencesDao).execute(preferences);
     }
 
+    public void deletePreference(Preferences preferences){
+        new DeletePreferenceAsync(preferencesDao).execute();
+    }
+
+    public void deleteAllPreferences(){
+        new DeleteAllPreferencesAsync(preferencesDao).execute();
+    }
+
     private static class InsertPreferencesAsync extends AsyncTask<Preferences,Void,Void> {
 
         private PreferencesDAO preferencesDAO;
@@ -70,19 +78,33 @@ public class PreferencesRoomRepository {
         }
     }
 
-    private static class DeletePreferenceAsync extends AsyncTask<Preferences,Void,Void>{
+    private static class DeletePreferenceAsync extends AsyncTask<Preferences,Void,Void> {
 
         private PreferencesDAO preferencesDAO;
 
-        private DeletePreferenceAsync(PreferencesDAO preferencesDAO){
+        private DeletePreferenceAsync(PreferencesDAO preferencesDAO) {
             this.preferencesDAO = preferencesDAO;
         }
+
         @Override
         protected Void doInBackground(Preferences... preferences) {
             preferencesDAO.deletePreference(preferences[0]);
             return null;
         }
+    }
 
+        private static class DeleteAllPreferencesAsync extends AsyncTask<Preferences,Void,Void>{
+
+            private PreferencesDAO preferencesDAO;
+
+            private DeleteAllPreferencesAsync(PreferencesDAO preferencesDAO){
+                this.preferencesDAO = preferencesDAO;
+            }
+            @Override
+            protected Void doInBackground(Preferences... preferences) {
+                preferencesDAO.deleteAllPreferences();
+                return null;
+            }
 
     }
 
