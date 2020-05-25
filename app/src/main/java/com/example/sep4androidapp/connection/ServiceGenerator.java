@@ -18,6 +18,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
+import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -38,8 +39,9 @@ public class ServiceGenerator {
             return dateTime;
         }
     }).create();
+    private static OkHttpClient client = new OkHttpClient.Builder().addInterceptor(new BasicAuthInterceptor()).build();
     private static Retrofit.Builder retrofitBuilder = new Retrofit.Builder().
-            baseUrl("https://zzleep-api-dev.herokuapp.com/api/").addConverterFactory(GsonConverterFactory.create(gson));
+            baseUrl("https://zzleep-api-dev.herokuapp.com/api/").addConverterFactory(GsonConverterFactory.create(gson)).client(client);
     private static Retrofit retrofit = retrofitBuilder.build();
 
     private static UserApi userApi = retrofit.create(UserApi.class);
