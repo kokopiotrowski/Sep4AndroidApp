@@ -37,13 +37,12 @@ public class StartStopRepository {
 
     //https://code.tutsplus.com/tutorials/sending-data-with-retrofit-2-http-client-for-android--cms-27845
 
-    public void start() {
+    public void start(String deviceId) {
         SleepTrackingApi sleepTrackingApi = ServiceGenerator.getSleepTrackingApi();
-        Call<StartStopResponse> call = sleepTrackingApi.startDevice();
+        Call<StartStopResponse> call = sleepTrackingApi.startDevice(deviceId);
         call.enqueue(new Callback<StartStopResponse>() {
             @Override
             public void onResponse(Call<StartStopResponse> call, Response<StartStopResponse> response) {
-                Log.i(TAG, "Zolly0.");
                 if (response.code() == 200) {
                     Log.i(TAG, "Zolly1 " + response.code());
 
@@ -59,13 +58,12 @@ public class StartStopRepository {
         });
     }
 
-    public void stop() {
+    public void stop(String deviceId) {
         SleepTrackingApi sleepTrackingApi = ServiceGenerator.getSleepTrackingApi();
-        Call<StartStopResponse> call = sleepTrackingApi.stopDevice();
+        Call<StartStopResponse> call = sleepTrackingApi.stopDevice(deviceId);
         call.enqueue(new Callback<StartStopResponse>() {
             @Override
             public void onResponse(Call<StartStopResponse> call, Response<StartStopResponse> response) {
-                Log.i(TAG, "Zolly0 ");
                 if (response.code() == 200) {
                     Log.i(TAG, "Zolly1 " + response.code());
 
@@ -81,9 +79,9 @@ public class StartStopRepository {
         });
     }
 
-    public void receiveStatus() {
+    public void receiveStatus(String deviceId) {
         SleepTrackingApi sleepTrackingApi = ServiceGenerator.getSleepTrackingApi();
-        Call<Boolean> call = sleepTrackingApi.getStatus();
+        Call<Boolean> call = sleepTrackingApi.getStatus(deviceId);
 
         call.enqueue(new Callback<Boolean>() {
             @Override

@@ -1,5 +1,7 @@
 package com.example.sep4androidapp.ViewModels;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -14,16 +16,17 @@ public class StartStopViewModel extends ViewModel {
         repository = StartStopRepository.getInstance();
     }
 
-    public void start() {
-        repository.start();
+    public void start(String deviceId) {
+        repository.start(deviceId);
     }
 
-    public void stop() {
-        repository.stop();
+    public void stop(String deviceId) {
+        repository.stop(deviceId);
     }
 
-    public void receiveStatus() {
-        repository.receiveStatus();
+    public void receiveStatus(String deviceId) {
+        Log.i("TAG", "Printprint");
+        repository.receiveStatus(deviceId);
     }
 
     public MutableLiveData<Boolean> getStatus() {

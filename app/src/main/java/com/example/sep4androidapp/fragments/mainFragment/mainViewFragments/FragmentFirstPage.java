@@ -63,7 +63,7 @@ public class FragmentFirstPage extends Fragment {
 
         Switch switchBtn = v.findViewById(R.id.switchBtn);
         temporaryViewModel = new ViewModelProvider(this).get(StartStopViewModel.class);
-        temporaryViewModel.receiveStatus();
+        temporaryViewModel.receiveStatus("0004A30B002181EC");
         temporaryViewModel.getStatus().observe(getViewLifecycleOwner(), switchBtn::setChecked);
 
         if(switchBtn.isChecked())
@@ -74,10 +74,10 @@ public class FragmentFirstPage extends Fragment {
         switchBtn.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if(switchBtn.isChecked())
             {
-                temporaryViewModel.start();
+                temporaryViewModel.start("0004A30B002181EC");
                 viewModel.update();
             }else{
-                temporaryViewModel.stop();
+                temporaryViewModel.stop("0004A30B002181EC");
                 viewModel.stopTimer();
             }
         });

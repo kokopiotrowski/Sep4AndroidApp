@@ -1,18 +1,23 @@
 package com.example.sep4androidapp.Adapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sep4androidapp.Entities.Device;
 import com.example.sep4androidapp.R;
+import com.example.sep4androidapp.ViewModels.StartStopViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +25,7 @@ import java.util.List;
 public class RoomsAdapter extends ListAdapter<Device, RoomsAdapter.RoomHolder> {
 
     private List<Device> devices = new ArrayList<>();
+    StartStopViewModel startStopViewModel = new StartStopViewModel();
 
     public RoomsAdapter() {
         super(DIFF_CALLBACK);
@@ -51,7 +57,25 @@ public class RoomsAdapter extends ListAdapter<Device, RoomsAdapter.RoomHolder> {
     public void onBindViewHolder(@NonNull RoomHolder holder, int position) {
         Device currentDevice = devices.get(position);
         holder.roomLabelTextView.setText(currentDevice.getName());
-        holder.roomsSwitch.setChecked(true);
+
+        startStopViewModel.receiveStatus(devices.get(position).getDeviceId());
+
+        holder.roomsSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked)
+                {
+                    startStopViewModel.start(devices.get(position).getDeviceId());
+                }else{
+                    startStopViewModel.stop(devices.get(position).getDeviceId());
+                }
+            }
+        });
+
+
+
+
+
     }
 
     public void setDevices(List<Device> devices)
