@@ -13,25 +13,20 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.sep4androidapp.Firebase.Firebase_Login;
+import com.example.sep4androidapp.ViewModels.StartStopViewModel;
 import com.example.sep4androidapp.fragments.mainFragment.MainFragment;
-import com.example.sep4androidapp.fragments.reportFragment.ReportFragment;
 import com.example.sep4androidapp.fragments.preferencesFragment.PreferencesFragment;
+import com.example.sep4androidapp.fragments.sleepFragment.SleepFragment;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
-
     ActionBarDrawerToggle toggle;
     NavigationView navigationView;
     DrawerLayout drawerLayout;
-    MainFragment mainFragment;
-    ReportFragment reportFragment;
-    PreferencesFragment preferencesFragment;
-
-
+    StartStopViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,32 +44,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        mainFragment = new MainFragment();
-        reportFragment = new ReportFragment();
-        preferencesFragment = new PreferencesFragment();
-
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, mainFragment).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainFragment()).commit();
             navigationView.setCheckedItem(R.id.itemMain);
         }
     }
-
-
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case R.id.itemMain:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, mainFragment).commit();
-                break;
-            case R.id.itemReports:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, reportFragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainFragment()).commit();
                 break;
             case R.id.itemRooms:
 //                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, ).commit();
                 break;
             case R.id.itemPreferences:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, preferencesFragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PreferencesFragment()).commit();
                 break;
             case R.id.itemSetUp:
 //                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, ).commit();
@@ -84,6 +70,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.itemAccount:
 //                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, ).commit();
+                break;
+            case R.id.itemSleep:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SleepFragment()).commit();
                 break;
             case R.id.itemLogOut:
                 AuthUI.getInstance().signOut(this).addOnCompleteListener(
@@ -104,8 +93,4 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.closeDrawer(GravityCompat.START);
         return false;
     }
-
-
-
-
 }

@@ -12,11 +12,11 @@ import androidx.fragment.app.Fragment;
 import com.example.sep4androidapp.R;
 
 public class FragmentCo2 extends Fragment {
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_main_category, container, false);
+        View v = inflater.inflate(R.layout.fragment_main_co2, container, false);
+
 
         return v;
     }

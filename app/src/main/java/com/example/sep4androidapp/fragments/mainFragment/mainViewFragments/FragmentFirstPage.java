@@ -1,31 +1,37 @@
 package com.example.sep4androidapp.fragments.mainFragment.mainViewFragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.sep4androidapp.Entities.RoomCondition;
 import com.example.sep4androidapp.R;
 import com.example.sep4androidapp.ViewModels.ReportViewModel;
+import com.example.sep4androidapp.ViewModels.StartStopViewModel;
+
+import java.util.Calendar;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class FragmentFirstPage extends Fragment {
     Spinner spinner;
     ReportViewModel viewModel;
+    StartStopViewModel temporaryViewModel; //Temporary, usage will be moved later
     TextView currentTemperature, currentHumidity, currentCO2, currentSound, timeStamp;
-    Button updateButton;
 
+    @SuppressLint({"SetTextI18n", "DefaultLocale"})
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -47,25 +53,34 @@ public class FragmentFirstPage extends Fragment {
         timeStamp = v.findViewById(R.id.timeStamp);
 
         viewModel = new ViewModelProvider(this).get(ReportViewModel.class);
-        viewModel.getRoomCondition().observe(getViewLifecycleOwner(), new Observer<RoomCondition>() {
-            @Override
-            public void onChanged(RoomCondition roomCondition) {
-                  currentTemperature.setText(String.format("%.1f", roomCondition.getTemperature()) + " °C");
-                  currentCO2.setText(String.format("%.0f", roomCondition.getCo2()) + " ppm");
-                  currentHumidity.setText(String.format("%.0f", roomCondition.getHumidity()) + "%");
-                  currentSound.setText(String.format("%.0f", roomCondition.getSound()) + "dB");
+        viewModel.getRoomCondition().observe(getViewLifecycleOwner(), roomCondition -> {
+              currentTemperature.setText(String.format("%.0f", roomCondition.getTemperature()) + " °C");
+              currentCO2.setText(String.format("%.0f", roomCondition.getCo2()) + " ppm");
+              currentHumidity.setText(String.format("%.0f", roomCondition.getHumidity()) + "%");
+              currentSound.setText(String.format("%.0f", roomCondition.getSound()) + "dB");
+                timeStamp.setText("Updated: " + roomCondition.getTimestamp());
+        });
+
+
+        Switch switchBtn = v.findViewById(R.id.switchBtn);
+        temporaryViewModel = new ViewModelProvider(this).get(StartStopViewModel.class);
+        temporaryViewModel.receiveStatus();
+        temporaryViewModel.getStatus().observe(getViewLifecycleOwner(), switchBtn::setChecked);
+
+        switchBtn.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if(switchBtn.isChecked())
+            {
+                temporaryViewModel.start();
+            }else{
+                temporaryViewModel.stop();
             }
         });
 
-        updateButton = v.findViewById(R.id.updateButton);
-        updateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                viewModel.updateRoomCondition();
-            }
-        });
-
+        viewModel.update();
 
         return v;
     }
+
+
+
 }

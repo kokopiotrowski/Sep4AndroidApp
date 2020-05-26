@@ -4,7 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -28,7 +30,6 @@ public class Firebase_Login extends AppCompatActivity {
 
     private FirebaseAuth _mFirebaseAuth;
     private FirebaseUser user;
-    private FirebaseAuth.AuthStateListener _mAuthListener;
     public static final int RC_SIGN_IN = 10;
 
     // Choose authentication providers
@@ -41,14 +42,15 @@ public class Firebase_Login extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_firebase_auth);
         _mFirebaseAuth = FirebaseAuth.getInstance();
         user = _mFirebaseAuth.getCurrentUser();
 
         if (user != null) {
-            Toast.makeText(getApplicationContext(), "welcome, You are already logged in",
-                    Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getApplicationContext(), "welcome, You are already logged in",
+//                    Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this, MainActivity.class));
+
         } else {
             // Create and launch sign-in intent
             startActivityForResult(

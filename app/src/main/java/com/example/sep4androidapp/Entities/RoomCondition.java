@@ -1,31 +1,20 @@
 package com.example.sep4androidapp.Entities;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
+
 
 public class RoomCondition implements Serializable {
-    @SerializedName("sleepId")
     private int sleepId;
-    @SerializedName("timeStamp")
-    private LocalDateTime timeStamp;
-    @SerializedName("temperature")
+    private LocalDateTime timestamp;
     private double temperature;
-    @SerializedName("co2")
     private double co2;
-    @SerializedName("sound")
     private double sound;
-    @SerializedName("humidity")
     private double humidity;
 
-
-    public RoomCondition(int sleepId, LocalDateTime timeStamp, double temperature, double co2, double sound, double humidity) {
+    public RoomCondition(int sleepId, LocalDateTime timestamp, double temperature, double co2, double sound, double humidity) {
         this.sleepId = sleepId;
-        this.timeStamp = timeStamp;
+        this.timestamp = timestamp;
         this.temperature = temperature;
         this.co2 = co2;
         this.sound = sound;
@@ -41,12 +30,12 @@ public class RoomCondition implements Serializable {
         this.sleepId = sleepId;
     }
 
-    public LocalDateTime getTimeStamp() {
-        return timeStamp;
+    public LocalDateTime getTimestamp() {
+        return timestamp;
     }
 
-    public void setTimeStamp(LocalDateTime timeStamp) {
-        this.timeStamp = timeStamp;
+    public void setTimestamp(LocalDateTime timestamp) {
+        this.timestamp = timestamp;
     }
 
     public double getTemperature() {
