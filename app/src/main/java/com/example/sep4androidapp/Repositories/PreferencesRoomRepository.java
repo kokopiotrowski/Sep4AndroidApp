@@ -32,7 +32,8 @@ public class PreferencesRoomRepository {
         preferencesDao = preferencesDatabase.preferencesDAO();
 
         allPreferences = preferencesDao.getAllPreferences();
-        preferences = preferencesDao.getAllPreferences().getValue().get(0);
+
+        //preferences = preferencesDao.getAllPreferences().getValue().get(0);
     }
 
     public static synchronized PreferencesRoomRepository getInstance(Application application) {
@@ -123,12 +124,13 @@ public class PreferencesRoomRepository {
     // GET API
     public void showPrefrences() {
         PreferenceApi preferenceApi = ServiceGenerator.getPreferenceApi();
-        Call< PreferencesResponse > call = preferenceApi.getPreferences(1);
+        Call< PreferencesResponse > call = preferenceApi.getPreferences();
         call.enqueue(new Callback< PreferencesResponse >() {
             @Override
             public void onResponse(Call< PreferencesResponse > call, Response< PreferencesResponse > response) {
                 Log.i(TAG, "Pouneh0");
                 if (response.code() == 200) {
+
                     Preferences P1 = new Preferences(
                             response.body().getDeviceId()
                             , response.body().isRegulationEnabled()
@@ -161,14 +163,11 @@ public class PreferencesRoomRepository {
         call.enqueue(new Callback< PreferencesResponse >() {
             @Override
             public void onResponse(Call< PreferencesResponse > call, Response< PreferencesResponse > response) {
-                Log.i(TAG, "successfully updated prefrences " + response.code());
-
+                Log.i(TAG, "Pouneh1 " + response.code());
             }
-
             @Override
             public void onFailure(Call< PreferencesResponse > call, Throwable t) {
-                Log.i(TAG, "was not enable to update prefrences");
-
+                Log.i(TAG, "Pouneh2");
             }
         });
 

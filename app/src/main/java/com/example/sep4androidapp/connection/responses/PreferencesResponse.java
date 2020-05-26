@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 public class PreferencesResponse implements Serializable {
     @SerializedName("deviceId")
-    private int deviceId;
+    private String deviceId;
     @SerializedName("regulationEnabled")
     private boolean regulationEnabled;
     @SerializedName("co2Max")
@@ -22,7 +22,7 @@ public class PreferencesResponse implements Serializable {
     @SerializedName("temperatureMax")
     private double temperatureMax;
 
-    public PreferencesResponse(int deviceId, boolean regulationEnabled, int co2Max, int humidityMax, int humidityMin, double temperatureMin, double temperatureMax) {
+    public PreferencesResponse(String deviceId, boolean regulationEnabled, int co2Max, int humidityMax, int humidityMin, double temperatureMin, double temperatureMax) {
         this.deviceId = deviceId;
         this.regulationEnabled = regulationEnabled;
         this.co2Max = co2Max;
@@ -32,11 +32,11 @@ public class PreferencesResponse implements Serializable {
         this.temperatureMax = temperatureMax;
     }
 
-    public int getDeviceId() {
+    public String getDeviceId() {
         return deviceId;
     }
 
-    public void setDeviceId(int deviceId) {
+    public void setDeviceId(String deviceId) {
         this.deviceId = deviceId;
     }
 

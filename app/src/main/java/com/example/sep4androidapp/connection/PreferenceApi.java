@@ -13,9 +13,11 @@ import retrofit2.http.Path;
 
 public interface PreferenceApi {
 
+    @GET("preferences/0004A30B002181EC")
+    public Call<PreferencesResponse> getPreferences();
 
-    @GET("preferences?devId={deviceId}")
-    Call<PreferencesResponse> getPreferences(@Path("deviceId") int deviceId);
+//    @GET("preferences?devId={deviceId}") "room-conditions/0004A30B002181EC"
+  //  Call<PreferencesResponse> getPreferences(@Path("deviceId") int deviceId);
 
 
     @Headers("Content-Type: application/json")

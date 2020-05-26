@@ -24,7 +24,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="120dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp">
@@ -35,17 +35,7 @@
             android:padding="8dp">
 
 
-            <TextView
-                android:id="@+id/tempMax"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/temperatureImage"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="127dp"
-                android:layout_marginTop="24dp"
-                android:text="Maximum: "
-                android:textSize="10dp"
-                android:textStyle="bold" />
+
 
             <ImageView
                 android:id="@+id/temperatureImage"
@@ -61,7 +51,7 @@
 
             <TextView
                 android:id="@+id/tempText"
-                android:layout_width="99dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/temperatureImage"
                 android:layout_alignParentTop="true"
@@ -72,67 +62,26 @@
 
             <EditText
                 android:id="@+id/minTempEditText"
-                android:layout_width="31dp"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/tempText"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="58dp"
-                android:layout_marginLeft="-30dp"
-                android:layout_marginTop="75dp"
-                android:layout_marginEnd="295dp"
-                android:hint="18"
-                android:inputType="number"
-                android:textSize="14dp" />
-
-            <Button
-                android:id="@+id/Tempbutton"
-                android:layout_width="81dp"
-                android:layout_height="35dp"
-                android:layout_marginLeft="225dp"
-                android:layout_marginTop="16dp"
-                android:text="Apply"
-                android:textSize="12dp" />
-
-            <TextView
-                android:id="@+id/suggestionTemp"
-                android:layout_width="wrap_content"
-                android:layout_height="29dp"
-                android:layout_below="@id/tempText"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginTop="65dp"
-                android:layout_marginEnd="212dp"
-                android:layout_marginBottom="13dp"
-                android:text="Suggested temperature is: "
-                android:textColor="#4CAF50"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tempMin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/temperatureImage"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="14dp"
-                android:layout_marginTop="22dp"
-                android:text="Minimum: "
-                android:textSize="10dp"
-                android:textStyle="bold" />
+                android:layout_marginStart="58dp"
+                android:layout_marginEnd="295dp"
+                android:layout_marginBottom="33dp"
+                android:inputType="number"
+                android:textSize="14dp" />
 
 
             <EditText
                 android:id="@+id/MaxTempEditText"
-                android:layout_width="wrap_content"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginStart="-2dp"
+                android:layout_marginStart="58dp"
                 android:layout_marginEnd="174dp"
                 android:layout_marginBottom="33dp"
-                android:layout_toEndOf="@+id/tempMax"
-                android:hint="24"
                 android:inputType="number"
                 android:textSize="14dp" />
 
@@ -143,7 +92,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="120dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp">
@@ -153,18 +102,6 @@
             android:layout_height="165dp"
             android:padding="8dp">
 
-
-            <TextView
-                android:id="@+id/humMax"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/humImage"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="127dp"
-                android:layout_marginTop="24dp"
-                android:text="Maximum: "
-                android:textSize="10dp"
-                android:textStyle="bold" />
 
             <ImageView
                 android:id="@+id/humImage"
@@ -180,7 +117,7 @@
 
             <TextView
                 android:id="@+id/humText"
-                android:layout_width="99dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/humImage"
                 android:layout_alignParentTop="true"
@@ -191,67 +128,26 @@
 
             <EditText
                 android:id="@+id/minHumEditText"
-                android:layout_width="31dp"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/humText"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
                 android:layout_marginStart="58dp"
-                android:layout_marginLeft="-30dp"
-                android:layout_marginTop="75dp"
                 android:layout_marginEnd="295dp"
-                android:hint="18"
+                android:layout_marginBottom="33dp"
                 android:inputType="number"
                 android:textSize="14dp" />
 
-            <Button
-                android:id="@+id/Humbutton"
-                android:layout_width="81dp"
-                android:layout_height="35dp"
-                android:layout_marginLeft="225dp"
-                android:layout_marginTop="16dp"
-                android:text="Apply"
-                android:textSize="12dp" />
-
-
-            <TextView
-                android:id="@+id/suggestionHum"
-                android:layout_width="wrap_content"
-                android:layout_height="23dp"
-                android:layout_below="@id/humText"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginTop="67dp"
-                android:layout_marginEnd="233dp"
-                android:layout_marginBottom="16dp"
-                android:text="Suggested Humidity is: "
-                android:textColor="#4CAF50"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/humMin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/humImage"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="19dp"
-                android:layout_marginTop="22dp"
-                android:text="Minimum: "
-                android:textSize="10dp"
-                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/MaxHumEditText"
-                android:layout_width="wrap_content"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginStart="-2dp"
+                android:layout_marginStart="58dp"
                 android:layout_marginEnd="174dp"
                 android:layout_marginBottom="33dp"
-                android:layout_toEndOf="@+id/humMax"
-                android:hint="24"
                 android:inputType="number"
                 android:textSize="14dp" />
 
@@ -261,7 +157,7 @@
     </androidx.cardview.widget.CardView>
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="120dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp">
@@ -272,17 +168,6 @@
             android:padding="8dp">
 
 
-            <TextView
-                android:id="@+id/co2Max"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/co2Image"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="127dp"
-                android:layout_marginTop="24dp"
-                android:text="Maximum: "
-                android:textSize="10dp"
-                android:textStyle="bold" />
 
             <ImageView
                 android:id="@+id/co2Image"
@@ -309,69 +194,29 @@
 
             <EditText
                 android:id="@+id/minCo2EditText"
-                android:layout_width="31dp"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/co2Text"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
                 android:layout_marginStart="58dp"
-                android:layout_marginLeft="-30dp"
-                android:layout_marginTop="75dp"
                 android:layout_marginEnd="295dp"
-                android:hint="18"
+                android:layout_marginBottom="33dp"
                 android:inputType="number"
                 android:textSize="14dp" />
 
-            <Button
-                android:id="@+id/co2button"
-                android:layout_width="81dp"
-                android:layout_height="35dp"
-                android:layout_marginLeft="225dp"
-                android:layout_marginTop="16dp"
-                android:text="Apply"
-                android:textSize="12dp" />
-
-
-            <TextView
-                android:id="@+id/suggestionCo2"
-                android:layout_width="wrap_content"
-                android:layout_height="31dp"
-                android:layout_below="@id/co2Text"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginTop="62dp"
-                android:layout_marginEnd="250dp"
-                android:layout_marginBottom="13dp"
-                android:text="Suggested CO2 is: "
-                android:textColor="#4CAF50"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/co2Min"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/co2Image"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="14dp"
-                android:layout_marginTop="22dp"
-                android:text="Minimum: "
-                android:textSize="10dp"
-                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/MaxCo2EditText"
-                android:layout_width="wrap_content"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginStart="-2dp"
+                android:layout_marginStart="58dp"
                 android:layout_marginEnd="174dp"
                 android:layout_marginBottom="33dp"
-                android:layout_toEndOf="@+id/co2Max"
-                android:hint="24"
                 android:inputType="number"
                 android:textSize="14dp" />
+
 
 
         </RelativeLayout>
@@ -394,23 +239,11 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.668"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.256" />
+            app:layout_constraintVertical_bias="0.1" />
 
-        <Button
-            android:id="@+id/buttonCancel"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:text="Cancel"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.321"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.256" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
