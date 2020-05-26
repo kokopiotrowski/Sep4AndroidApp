@@ -122,7 +122,7 @@ public class PreferencesRoomRepository {
 
 
     // GET API
-    public void showPrefrences() {
+    public void showPreferences() {
         PreferenceApi preferenceApi = ServiceGenerator.getPreferenceApi();
         Call< PreferencesResponse > call = preferenceApi.getPreferences();
         call.enqueue(new Callback< PreferencesResponse >() {

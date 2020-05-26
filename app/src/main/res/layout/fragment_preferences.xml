@@ -35,8 +35,6 @@
             android:padding="8dp">
 
 
-
-
             <ImageView
                 android:id="@+id/temperatureImage"
                 android:layout_width="60dp"
@@ -60,30 +58,56 @@
                 android:text="Temperature"
                 android:textStyle="bold" />
 
+
             <EditText
                 android:id="@+id/minTempEditText"
-                android:layout_width="40dp"
+                android:layout_width="38dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
                 android:layout_marginStart="58dp"
-                android:layout_marginEnd="295dp"
-                android:layout_marginBottom="33dp"
+                android:layout_marginEnd="288dp"
+                android:layout_marginBottom="47dp"
                 android:inputType="number"
                 android:textSize="14dp" />
-
 
             <EditText
                 android:id="@+id/MaxTempEditText"
-                android:layout_width="40dp"
+                android:layout_width="33dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
                 android:layout_marginStart="58dp"
-                android:layout_marginEnd="174dp"
-                android:layout_marginBottom="33dp"
+                android:layout_marginEnd="173dp"
+                android:layout_marginBottom="48dp"
                 android:inputType="number"
                 android:textSize="14dp" />
+
+            <TextView
+                android:id="@+id/TempMinTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="85dp"
+                android:text="Minimum:"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/TempMaxTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="125dp"
+                android:layout_marginTop="84dp"
+                android:layout_marginEnd="54dp"
+                android:paddingRight="2dp"
+                android:text="Maximum:"
+                android:textSize="10sp"
+                android:textStyle="bold" />
 
 
         </RelativeLayout>
@@ -126,30 +150,56 @@
                 android:text="Humidity"
                 android:textStyle="bold" />
 
+
             <EditText
                 android:id="@+id/minHumEditText"
-                android:layout_width="40dp"
+                android:layout_width="38dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
                 android:layout_marginStart="58dp"
-                android:layout_marginEnd="295dp"
-                android:layout_marginBottom="33dp"
+                android:layout_marginEnd="288dp"
+                android:layout_marginBottom="47dp"
                 android:inputType="number"
                 android:textSize="14dp" />
-
 
             <EditText
                 android:id="@+id/MaxHumEditText"
-                android:layout_width="40dp"
+                android:layout_width="33dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
                 android:layout_marginStart="58dp"
-                android:layout_marginEnd="174dp"
-                android:layout_marginBottom="33dp"
+                android:layout_marginEnd="173dp"
+                android:layout_marginBottom="48dp"
                 android:inputType="number"
                 android:textSize="14dp" />
+
+            <TextView
+                android:id="@+id/HumMinTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="85dp"
+                android:text="Minimum:"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/HemMaxTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="125dp"
+                android:layout_marginTop="84dp"
+                android:layout_marginEnd="54dp"
+                android:paddingRight="2dp"
+                android:text="Maximum:"
+                android:textSize="10sp"
+                android:textStyle="bold" />
 
 
         </RelativeLayout>
@@ -192,31 +242,56 @@
                 android:text="CO2"
                 android:textStyle="bold" />
 
+
             <EditText
                 android:id="@+id/minCo2EditText"
-                android:layout_width="40dp"
+                android:layout_width="38dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
                 android:layout_marginStart="58dp"
-                android:layout_marginEnd="295dp"
-                android:layout_marginBottom="33dp"
+                android:layout_marginEnd="288dp"
+                android:layout_marginBottom="47dp"
                 android:inputType="number"
                 android:textSize="14dp" />
-
 
             <EditText
                 android:id="@+id/MaxCo2EditText"
-                android:layout_width="40dp"
+                android:layout_width="33dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
                 android:layout_marginStart="58dp"
-                android:layout_marginEnd="174dp"
-                android:layout_marginBottom="33dp"
+                android:layout_marginEnd="173dp"
+                android:layout_marginBottom="48dp"
                 android:inputType="number"
                 android:textSize="14dp" />
 
+            <TextView
+                android:id="@+id/Co2MinTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="85dp"
+                android:text="Minimum:"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/Co2MaxTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="125dp"
+                android:layout_marginTop="84dp"
+                android:layout_marginEnd="54dp"
+                android:paddingRight="2dp"
+                android:text="Maximum:"
+                android:textSize="10sp"
+                android:textStyle="bold" />
 
 
         </RelativeLayout>
@@ -232,6 +307,19 @@
         android:padding="20dp">
 
         <Button
+            android:id="@+id/buttonYourPreferences"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:text="Your preferences"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.289"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.124" />
+
+        <Button
             android:id="@+id/buttonSave"
             android:layout_width="100dp"
             android:layout_height="50dp"
@@ -239,10 +327,10 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintHorizontal_bias="0.72"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.1" />
+            app:layout_constraintVertical_bias="0.12" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

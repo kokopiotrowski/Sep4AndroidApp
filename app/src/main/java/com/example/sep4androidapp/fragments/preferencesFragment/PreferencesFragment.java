@@ -27,7 +27,7 @@ public class PreferencesFragment extends Fragment {
 
     Spinner spinner;
     PrefrencesViewModel viewModel;
-    Button save;
+    Button save, yourPrefernces;
     EditText MintempEditText, MinhumEditText, Minco2EditText,
             MaxtempEditText, MaxhumEditText, Maxco2EditText;
 
@@ -40,14 +40,15 @@ public class PreferencesFragment extends Fragment {
         spinner.setAdapter(adapter);
 
         MintempEditText = view.findViewById(R.id.minTempEditText);
+        MaxtempEditText = view.findViewById(R.id.MaxTempEditText);
         MinhumEditText = view.findViewById(R.id.minHumEditText);
+        MaxhumEditText = view.findViewById(R.id.MaxHumEditText);
+        Minco2EditText = view.findViewById(R.id.minCo2EditText);
+        Maxco2EditText = view.findViewById(R.id.MaxCo2EditText);
         Minco2EditText = view.findViewById(R.id.minCo2EditText);
 
-        MaxtempEditText = view.findViewById(R.id.MaxTempEditText);
-        MaxhumEditText = view.findViewById(R.id.MaxHumEditText);
-        Maxco2EditText = view.findViewById(R.id.MaxCo2EditText);
-
         save = view.findViewById(R.id.buttonSave);
+        yourPrefernces = view.findViewById(R.id.buttonYourPreferences);
 
 
         viewModel = new ViewModelProvider(this).get(PrefrencesViewModel.class);
@@ -66,11 +67,17 @@ public class PreferencesFragment extends Fragment {
                                 true,
                                 Integer.parseInt(Maxco2EditText.getText().toString()),
                                 Integer.parseInt(Minco2EditText.getText().toString()),
-                                Integer.parseInt(MinhumEditText.getText().toString()),
                                 Integer.parseInt(MaxhumEditText.getText().toString()),
+                                Integer.parseInt(MinhumEditText.getText().toString()),
                                 Double.parseDouble(MintempEditText.getText().toString()),
                                 Double.parseDouble(MaxtempEditText.getText().toString()));                        ;
                 viewModel.updatePrefrences(preference);
+            }
+        });
+        yourPrefernces.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewModel.showPrefrences();
             }
         });
         return view;

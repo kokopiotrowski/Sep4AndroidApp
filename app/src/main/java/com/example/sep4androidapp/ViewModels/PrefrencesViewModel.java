@@ -43,7 +43,7 @@ import java.util.List;
     //---------------------------------------------------------------------------
 
      public void showPrefrences(){
-        preferencesRoomRepository.showPrefrences();
+        preferencesRoomRepository.showPreferences();
      }
 
      public void updatePrefrences(Preferences preference){
