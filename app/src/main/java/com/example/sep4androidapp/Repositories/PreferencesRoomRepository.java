@@ -128,7 +128,7 @@ public class PreferencesRoomRepository {
         call.enqueue(new Callback< PreferencesResponse >() {
             @Override
             public void onResponse(Call< PreferencesResponse > call, Response< PreferencesResponse > response) {
-                Log.i(TAG, "Pouneh0");
+
                 if (response.code() == 200) {
 
                     Preferences P1 = new Preferences(
@@ -141,6 +141,7 @@ public class PreferencesRoomRepository {
                             , response.body().getTemperatureMin()
                             , response.body().getTemperatureMax());
                     preferencesDao.insertPreference(P1);
+                    Log.i(TAG, "Pouneh0");
 
                 } else {
                     Log.i(TAG, "Pouneh2 " + response.code());

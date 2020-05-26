@@ -16,13 +16,13 @@ public interface PreferenceApi {
     @GET("preferences/0004A30B002181EC")
     public Call<PreferencesResponse> getPreferences();
 
-//    @GET("preferences?devId={deviceId}") "room-conditions/0004A30B002181EC"
+//    @GET("preferences?devId={deviceId}")
   //  Call<PreferencesResponse> getPreferences(@Path("deviceId") int deviceId);
 
 
     @Headers("Content-Type: application/json")
     @PUT("preferences")
-    Call updatePreferences(@Body Preferences preferences);
+    Call <PreferencesResponse>updatePreferences(@Body Preferences preferences);
 
 
 

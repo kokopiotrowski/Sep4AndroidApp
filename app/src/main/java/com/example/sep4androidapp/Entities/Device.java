@@ -5,19 +5,19 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
 public class Device implements Serializable {
-    private int deviceId;
+    private String deviceId;
     private String name;
 
-    public Device(int deviceId, String name) {
+    public Device(String deviceId, String name) {
         this.deviceId = deviceId;
         this.name = name;
     }
 
-    public int getDeviceId() {
+    public String getDeviceId() {
         return deviceId;
     }
 
-    public void setDeviceId(int deviceId) {
+    public void setDeviceId(String deviceId) {
         this.deviceId = deviceId;
     }
 

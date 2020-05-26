@@ -11,9 +11,9 @@ public class PreferencesResponse implements Serializable {
     private boolean regulationEnabled;
     @SerializedName("co2Max")
     private int co2Max;
-    @SerializedName("humidityMax")
+    @SerializedName("co2Min")
     private int co2Min;
-    @SerializedName("humidityMin")
+    @SerializedName("humidityMax")
     private int humidityMax;
     @SerializedName("humidityMin")
     private int humidityMin;
