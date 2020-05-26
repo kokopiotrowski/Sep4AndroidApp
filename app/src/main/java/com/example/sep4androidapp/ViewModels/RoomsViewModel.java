@@ -3,6 +3,7 @@ package com.example.sep4androidapp.ViewModels;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.sep4androidapp.Entities.Device;
 import com.example.sep4androidapp.Repositories.RoomsRepository;
 import com.example.sep4androidapp.connection.responses.DeviceResponse;
 
@@ -15,7 +16,7 @@ public class RoomsViewModel extends ViewModel {
         repository = RoomsRepository.getInstance();
     }
 
-    public LiveData<List<DeviceResponse>> getDevices()
+    public LiveData<List<Device>> getDevices()
     {
         return repository.getList();
     }

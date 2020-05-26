@@ -1,6 +1,7 @@
 package com.example.sep4androidapp.fragments.roomFragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,13 +9,17 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sep4androidapp.Adapter.RoomsAdapter;
+import com.example.sep4androidapp.Entities.Device;
 import com.example.sep4androidapp.R;
 import com.example.sep4androidapp.ViewModels.RoomsViewModel;
+
+import java.util.List;
 
 public class RoomsFragment extends Fragment {
     private RoomsAdapter adapter;
@@ -30,12 +35,13 @@ public class RoomsFragment extends Fragment {
         adapter = new RoomsAdapter();
         recyclerView.setAdapter(adapter);
 
-
-
         viewModel = new ViewModelProvider(this).get(RoomsViewModel.class);
-        viewModel.getDevices().observe(getViewLifecycleOwner(), deviceList -> {
-
-        });
+        //        viewModel.getDevices().observe(getViewLifecycleOwner(), new Observer<List<Device>>() {
+//            @Override
+//            public void onChanged(List<Device> devices) {
+//
+//            }
+//        }
         viewModel.updateRooms();
         return view;
     }

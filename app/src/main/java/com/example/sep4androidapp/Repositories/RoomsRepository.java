@@ -5,9 +5,9 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.sep4androidapp.Entities.Device;
 import com.example.sep4androidapp.connection.AccountDevicesApi;
 import com.example.sep4androidapp.connection.ServiceGenerator;
-import com.example.sep4androidapp.connection.responses.DeviceResponse;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ import retrofit2.Response;
 
 public class RoomsRepository {
     private static RoomsRepository instance;
-    private MutableLiveData<List<DeviceResponse>> list;
+    private MutableLiveData<List<Device>> list;
 
     private RoomsRepository()
     {
@@ -34,25 +34,25 @@ public class RoomsRepository {
 
     public void updateRooms(){
         AccountDevicesApi api = ServiceGenerator.getAccountDevicesApi();
-        Call<List<DeviceResponse>> call = api.getDevices();
-        call.enqueue(new Callback<List<DeviceResponse>>() {
+        Call<List<Device>> call = api.getDevices();
+        call.enqueue(new Callback<List<Device>>() {
             @Override
-            public void onResponse(Call<List<DeviceResponse>> call, Response<List<DeviceResponse>> response) {
+            public void onResponse(Call<List<Device>> call, Response<List<Device>> response) {
                 if(response.code() == 200)
                 {
-//                    list.setValue();
+                    list.setValue(response.body());
                 }
                 Log.i("RESPONSECODE", "Message: " + response.code());
             }
 
             @Override
-            public void onFailure(Call<List<DeviceResponse>> call, Throwable t) {
+            public void onFailure(Call<List<Device>> call, Throwable t) {
                 Log.i("Why", "" + t.getCause());
             }
         });
     }
 
-    public LiveData<List<DeviceResponse>> getList(){
+    public LiveData<List<Device>> getList(){
         return list;
     }
 

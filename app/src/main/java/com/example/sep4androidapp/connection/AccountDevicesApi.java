@@ -1,6 +1,6 @@
 package com.example.sep4androidapp.connection;
 
-import com.example.sep4androidapp.connection.responses.DeviceResponse;
+import com.example.sep4androidapp.Entities.Device;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import retrofit2.http.GET;
 public interface AccountDevicesApi {
 
     @GET("devices")
-    public Call<List<DeviceResponse>> getDevices();
+    public Call<List<Device>> getDevices();
 
 //    @GET("devices?userId={userId}")
 //    @FormUrlEncoded
