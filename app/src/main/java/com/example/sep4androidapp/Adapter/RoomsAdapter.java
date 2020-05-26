@@ -14,7 +14,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.sep4androidapp.Entities.Device;
 import com.example.sep4androidapp.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class RoomsAdapter extends ListAdapter<Device, RoomsAdapter.RoomHolder> {
+
+    private List<Device> devices = new ArrayList<>();
 
     public RoomsAdapter() {
         super(DIFF_CALLBACK);
@@ -23,7 +28,7 @@ public class RoomsAdapter extends ListAdapter<Device, RoomsAdapter.RoomHolder> {
     private static final DiffUtil.ItemCallback<Device> DIFF_CALLBACK = new DiffUtil.ItemCallback<Device>() {
         @Override
         public boolean areItemsTheSame(@NonNull Device oldItem, @NonNull Device newItem) {
-            return oldItem.getDeviceId() == newItem.getDeviceId();
+            return oldItem.getDeviceId().equals(newItem.getDeviceId());
         }
 
         @Override
@@ -44,20 +49,27 @@ public class RoomsAdapter extends ListAdapter<Device, RoomsAdapter.RoomHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull RoomHolder holder, int position) {
-        Device currentDevice = getItem(position);
+        Device currentDevice = devices.get(position);
         holder.roomLabelTextView.setText(currentDevice.getName());
         holder.roomsSwitch.setChecked(true);
     }
 
-    public Device getDeviceAt(int position) {
-        return getItem(position);
+    public void setDevices(List<Device> devices)
+    {
+        this.devices = devices;
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public int getItemCount() {
+        return devices.size();
     }
 
     class RoomHolder extends RecyclerView.ViewHolder {
         private TextView roomLabelTextView;
         private Switch roomsSwitch;
 
-        public RoomHolder(View itemView) {
+        RoomHolder(View itemView) {
             super(itemView);
             roomLabelTextView = itemView.findViewById(R.id.roomLabelTextView);
             roomsSwitch = itemView.findViewById(R.id.roomsSwitch);

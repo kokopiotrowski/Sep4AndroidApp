@@ -13,30 +13,33 @@
         android:background="#E1E1E1">
 
         <Switch
-            android:id="@+id/switch1"
-            android:layout_width="98dp"
-            android:layout_height="44dp"
-            android:layout_marginEnd="72dp"
-            android:text="off/on"
+            android:id="@+id/roomsSwitch2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/textView"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.578" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView"
-            android:layout_width="194dp"
-            android:layout_height="53dp"
-            android:layout_marginStart="36dp"
-            android:text="All devices"
+            android:id="@+id/roomLabelTextView2"
+            android:layout_width="330dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="20dp"
+            android:layout_toStartOf="@+id/roomsSwitch"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:text="Bedroom"
             android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.592" />
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
