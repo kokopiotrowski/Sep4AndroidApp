@@ -23,7 +23,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <RadioGroup
-            android:id="@+id/radioGroup"
+            android:id="@+id/lastReportRadioGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checkedButton="@id/reportLastWeekRadioButton"
@@ -33,28 +33,72 @@
             app:layout_constraintTop_toBottomOf="@+id/reportTextView">
 
             <RadioButton
+                android:id="@+id/lastSleepRadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="Last sleep" />
+
+            <RadioButton
                 android:id="@+id/reportLastWeekRadioButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:checked="false"
                 android:text="Last week" />
 
             <RadioButton
-                android:id="@+id/reportLastWeeekRadioButton"
+                android:id="@+id/reportLastMonthRadioButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:checked="false"
                 android:text="Last month" />
 
         </RadioGroup>
 
-        <TextView
-            android:id="@+id/reportPowerBiTextField"
+
+        <Button
+            android:id="@+id/rateYourSleepButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Power BI (future implementation)"
+            android:text="Rate your last sleep"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@+id/ratingBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <RatingBar
+            android:id="@+id/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ScrollView
+            android:layout_width="415dp"
+            android:layout_height="425dp"
+            app:layout_constraintBottom_toTopOf="@+id/rateYourSleepButton"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+            app:layout_constraintTop_toBottomOf="@+id/lastReportRadioGroup">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.github.mikephil.charting.charts.CandleStickChart
+                    android:id="@+id/temperatureChart"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"></com.github.mikephil.charting.charts.CandleStickChart>
+
+                <com.github.mikephil.charting.charts.HorizontalBarChart
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp">
+
+                </com.github.mikephil.charting.charts.HorizontalBarChart>
+            </LinearLayout>
+        </ScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
