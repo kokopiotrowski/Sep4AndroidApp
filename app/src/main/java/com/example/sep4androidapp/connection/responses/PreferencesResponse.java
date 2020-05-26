@@ -1,5 +1,6 @@
 package com.example.sep4androidapp.connection.responses;
 
+import com.example.sep4androidapp.Entities.Preferences;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -22,10 +23,11 @@ public class PreferencesResponse implements Serializable {
     @SerializedName("temperatureMax")
     private double temperatureMax;
 
-    public PreferencesResponse(String deviceId, boolean regulationEnabled, int co2Max, int humidityMax, int humidityMin, double temperatureMin, double temperatureMax) {
+    public PreferencesResponse(String deviceId, boolean regulationEnabled, int co2Max, int co2Min,int humidityMax, int humidityMin, double temperatureMin, double temperatureMax) {
         this.deviceId = deviceId;
         this.regulationEnabled = regulationEnabled;
         this.co2Max = co2Max;
+        this.co2Min = co2Min;
         this.humidityMax = humidityMax;
         this.humidityMin = humidityMin;
         this.temperatureMin = temperatureMin;
@@ -96,5 +98,8 @@ public class PreferencesResponse implements Serializable {
         this.temperatureMax = temperatureMax;
     }
 
+    public Preferences getPre(){
+        return new Preferences(deviceId, regulationEnabled, co2Max,co2Min, humidityMax, humidityMin, temperatureMin, temperatureMax);
 
+}
 }

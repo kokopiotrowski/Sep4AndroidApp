@@ -5,8 +5,10 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.example.sep4androidapp.Entities.Preferences;
+import com.example.sep4androidapp.Entities.RoomCondition;
 import com.example.sep4androidapp.LocalStorage.PreferencesDAO;
 import com.example.sep4androidapp.LocalStorage.PreferencesDatabase;
 import com.example.sep4androidapp.connection.PreferenceApi;
@@ -25,11 +27,12 @@ public class PreferencesRoomRepository {
     private PreferencesDAO preferencesDao;
     private static PreferencesRoomRepository instance;
     private LiveData< List< Preferences > > allPreferences;
-    private Preferences preferences;
+    private MutableLiveData< Preferences > pre;
 
     private PreferencesRoomRepository(Application application) {
         PreferencesDatabase preferencesDatabase = PreferencesDatabase.getInstance(application);
         preferencesDao = preferencesDatabase.preferencesDAO();
+        pre = new MutableLiveData<>();
 
         allPreferences = preferencesDao.getAllPreferences();
 
@@ -140,20 +143,25 @@ public class PreferencesRoomRepository {
                             , response.body().getHumidityMin()
                             , response.body().getTemperatureMin()
                             , response.body().getTemperatureMax());
-                    preferencesDao.insertPreference(P1);
-                    Log.i(TAG, "Pouneh0");
+                    //preferencesDao.insertPreference(P1);
+                    //pre.setValue(P1);
+                    //pre.postValue(P1);
+                    pre.setValue(response.body().getPre());
+
+                    Log.i(TAG, "Pouneh0" + response.code());
 
                 } else {
                     Log.i(TAG, "Pouneh2 " + response.code());
                 }
             }
-
             @Override
             public void onFailure(Call< PreferencesResponse > call, Throwable t) {
                 Log.e(TAG, "Pouneh3 ");
             }
         });
     }
+
+    public LiveData< Preferences > getPre() { return pre; }
 
 
     // PUT API
@@ -166,13 +174,16 @@ public class PreferencesRoomRepository {
             public void onResponse(Call< PreferencesResponse > call, Response< PreferencesResponse > response) {
                 Log.i(TAG, "Pouneh1 " + response.code());
             }
+
             @Override
             public void onFailure(Call< PreferencesResponse > call, Throwable t) {
                 Log.i(TAG, "Pouneh2");
             }
         });
+    }
 
-
+    public LiveData< Preferences > getPreFrence() {
+        return pre;
     }
 
 

@@ -11,7 +11,7 @@ import com.example.sep4androidapp.Repositories.PreferencesRoomRepository;
 
 import java.util.List;
 
- public class PrefrencesViewModel extends AndroidViewModel {
+public class PrefrencesViewModel extends AndroidViewModel {
 
     private PreferencesRoomRepository preferencesRoomRepository;
 
@@ -42,15 +42,19 @@ import java.util.List;
 
     //---------------------------------------------------------------------------
 
-     public void showPrefrences(){
+    public void showPrefrences() {
         preferencesRoomRepository.showPreferences();
-     }
+    }
 
-     public void updatePrefrences(Preferences preference){
+    public void updatePrefrences(Preferences preference) {
         preferencesRoomRepository.updatePrefrences(preference);
-     }
+    }
 
-     public LiveData< List< Preferences > > getPrefrences() {
-         return preferencesRoomRepository.getAllPreferences();
-     }
+    public LiveData< List< Preferences > > getPrefrences() {
+        return preferencesRoomRepository.getAllPreferences();
+    }
+
+    public LiveData<Preferences> getLastPreference(){
+        return preferencesRoomRepository.getPreFrence();
+    }
 }

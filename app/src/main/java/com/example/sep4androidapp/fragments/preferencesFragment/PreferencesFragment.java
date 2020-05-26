@@ -52,34 +52,51 @@ public class PreferencesFragment extends Fragment {
 
 
         viewModel = new ViewModelProvider(this).get(PrefrencesViewModel.class);
+        /*
+        viewModel.getLastPreference().observe(getViewLifecycleOwner(), pre -> {
+            MintempEditText.setText(String.format("%.0f", pre.getTemperatureMin()) + "°C");
+            MaxtempEditText.setText(String.format("%.0f", pre.getTemperatureMax()) + "°C");
+            MinhumEditText.setText(String.format("%.0f", pre.getHumidityMin()) + "°C");
+            MaxhumEditText.setText(String.format("%.0f", pre.getHumidityMax()) + "°C");
+            Minco2EditText.setText(String.format("%.0f", pre.getCo2Min()) + "ppm");
+            Maxco2EditText.setText(String.format("%.0f", pre.getCo2Max()) + "ppm");
+        });*/
+
+
         viewModel.getPrefrences().observe(getViewLifecycleOwner(), new Observer< List< Preferences > >() {
             @Override
             public void onChanged(List< Preferences > preferences) {
             }
         });
 
+
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 Preferences preference = new Preferences(
-                                "0004A30B002181EC",
-                                true,
-                                Integer.parseInt(Maxco2EditText.getText().toString()),
-                                Integer.parseInt(Minco2EditText.getText().toString()),
-                                Integer.parseInt(MaxhumEditText.getText().toString()),
-                                Integer.parseInt(MinhumEditText.getText().toString()),
-                                Double.parseDouble(MintempEditText.getText().toString()),
-                                Double.parseDouble(MaxtempEditText.getText().toString()));                        ;
+                        "0004A30B002181EC",
+                        true,
+                        Integer.parseInt(Maxco2EditText.getText().toString()),
+                        Integer.parseInt(Minco2EditText.getText().toString()),
+                        Integer.parseInt(MaxhumEditText.getText().toString()),
+                        Integer.parseInt(MinhumEditText.getText().toString()),
+                        Double.parseDouble(MintempEditText.getText().toString()),
+                        Double.parseDouble(MaxtempEditText.getText().toString()));
+
                 viewModel.updatePrefrences(preference);
             }
         });
+
         yourPrefernces.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 viewModel.showPrefrences();
             }
         });
+
+
         return view;
     }
 }

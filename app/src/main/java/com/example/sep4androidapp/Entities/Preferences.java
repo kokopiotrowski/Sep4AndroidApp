@@ -92,4 +92,6 @@ public class Preferences {
     public void setTemperatureMax(double temperatureMax) {
         this.temperatureMax = temperatureMax;
     }
+
+
 }
