@@ -1,6 +1,7 @@
 package com.example.sep4androidapp.fragments.sleepFragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,12 +22,15 @@ import com.example.sep4androidapp.Entities.SleepData;
 import com.example.sep4androidapp.R;
 import com.example.sep4androidapp.ViewModels.ReportViewModel;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 
 
@@ -74,17 +78,25 @@ public class SleepFragment extends Fragment {
                 for (int i = 0; i < size ; i++) {
                     float count = i;
                     RoomCondition temp = roomConditions.get(i);
+                    LocalDateTime time = temp.getTimestamp();
+                    /*ZoneId zoneId = ZoneId.systemDefault();
+                    long epoch = time.atZone(zoneId).toEpochSecond();
+                    Log.i("Seconds", String.valueOf(epoch));*/
+
                     float temperature = (float) temp.getTemperature();
                     float sound = (float) temp.getSound();
                     float humidity = (float) temp.getHumidity();
                     float co2 = (float) temp.getCo2();
 
-                    setTemperatureValues(temperature, count);
+                    setTemperatureValues(temperature, String.valueOf(time));
                     setSoundValues(sound, count);
                     setHumidityValues(humidity, count);
                     setCo2Values(co2, count);
 
+
+
                 }
+
             }
         });
 
@@ -136,8 +148,12 @@ public class SleepFragment extends Fragment {
 
 
                 data = new LineData(dataSets);
+                XAxis xAxis = mpLineChart.getXAxis();
+                xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
                 mpLineChart.setData(data);
                 mpLineChart.invalidate();
+
+                /*xAxis.setValueFormatter( new DayAxisValueFormatter);*/
             }
 
             @Override
@@ -150,9 +166,9 @@ public class SleepFragment extends Fragment {
         return view;
     }
 
-    private void setTemperatureValues(float temperature, float index) {
+    private void setTemperatureValues(float temperature, String date) {
 
-        temperatureValues.add(new Entry(index,temperature));
+        temperatureValues.add(new Entry(Float.parseFloat(date),temperature));
 
     }
     private void setSoundValues(float sound, float index) {
@@ -191,5 +207,7 @@ public class SleepFragment extends Fragment {
 
 
 }
+
+
 
 
