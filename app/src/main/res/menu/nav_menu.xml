@@ -12,7 +12,7 @@
     <item
         android:id="@+id/itemRooms"
         android:title="Room"
-        app:actionLayout="@layout/switch_item" ></item>
+        app:actionLayout="@layout/switch_item" />
     <item
         android:id="@+id/itemPreferences"
         android:title="Preferences" />
