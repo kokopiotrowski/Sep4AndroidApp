@@ -92,7 +92,7 @@ public class SleepFragment extends Fragment {
 
 
         String[] arraySpinner = new String[] {
-                " ","Temperature", "Sound", "Humidity", "Co2"
+                "","Temperature", "Sound", "Humidity", "Co2"
         };
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_spinner_item, arraySpinner);
@@ -105,7 +105,15 @@ public class SleepFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 Object item = parentView.getItemAtPosition(position).toString();
-                dataSets.clear();
+                if(item.equals("")){
+
+                    //do nothing
+                }
+                else
+                    {
+                    dataSets.clear();
+                    }
+
                 if(item.equals("Temperature")){
                     temperatureDataSet = new LineDataSet(getTemperatureValues(),"Temperature");
                     dataSets.add(temperatureDataSet);
@@ -138,9 +146,6 @@ public class SleepFragment extends Fragment {
             }
 
         });
-
-
-
 
         return view;
     }
