@@ -21,9 +21,9 @@ import com.example.sep4androidapp.ViewModels.StartStopViewModel;
 import com.example.sep4androidapp.connection.ApiCallBack;
 
 public class FragmentFirstPage extends Fragment {
-    Spinner spinner;
-    ReportViewModel viewModel;
-    TextView currentTemperature, currentHumidity, currentCO2, currentSound, timeStamp;
+    private Spinner spinner;
+    private ReportViewModel viewModel;
+    private TextView currentTemperature, currentHumidity, currentCO2, currentSound, timeStamp;
 
     @SuppressLint({"SetTextI18n", "DefaultLocale"})
     @Nullable
