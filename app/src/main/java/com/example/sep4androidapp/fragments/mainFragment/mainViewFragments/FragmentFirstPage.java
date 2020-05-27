@@ -2,8 +2,6 @@ package com.example.sep4androidapp.fragments.mainFragment.mainViewFragments;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,16 +18,12 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.sep4androidapp.R;
 import com.example.sep4androidapp.ViewModels.ReportViewModel;
 import com.example.sep4androidapp.ViewModels.StartStopViewModel;
-
-import java.util.Calendar;
-import java.util.Timer;
-import java.util.TimerTask;
+import com.example.sep4androidapp.connection.ApiCallBack;
 
 public class FragmentFirstPage extends Fragment {
-    Spinner spinner;
-    ReportViewModel viewModel;
-    StartStopViewModel temporaryViewModel; //Temporary, usage will be moved later
-    TextView currentTemperature, currentHumidity, currentCO2, currentSound, timeStamp;
+    private Spinner spinner;
+    private ReportViewModel viewModel;
+    private TextView currentTemperature, currentHumidity, currentCO2, currentSound, timeStamp;
 
     @SuppressLint({"SetTextI18n", "DefaultLocale"})
     @Nullable
@@ -60,23 +54,6 @@ public class FragmentFirstPage extends Fragment {
               currentSound.setText(String.format("%.0f", roomCondition.getSound()) + "dB");
                 timeStamp.setText("Updated: " + roomCondition.getTimestamp());
         });
-
-
-        Switch switchBtn = v.findViewById(R.id.switchBtn);
-        temporaryViewModel = new ViewModelProvider(this).get(StartStopViewModel.class);
-        temporaryViewModel.receiveStatus();
-        temporaryViewModel.getStatus().observe(getViewLifecycleOwner(), switchBtn::setChecked);
-
-        switchBtn.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if(switchBtn.isChecked())
-            {
-                temporaryViewModel.start();
-            }else{
-                temporaryViewModel.stop();
-            }
-        });
-
-        viewModel.update();
 
         return v;
     }

@@ -16,6 +16,7 @@ import com.example.sep4androidapp.Firebase.Firebase_Login;
 import com.example.sep4androidapp.ViewModels.StartStopViewModel;
 import com.example.sep4androidapp.fragments.mainFragment.MainFragment;
 import com.example.sep4androidapp.fragments.preferencesFragment.PreferencesFragment;
+import com.example.sep4androidapp.fragments.roomFragment.RoomsFragment;
 import com.example.sep4androidapp.fragments.sleepFragment.SleepFragment;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -57,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainFragment()).commit();
                 break;
             case R.id.itemRooms:
-//                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, ).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new RoomsFragment()).commit();
                 break;
             case R.id.itemPreferences:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PreferencesFragment()).commit();

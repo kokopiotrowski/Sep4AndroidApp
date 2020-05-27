@@ -1,11 +1,10 @@
 package com.example.sep4androidapp.ViewModels;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.sep4androidapp.Entities.StartStop;
 import com.example.sep4androidapp.Repositories.StartStopRepository;
+import com.example.sep4androidapp.connection.ApiCallBack;
 
 public class StartStopViewModel extends ViewModel {
     private StartStopRepository repository;
@@ -14,16 +13,16 @@ public class StartStopViewModel extends ViewModel {
         repository = StartStopRepository.getInstance();
     }
 
-    public void start() {
-        repository.start();
+    public void start(String deviceId) {
+        repository.start(deviceId);
     }
 
-    public void stop() {
-        repository.stop();
+    public void stop(String deviceId) {
+        repository.stop(deviceId);
     }
 
-    public void receiveStatus() {
-        repository.receiveStatus();
+    public void receiveStatus(String deviceId, ApiCallBack callBack) {
+        repository.receiveStatus(deviceId, callBack);
     }
 
     public MutableLiveData<Boolean> getStatus() {
