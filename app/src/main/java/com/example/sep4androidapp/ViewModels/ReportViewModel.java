@@ -25,6 +25,15 @@ public class ReportViewModel extends ViewModel {
     private ReportRepository repository;
     private Handler handler = new Handler();
     private Timer timer = new Timer();
+    private String deviceId;
+
+    public String getDeviceId() {
+        return deviceId;
+    }
+
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
+    }
 
     public ReportViewModel() {
 
@@ -36,20 +45,26 @@ public class ReportViewModel extends ViewModel {
        return repository.getRoomCondition();
     }
 
-    public void updateRoomCondition(){
-        repository.updateRoomCondition();
+    public void updateRoomCondition(String deviceId){
+        repository.updateRoomCondition(deviceId);
     }
 
-    public void update() {
+    public void update(String deviceId) {
+        timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
                 handler.post(()-> {
-                        Log.i("TAG", String.valueOf(Calendar.getInstance().getTime()));
-                        updateRoomCondition();
+                        Log.i("TIMINGG", String.valueOf(Calendar.getInstance().getTime()));
+                        updateRoomCondition(deviceId);
                 });
             }
         }, 0, 1000);
+    }
+
+    public void stopTimer()
+    {
+        timer.cancel();
     }
 
     public LiveData<SleepData> getSleepData() {
