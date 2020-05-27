@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -52,15 +53,28 @@ public class PreferencesFragment extends Fragment {
 
 
         viewModel = new ViewModelProvider(this).get(PrefrencesViewModel.class);
-        /*
-        viewModel.getLastPreference().observe(getViewLifecycleOwner(), pre -> {
-            MintempEditText.setText(String.format("%.0f", pre.getTemperatureMin()) + "°C");
-            MaxtempEditText.setText(String.format("%.0f", pre.getTemperatureMax()) + "°C");
-            MinhumEditText.setText(String.format("%.0f", pre.getHumidityMin()) + "°C");
-            MaxhumEditText.setText(String.format("%.0f", pre.getHumidityMax()) + "°C");
-            Minco2EditText.setText(String.format("%.0f", pre.getCo2Min()) + "ppm");
-            Maxco2EditText.setText(String.format("%.0f", pre.getCo2Max()) + "ppm");
-        });*/
+     /*   viewModel.getAllPreferences().observe(getViewLifecycleOwner(), new Observer< List< Preferences > >() {
+            @Override
+            public void onChanged(List< Preferences > preferences) {
+                Toast.makeText(getActivity(),"Onchanged",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+      */
+
+        viewModel.getLastPreference().observe(getViewLifecycleOwner(), new Observer< Preferences >() {
+            @Override
+            public void onChanged(Preferences preferences) {
+
+                MintempEditText.setText(String.format("%.1f", preferences.getTemperatureMin()));
+                MaxtempEditText.setText(String.format("%.1f", preferences.getTemperatureMax()));
+                MinhumEditText.setText(String.valueOf(preferences.getHumidityMin()));
+                MaxhumEditText.setText(String.valueOf( preferences.getHumidityMax())) ;
+                Minco2EditText.setText(String.valueOf( preferences.getCo2Min()) );
+                Maxco2EditText.setText(String.valueOf(preferences.getCo2Max()) );
+            }
+        });
+
 
 
 
@@ -90,18 +104,7 @@ public class PreferencesFragment extends Fragment {
             }
         });
 
-        viewModel.getLastPreference().observe(getViewLifecycleOwner(), new Observer< Preferences >() {
-            @Override
-            public void onChanged(Preferences preferences) {
 
-                MintempEditText.setText(String.format("%.1f", preferences.getTemperatureMin()));
-                MaxtempEditText.setText(String.format("%.1f", preferences.getTemperatureMax()));
-                MinhumEditText.setText(String.valueOf(preferences.getHumidityMin()));
-                MaxhumEditText.setText(String.valueOf( preferences.getHumidityMax())) ;
-                Minco2EditText.setText(String.valueOf( preferences.getCo2Min()) );
-                Maxco2EditText.setText(String.valueOf(preferences.getCo2Max()) );
-            }
-        });
         return view;
     }
 }

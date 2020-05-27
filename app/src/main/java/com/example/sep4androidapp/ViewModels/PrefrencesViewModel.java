@@ -7,17 +7,17 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.example.sep4androidapp.Entities.Preferences;
-import com.example.sep4androidapp.Repositories.PreferencesRoomRepository;
+import com.example.sep4androidapp.Repositories.PreferencesRepository;
 
 import java.util.List;
 
 public class PrefrencesViewModel extends AndroidViewModel {
 
-    private PreferencesRoomRepository preferencesRoomRepository;
+    private PreferencesRepository preferencesRoomRepository;
 
     public PrefrencesViewModel(@NonNull Application application) {
         super(application);
-        preferencesRoomRepository = PreferencesRoomRepository.getInstance(application);
+        preferencesRoomRepository = PreferencesRepository.getInstance(application);
     }
 
     public LiveData< List< Preferences > > getAllPreferences() {
