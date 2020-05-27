@@ -107,6 +107,7 @@ public class ReportFragment extends Fragment {
             temperatureData.addEntry(new Entry(data.get(i).getTimeStart().getDayOfYear(), (float) data.get(i).getAverageTemperature()), i);
         }
 
+
         temperatureChart.setData(temperatureData);
         co2Chart.setData(co2Data);
     }
