@@ -1,29 +1,39 @@
 package com.example.sep4androidapp.Entities;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "preferences_table")
 public class Preferences {
-    private int deviceId;
+
+    @PrimaryKey
+    @NonNull
+    private String deviceId;
     private boolean regulationEnabled;
     private int co2Max;
+    private int co2Min;
     private int humidityMax;
     private int humidityMin;
     private double temperatureMin;
     private double temperatureMax;
 
-    public Preferences(int deviceId, boolean regulationEnabled, int co2Max, int humidityMax, int humidityMin, double temperatureMin, double temperatureMax) {
+    public Preferences(String deviceId, boolean regulationEnabled, int co2Max,int co2Min, int humidityMax, int humidityMin, double temperatureMin, double temperatureMax) {
         this.deviceId = deviceId;
         this.regulationEnabled = regulationEnabled;
         this.co2Max = co2Max;
+        this.co2Min = co2Min;
         this.humidityMax = humidityMax;
         this.humidityMin = humidityMin;
         this.temperatureMin = temperatureMin;
         this.temperatureMax = temperatureMax;
     }
 
-    public int getDeviceId() {
+    public String getDeviceId() {
         return deviceId;
     }
 
-    public void setDeviceId(int deviceId) {
+    public void setDeviceId(String deviceId) {
         this.deviceId = deviceId;
     }
 
@@ -41,6 +51,14 @@ public class Preferences {
 
     public void setCo2Max(int co2Max) {
         this.co2Max = co2Max;
+    }
+
+    public int getCo2Min() {
+        return co2Min;
+    }
+
+    public void setCo2Min(int co2Min) {
+        this.co2Min = co2Min;
     }
 
     public int getHumidityMax() {
@@ -74,4 +92,6 @@ public class Preferences {
     public void setTemperatureMax(double temperatureMax) {
         this.temperatureMax = temperatureMax;
     }
+
+
 }
