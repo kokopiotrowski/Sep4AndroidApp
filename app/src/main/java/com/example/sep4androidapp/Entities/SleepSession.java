@@ -7,15 +7,25 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class SleepSession implements Serializable {
+    @SerializedName("sleepId")
     private int sleepId;
+    @SerializedName("deviceId")
     private String deviceId;
+    @SerializedName("timeStart")
     private LocalDateTime timeStart;
+    @SerializedName("timeFinish")
     private LocalDateTime timeFinish;
+    @SerializedName("rating")
     private int rating;
+    @SerializedName("averageCo2")
     private double averageCo2;
+    @SerializedName("averageHumidity")
     private double averageHumidity;
+    @SerializedName("averageSound")
     private double averageSound;
+    @SerializedName("averageTemperature")
     private double averageTemperature;
+
 
 
     public SleepSession(int sleepId, String deviceId, LocalDateTime timeStart, LocalDateTime timeFinish, int rating, double averageCo2, double averageHumidity, double averageSound, double averageTemperature) {
