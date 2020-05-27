@@ -17,7 +17,9 @@ import com.example.sep4androidapp.connection.responses.RoomConditionResponse;
 import com.example.sep4androidapp.connection.responses.SleepDataResponse;
 import com.example.sep4androidapp.connection.responses.SleepSessionResponse;
 
+import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -29,6 +31,7 @@ public class ReportRepository {
     private static ReportRepository instance;
     private MutableLiveData<RoomCondition> roomCondition;
     private MutableLiveData<SleepData> sleepData;
+    private MutableLiveData<List<SleepSession>> sleepSessions;
 
     private ReportRepository (){
         roomCondition = new MutableLiveData<>();
@@ -102,4 +105,31 @@ public class ReportRepository {
     public LiveData<SleepData> getSleepData() {
         return sleepData;
     }
+
+    public void updateSleepSessions(int deviceId, LocalDate start, LocalDate end){
+        ReportApi reportApi = ServiceGenerator.getReportApi();
+        Call<List<SleepSession>> call = reportApi.getReport(deviceId, start.toString(), end.toString());
+        call.enqueue(new Callback<List<SleepSession>>() {
+
+            @Override
+            public void onResponse(Call<List<SleepSession>> call, Response<List<SleepSession>> response) {
+                if (response.code() == 200){
+                    sleepSessions.setValue(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<SleepSession>> call, Throwable t) {
+                Log.i("Retrofit", "Something went wrong in update sleep data :(");
+                Log.i("Why", "" + t.getCause());
+            }
+
+        });
+    }
+
+    public LiveData<List<SleepSession>> getSleepSessions()
+    {
+        return sleepSessions;
+    }
+
 }

@@ -16,6 +16,7 @@ import com.example.sep4androidapp.Firebase.Firebase_Login;
 import com.example.sep4androidapp.ViewModels.StartStopViewModel;
 import com.example.sep4androidapp.fragments.mainFragment.MainFragment;
 import com.example.sep4androidapp.fragments.preferencesFragment.PreferencesFragment;
+import com.example.sep4androidapp.fragments.reportFragment.ReportFragment;
 import com.example.sep4androidapp.fragments.roomFragment.RoomsFragment;
 import com.example.sep4androidapp.fragments.sleepFragment.SleepFragment;
 import com.firebase.ui.auth.AuthUI;
@@ -27,7 +28,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ActionBarDrawerToggle toggle;
     NavigationView navigationView;
     DrawerLayout drawerLayout;
-    StartStopViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +56,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (menuItem.getItemId()) {
             case R.id.itemMain:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainFragment()).commit();
+                break;
+            case R.id.itemReports:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, ReportFragment.newInstance()).commit();
                 break;
             case R.id.itemRooms:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new RoomsFragment()).commit();
@@ -87,7 +90,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             }
                         }
                 );
-//                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, ).commit();
                 break;
 
         }

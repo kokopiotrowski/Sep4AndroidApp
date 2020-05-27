@@ -7,6 +7,9 @@
         android:id="@+id/itemMain"
         android:title="Main" />
     <item
+        android:id="@+id/itemReports"
+        android:title="Reports" />
+    <item
         android:id="@+id/itemRooms"
         android:title="Room"
         app:actionLayout="@layout/switch_item" />
