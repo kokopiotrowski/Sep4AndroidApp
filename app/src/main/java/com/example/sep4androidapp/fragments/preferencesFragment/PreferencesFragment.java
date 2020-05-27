@@ -63,11 +63,6 @@ public class PreferencesFragment extends Fragment {
         });*/
 
 
-        viewModel.getPrefrences().observe(getViewLifecycleOwner(), new Observer< List< Preferences > >() {
-            @Override
-            public void onChanged(List< Preferences > preferences) {
-            }
-        });
 
 
         save.setOnClickListener(new View.OnClickListener() {
@@ -91,12 +86,22 @@ public class PreferencesFragment extends Fragment {
         yourPrefernces.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 viewModel.showPrefrences();
             }
         });
 
+        viewModel.getLastPreference().observe(getViewLifecycleOwner(), new Observer< Preferences >() {
+            @Override
+            public void onChanged(Preferences preferences) {
 
+                MintempEditText.setText(String.format("%.1f", preferences.getTemperatureMin()));
+                MaxtempEditText.setText(String.format("%.1f", preferences.getTemperatureMax()));
+                MinhumEditText.setText(String.valueOf(preferences.getHumidityMin()));
+                MaxhumEditText.setText(String.valueOf( preferences.getHumidityMax())) ;
+                Minco2EditText.setText(String.valueOf( preferences.getCo2Min()) );
+                Maxco2EditText.setText(String.valueOf(preferences.getCo2Max()) );
+            }
+        });
         return view;
     }
 }
