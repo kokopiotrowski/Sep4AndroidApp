@@ -6,11 +6,12 @@ import com.example.sep4androidapp.Entities.SleepSession;
 import com.google.gson.annotations.SerializedName;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SleepDataResponse {
     @SerializedName("roomConditions")
-    private List<RoomCondition> roomConditions;
+    private ArrayList<RoomCondition> roomConditions;
     private int sleepId;
     private String deviceId;
     private LocalDateTime timeStart;
