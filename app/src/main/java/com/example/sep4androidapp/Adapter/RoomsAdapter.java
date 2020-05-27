@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.sep4androidapp.Entities.Device;
 import com.example.sep4androidapp.R;
 import com.example.sep4androidapp.ViewModels.StartStopViewModel;
+import com.example.sep4androidapp.connection.ApiCallBack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,17 +59,17 @@ public class RoomsAdapter extends ListAdapter<Device, RoomsAdapter.RoomHolder> {
         Device currentDevice = devices.get(position);
         holder.roomLabelTextView.setText(currentDevice.getName());
 
-        startStopViewModel.receiveStatus(devices.get(position).getDeviceId());
+        startStopViewModel.receiveStatus(devices.get(position).getDeviceId(), success -> {
+           Log.i("StartStopRepo",  "Result is: " + success);
+           holder.roomsSwitch.setChecked(success);
+        });
 
-        holder.roomsSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked)
-                {
-                    startStopViewModel.start(devices.get(position).getDeviceId());
-                }else{
-                    startStopViewModel.stop(devices.get(position).getDeviceId());
-                }
+        holder.roomsSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if(isChecked)
+            {
+                startStopViewModel.start(devices.get(position).getDeviceId());
+            }else{
+                startStopViewModel.stop(devices.get(position).getDeviceId());
             }
         });
     }

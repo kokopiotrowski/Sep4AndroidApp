@@ -2,8 +2,6 @@ package com.example.sep4androidapp.fragments.mainFragment.mainViewFragments;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,15 +18,11 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.sep4androidapp.R;
 import com.example.sep4androidapp.ViewModels.ReportViewModel;
 import com.example.sep4androidapp.ViewModels.StartStopViewModel;
-
-import java.util.Calendar;
-import java.util.Timer;
-import java.util.TimerTask;
+import com.example.sep4androidapp.connection.ApiCallBack;
 
 public class FragmentFirstPage extends Fragment {
     Spinner spinner;
     ReportViewModel viewModel;
-    StartStopViewModel temporaryViewModel; //Temporary, usage will be moved later
     TextView currentTemperature, currentHumidity, currentCO2, currentSound, timeStamp;
 
     @SuppressLint({"SetTextI18n", "DefaultLocale"})
@@ -59,27 +53,6 @@ public class FragmentFirstPage extends Fragment {
               currentHumidity.setText(String.format("%.0f", roomCondition.getHumidity()) + "%");
               currentSound.setText(String.format("%.0f", roomCondition.getSound()) + "dB");
                 timeStamp.setText("Updated: " + roomCondition.getTimestamp());
-        });
-
-        Switch switchBtn = v.findViewById(R.id.switchBtn);
-        temporaryViewModel = new ViewModelProvider(this).get(StartStopViewModel.class);
-        temporaryViewModel.receiveStatus("0004A30B002181EC");
-        temporaryViewModel.getStatus().observe(getViewLifecycleOwner(), switchBtn::setChecked);
-
-        if(switchBtn.isChecked())
-        {
-            viewModel.update();
-        }
-
-        switchBtn.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if(switchBtn.isChecked())
-            {
-                temporaryViewModel.start("0004A30B002181EC");
-                viewModel.update();
-            }else{
-                temporaryViewModel.stop("0004A30B002181EC");
-                viewModel.stopTimer();
-            }
         });
 
         return v;
