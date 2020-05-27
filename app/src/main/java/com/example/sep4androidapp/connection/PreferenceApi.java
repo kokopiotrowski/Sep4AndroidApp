@@ -2,6 +2,7 @@ package com.example.sep4androidapp.connection;
 
 import com.example.sep4androidapp.Entities.Preferences;
 import com.example.sep4androidapp.connection.responses.PreferencesResponse;
+import com.example.sep4androidapp.connection.responses.RoomConditionResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -12,14 +13,18 @@ import retrofit2.http.Path;
 
 public interface PreferenceApi {
 
+    @GET("preferences/0004A30B002181EC")
+    public Call<PreferencesResponse> getPreferences();
 
-    @GET("preferences?devId={deviceId}")
-    Call<PreferencesResponse> getPreferences(@Path("deviceId") int deviceId);
+//    @GET("preferences?devId={deviceId}")
+  //  Call<PreferencesResponse> getPreferences(@Path("deviceId") int deviceId);
 
 
     @Headers("Content-Type: application/json")
     @PUT("preferences")
-    Call updatePreferences(@Body Preferences preferences);
+    Call <PreferencesResponse>updatePreferences(@Body Preferences preferences);
+
+
 
 
 }
