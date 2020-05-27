@@ -18,18 +18,14 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sep4androidapp.R;
-import com.example.sep4androidapp.ViewModels.ReportViewModel;
-import com.example.sep4androidapp.ViewModels.RoomsViewModel;
-import com.example.sep4androidapp.ViewModels.StartStopViewModel;
+import com.example.sep4androidapp.ViewModels.FragmentFirstPageViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class FragmentFirstPage extends Fragment {
     private Spinner spinner;
-    private ReportViewModel reportViewModel;
-    private RoomsViewModel roomViewModel;
-    private StartStopViewModel startStopViewModel;
+    private FragmentFirstPageViewModel viewModel;
     private TextView currentTemperature, currentHumidity, currentCO2, currentSound, timeStamp;
     private Switch deviceSwitch;
 
@@ -50,12 +46,10 @@ public class FragmentFirstPage extends Fragment {
         currentCO2 = v.findViewById(R.id.currentCo2);
         timeStamp = v.findViewById(R.id.timeStamp);
 
-        roomViewModel = new ViewModelProvider(this).get(RoomsViewModel.class);
-        reportViewModel = new ViewModelProvider(this).get(ReportViewModel.class);
-        startStopViewModel = new ViewModelProvider(this).get(StartStopViewModel.class);
+        viewModel = new ViewModelProvider(this).get(FragmentFirstPageViewModel.class);
 
-        roomViewModel.updateRooms();
-        roomViewModel.getDevices().observe(getViewLifecycleOwner(), devices -> {
+        viewModel.updateRooms();
+        viewModel.getDevices().observe(getViewLifecycleOwner(), devices -> {
             nameList.clear();
             idList.clear();
             for (int i = 0; i < devices.size(); i++) {
@@ -71,8 +65,8 @@ public class FragmentFirstPage extends Fragment {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                reportViewModel.setDeviceId(idList.get(position));
-                startStopViewModel.receiveStatus(reportViewModel.getDeviceId(), success -> {
+                viewModel.setDeviceId(idList.get(position));
+                viewModel.receiveStatus(viewModel.getDeviceId(), success -> {
                     Log.i("StartStopRepo",  "Result is: " + success);
                     deviceSwitch.setChecked(success);
                 });
@@ -82,7 +76,7 @@ public class FragmentFirstPage extends Fragment {
             public void onNothingSelected(AdapterView<?> parent) {}
         });
 
-        reportViewModel.getRoomCondition().observe(getViewLifecycleOwner(), roomCondition -> {
+        viewModel.getRoomCondition().observe(getViewLifecycleOwner(), roomCondition -> {
             currentTemperature.setText(String.format("%.0f", roomCondition.getTemperature()) + " °C");
             currentCO2.setText(String.format("%.0f", roomCondition.getCo2()) + " ppm");
             currentHumidity.setText(String.format("%.0f", roomCondition.getHumidity()) + "%");
@@ -91,27 +85,16 @@ public class FragmentFirstPage extends Fragment {
         });
 
         deviceSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            switchCheck(isChecked);
+            viewModel.switchCheck(isChecked);
         });
 
         return v;
     }
 
-    private void switchCheck(boolean isChecked)
-    {
-        if(isChecked)
-        {
-            startStopViewModel.start(reportViewModel.getDeviceId());
-            reportViewModel.update(reportViewModel.getDeviceId());
-        }else{
-            startStopViewModel.stop(reportViewModel.getDeviceId());
-            reportViewModel.stopTimer();
-        }
-    }
 
     @Override
     public void onPause() {
         super.onPause();
-        reportViewModel.stopTimer();
+        viewModel.stopTimer();
     }
 }
