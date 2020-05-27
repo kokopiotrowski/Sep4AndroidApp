@@ -49,7 +49,7 @@ public class PreferencesFragment extends Fragment {
         Minco2EditText = view.findViewById(R.id.minCo2EditText);
 
         save = view.findViewById(R.id.buttonSave);
-        yourPrefernces = view.findViewById(R.id.buttonYourPreferences);
+        yourPrefernces = view.findViewById(R.id.buttonView);
 
 
         viewModel = new ViewModelProvider(this).get(PrefrencesViewModel.class);
