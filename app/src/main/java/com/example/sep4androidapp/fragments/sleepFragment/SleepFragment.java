@@ -78,7 +78,7 @@ public class SleepFragment extends Fragment {
                 for (int i = 0; i < size ; i++) {
                     float count = i;
                     RoomCondition temp = roomConditions.get(i);
-                    LocalDateTime time = temp.getTimestamp();
+                    /*LocalDateTime time = temp.getTimestamp();*/
                     /*ZoneId zoneId = ZoneId.systemDefault();
                     long epoch = time.atZone(zoneId).toEpochSecond();
                     Log.i("Seconds", String.valueOf(epoch));*/
@@ -88,7 +88,7 @@ public class SleepFragment extends Fragment {
                     float humidity = (float) temp.getHumidity();
                     float co2 = (float) temp.getCo2();
 
-                    setTemperatureValues(temperature, String.valueOf(time));
+                    setTemperatureValues(temperature, count);
                     setSoundValues(sound, count);
                     setHumidityValues(humidity, count);
                     setCo2Values(co2, count);
@@ -166,9 +166,9 @@ public class SleepFragment extends Fragment {
         return view;
     }
 
-    private void setTemperatureValues(float temperature, String date) {
+    private void setTemperatureValues(float temperature, float index) {
 
-        temperatureValues.add(new Entry(Float.parseFloat(date),temperature));
+        temperatureValues.add(new Entry(index,temperature));
 
     }
     private void setSoundValues(float sound, float index) {
