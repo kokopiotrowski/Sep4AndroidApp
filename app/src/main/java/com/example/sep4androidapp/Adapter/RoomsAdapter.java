@@ -25,7 +25,7 @@ import java.util.List;
 public class RoomsAdapter extends ListAdapter<Device, RoomsAdapter.RoomHolder> {
 
     private List<Device> devices = new ArrayList<>();
-    StartStopViewModel startStopViewModel = new StartStopViewModel();
+    private StartStopViewModel startStopViewModel = new StartStopViewModel();
 
     public RoomsAdapter() {
         super(DIFF_CALLBACK);
@@ -71,11 +71,6 @@ public class RoomsAdapter extends ListAdapter<Device, RoomsAdapter.RoomHolder> {
                 }
             }
         });
-
-
-
-
-
     }
 
     public void setDevices(List<Device> devices)

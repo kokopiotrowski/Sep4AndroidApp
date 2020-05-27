@@ -25,7 +25,6 @@ public class StartStopViewModel extends ViewModel {
     }
 
     public void receiveStatus(String deviceId) {
-        Log.i("TAG", "Printprint");
         repository.receiveStatus(deviceId);
     }
 

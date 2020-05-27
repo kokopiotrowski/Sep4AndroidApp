@@ -18,14 +18,10 @@ import static android.content.ContentValues.TAG;
 
 public class StartStopRepository {
     private static StartStopRepository instance;
-    private MutableLiveData<StartStop> startStop;
-    private SleepTrackingApi sleepTrackingApi = ServiceGenerator.getSleepTrackingApi();
     private MutableLiveData<Boolean> status;
-
 
     private StartStopRepository() {
         status = new MutableLiveData<>();
-        startStop = new MutableLiveData<>();
     }
 
     public static synchronized StartStopRepository getInstance() {
@@ -43,17 +39,12 @@ public class StartStopRepository {
         call.enqueue(new Callback<StartStopResponse>() {
             @Override
             public void onResponse(Call<StartStopResponse> call, Response<StartStopResponse> response) {
-                if (response.code() == 200) {
-                    Log.i(TAG, "Zolly1 " + response.code());
-
-                } else {
-                    Log.i(TAG, "Zolly2 " + response.code());
-                }
+                Log.i("StartStopRepo", "Start response: " + response.code());
             }
 
             @Override
             public void onFailure(Call<StartStopResponse> call, Throwable t) {
-                Log.e(TAG, "Zolly3 ");
+                Log.i("StartStopRepo", "Start failed: " + t.getMessage());
             }
         });
     }
@@ -64,17 +55,12 @@ public class StartStopRepository {
         call.enqueue(new Callback<StartStopResponse>() {
             @Override
             public void onResponse(Call<StartStopResponse> call, Response<StartStopResponse> response) {
-                if (response.code() == 200) {
-                    Log.i(TAG, "Zolly1 " + response.code());
-
-                } else {
-                    Log.i(TAG, "Zolly2 " + response.code());
-                }
+                Log.i("StartStopRepo", "Stop response: " + response.code());
             }
 
             @Override
             public void onFailure(Call<StartStopResponse> call, Throwable t) {
-                Log.e(TAG, "Zolly3 ");
+                Log.i("StartStopRepo", "Stop failed: " + t.getMessage());
             }
         });
     }
@@ -86,30 +72,22 @@ public class StartStopRepository {
         call.enqueue(new Callback<Boolean>() {
             @Override
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                Log.i("TAG", "zollyresponserepo: " + response.code() + " " +  response.body());
-                if(response.code() == 200)
-                {
-                    Log.i("TAG", "kkStatus received: " + response.body());
+                Log.i("StartStopRepo", "Receiving response: " + response.code() + " " + response.body());
+                if (response.code() == 200) {
                     status.setValue(response.body());
-                    Log.i("TAG", "kkStatus placed: " + status);
                 }
             }
 
             @Override
             public void onFailure(Call<Boolean> call, Throwable t) {
-                Log.i("TAG", "response: " + t.getMessage());
+                Log.i("StartStopRepo", "Receiving failed: " + t.getMessage());
             }
         });
 
     }
 
-    public LiveData<StartStop> getStartStop() {
-        return startStop;
-    }
 
-    public MutableLiveData<Boolean> getStatus()
-    {
-        Log.i("TAG", "kkStatus to return: " + status);
+    public MutableLiveData<Boolean> getStatus() {
         return status;
     }
 
