@@ -43,14 +43,14 @@
                 android:id="@+id/reportLastWeekRadioButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:checked="false"
+
                 android:text="Last week" />
 
             <RadioButton
                 android:id="@+id/reportLastMonthRadioButton"
-                android:layout_width="wrap_content"
+                android:layout_width="119dp"
                 android:layout_height="wrap_content"
-                android:checked="false"
+
                 android:text="Last month" />
 
         </RadioGroup>
@@ -87,12 +87,13 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <com.github.mikephil.charting.charts.CandleStickChart
+                <com.github.mikephil.charting.charts.CombinedChart
                     android:id="@+id/temperatureChart"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"></com.github.mikephil.charting.charts.CandleStickChart>
+                    android:layout_height="200dp"></com.github.mikephil.charting.charts.CombinedChart>
 
                 <com.github.mikephil.charting.charts.HorizontalBarChart
+                    android:id="@+id/co2Chart"
                     android:layout_width="match_parent"
                     android:layout_height="200dp">
 

@@ -16,6 +16,7 @@ import com.example.sep4androidapp.Firebase.Firebase_Login;
 import com.example.sep4androidapp.ViewModels.StartStopViewModel;
 import com.example.sep4androidapp.fragments.mainFragment.MainFragment;
 import com.example.sep4androidapp.fragments.preferencesFragment.PreferencesFragment;
+import com.example.sep4androidapp.fragments.reportFragment.ReportFragment;
 import com.example.sep4androidapp.fragments.sleepFragment.SleepFragment;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -27,6 +28,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     NavigationView navigationView;
     DrawerLayout drawerLayout;
     StartStopViewModel viewModel;
+
+    ReportFragment reportFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +47,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
+        reportFragment = new ReportFragment();
+
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainFragment()).commit();
             navigationView.setCheckedItem(R.id.itemMain);
@@ -56,6 +61,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.itemMain:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainFragment()).commit();
                 break;
+            case R.id.itemReports:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, ReportFragment.newInstance()).commit();
             case R.id.itemRooms:
 //                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, ).commit();
                 break;

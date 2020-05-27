@@ -9,9 +9,14 @@ import androidx.room.Room;
 
 import com.example.sep4androidapp.Entities.RoomCondition;
 import com.example.sep4androidapp.Entities.SleepData;
+import com.example.sep4androidapp.Entities.SleepSession;
 import com.example.sep4androidapp.Repositories.ReportRepository;
+import com.example.sep4androidapp.connection.responses.SleepSessionResponse;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -53,5 +58,14 @@ public class ReportViewModel extends ViewModel {
 
     public void updateSleepData() {
         repository.updateSleepData();
+    }
+
+    public LiveData<List<SleepSession>> getSleepSessions(){
+        return repository.getSleepSessions();
+    }
+
+    public void updateSleepSessions(int deviceId, LocalDate start, LocalDate end)
+    {
+        repository.updateSleepSessions(deviceId, start, end);
     }
 }

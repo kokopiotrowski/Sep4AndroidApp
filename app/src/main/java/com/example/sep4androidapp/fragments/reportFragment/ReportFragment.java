@@ -16,9 +16,19 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RatingBar;
 
+import com.example.sep4androidapp.Entities.SleepSession;
 import com.example.sep4androidapp.R;
 import com.example.sep4androidapp.ViewModels.ReportViewModel;
+import com.github.mikephil.charting.charts.CandleStickChart;
+import com.github.mikephil.charting.charts.CombinedChart;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.CombinedData;
+import com.github.mikephil.charting.data.Entry;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
 
 public class ReportFragment extends Fragment {
 
@@ -26,10 +36,14 @@ public class ReportFragment extends Fragment {
     View v;
     RadioGroup radioGroup;
     RadioButton yesterday, lastWeek, lastMonth;
-    HorizontalBarChart reportChart;
+    CombinedChart temperatureChart;
+    HorizontalBarChart co2Chart;
 
     RatingBar ratingBar;
     Button rateSleepButton;
+
+    CombinedData temperatureData;
+    BarData co2Data;
 
 
     public static ReportFragment newInstance() {
@@ -47,29 +61,28 @@ public class ReportFragment extends Fragment {
         yesterday = v.findViewById(R.id.lastSleepRadioButton);
         lastWeek = v.findViewById(R.id.reportLastWeekRadioButton);
         lastMonth = v.findViewById(R.id.reportLastMonthRadioButton);
-        HorizontalBarChart reportChart = v.findViewById(R.id.temperatureChart);
+
+        temperatureChart = v.findViewById(R.id.temperatureChart);
+        co2Chart = v.findViewById(R.id.co2Chart);
 
         ratingBar = v.findViewById(R.id.ratingBar);
         rateSleepButton = v.findViewById(R.id.rateYourSleepButton);
 
 
-
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                if(0 != i){
-                    ratingBar.setVisibility(View.INVISIBLE);
-                    rateSleepButton.setVisibility(View.INVISIBLE);
-                }
-                else{
-                    ratingBar.setVisibility(View.VISIBLE);
-                    rateSleepButton.setVisibility(View.VISIBLE);;
-                }
+        radioGroup.setOnCheckedChangeListener((radioGroup, i) -> {
+            if(0 != radioGroup.getCheckedRadioButtonId()){
+                ratingBar.setVisibility(View.INVISIBLE);
+                rateSleepButton.setVisibility(View.INVISIBLE);
+            }
+            else
+            {
+                ratingBar.setVisibility(View.VISIBLE);
+                rateSleepButton.setVisibility(View.VISIBLE);;
             }
         });
 
 
-
+        //updateCharts(LocalDate.now().minusDays(1),LocalDate.now());
         return v;
     }
 
@@ -81,4 +94,20 @@ public class ReportFragment extends Fragment {
         // TODO: Use the ViewModel
     }
 
+
+    private void updateCharts(LocalDate start, LocalDate end)
+    {
+        temperatureData = new CombinedData();
+        co2Data = new BarData();
+
+        mViewModel.updateSleepSessions(1, start, end);
+        List<SleepSession> data = mViewModel.getSleepSessions().getValue();
+
+        for(int i=0; i< data.size(); i++) {
+            temperatureData.addEntry(new Entry(data.get(i).getTimeStart().getDayOfYear(), (float) data.get(i).getAverageTemperature()), i);
+        }
+
+        temperatureChart.setData(temperatureData);
+        co2Chart.setData(co2Data);
+    }
 }
