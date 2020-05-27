@@ -58,9 +58,17 @@
 
             <EditText
                 android:id="@+id/minTempEditText"
-                android:layout_width="38dp"
+                android:layout_width="45dp"
                 android:layout_height="wrap_content"
+<<<<<<< HEAD
                 android:layout_marginStart="10dp"
+=======
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="68dp"
+                android:layout_marginEnd="260dp"
+                android:layout_marginBottom="47dp"
+>>>>>>> 13a0da4ed4ae7683eed3d41e6818057ee724db23
                 android:inputType="number"
                 android:textSize="14dp"
                 app:layout_constraintStart_toEndOf="@+id/TempMinTextView"
@@ -68,9 +76,18 @@
 
             <EditText
                 android:id="@+id/MaxTempEditText"
-                android:layout_width="33dp"
+                android:layout_width="45dp"
                 android:layout_height="wrap_content"
+<<<<<<< HEAD
                 android:layout_marginStart="10dp"
+=======
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="55dp"
+                android:layout_marginEnd="150dp"
+                android:layout_marginBottom="48dp"
+                android:layout_alignLeft="@+id/TempMaxTextView"
+>>>>>>> 13a0da4ed4ae7683eed3d41e6818057ee724db23
                 android:inputType="number"
                 android:textSize="14dp"
                 app:layout_constraintStart_toEndOf="@+id/TempMaxTextView"
@@ -92,9 +109,17 @@
                 android:id="@+id/TempMaxTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+<<<<<<< HEAD
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="24dp"
                 android:paddingRight="2dp"
+=======
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="120dp"
+                android:layout_marginTop="84dp"
+                android:layout_marginEnd="54dp"
+>>>>>>> 13a0da4ed4ae7683eed3d41e6818057ee724db23
                 android:text="Maximum:"
                 android:textSize="10sp"
                 android:textStyle="bold"
@@ -202,7 +227,7 @@
 
             <ImageView
                 android:id="@+id/co2Image"
-                android:layout_width="53dp"
+                android:layout_width="58dp"
                 android:layout_height="67dp"
                 android:padding="0dp"
                 android:scaleType="fitXY"
@@ -280,8 +305,8 @@
 
         <Button
             android:id="@+id/buttonYourPreferences"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
+            android:layout_width="125dp"
+            android:layout_height="55dp"
             android:text="Your preferences"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -293,16 +318,16 @@
 
         <Button
             android:id="@+id/buttonSave"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
+            android:layout_width="89dp"
+            android:layout_height="52dp"
             android:text="Save"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.72"
+            app:layout_constraintHorizontal_bias="0.742"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.12" />
+            app:layout_constraintVertical_bias="0.125" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

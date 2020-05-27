@@ -8,7 +8,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.sep4androidapp.Entities.Preferences;
-import com.example.sep4androidapp.Entities.RoomCondition;
 import com.example.sep4androidapp.LocalStorage.PreferencesDAO;
 import com.example.sep4androidapp.LocalStorage.PreferencesDatabase;
 import com.example.sep4androidapp.connection.PreferenceApi;
@@ -23,25 +22,23 @@ import retrofit2.Response;
 
 import static android.content.ContentValues.TAG;
 
-public class PreferencesRoomRepository {
+public class PreferencesRepository {
     private PreferencesDAO preferencesDao;
-    private static PreferencesRoomRepository instance;
+    private static PreferencesRepository instance;
     private LiveData< List< Preferences > > allPreferences;
     private MutableLiveData< Preferences > pre;
 
-    private PreferencesRoomRepository(Application application) {
+    private PreferencesRepository(Application application) {
         PreferencesDatabase preferencesDatabase = PreferencesDatabase.getInstance(application);
         preferencesDao = preferencesDatabase.preferencesDAO();
         pre = new MutableLiveData<>();
 
         allPreferences = preferencesDao.getAllPreferences();
-
-        //preferences = preferencesDao.getAllPreferences().getValue().get(0);
     }
 
-    public static synchronized PreferencesRoomRepository getInstance(Application application) {
+    public static synchronized PreferencesRepository getInstance(Application application) {
         if (instance == null)
-            instance = new PreferencesRoomRepository(application);
+            instance = new PreferencesRepository(application);
         return instance;
     }
 
@@ -143,10 +140,7 @@ public class PreferencesRoomRepository {
                             , response.body().getHumidityMin()
                             , response.body().getTemperatureMin()
                             , response.body().getTemperatureMax());
-                    //preferencesDao.insertPreference(P1);
-                    //pre.setValue(P1);
-                    //pre.postValue(P1);
-                    pre.setValue(response.body().getPre());
+                     pre.setValue(P1);
 
                     Log.i(TAG, "Pouneh0" + response.code());
 
@@ -154,6 +148,7 @@ public class PreferencesRoomRepository {
                     Log.i(TAG, "Pouneh2 " + response.code());
                 }
             }
+
             @Override
             public void onFailure(Call< PreferencesResponse > call, Throwable t) {
                 Log.e(TAG, "Pouneh3 ");
@@ -161,7 +156,9 @@ public class PreferencesRoomRepository {
         });
     }
 
-    public LiveData< Preferences > getPre() { return pre; }
+    public LiveData< Preferences > getPre() {
+        return pre;
+    }
 
 
     // PUT API
