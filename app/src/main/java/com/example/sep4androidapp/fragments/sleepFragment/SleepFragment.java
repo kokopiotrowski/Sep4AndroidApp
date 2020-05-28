@@ -32,6 +32,8 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 
 public class SleepFragment extends Fragment {
@@ -73,25 +75,30 @@ public class SleepFragment extends Fragment {
                 co2.setText(String.valueOf(sleepData.getAverageCo2()) + " ppm");
 
                 ArrayList<RoomCondition> roomConditions = sleepData.getRoomConditions();
+
+                Collections.sort(roomConditions);
+
+
                 int size = roomConditions.size();
 
                 for (int i = 0; i < size ; i++) {
                     float count = i;
                     RoomCondition temp = roomConditions.get(i);
-                    /*LocalDateTime time = temp.getTimestamp();*/
-                    /*ZoneId zoneId = ZoneId.systemDefault();
+                    LocalDateTime time = temp.getTimestamp();
+                    ZoneId zoneId = ZoneId.systemDefault();
                     long epoch = time.atZone(zoneId).toEpochSecond();
-                    Log.i("Seconds", String.valueOf(epoch));*/
+                    double toDouble = epoch;
+                    float value = (float) toDouble;
 
                     float temperature = (float) temp.getTemperature();
                     float sound = (float) temp.getSound();
                     float humidity = (float) temp.getHumidity();
                     float co2 = (float) temp.getCo2();
 
-                    setTemperatureValues(temperature, count);
-                    setSoundValues(sound, count);
-                    setHumidityValues(humidity, count);
-                    setCo2Values(co2, count);
+                    setTemperatureValues(temperature, epoch);
+                    setSoundValues(sound, epoch);
+                    setHumidityValues(humidity, epoch);
+                    setCo2Values(co2, epoch);
 
 
 
@@ -150,10 +157,11 @@ public class SleepFragment extends Fragment {
                 data = new LineData(dataSets);
                 XAxis xAxis = mpLineChart.getXAxis();
                 xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+                xAxis.setValueFormatter(new MyValueFormatter());
                 mpLineChart.setData(data);
                 mpLineChart.invalidate();
 
-                /*xAxis.setValueFormatter( new DayAxisValueFormatter);*/
+
             }
 
             @Override
@@ -202,6 +210,18 @@ public class SleepFragment extends Fragment {
 
         return humidityValues;
     }
+
+    private ArrayList<Entry> getTestValues(){
+        temperatureValues.add(new Entry(1,1));
+        temperatureValues.add(new Entry(2,2));
+        temperatureValues.add(new Entry(19,19));
+        temperatureValues.add(new Entry(20,20));
+        temperatureValues.add(new Entry(21,21));
+
+
+return temperatureValues;
+    }
+
 
 
 
