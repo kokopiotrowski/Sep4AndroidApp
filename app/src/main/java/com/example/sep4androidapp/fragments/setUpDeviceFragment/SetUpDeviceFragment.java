@@ -45,7 +45,6 @@ public class SetUpDeviceFragment extends Fragment {
 
                 availableDevices.append(strings.get(i) + "\n");
             }
-
         });
 
         setupDevice.setOnClickListener(v -> {
@@ -53,18 +52,13 @@ public class SetUpDeviceFragment extends Fragment {
             if (!deviceId.getText().toString().isEmpty() && !newRoomName.getText().toString().isEmpty()) {
 //                Log.i("TAG", "DeviceId: " + deviceId.getText() + " name: " + newRoomName.getText());
                 NewDeviceModel model = new NewDeviceModel(deviceId.getText().toString(), newRoomName.getText().toString());
-                Log.i("TAG", "Device id: " + model.getDeviceId() + " Name: " + model.getName());
                 viewModel.postNewDevice(new NewDeviceModel(deviceId.getText().toString(), newRoomName.getText().toString()));
-
             }else{
                 Toast.makeText(getActivity(), "Fill up all the required fields", Toast.LENGTH_SHORT).show();
             }
-
-
         });
 
         viewModel.updateAvailableDevices();
-
         return view;
     }
 }

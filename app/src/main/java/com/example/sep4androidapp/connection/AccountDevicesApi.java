@@ -18,7 +18,7 @@ import retrofit2.http.Path;
 public interface AccountDevicesApi {
 
     @GET("devices")
-    public Call<List<Device>> getDevices();
+    Call<List<Device>> getDevices();
 
     @GET("devices/available")
     Call<List<String>> getAvailableDevices();
@@ -29,17 +29,5 @@ public interface AccountDevicesApi {
 
     @DELETE("devices/{deviceId}")
     Call<Void> deleteDevice(@Path("deviceId") String deviceId);
-
-
-//    @GET("devices?userId={userId}")
-//    @FormUrlEncoded
-//    Call<DeviceResponse> getDeviceByUserId(@Path("userId") int userId);
-//
-
-//
-//    @Headers("Content-Type: application/json")
-//    @PUT("devices")
-//    @FormUrlEncoded
-//    Call updateDevice(@Body Device device);
 
 }

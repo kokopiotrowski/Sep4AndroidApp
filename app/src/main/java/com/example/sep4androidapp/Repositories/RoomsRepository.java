@@ -73,5 +73,4 @@ public class RoomsRepository {
     public LiveData<List<Device>> getList(){
         return list;
     }
-
 }

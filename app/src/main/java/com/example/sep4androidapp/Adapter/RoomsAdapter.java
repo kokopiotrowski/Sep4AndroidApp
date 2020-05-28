@@ -59,25 +59,22 @@ public class RoomsAdapter extends ListAdapter<Device, RoomsAdapter.RoomHolder> {
         holder.roomLabelTextView.setText(currentDevice.getName());
 
         startStopViewModel.receiveStatus(getItem(position).getDeviceId(), success -> {
-           Log.i("StartStopRepo",  "Result is: " + success);
-           holder.roomsSwitch.setChecked(success);
+            Log.i("StartStopRepo", "Result is: " + success);
+            holder.roomsSwitch.setChecked(success);
         });
 
         holder.roomsSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if(isChecked)
-            {
+            if (isChecked) {
                 startStopViewModel.start(getItem(position).getDeviceId());
-            }else{
+            } else {
                 startStopViewModel.stop(getItem(position).getDeviceId());
             }
         });
     }
 
-    public Device getDeviceAt(int position)
-    {
+    public Device getDeviceAt(int position) {
         return getItem(position);
     }
-
 
     class RoomHolder extends RecyclerView.ViewHolder {
         private TextView roomLabelTextView;

@@ -55,7 +55,6 @@ public class RoomsFragment extends Fragment {
                 String id = adapter.getDeviceAt(viewHolder.getAdapterPosition()).getDeviceId();
                 Log.i("TAG", "Device to delete: " + id);
                 viewModel.deleteDevice(id);
-
             }
         }).attachToRecyclerView(recyclerView);
 
