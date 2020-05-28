@@ -64,6 +64,8 @@ public class PreferencesFragment extends Fragment {
         //Minco2EditText = view.findViewById(R.id.minCo2EditText);
 
         save = view.findViewById(R.id.buttonSave);
+        yourPrefernces = view.findViewById(R.id.buttonYourPreferences);
+
         viewModel = new ViewModelProvider(this).get(PrefrencesViewModel.class);
 
 
@@ -75,18 +77,18 @@ public class PreferencesFragment extends Fragment {
             Toast.makeText(getActivity(), "yesyesyesyesyes" +
                     "", Toast.LENGTH_LONG).show();
 
-//            viewModel.getLastPreference().observe(getViewLifecycleOwner(), new Observer< Preferences >() {
-//                @Override
-//                public void onChanged(Preferences preferences) {
-//
-//                    MintempEditText.setText(String.format("%.1f", preferences.getTemperatureMin()));
-//                    MaxtempEditText.setText(String.format("%.1f", preferences.getTemperatureMax()));
-//                    MinhumEditText.setText(String.valueOf(preferences.getHumidityMin()));
-//                    MaxhumEditText.setText(String.valueOf( preferences.getHumidityMax())) ;
-//                    Minco2EditText.setText(String.valueOf( preferences.getCo2Min()) );
-//                    Maxco2EditText.setText(String.valueOf(preferences.getCo2Max()) );
-//                }
-//            });
+            viewModel.getLastPreference().observe(getViewLifecycleOwner(), new Observer< Preferences >() {
+                @Override
+                public void onChanged(Preferences preferences) {
+
+                    MintempEditText.setText(String.format("%.1f", preferences.getTemperatureMin()));
+                    MaxtempEditText.setText(String.format("%.1f", preferences.getTemperatureMax()));
+                    MinhumEditText.setText(String.valueOf(preferences.getHumidityMin()));
+                    MaxhumEditText.setText(String.valueOf( preferences.getHumidityMax())) ;
+                    Minco2EditText.setText(String.valueOf( preferences.getCo2Min()) );
+                    Maxco2EditText.setText(String.valueOf(preferences.getCo2Max()) );
+                }
+            });
 
 //            yourPrefernces.setOnClickListener(new View.OnClickListener() {
 //                @Override
