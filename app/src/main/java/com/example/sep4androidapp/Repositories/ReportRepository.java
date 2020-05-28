@@ -19,6 +19,7 @@ import com.example.sep4androidapp.connection.responses.SleepDataResponse;
 import com.example.sep4androidapp.connection.responses.SleepSessionResponse;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -38,6 +39,7 @@ public class ReportRepository {
     private ReportRepository (){
         roomCondition = new MutableLiveData<>();
         sleepData = new MutableLiveData<>();
+        sleepSessions = new MutableLiveData<>();
 
     }
 
@@ -108,9 +110,15 @@ public class ReportRepository {
         return sleepData;
     }
 
-    public void updateSleepSessions(int deviceId){
+    public void updateSleepSessions(String deviceId){
+
+        LocalDate today = LocalDate.now();
+        LocalDate monthAgo = today.minusMonths(1);
+        today.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        monthAgo.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
         ReportApi reportApi = ServiceGenerator.getReportApi();
-        Call<ReportResponse> call = reportApi.getReport();
+        Call<ReportResponse> call = reportApi.getReport(deviceId);
         call.enqueue(new Callback<ReportResponse>() {
 
             @Override

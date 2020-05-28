@@ -17,7 +17,7 @@
             android:autoText="false"
             android:text="Report"
             android:textAlignment="center"
-            android:textSize="40dp"
+            android:textSize="30dp"
             app:layout_constraintBottom_toTopOf="@+id/temperatureChart"
             app:layout_constraintEnd_toStartOf="@+id/lastReportRadioGroup"
             app:layout_constraintStart_toStartOf="parent"
@@ -63,12 +63,10 @@
             android:id="@+id/rateYourSleepButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="100dp"
             android:text="Rate your last sleep"
             android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/ratingBar"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.547"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0" />
@@ -81,7 +79,7 @@
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.561"
+            app:layout_constraintHorizontal_bias="0.51"
             app:layout_constraintStart_toStartOf="parent" />
 
         <com.github.mikephil.charting.charts.LineChart
@@ -95,7 +93,7 @@
         <com.github.mikephil.charting.charts.HorizontalBarChart
             android:id="@+id/co2Chart"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="200dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/temperatureChart"
             app:layout_constraintVertical_bias="0.25">

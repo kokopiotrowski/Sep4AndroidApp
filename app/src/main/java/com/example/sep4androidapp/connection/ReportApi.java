@@ -14,11 +14,12 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface ReportApi {
 
-    @GET("reports/device1?dateStart=2010-10-10&dateFinish=2020-10-10")
-    Call<ReportResponse> getReport();
+    @GET("reports/{deviceId}")
+    Call<ReportResponse> getReport(@Path("deviceId") String deviceId);
 //@Path("deviceId") int deviceId
     @GET("reports/sleeps/1")
     Call<SleepDataResponse> getSleepData();

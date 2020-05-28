@@ -61,12 +61,10 @@ public class ReportViewModel extends ViewModel {
     }
 
     public LiveData<List<SleepSession>> getSleepSessions(){
-        if(repository.getSleepSessions() == null)
-        return null;
         return repository.getSleepSessions();
     }
 
-    public void updateSleepSessions(int deviceId)
+    public void updateSleepSessions(String deviceId)
     {
         repository.updateSleepSessions(deviceId);
     }
