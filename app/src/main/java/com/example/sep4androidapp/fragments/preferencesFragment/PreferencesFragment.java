@@ -53,15 +53,6 @@ public class PreferencesFragment extends Fragment {
 
 
         viewModel = new ViewModelProvider(this).get(PrefrencesViewModel.class);
-     /*   viewModel.getAllPreferences().observe(getViewLifecycleOwner(), new Observer< List< Preferences > >() {
-            @Override
-            public void onChanged(List< Preferences > preferences) {
-                Toast.makeText(getActivity(),"Onchanged",Toast.LENGTH_SHORT).show();
-            }
-        });
-
-      */
-
         viewModel.getLastPreference().observe(getViewLifecycleOwner(), new Observer< Preferences >() {
             @Override
             public void onChanged(Preferences preferences) {
@@ -74,10 +65,6 @@ public class PreferencesFragment extends Fragment {
                 Maxco2EditText.setText(String.valueOf(preferences.getCo2Max()) );
             }
         });
-
-
-
-
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override

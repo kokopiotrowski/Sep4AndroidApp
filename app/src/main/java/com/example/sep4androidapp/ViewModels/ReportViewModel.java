@@ -7,9 +7,11 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.room.Room;
 
+import com.example.sep4androidapp.Entities.Fact;
 import com.example.sep4androidapp.Entities.RoomCondition;
 import com.example.sep4androidapp.Entities.SleepData;
 import com.example.sep4androidapp.Entities.SleepSession;
+import com.example.sep4androidapp.Repositories.FactRepository;
 import com.example.sep4androidapp.Repositories.ReportRepository;
 import com.example.sep4androidapp.connection.responses.SleepSessionResponse;
 
@@ -22,6 +24,7 @@ import java.util.TimerTask;
 
 public class ReportViewModel extends ViewModel {
 
+    private FactRepository randomRepository;
     private ReportRepository repository;
     private Handler handler = new Handler();
     private Timer timer = new Timer();
@@ -29,11 +32,20 @@ public class ReportViewModel extends ViewModel {
     public ReportViewModel() {
 
         repository = ReportRepository.getInstance();
+        randomRepository = FactRepository.getInstance();
     }
 
     public LiveData<RoomCondition> getRoomCondition() {
 
        return repository.getRoomCondition();
+    }
+
+    public LiveData< Fact > getFact(){
+        return randomRepository.getFact();
+    }
+
+    public void getRandomFact(){
+        randomRepository.getFactRandomly();
     }
 
     public void updateRoomCondition(){
