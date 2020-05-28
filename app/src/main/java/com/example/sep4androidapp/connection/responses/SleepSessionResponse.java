@@ -4,12 +4,12 @@ import com.example.sep4androidapp.Entities.RoomCondition;
 import com.example.sep4androidapp.Entities.SleepSession;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SleepSessionResponse {
-
+public class SleepSessionResponse implements Serializable {
     @SerializedName("sleepId")
     private int sleepId;
     @SerializedName("deviceId")

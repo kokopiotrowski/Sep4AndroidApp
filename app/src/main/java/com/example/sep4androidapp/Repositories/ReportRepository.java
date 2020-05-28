@@ -13,11 +13,13 @@ import com.example.sep4androidapp.Entities.SleepSession;
 import com.example.sep4androidapp.connection.ReportApi;
 import com.example.sep4androidapp.connection.RoomConditionApi;
 import com.example.sep4androidapp.connection.ServiceGenerator;
+import com.example.sep4androidapp.connection.responses.ReportResponse;
 import com.example.sep4androidapp.connection.responses.RoomConditionResponse;
 import com.example.sep4androidapp.connection.responses.SleepDataResponse;
 import com.example.sep4androidapp.connection.responses.SleepSessionResponse;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -106,20 +108,20 @@ public class ReportRepository {
         return sleepData;
     }
 
-    public void updateSleepSessions(int deviceId, LocalDate start, LocalDate end){
+    public void updateSleepSessions(int deviceId){
         ReportApi reportApi = ServiceGenerator.getReportApi();
-        Call<List<SleepSession>> call = reportApi.getReport(deviceId, start.toString(), end.toString());
-        call.enqueue(new Callback<List<SleepSession>>() {
+        Call<ReportResponse> call = reportApi.getReport();
+        call.enqueue(new Callback<ReportResponse>() {
 
             @Override
-            public void onResponse(Call<List<SleepSession>> call, Response<List<SleepSession>> response) {
+            public void onResponse(Call<ReportResponse> call, Response<ReportResponse> response) {
                 if (response.code() == 200){
-                    sleepSessions.setValue(response.body());
+                    sleepSessions.setValue(response.body().getSleepSessions());
                 }
             }
 
             @Override
-            public void onFailure(Call<List<SleepSession>> call, Throwable t) {
+            public void onFailure(Call<ReportResponse> call, Throwable t) {
                 Log.i("Retrofit", "Something went wrong in update sleep data :(");
                 Log.i("Why", "" + t.getCause());
             }

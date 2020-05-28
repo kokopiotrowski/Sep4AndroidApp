@@ -2,6 +2,7 @@ package com.example.sep4androidapp.connection;
 
 
 import com.example.sep4androidapp.Entities.SleepSession;
+import com.example.sep4androidapp.connection.responses.ReportResponse;
 import com.example.sep4androidapp.connection.responses.SleepDataResponse;
 import com.example.sep4androidapp.connection.responses.SleepSessionResponse;
 
@@ -16,9 +17,9 @@ import retrofit2.http.Path;
 
 public interface ReportApi {
 
-    @GET("reports/{deviceId}?dateStart={dStart}&dateFinish={dFinish}")
-    Call<List<SleepSession>> getReport(@Path("deviceId") int deviceId, @Path("dStart") String dateStart, @Path("dFinish") String dateFinish);
-
+    @GET("reports/device1?dateStart=2010-10-10&dateFinish=2020-10-10")
+    Call<ReportResponse> getReport();
+//@Path("deviceId") int deviceId
     @GET("reports/sleeps/1")
     Call<SleepDataResponse> getSleepData();
 

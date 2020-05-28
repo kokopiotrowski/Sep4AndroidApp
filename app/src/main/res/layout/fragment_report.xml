@@ -17,20 +17,22 @@
             android:autoText="false"
             android:text="Report"
             android:textAlignment="center"
-            android:textSize="30dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="40dp"
+            app:layout_constraintBottom_toTopOf="@+id/temperatureChart"
+            app:layout_constraintEnd_toStartOf="@+id/lastReportRadioGroup"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <RadioGroup
             android:id="@+id/lastReportRadioGroup"
-            android:layout_width="wrap_content"
+            android:layout_width="150sp"
             android:layout_height="wrap_content"
             android:checkedButton="@id/reportLastWeekRadioButton"
             android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.86"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/reportTextView">
+            app:layout_constraintTop_toTopOf="parent">
 
             <RadioButton
                 android:id="@+id/lastSleepRadioButton"
@@ -48,9 +50,10 @@
 
             <RadioButton
                 android:id="@+id/reportLastMonthRadioButton"
+                style="@style/Widget.AppCompat.CompoundButton.RadioButton"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
 
+                android:layout_height="wrap_content"
                 android:text="Last month" />
 
         </RadioGroup>
@@ -60,35 +63,42 @@
             android:id="@+id/rateYourSleepButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="100dp"
             android:text="Rate your last sleep"
             android:visibility="visible"
-            app:layout_constraintBottom_toTopOf="@+id/ratingBar"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintHorizontal_bias="0.547"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
 
         <RatingBar
             android:id="@+id/ratingBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.561"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <com.github.mikephil.charting.charts.CombinedChart
+        <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/temperatureChart"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             app:layout_constraintTop_toBottomOf="@+id/lastReportRadioGroup">
 
-        </com.github.mikephil.charting.charts.CombinedChart>
+        </com.github.mikephil.charting.charts.LineChart>
 
         <com.github.mikephil.charting.charts.HorizontalBarChart
             android:id="@+id/co2Chart"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/rateYourSleepButton"
-            app:layout_constraintTop_toBottomOf="@+id/temperatureChart">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/temperatureChart"
+            app:layout_constraintVertical_bias="0.25">
 
         </com.github.mikephil.charting.charts.HorizontalBarChart>
 
