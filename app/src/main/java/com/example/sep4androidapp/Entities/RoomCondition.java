@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 
-public class RoomCondition implements Serializable {
+public class RoomCondition implements Comparable<RoomCondition> {
     private int sleepId;
     private LocalDateTime timestamp;
     private double temperature;
@@ -68,5 +68,10 @@ public class RoomCondition implements Serializable {
 
     public void setHumidity(double humidity) {
         this.humidity = humidity;
+    }
+
+    @Override
+    public int compareTo(RoomCondition o) {
+        return getTimestamp().compareTo(o.getTimestamp());
     }
 }
