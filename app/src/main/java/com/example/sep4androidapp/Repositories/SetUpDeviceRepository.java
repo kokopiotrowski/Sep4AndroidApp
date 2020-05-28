@@ -5,6 +5,8 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.sep4androidapp.Entities.Device;
+import com.example.sep4androidapp.Entities.NewDeviceModel;
 import com.example.sep4androidapp.connection.AccountDevicesApi;
 import com.example.sep4androidapp.connection.ServiceGenerator;
 
@@ -57,5 +59,25 @@ public class SetUpDeviceRepository {
     {
         return availableDevicesList;
 
+    }
+
+    public void postNewDevice(NewDeviceModel model) {
+        Log.i("TAG", "Device id: " + model.getDeviceId() + " Name: " + model.getName());
+
+        AccountDevicesApi devicesApi = ServiceGenerator.getAccountDevicesApi();
+        Call<Device> call = devicesApi.addDevice(model);
+        call.enqueue(new Callback<Device>() {
+            @Override
+            public void onResponse(Call<Device> call, Response<Device> response) {
+                Log.i("SetUpRepo", "Post device response: " + response.code() + " Device id: " +response.body().getDeviceId());
+
+            }
+
+            @Override
+            public void onFailure(Call<Device> call, Throwable t) {
+                Log.i("SetUpRepo", "Failing with posting device: " + t.getMessage());
+
+            }
+        });
     }
 }

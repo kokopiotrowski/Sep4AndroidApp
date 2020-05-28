@@ -36,11 +36,10 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:ems="10"
+        android:gravity="center_vertical"
         android:inputType="textPersonName"
-        android:text="ID"
         app:layout_constraintStart_toEndOf="@+id/deviceIdtext"
-        app:layout_constraintTop_toTopOf="parent"
-        android:gravity="center_vertical"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/newRoomtext"
@@ -61,7 +60,6 @@
         android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name"
         app:layout_constraintStart_toEndOf="@+id/newRoomtext"
         app:layout_constraintTop_toBottomOf="@+id/deviceId" />
 

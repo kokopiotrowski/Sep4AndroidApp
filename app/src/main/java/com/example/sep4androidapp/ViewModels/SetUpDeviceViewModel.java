@@ -3,6 +3,7 @@ package com.example.sep4androidapp.ViewModels;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.sep4androidapp.Entities.NewDeviceModel;
 import com.example.sep4androidapp.Repositories.SetUpDeviceRepository;
 
 import java.util.List;
@@ -22,5 +23,10 @@ public class SetUpDeviceViewModel extends ViewModel {
     public LiveData<List<String>> getAvailableDevices()
     {
         return repository.getAvailableDevices();
+    }
+
+    public void postNewDevice(NewDeviceModel model)
+    {
+        repository.postNewDevice(model);
     }
 }
