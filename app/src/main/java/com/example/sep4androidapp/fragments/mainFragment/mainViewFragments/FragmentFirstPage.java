@@ -24,6 +24,7 @@ import com.example.sep4androidapp.ViewModels.ReportViewModel;
 import com.example.sep4androidapp.ViewModels.StartStopViewModel;
 import com.example.sep4androidapp.connection.ApiCallBack;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 public class FragmentFirstPage extends Fragment {
     private Spinner spinner;
@@ -55,7 +56,7 @@ public class FragmentFirstPage extends Fragment {
         timeStamp = v.findViewById(R.id.timeStamp);
         randomFactButton = v.findViewById(R.id.floatingButton);
         title = v.findViewById(R.id.randomTitle);
-        text = v.findViewById(R.id.randonText);
+        text = v.findViewById(R.id.randomText);
         cardView = v.findViewById(R.id.randomFactLayout);
 
         viewModel = new ViewModelProvider(this).get(ReportViewModel.class);

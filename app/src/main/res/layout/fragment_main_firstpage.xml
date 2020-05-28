@@ -1,31 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-    android:orientation="vertical">
+        android:orientation="vertical">
 
-<!--        <Button-->
-<!--            android:id="@+id/updateButton"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Update" />-->
+        <!--        <Button-->
+        <!--            android:id="@+id/updateButton"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="Update" />-->
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:orientation="horizontal"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="5dp"
-            >
+            android:orientation="horizontal">
 
             <Spinner
                 android:id="@+id/spinner"
@@ -203,8 +202,8 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="20dp"
                     android:text="Humidity:"
-                    android:textStyle="bold"
                     android:textSize="20sp"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -272,8 +271,8 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="20dp"
                     android:text="Sound:"
-                    android:textStyle="bold"
                     android:textSize="20sp"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -322,35 +321,27 @@
         </androidx.cardview.widget.CardView>
 
 
-
-
-
-
-
-
-
         <androidx.cardview.widget.CardView
             android:id="@+id/randomFactLayout"
             android:layout_width="match_parent"
-            android:layout_height="130dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="5dp"
-            app:cardBackgroundColor="#E3E3E3"
             android:visibility="invisible"
-            >
+            app:cardBackgroundColor="#E3E3E3">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/blue_night">
+                android:layout_height="match_parent">
+
 
                 <TextView
                     android:id="@+id/randomTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/star"
+                    android:textColor="@color/blue_night"
                     android:textSize="15sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -361,41 +352,35 @@
                     app:layout_constraintVertical_bias="0.056" />
 
                 <TextView
-                    android:id="@+id/randonText"
+                    android:id="@+id/randomText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
-                    android:textColor="#FFFFFF"
+                    android:layout_marginRight="18dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="10dp"
                     android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.071"
+                    app:layout_constraintHorizontal_bias="0.091"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/randomTitle" />
+                    app:layout_constraintTop_toBottomOf="@+id/randomTitle"
+                    app:layout_constraintVertical_bias="0.67" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
 
-
-
-
-
-
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-
             android:id="@+id/floatingButton"
-            layout_alignParentButton="true"
-            layout_alignParentEnd="true"
-            android:layout_width="232dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_margin="30dp"
+            android:layout_gravity="end"
+            android:layout_margin="8dp"
+            android:backgroundTint="@color/blue_night"
+            android:src="@drawable/night"/>
 
-
-            />
 
     </LinearLayout>
 
