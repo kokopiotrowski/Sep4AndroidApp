@@ -42,14 +42,32 @@ public class RoomsRepository {
                 {
                     list.setValue(response.body());
                 }
-                Log.i("RESPONSECODE", "Message: " + response.code());
+                Log.i("roomsRepo", "Update room: " + response.code());
             }
 
             @Override
             public void onFailure(Call<List<Device>> call, Throwable t) {
-                Log.i("Why", "" + t.getCause());
+                Log.i("roomsRepo", "Update room failed" + t.getCause());
             }
         });
+    }
+
+    public void deleteDevice(String deviceId)
+    {
+        AccountDevicesApi api = ServiceGenerator.getAccountDevicesApi();
+        Call<Void> call = api.deleteDevice(deviceId);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                Log.i("roomsRepo", "Delete device succeeded" + response.code());
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.i("roomsRepo", "Deleting device failed" + t.getCause());
+            }
+        });
+        updateRooms();
     }
 
     public LiveData<List<Device>> getList(){

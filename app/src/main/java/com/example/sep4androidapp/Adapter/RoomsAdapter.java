@@ -74,6 +74,11 @@ public class RoomsAdapter extends ListAdapter<Device, RoomsAdapter.RoomHolder> {
         });
     }
 
+    public Device getDeviceAt(int position)
+    {
+        return devices.get(position);
+    }
+
     public void setDevices(List<Device> devices)
     {
         this.devices = devices;
