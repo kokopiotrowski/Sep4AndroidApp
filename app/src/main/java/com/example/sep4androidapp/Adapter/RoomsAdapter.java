@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RoomsAdapter extends ListAdapter<Device, RoomsAdapter.RoomHolder> {
-
+    private OnItemClickListener listener;
     private List<Device> devices = new ArrayList<>();
     private StartStopViewModel startStopViewModel = new StartStopViewModel();
 
@@ -60,22 +60,20 @@ public class RoomsAdapter extends ListAdapter<Device, RoomsAdapter.RoomHolder> {
         holder.roomLabelTextView.setText(currentDevice.getName());
 
         startStopViewModel.receiveStatus(devices.get(position).getDeviceId(), success -> {
-           Log.i("StartStopRepo",  "Result is: " + success);
-           holder.roomsSwitch.setChecked(success);
+            Log.i("StartStopRepo", "Result is: " + success);
+            holder.roomsSwitch.setChecked(success);
         });
 
         holder.roomsSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if(isChecked)
-            {
+            if (isChecked) {
                 startStopViewModel.start(devices.get(position).getDeviceId());
-            }else{
+            } else {
                 startStopViewModel.stop(devices.get(position).getDeviceId());
             }
         });
     }
 
-    public void setDevices(List<Device> devices)
-    {
+    public void setDevices(List<Device> devices) {
         this.devices = devices;
         notifyDataSetChanged();
     }
@@ -93,6 +91,21 @@ public class RoomsAdapter extends ListAdapter<Device, RoomsAdapter.RoomHolder> {
             super(itemView);
             roomLabelTextView = itemView.findViewById(R.id.roomLabelTextView);
             roomsSwitch = itemView.findViewById(R.id.roomsSwitch);
+
+            itemView.setOnClickListener(v -> {
+                int position = getAdapterPosition();
+                if (listener != null && position != RecyclerView.NO_POSITION) {
+                    listener.onItemClick(devices.get(position));
+                }
+            });
         }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(Device device);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
     }
 }

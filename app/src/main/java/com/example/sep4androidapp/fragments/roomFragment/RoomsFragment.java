@@ -27,6 +27,7 @@ public class RoomsFragment extends Fragment {
     private RoomsAdapter adapter;
     private RoomsViewModel viewModel;
 
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -42,8 +43,10 @@ public class RoomsFragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(RoomsViewModel.class);
         viewModel.getDevices().observe(getViewLifecycleOwner(), devices -> adapter.setDevices(devices));
 
-
         viewModel.updateRooms();
+
+        viewModel.openDevice(adapter, getActivity());
+
         return view;
     }
 }
