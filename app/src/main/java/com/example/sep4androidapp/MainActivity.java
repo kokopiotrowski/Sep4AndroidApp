@@ -18,6 +18,7 @@ import com.example.sep4androidapp.fragments.mainFragment.MainFragment;
 import com.example.sep4androidapp.fragments.preferencesFragment.PreferencesFragment;
 import com.example.sep4androidapp.fragments.reportFragment.ReportFragment;
 import com.example.sep4androidapp.fragments.roomFragment.RoomsFragment;
+import com.example.sep4androidapp.fragments.setUpDeviceFragment.SetUpDeviceFragment;
 import com.example.sep4androidapp.fragments.sleepFragment.SleepFragment;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -67,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PreferencesFragment()).commit();
                 break;
             case R.id.itemSetUp:
-//                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, ).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SetUpDeviceFragment()).commit();
                 break;
             case R.id.itemTipsFacts:
 //                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, ).commit();

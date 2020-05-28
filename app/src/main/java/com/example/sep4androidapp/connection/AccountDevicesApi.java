@@ -12,6 +12,11 @@ public interface AccountDevicesApi {
     @GET("devices")
     public Call<List<Device>> getDevices();
 
+    @GET("devices/available")
+    Call<List<String>> getAvailableDevices();
+
+
+
 //    @GET("devices?userId={userId}")
 //    @FormUrlEncoded
 //    Call<DeviceResponse> getDeviceByUserId(@Path("userId") int userId);
