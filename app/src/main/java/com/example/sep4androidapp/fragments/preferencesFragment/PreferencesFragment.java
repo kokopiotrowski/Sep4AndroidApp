@@ -1,8 +1,11 @@
 package com.example.sep4androidapp.fragments.preferencesFragment;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.ConnectivityManager;
+import android.net.Network;
 import android.net.NetworkInfo;
+import android.net.NetworkRequest;
 import android.os.Bundle;
 import android.text.Editable;
 import android.util.Log;
@@ -23,6 +26,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.sep4androidapp.Entities.Preferences;
+import com.example.sep4androidapp.Network.CheckNetwork;
+import com.example.sep4androidapp.Network.Variables;
 import com.example.sep4androidapp.R;
 import com.example.sep4androidapp.ViewModels.PrefrencesViewModel;
 
@@ -63,50 +68,50 @@ public class PreferencesFragment extends Fragment {
 
         viewModel = new ViewModelProvider(this).get(PrefrencesViewModel.class);
 
-        viewModel.getAllPreferences().observe(getViewLifecycleOwner(), new Observer<List<Preferences>>() {
-            @Override
-            public void onChanged(List<Preferences> preferences) {
+        CheckNetwork network = new CheckNetwork(getActivity().getApplicationContext());
+        network.registerDefaultNetworkCallback();
 
-                if (!preferences.isEmpty()) {
-                    MintempEditText.setText("");
-                    MaxtempEditText.setText("");
-                    MinhumEditText.setText("");
-                    MaxhumEditText.setText("");
-                    Minco2EditText.setText("");
-                    Maxco2EditText.setText("");
-                    for (Preferences p : preferences) {
-                        MintempEditText.append(p.getTemperatureMin() + "\n");
-                        MaxtempEditText.append(p.getTemperatureMax() + "\n");
-                        MinhumEditText.append(p.getHumidityMin() + "\n");
-                        MaxhumEditText.append(p.getHumidityMax() + "\n");
-                        Minco2EditText.append(p.getCo2Min() + "\n");
-                        Maxco2EditText.append(p.getCo2Max() + "\n");
+        Variables.counter++;
+        if (Variables.isNetworkConnected) {
+            Toast.makeText(getActivity(), "yesyesyesyesyes" +
+                    "", Toast.LENGTH_LONG).show();
+        }else {
+              Toast.makeText(getActivity(), "nononononon", Toast.LENGTH_LONG).show();
+            viewModel.getAllPreferences().observe(getViewLifecycleOwner(), new Observer<List<Preferences>>() {
+                @Override
+                public void onChanged(List<Preferences> preferences) {
 
+                    if (!preferences.isEmpty()) {
+                        MintempEditText.setText("");
+                        MaxtempEditText.setText("");
+                        MinhumEditText.setText("");
+                        MaxhumEditText.setText("");
+                        Minco2EditText.setText("");
+                        Maxco2EditText.setText("");
+                        for (Preferences p : preferences) {
+                            MintempEditText.append(p.getTemperatureMin() + "\n");
+                            MaxtempEditText.append(p.getTemperatureMax() + "\n");
+                            MinhumEditText.append(p.getHumidityMin() + "\n");
+                            MaxhumEditText.append(p.getHumidityMax() + "\n");
+                            Minco2EditText.append(p.getCo2Min() + "\n");
+                            Maxco2EditText.append(p.getCo2Max() + "\n");
+
+                        }
+                    } else {
+                        MintempEditText.setText("Empty");
+                        MaxtempEditText.setText("Empty");
+                        MinhumEditText.setText("Empty");
+                        MaxhumEditText.setText("Empty");
+                        Minco2EditText.setText("Empty");
+                        Maxco2EditText.setText("Empty");
                     }
-                } else {
-                    MintempEditText.setText("Empty");
-                    MaxtempEditText.setText("Empty");
-                    MinhumEditText.setText("Empty");
-                    MaxhumEditText.setText("Empty");
-                    Minco2EditText.setText("Empty");
-                    Maxco2EditText.setText("Empty");
+
                 }
+            });
+        }
 
-            }
-        });
 
-//        viewModel.getLastPreference().observe(getViewLifecycleOwner(), new Observer< Preferences >() {
-//            @Override
-//            public void onChanged(Preferences preferences) {
-//
-//                MintempEditText.setText(String.format("%.1f", preferences.getTemperatureMin()));
-//                MaxtempEditText.setText(String.format("%.1f", preferences.getTemperatureMax()));
-//                MinhumEditText.setText(String.valueOf(preferences.getHumidityMin()));
-//                MaxhumEditText.setText(String.valueOf( preferences.getHumidityMax())) ;
-//                Minco2EditText.setText(String.valueOf( preferences.getCo2Min()) );
-//                Maxco2EditText.setText(String.valueOf(preferences.getCo2Max()) );
-//            }
-//        });
+        
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
