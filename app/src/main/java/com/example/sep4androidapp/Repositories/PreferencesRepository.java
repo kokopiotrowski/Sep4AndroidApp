@@ -26,12 +26,12 @@ public class PreferencesRepository {
     private PreferencesDAO preferencesDao;
     private static PreferencesRepository instance;
     private LiveData< List< Preferences > > allPreferences;
-    //private MutableLiveData< Preferences > pre;
+    private MutableLiveData< Preferences > pre;
 
     private PreferencesRepository(Application application) {
         PreferencesDatabase preferencesDatabase = PreferencesDatabase.getInstance(application);
         preferencesDao = preferencesDatabase.preferencesDAO();
-        //pre = new MutableLiveData<>();
+        pre = new MutableLiveData<>();
 
         allPreferences = preferencesDao.getAllPreferences();
     }
@@ -122,66 +122,66 @@ public class PreferencesRepository {
 
 
     // GET API
-//    public void showPreferences() {
-//        PreferenceApi preferenceApi = ServiceGenerator.getPreferenceApi();
-//        Call< PreferencesResponse > call = preferenceApi.getPreferences();
-//        call.enqueue(new Callback< PreferencesResponse >() {
-//            @Override
-//            public void onResponse(Call< PreferencesResponse > call, Response< PreferencesResponse > response) {
-//
-//                if (response.code() == 200) {
-//
-//                    Preferences P1 = new Preferences(
-//                            response.body().getDeviceId()
-//                            , response.body().isRegulationEnabled()
-//                            , response.body().getCo2Max()
-//                            , response.body().getCo2Min()
-//                            , response.body().getHumidityMax()
-//                            , response.body().getHumidityMin()
-//                            , response.body().getTemperatureMin()
-//                            , response.body().getTemperatureMax());
-//                     pre.setValue(P1);
-//
-//                    Log.i(TAG, "Pouneh0" + response.code());
-//
-//                } else {
-//                    Log.i(TAG, "Pouneh2 " + response.code());
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call< PreferencesResponse > call, Throwable t) {
-//                Log.e(TAG, "Pouneh3 ");
-//            }
-//        });
-//    }
-//
-//    public LiveData< Preferences > getPre() {
-//        return pre;
-//    }
-//
-//
-//    // PUT API
-//    public void updatePrefrences(Preferences preference) {
-//
-//        PreferenceApi preferenceApi = ServiceGenerator.getPreferenceApi();
-//        Call< PreferencesResponse > call = preferenceApi.updatePreferences(preference);
-//        call.enqueue(new Callback< PreferencesResponse >() {
-//            @Override
-//            public void onResponse(Call< PreferencesResponse > call, Response< PreferencesResponse > response) {
-//                Log.i(TAG, "Pouneh1 " + response.code());
-//            }
-//
-//            @Override
-//            public void onFailure(Call< PreferencesResponse > call, Throwable t) {
-//                Log.i(TAG, "Pouneh2");
-//            }
-//        });
-//    }
-//
-//    public LiveData< Preferences > getPreFrence() {
-//        return pre;
-//    }
+    public void showPreferences() {
+        PreferenceApi preferenceApi = ServiceGenerator.getPreferenceApi();
+        Call< PreferencesResponse > call = preferenceApi.getPreferences();
+        call.enqueue(new Callback< PreferencesResponse >() {
+            @Override
+            public void onResponse(Call< PreferencesResponse > call, Response< PreferencesResponse > response) {
+
+                if (response.code() == 200) {
+
+                    Preferences P1 = new Preferences(
+                            response.body().getDeviceId()
+                            , response.body().isRegulationEnabled()
+                            , response.body().getCo2Max()
+                            , response.body().getCo2Min()
+                            , response.body().getHumidityMax()
+                            , response.body().getHumidityMin()
+                            , response.body().getTemperatureMin()
+                            , response.body().getTemperatureMax());
+                     pre.setValue(P1);
+
+                    Log.i(TAG, "Pouneh0" + response.code());
+
+                } else {
+                    Log.i(TAG, "Pouneh2 " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call< PreferencesResponse > call, Throwable t) {
+                Log.e(TAG, "Pouneh3 ");
+            }
+        });
+    }
+
+    public LiveData< Preferences > getPre() {
+        return pre;
+    }
+
+
+    // PUT API
+    public void updatePrefrences(Preferences preference) {
+
+        PreferenceApi preferenceApi = ServiceGenerator.getPreferenceApi();
+        Call< PreferencesResponse > call = preferenceApi.updatePreferences(preference);
+        call.enqueue(new Callback< PreferencesResponse >() {
+            @Override
+            public void onResponse(Call< PreferencesResponse > call, Response< PreferencesResponse > response) {
+                Log.i(TAG, "Pouneh1 " + response.code());
+            }
+
+            @Override
+            public void onFailure(Call< PreferencesResponse > call, Throwable t) {
+                Log.i(TAG, "Pouneh2");
+            }
+        });
+    }
+
+    public LiveData< Preferences > getPreFrence() {
+        return pre;
+    }
 
 
 }
