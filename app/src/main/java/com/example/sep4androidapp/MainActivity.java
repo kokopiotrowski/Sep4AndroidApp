@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.sep4androidapp.Firebase.Firebase_Login;
 import com.example.sep4androidapp.ViewModels.StartStopViewModel;
+import com.example.sep4androidapp.fragments.factFragment.FactFragment;
 import com.example.sep4androidapp.fragments.mainFragment.MainFragment;
 import com.example.sep4androidapp.fragments.preferencesFragment.PreferencesFragment;
 import com.example.sep4androidapp.fragments.reportFragment.ReportFragment;
@@ -70,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, ).commit();
                 break;
             case R.id.itemTipsFacts:
-//                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, ).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new FactFragment()).commit();
                 break;
             case R.id.itemAccount:
 //                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, ).commit();

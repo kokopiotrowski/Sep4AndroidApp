@@ -1,6 +1,8 @@
 package com.example.sep4androidapp.Entities;
 
-public class Fact {
+import java.io.Serializable;
+
+public class Fact implements Serializable {
     private String title;
     private String content;
 
