@@ -42,7 +42,7 @@ public class RoomsFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         viewModel = new ViewModelProvider(this).get(RoomsViewModel.class);
-        viewModel.getDevices().observe(getViewLifecycleOwner(), devices -> adapter.setDevices(devices));
+        viewModel.getDevices().observe(getViewLifecycleOwner(), devices -> adapter.submitList(devices));
 
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
             @Override
