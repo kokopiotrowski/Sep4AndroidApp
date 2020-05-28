@@ -31,32 +31,32 @@ public class PrefrencesViewModel extends AndroidViewModel {
     public void update(final Preferences preferences) {
         preferencesRoomRepository.update(preferences);
     }
+//
+//    public void deletePreference(final Preferences preferences) {
+//        preferencesRoomRepository.deletePreference(preferences);
+//    }
+//
+//    public void deleteAllPreferences() {
+//        preferencesRoomRepository.deleteAllPreferences();
+//    }
+//
+//    //---------------------------------------------------------------------------
+//
+//    public void showPrefrences() {
+//        preferencesRoomRepository.showPreferences();
+//    }
+//
+//    public void updatePrefrences(Preferences preference) {
+//        preferencesRoomRepository.updatePrefrences(preference);
+//    }
+//
+//    public LiveData< List< Preferences > > getPrefrences() {
+//        return preferencesRoomRepository.getAllPreferences();
+//    }
 
-    public void deletePreference(final Preferences preferences) {
-        preferencesRoomRepository.deletePreference(preferences);
-    }
-
-    public void deleteAllPreferences() {
-        preferencesRoomRepository.deleteAllPreferences();
-    }
-
-    //---------------------------------------------------------------------------
-
-    public void showPrefrences() {
-        preferencesRoomRepository.showPreferences();
-    }
-
-    public void updatePrefrences(Preferences preference) {
-        preferencesRoomRepository.updatePrefrences(preference);
-    }
-
-    public LiveData< List< Preferences > > getPrefrences() {
-        return preferencesRoomRepository.getAllPreferences();
-    }
 
 
-
-   public LiveData<Preferences> getLastPreference() {
-       return preferencesRoomRepository.getPre();
-   }
+//   public LiveData<Preferences> getLastPreference() {
+//       return preferencesRoomRepository.getPre();
+//   }
 }

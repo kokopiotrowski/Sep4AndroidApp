@@ -19,14 +19,14 @@ public interface PreferencesDAO {
     @Update
     void updatePreference(Preferences preferences);
 
-    @Delete
-    void deletePreference(Preferences preferences);
+//    @Delete
+//    void deletePreference(Preferences preferences);
 
 //    @Query("DELETE FROM preferences_table where deviceId= :deviceId")
 //    void deletePreference(int deviceId);
 
-    @Query("DELETE FROM preferences_table")
-    void deleteAllPreferences();
+//    @Query("DELETE FROM preferences_table")
+//    void deleteAllPreferences();
 
     @Query("SELECT*FROM preferences_table")
     LiveData<List<Preferences>> getAllPreferences();
