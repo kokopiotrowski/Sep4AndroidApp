@@ -11,7 +11,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="405dp"
         android:layout_height="match_parent"
-        android:padding="6dp">
+        android:padding="6dp"
+        >
 
 
         <TextView
@@ -36,15 +37,13 @@
 
         <TextView
             android:id="@+id/factTextView"
-            android:layout_width="wrap_content"
+            android:layout_width="343dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/factTitleTextView"
             android:layout_alignParentStart="true"
             android:layout_margin="2dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginLeft="8dp"
             android:layout_marginStart="8dp"
-            android:text="contect"
+            android:padding="8dp"
+            android:text="content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/factTitleTextView"

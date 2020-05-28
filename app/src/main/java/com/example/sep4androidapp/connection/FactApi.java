@@ -13,7 +13,7 @@ import retrofit2.http.Path;
 
 public interface FactApi {
 
-    @GET("fact/random")
+    @GET("facts/random")
     public Call <Fact> getRandomFact();
 
 
