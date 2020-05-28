@@ -15,6 +15,6 @@ public interface RoomConditionApi {
 
 
 
-    @GET("room-conditions/0004A30B002181EC")
-    public Call<RoomConditionResponse> getRoomCondition();
+    @GET("room-conditions/{deviceId}")
+    public Call<RoomConditionResponse> getRoomCondition(@Path("deviceId") String deviceId);
 }

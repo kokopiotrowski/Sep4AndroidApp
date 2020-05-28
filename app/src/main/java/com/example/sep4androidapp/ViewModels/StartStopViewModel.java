@@ -24,10 +24,4 @@ public class StartStopViewModel extends ViewModel {
     public void receiveStatus(String deviceId, ApiCallBack callBack) {
         repository.receiveStatus(deviceId, callBack);
     }
-
-    public MutableLiveData<Boolean> getStatus() {
-       return repository.getStatus();
-    }
-
-
 }

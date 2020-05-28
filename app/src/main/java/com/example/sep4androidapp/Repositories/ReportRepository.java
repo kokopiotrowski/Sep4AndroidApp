@@ -48,10 +48,10 @@ public class ReportRepository {
 
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void updateRoomCondition(){
+    public void updateRoomCondition(String deviceId){
 
         RoomConditionApi roomConditionApi = ServiceGenerator.getRoomConditionApi();
-        Call<RoomConditionResponse> call = roomConditionApi.getRoomCondition();
+        Call<RoomConditionResponse> call = roomConditionApi.getRoomCondition(deviceId);
         call.enqueue(new Callback<RoomConditionResponse>() {
             @Override
             public void onResponse(Call<RoomConditionResponse> call, Response<RoomConditionResponse> response) {
