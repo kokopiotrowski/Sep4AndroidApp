@@ -30,7 +30,6 @@ import retrofit2.Response;
 
 
 public class ReportRepository {
-
     private static ReportRepository instance;
     private MutableLiveData<RoomCondition> roomCondition;
     private MutableLiveData<SleepData> sleepData;
@@ -40,7 +39,6 @@ public class ReportRepository {
         roomCondition = new MutableLiveData<>();
         sleepData = new MutableLiveData<>();
         sleepSessions = new MutableLiveData<>();
-
     }
 
     public static synchronized ReportRepository getInstance(){
@@ -49,7 +47,6 @@ public class ReportRepository {
         }
         return instance;
     }
-
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void updateRoomCondition(String deviceId){
@@ -62,12 +59,14 @@ public class ReportRepository {
                 if (response.code() == 200){
 
                     roomCondition.setValue(response.body().getRoomCondition());
+                }else{
+                    Log.i("ReportRepo", "Response code: " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<RoomConditionResponse> call, Throwable t) {
-                Log.i("Retrofit", t.getMessage());
+                Log.i("ReportRepo", "Failure at updating: " + t.getMessage());
 
             }
         });
@@ -78,19 +77,14 @@ public class ReportRepository {
         return roomCondition;
     }
 
-
-
     public void updateSleepData() {
         ReportApi reportApi = ServiceGenerator.getReportApi();
         Call<SleepDataResponse> call = reportApi.getSleepData();
         call.enqueue(new Callback<SleepDataResponse>() {
-
             @Override
             public void onResponse(Call<SleepDataResponse> call, Response<SleepDataResponse> response) {
-
                 if (response.code() == 200){
                     sleepData.setValue(response.body().getSleepData());
-
                 }
             }
 
@@ -129,7 +123,6 @@ public class ReportRepository {
                 Log.i("Retrofit", "Something went wrong in update sleep data :(");
                 Log.i("Why", "" + t.getCause());
             }
-
         });
     }
 

@@ -52,13 +52,11 @@ public class FragmentFirstPage extends Fragment {
         timeStamp = v.findViewById(R.id.timeStamp);
         floatingButton = v.findViewById(R.id.floatingButton);
 
-
         viewModel = new ViewModelProvider(this).get(FragmentFirstPageViewModel.class);
+        viewModel.updateRooms();
 
+        setListeners();
 
-        floatingButton.setOnClickListener(v1 -> {
-            viewModel.getFactRandomly();
-        });
         viewModel.getFact().observe(getViewLifecycleOwner(), fact -> {
             Bundle args = new Bundle();
             args.putString("title", fact.getTitle());
@@ -67,11 +65,8 @@ public class FragmentFirstPage extends Fragment {
             args.putString("url", fact.getSourceUrl());;
             factFragmentDialog.setArguments(args);
             factFragmentDialog.show(getChildFragmentManager(), "Chosen");
-
         });
 
-
-        viewModel.updateRooms();
         viewModel.getDevices().observe(getViewLifecycleOwner(), devices -> {
             nameList.clear();
             idList.clear();
@@ -85,6 +80,19 @@ public class FragmentFirstPage extends Fragment {
             spinner.setAdapter(adapter);
         });
 
+        viewModel.getRoomCondition().observe(getViewLifecycleOwner(), roomCondition -> {
+            currentTemperature.setText(String.format("%.0f", roomCondition.getTemperature()) + " °C");
+            currentCO2.setText(String.format("%.0f", roomCondition.getCo2()) + " ppm");
+            currentHumidity.setText(String.format("%.0f", roomCondition.getHumidity()) + "%");
+            currentSound.setText(String.format("%.0f", roomCondition.getSound()) + "dB");
+            timeStamp.setText("Updated: " + roomCondition.getTimestamp());
+        });
+
+        return v;
+    }
+
+    private void setListeners()
+    {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -99,19 +107,13 @@ public class FragmentFirstPage extends Fragment {
             public void onNothingSelected(AdapterView<?> parent) {}
         });
 
-        viewModel.getRoomCondition().observe(getViewLifecycleOwner(), roomCondition -> {
-            currentTemperature.setText(String.format("%.0f", roomCondition.getTemperature()) + " °C");
-            currentCO2.setText(String.format("%.0f", roomCondition.getCo2()) + " ppm");
-            currentHumidity.setText(String.format("%.0f", roomCondition.getHumidity()) + "%");
-            currentSound.setText(String.format("%.0f", roomCondition.getSound()) + "dB");
-            timeStamp.setText("Updated: " + roomCondition.getTimestamp());
-        });
-
         deviceSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             viewModel.switchCheck(isChecked);
         });
 
-        return v;
+        floatingButton.setOnClickListener(v1 -> {
+            viewModel.getFactRandomly();
+        });
     }
 
     @Override

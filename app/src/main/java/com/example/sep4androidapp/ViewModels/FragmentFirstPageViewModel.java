@@ -2,6 +2,7 @@ package com.example.sep4androidapp.ViewModels;
 
 import android.os.Handler;
 import android.util.Log;
+import android.widget.Spinner;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
@@ -34,11 +35,9 @@ public class FragmentFirstPageViewModel extends ViewModel {
 
     public void setDeviceId(String deviceId) {
         this.deviceId = deviceId;
-        Log.i("TAG", "DEVICEIDTO: " + deviceId);
     }
 
     public FragmentFirstPageViewModel() {
-
         reportRepository = ReportRepository.getInstance();
         startStopRepository = StartStopRepository.getInstance();
         roomsRepository = RoomsRepository.getInstance();
@@ -50,7 +49,7 @@ public class FragmentFirstPageViewModel extends ViewModel {
         return reportRepository.getRoomCondition();
     }
 
-    public void updateRoomCondition(String deviceId) {
+    private void updateRoomCondition(String deviceId) {
         reportRepository.updateRoomCondition(deviceId);
     }
 
@@ -60,7 +59,7 @@ public class FragmentFirstPageViewModel extends ViewModel {
             @Override
             public void run() {
                 handler.post(() -> {
-                    Log.i("TIMINGG", String.valueOf(Calendar.getInstance().getTime()) + " Id: " + getDeviceId());
+                    Log.i("TIMER", String.valueOf(Calendar.getInstance().getTime()));
                     updateRoomCondition(getDeviceId());
                 });
             }
@@ -71,11 +70,11 @@ public class FragmentFirstPageViewModel extends ViewModel {
         timer.cancel();
     }
 
-    public void start(String deviceId) {
+    private void start(String deviceId) {
         startStopRepository.start(deviceId);
     }
 
-    public void stop(String deviceId) {
+    private void stop(String deviceId) {
         startStopRepository.stop(deviceId);
     }
 
