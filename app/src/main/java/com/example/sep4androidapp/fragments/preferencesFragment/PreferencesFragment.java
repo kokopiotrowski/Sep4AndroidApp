@@ -67,15 +67,16 @@ public class PreferencesFragment extends Fragment {
         save = view.findViewById(R.id.buttonSave);
         yourPrefernces = view.findViewById(R.id.buttonYourPreferences);
 
-        viewModel = new ViewModelProvider(this).get(PrefrencesViewModel.class);
+
 
         CheckNetwork network = new CheckNetwork(getActivity().getApplicationContext());
         network.registerNetworkCallback();
 
-
+        viewModel = new ViewModelProvider(this).get(PrefrencesViewModel.class);
         //Variables.counter++;
         if (Variables.isNetworkConnected)  {
             Toast.makeText(getActivity(), "Connected to the network" + "", Toast.LENGTH_LONG).show();
+
 
             viewModel.getLastPreference().observe(getViewLifecycleOwner(), new Observer< Preferences >() {
                 @SuppressLint({"SetTextI18n", "DefaultLocale"})
@@ -95,9 +96,9 @@ public class PreferencesFragment extends Fragment {
             yourPrefernces.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //viewModel.showPrefrences();
+                    viewModel.showPrefrences();
                     //viewModel.getAllPreferences();
-                    viewModel.deleteAllPreferences();
+                    //viewModel.deleteAllPreferences();
 
 
                 }
