@@ -49,6 +49,8 @@ import java.util.List;
 
 public class ReportFragment extends Fragment {
 
+    private final String deviceId = "fake_device1";
+
     private ReportViewModel mViewModel;
     private View v;
     private TextView reportTextView;
@@ -58,6 +60,8 @@ public class ReportFragment extends Fragment {
     private HorizontalBarChart co2Chart;
     private RatingBar ratingBar;
     private Button rateSleepButton;
+
+    private int lastSleepId;
 
     private List<Entry> temperatureEntries = new ArrayList<>();
     private List<BarEntry> co2Entries = new ArrayList<>();
@@ -96,34 +100,11 @@ public class ReportFragment extends Fragment {
 
         ratingBar.setStepSize(1);
 
-        radioGroup.setOnCheckedChangeListener((radioGroup, i) -> {
-            int clickedButtonId = radioGroup.getCheckedRadioButtonId();
-            if (yesterday.getId() == clickedButtonId) {
-                rateSleepButton.setVisibility(View.VISIBLE);
-                ratingBar.setVisibility(View.VISIBLE);
-                updateCharts(1);
-                //updateChartsFakeData(1);
-            } else if (lastWeek.getId() == clickedButtonId) {
-                rateSleepButton.setVisibility(View.GONE);
-                ratingBar.setVisibility(View.GONE);
-                updateCharts(7);
-                //updateChartsFakeData(7);
-            } else if (lastMonth.getId() == clickedButtonId) {
-                rateSleepButton.setVisibility(View.GONE);
-                ratingBar.setVisibility(View.GONE);
-                updateCharts(30);
-                //updateChartsFakeData(30);
-            }
-        });
+        settingListenersAndObservers();
 
-        mViewModel.updateSleepSessions("fake_device3");
-        mViewModel.getSleepSessions().observe(getViewLifecycleOwner(), new Observer<List<SleepSession>>() {
-            @Override
-            public void onChanged(List<SleepSession> sleepSessions) {
-                sleepSessionsData = sleepSessions;
-                updateCharts(1);
-            }
-        });
+
+        mViewModel.updateSleepSessions(deviceId);
+
 
         //updateChartsFakeData(1);
         return v;
@@ -178,6 +159,52 @@ public class ReportFragment extends Fragment {
         co2Chart.setAutoScaleMinMaxEnabled(true);
         temperatureChart.setScaleX(1);
         co2Chart.setScaleX(1);
+    }
+
+    private void settingListenersAndObservers()
+    {
+        rateSleepButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Log.i("SleepSession", "Last sleep: " + sleepSessionsData.get(0).getTimeFinish());
+                mViewModel.rateSleep(sleepSessionsData.get(0).getSleepId(), ratingBar.getNumStars());
+                mViewModel.updateSleepSessions(deviceId);
+            }
+        });
+
+        radioGroup.setOnCheckedChangeListener((radioGroup, i) -> {
+            int clickedButtonId = radioGroup.getCheckedRadioButtonId();
+            if (yesterday.getId() == clickedButtonId) {
+                rateSleepButton.setVisibility(View.VISIBLE);
+                ratingBar.setVisibility(View.VISIBLE);
+                updateCharts(1);
+                //updateChartsFakeData(1);
+            } else if (lastWeek.getId() == clickedButtonId) {
+                rateSleepButton.setVisibility(View.GONE);
+                ratingBar.setVisibility(View.GONE);
+                updateCharts(7);
+                //updateChartsFakeData(7);
+            } else if (lastMonth.getId() == clickedButtonId) {
+                rateSleepButton.setVisibility(View.GONE);
+                ratingBar.setVisibility(View.GONE);
+                updateCharts(30);
+                //updateChartsFakeData(30);
+            }
+        });
+
+        mViewModel.getSleepSessions().observe(getViewLifecycleOwner(), new Observer<List<SleepSession>>() {
+            @Override
+            public void onChanged(List<SleepSession> sleepSessions) {
+                sleepSessionsData = sleepSessions;
+                updateCharts(1);
+                int lastSleepRating = sleepSessions.get(0).getRating();
+                if(lastSleepRating != 0) {
+                    ratingBar.setRating(lastSleepRating);
+                    rateSleepButton.setClickable(false);
+                }
+            }
+        });
     }
 
     private void updateChartsFakeData(int lastDays) {
