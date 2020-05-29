@@ -21,6 +21,8 @@ import com.example.sep4androidapp.Adapter.RoomsAdapter;
 import com.example.sep4androidapp.Entities.Device;
 import com.example.sep4androidapp.R;
 import com.example.sep4androidapp.ViewModels.RoomsViewModel;
+import com.example.sep4androidapp.fragments.setUpDeviceFragment.SetUpDeviceFragment;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 import java.util.Objects;
@@ -28,6 +30,7 @@ import java.util.Objects;
 public class RoomsFragment extends Fragment {
     private RoomsAdapter adapter;
     private RoomsViewModel viewModel;
+    private FloatingActionButton leadToSetUpButton;
 
     @Nullable
     @Override
@@ -37,6 +40,10 @@ public class RoomsFragment extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
+        leadToSetUpButton = view.findViewById(R.id.leadToSetUpButton);
+        leadToSetUpButton.setOnClickListener(v -> {
+            getParentFragmentManager().beginTransaction().replace(R.id.fragment_container, new SetUpDeviceFragment()).commit();
+        });
 
         adapter = new RoomsAdapter();
         recyclerView.setAdapter(adapter);
