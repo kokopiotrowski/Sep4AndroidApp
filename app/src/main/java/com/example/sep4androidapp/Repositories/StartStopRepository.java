@@ -32,8 +32,6 @@ public class StartStopRepository {
         return instance;
     }
 
-    //https://code.tutsplus.com/tutorials/sending-data-with-retrofit-2-http-client-for-android--cms-27845
-
     public void start(String deviceId) {
         SleepTrackingApi sleepTrackingApi = ServiceGenerator.getSleepTrackingApi();
         Call<StartStopResponse> call = sleepTrackingApi.startDevice(deviceId);

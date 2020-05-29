@@ -50,24 +50,21 @@ import java.util.List;
 public class ReportFragment extends Fragment {
 
     private ReportViewModel mViewModel;
-    View v;
-    TextView reportTextView;
-    RadioGroup radioGroup;
-    RadioButton yesterday, lastWeek, lastMonth;
-    LineChart temperatureChart;
-    HorizontalBarChart co2Chart;
-    RatingBar ratingBar;
-    Button rateSleepButton;
+    private View v;
+    private TextView reportTextView;
+    private RadioGroup radioGroup;
+    private RadioButton yesterday, lastWeek, lastMonth;
+    private LineChart temperatureChart;
+    private HorizontalBarChart co2Chart;
+    private RatingBar ratingBar;
+    private Button rateSleepButton;
 
-    List<Entry> temperatureEntries = new ArrayList<>();
-    List<BarEntry> co2Entries = new ArrayList<>();
+    private List<Entry> temperatureEntries = new ArrayList<>();
+    private List<BarEntry> co2Entries = new ArrayList<>();
 
-    List<SleepSession> sleepSessionsData;
-
-
-
-    LineData temperatureData;
-    BarData co2Data;
+    private List<SleepSession> sleepSessionsData;
+    private LineData temperatureData;
+    private BarData co2Data;
 
 
     public static ReportFragment newInstance() {
@@ -97,29 +94,21 @@ public class ReportFragment extends Fragment {
         temperatureEntries = new ArrayList<>();
         co2Entries = new ArrayList<>();
 
-
         ratingBar.setStepSize(1);
-
-
-
 
         radioGroup.setOnCheckedChangeListener((radioGroup, i) -> {
             int clickedButtonId = radioGroup.getCheckedRadioButtonId();
-            if(yesterday.getId() == clickedButtonId){
+            if (yesterday.getId() == clickedButtonId) {
                 rateSleepButton.setVisibility(View.VISIBLE);
                 ratingBar.setVisibility(View.VISIBLE);
                 updateCharts(1);
-               //updateChartsFakeData(1);
-            }
-            else if(lastWeek.getId() == clickedButtonId)
-            {
+                //updateChartsFakeData(1);
+            } else if (lastWeek.getId() == clickedButtonId) {
                 rateSleepButton.setVisibility(View.GONE);
                 ratingBar.setVisibility(View.GONE);
                 updateCharts(7);
                 //updateChartsFakeData(7);
-            }
-            else if(lastMonth.getId() == clickedButtonId)
-            {
+            } else if (lastMonth.getId() == clickedButtonId) {
                 rateSleepButton.setVisibility(View.GONE);
                 ratingBar.setVisibility(View.GONE);
                 updateCharts(30);
@@ -134,8 +123,7 @@ public class ReportFragment extends Fragment {
                 sleepSessionsData = sleepSessions;
                 updateCharts(1);
             }
-
-    });
+        });
 
         //updateChartsFakeData(1);
         return v;
@@ -149,63 +137,57 @@ public class ReportFragment extends Fragment {
         // TODO: Use the ViewModel
     }
 
-
-    private void updateCharts(int lastDays)
-    {
+    private void updateCharts(int lastDays) {
         temperatureChart.clear();
         co2Chart.clear();
 
         temperatureEntries.clear();
         co2Entries.clear();
 
-            for (int i = 0; i < (sleepSessionsData.size()<=lastDays?sleepSessionsData.size():lastDays); i++) {
+        for (int i = 0; i < (sleepSessionsData.size() <= lastDays ? sleepSessionsData.size() : lastDays); i++) {
 
-                SleepSession cSleep = sleepSessionsData.get(i);
-                int dayOfMonth = cSleep.getTimeStart().getDayOfMonth();
+            SleepSession cSleep = sleepSessionsData.get(i);
+            int dayOfMonth = cSleep.getTimeStart().getDayOfMonth();
 
-                temperatureEntries.add(new Entry(dayOfMonth, (float) cSleep.getAverageTemperature()));
-                co2Entries.add(new BarEntry(dayOfMonth, (float) cSleep.getAverageCo2()));
-            }
-            Collections.sort(temperatureEntries, new EntryXComparator());
-            Collections.sort(co2Entries, new EntryXComparator());
+            temperatureEntries.add(new Entry(dayOfMonth, (float) cSleep.getAverageTemperature()));
+            co2Entries.add(new BarEntry(dayOfMonth, (float) cSleep.getAverageCo2()));
+        }
+        Collections.sort(temperatureEntries, new EntryXComparator());
+        Collections.sort(co2Entries, new EntryXComparator());
 
-            LineDataSet temperatureDataSet = new LineDataSet(temperatureEntries, "Temperature");
-            BarDataSet co2DataSet = new BarDataSet(co2Entries, "Co2");
+        LineDataSet temperatureDataSet = new LineDataSet(temperatureEntries, "Temperature");
+        BarDataSet co2DataSet = new BarDataSet(co2Entries, "Co2");
 
-            temperatureData = new LineData(temperatureDataSet);
+        temperatureData = new LineData(temperatureDataSet);
 
-            temperatureChart.setData(temperatureData);
-
-
-            co2Data = new BarData(co2DataSet);
-            co2Data.setBarWidth(0.9f);
-            co2Chart.setData(co2Data);
-            co2Chart.setFitBars(true);
-
-            temperatureChart.invalidate();
-            co2Chart.invalidate();
-            styleCharts();
+        temperatureChart.setData(temperatureData);
 
 
+        co2Data = new BarData(co2DataSet);
+        co2Data.setBarWidth(0.9f);
+        co2Chart.setData(co2Data);
+        co2Chart.setFitBars(true);
+
+        temperatureChart.invalidate();
+        co2Chart.invalidate();
+        styleCharts();
     }
 
-    private void styleCharts()
-    {
+    private void styleCharts() {
         temperatureChart.setAutoScaleMinMaxEnabled(true);
         co2Chart.setAutoScaleMinMaxEnabled(true);
         temperatureChart.setScaleX(1);
         co2Chart.setScaleX(1);
     }
 
-    private void updateChartsFakeData(int lastDays)
-    {
+    private void updateChartsFakeData(int lastDays) {
         temperatureEntries = new ArrayList<>();
         co2Entries = new ArrayList<>();
 
         for (int i = 1; i <= lastDays; i++) {
 
             temperatureEntries.add(new Entry(i, (float) Math.floor(Math.random() * 13 + 12)));
-            co2Entries.add(new BarEntry(i, (float) Math.floor(Math.random() * 200 +400)));
+            co2Entries.add(new BarEntry(i, (float) Math.floor(Math.random() * 200 + 400)));
         }
 
         LineDataSet temperatureDataSet = new LineDataSet(temperatureEntries, "Temperature");
@@ -216,12 +198,11 @@ public class ReportFragment extends Fragment {
 
 
         co2Data = new BarData(co2DataSet);
-        co2Data.setBarWidth((float)(1.5 /lastDays));
+        co2Data.setBarWidth((float) (1.5 / lastDays));
         co2Chart.setData(co2Data);
         co2Chart.setFitBars(true);
 
         temperatureChart.invalidate();
         co2Chart.invalidate();
-
     }
 }

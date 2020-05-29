@@ -82,7 +82,6 @@ public class PreferencesFragment extends Fragment {
                 @Override
                 public void onChanged(Preferences preferences) {
 
-
                     MintempEditText.setText(String.format("%.1f", preferences.getTemperatureMin()));
                     MaxtempEditText.setText(String.format("%.1f", preferences.getTemperatureMax()));
                     MinhumEditText.setText(String.valueOf(preferences.getHumidityMin()));

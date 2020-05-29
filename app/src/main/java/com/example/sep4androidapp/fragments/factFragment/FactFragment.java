@@ -27,12 +27,12 @@ public class FactFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_fact, container, false);
 
-        RecyclerView recyclerView = view.findViewById(R.id.factRecyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setHasFixedSize(true);
-
-        adapter = new FactAdapter();
-        recyclerView.setAdapter(adapter);
+//        RecyclerView recyclerView = view.findViewById(R.id.factRecyclerView);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+//        recyclerView.setHasFixedSize(true);
+//
+//        adapter = new FactAdapter();
+//        recyclerView.setAdapter(adapter);
 
         viewModel = new ViewModelProvider(this).get(FactViewModel.class);
         viewModel.getFacts().observe(getViewLifecycleOwner(),facts -> adapter.setFacts(facts));
@@ -40,8 +40,6 @@ public class FactFragment extends Fragment {
 
         viewModel.updateFacts();
         return view;
-
-
     }
 
 }

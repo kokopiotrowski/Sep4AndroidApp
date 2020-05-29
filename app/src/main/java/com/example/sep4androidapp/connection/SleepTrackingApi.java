@@ -23,8 +23,5 @@ public interface SleepTrackingApi {
     Call<Boolean> getStatus(@Path("deviceId") String deviceId);
 
 
-    Call< StartStopResponse> getStartStopTrackingApi();
-
-
 
 }

@@ -71,8 +71,6 @@ public class ReportRepository {
 
             }
         });
-
-
     }
 
     public LiveData<RoomCondition> getRoomCondition(){
@@ -94,8 +92,6 @@ public class ReportRepository {
                     sleepData.setValue(response.body().getSleepData());
 
                 }
-
-
             }
 
             @Override

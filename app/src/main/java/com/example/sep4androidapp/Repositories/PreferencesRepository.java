@@ -58,14 +58,6 @@ public class PreferencesRepository {
         new UpdatePreferencesAsync(preferencesDao).execute(preferences);
     }
 
-//    public void deletePreference(Preferences preferences) {
-//        new DeletePreferenceAsync(preferencesDao).execute();
-//    }
-
-//    public void deleteAllPreferences() {
-//        new DeleteAllPreferencesAsync(preferencesDao).execute();
-//    }
-
     private static class InsertPreferencesAsync extends AsyncTask< Preferences, Void, Void > {
         private PreferencesDAO preferencesDAO;
 
