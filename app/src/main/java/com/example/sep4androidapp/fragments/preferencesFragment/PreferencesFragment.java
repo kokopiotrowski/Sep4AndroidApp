@@ -95,8 +95,9 @@ public class PreferencesFragment extends Fragment {
             yourPrefernces.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    viewModel.showPrefrences();
+                    //viewModel.showPrefrences();
                     //viewModel.getAllPreferences();
+                    viewModel.deleteAllPreferences();
 
 
                 }
@@ -127,12 +128,12 @@ public class PreferencesFragment extends Fragment {
                         }
                     } else {
 
-//                        MintempEditText.setText("Empty");
-//                        MaxtempEditText.setText("Empty");
-//                        MinhumEditText.setText("Empty");
-//                        MaxhumEditText.setText("Empty");
-//                        Minco2EditText.setText("Empty");
-//                        Maxco2EditText.setText("Empty");
+                        MintempEditText.setText("Empty");
+                        MaxtempEditText.setText("Empty");
+                        MinhumEditText.setText("Empty");
+                        MaxhumEditText.setText("Empty");
+                        Minco2EditText.setText("Empty");
+                        Maxco2EditText.setText("Empty");
                     }
 
                 }

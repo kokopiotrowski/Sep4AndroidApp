@@ -36,9 +36,9 @@ public class PrefrencesViewModel extends AndroidViewModel {
 //        preferencesRoomRepository.deletePreference(preferences);
 //    }
 //
-//    public void deleteAllPreferences() {
-//        preferencesRoomRepository.deleteAllPreferences();
-//    }
+    public void deleteAllPreferences() {
+        preferencesRoomRepository.deleteAllPreferences();
+    }
 //
 //    //---------------------------------------------------------------------------
 //

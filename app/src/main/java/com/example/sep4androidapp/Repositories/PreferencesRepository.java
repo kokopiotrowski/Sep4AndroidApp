@@ -62,9 +62,9 @@ public class PreferencesRepository {
 //        new DeletePreferenceAsync(preferencesDao).execute();
 //    }
 
-//    public void deleteAllPreferences() {
-//        new DeleteAllPreferencesAsync(preferencesDao).execute();
-//    }
+    public void deleteAllPreferences() {
+        new DeleteAllPreferencesAsync(preferencesDao).execute();
+    }
 
     private static class InsertPreferencesAsync extends AsyncTask< Preferences, Void, Void > {
         private PreferencesDAO preferencesDAO;
@@ -108,19 +108,19 @@ public class PreferencesRepository {
 //        }
 //    }
 
-//    private static class DeleteAllPreferencesAsync extends AsyncTask< Preferences, Void, Void > {
-//        private PreferencesDAO preferencesDAO;
-//
-//        private DeleteAllPreferencesAsync(PreferencesDAO preferencesDAO) {
-//            this.preferencesDAO = preferencesDAO;
-//        }
-//
-//        @Override
-//        protected Void doInBackground(Preferences... preferences) {
-//            preferencesDAO.deleteAllPreferences();
-//            return null;
-//        }
-//    }
+    private static class DeleteAllPreferencesAsync extends AsyncTask< Preferences, Void, Void > {
+        private PreferencesDAO preferencesDAO;
+
+        private DeleteAllPreferencesAsync(PreferencesDAO preferencesDAO) {
+            this.preferencesDAO = preferencesDAO;
+        }
+
+        @Override
+        protected Void doInBackground(Preferences... preferences) {
+            preferencesDAO.deleteAllPreferences();
+            return null;
+        }
+    }
 
     //_________________________________________________________________________
 
