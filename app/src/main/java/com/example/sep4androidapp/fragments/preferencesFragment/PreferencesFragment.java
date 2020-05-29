@@ -96,7 +96,7 @@ public class PreferencesFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     viewModel.showPrefrences();
-                    viewModel.getAllPreferences();
+                    //viewModel.getAllPreferences();
 
 
                 }
