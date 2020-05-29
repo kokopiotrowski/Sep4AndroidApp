@@ -4,8 +4,12 @@ import android.app.Application;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.room.DatabaseConfiguration;
+import androidx.room.InvalidationTracker;
+import androidx.sqlite.db.SupportSQLiteOpenHelper;
 
 import com.example.sep4androidapp.Entities.Preferences;
 import com.example.sep4androidapp.LocalStorage.PreferencesDAO;
@@ -54,13 +58,13 @@ public class PreferencesRepository {
         new UpdatePreferencesAsync(preferencesDao).execute(preferences);
     }
 
-    public void deletePreference(Preferences preferences) {
-        new DeletePreferenceAsync(preferencesDao).execute();
-    }
+//    public void deletePreference(Preferences preferences) {
+//        new DeletePreferenceAsync(preferencesDao).execute();
+//    }
 
-    public void deleteAllPreferences() {
-        new DeleteAllPreferencesAsync(preferencesDao).execute();
-    }
+//    public void deleteAllPreferences() {
+//        new DeleteAllPreferencesAsync(preferencesDao).execute();
+//    }
 
     private static class InsertPreferencesAsync extends AsyncTask< Preferences, Void, Void > {
         private PreferencesDAO preferencesDAO;
@@ -90,33 +94,33 @@ public class PreferencesRepository {
         }
     }
 
-    private static class DeletePreferenceAsync extends AsyncTask< Preferences, Void, Void > {
-        private PreferencesDAO preferencesDAO;
+//    private static class DeletePreferenceAsync extends AsyncTask< Preferences, Void, Void > {
+//        private PreferencesDAO preferencesDAO;
+//
+//        private DeletePreferenceAsync(PreferencesDAO preferencesDAO) {
+//            this.preferencesDAO = preferencesDAO;
+//        }
+//
+//        @Override
+//        protected Void doInBackground(Preferences... preferences) {
+//            preferencesDAO.deletePreference(preferences[0]);
+//            return null;
+//        }
+//    }
 
-        private DeletePreferenceAsync(PreferencesDAO preferencesDAO) {
-            this.preferencesDAO = preferencesDAO;
-        }
-
-        @Override
-        protected Void doInBackground(Preferences... preferences) {
-            preferencesDAO.deletePreference(preferences[0]);
-            return null;
-        }
-    }
-
-    private static class DeleteAllPreferencesAsync extends AsyncTask< Preferences, Void, Void > {
-        private PreferencesDAO preferencesDAO;
-
-        private DeleteAllPreferencesAsync(PreferencesDAO preferencesDAO) {
-            this.preferencesDAO = preferencesDAO;
-        }
-
-        @Override
-        protected Void doInBackground(Preferences... preferences) {
-            preferencesDAO.deleteAllPreferences();
-            return null;
-        }
-    }
+//    private static class DeleteAllPreferencesAsync extends AsyncTask< Preferences, Void, Void > {
+//        private PreferencesDAO preferencesDAO;
+//
+//        private DeleteAllPreferencesAsync(PreferencesDAO preferencesDAO) {
+//            this.preferencesDAO = preferencesDAO;
+//        }
+//
+//        @Override
+//        protected Void doInBackground(Preferences... preferences) {
+//            preferencesDAO.deleteAllPreferences();
+//            return null;
+//        }
+//    }
 
     //_________________________________________________________________________
 
@@ -184,4 +188,9 @@ public class PreferencesRepository {
     }
 
 
+//    private static PreferencesDatabase.Callback pCalback = new PreferencesDatabase() {
+//
+//        @Override
+//        public void onCreate(@NonNull)
+//
 }

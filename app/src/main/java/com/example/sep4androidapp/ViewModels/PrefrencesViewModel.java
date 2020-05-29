@@ -31,17 +31,17 @@ public class PrefrencesViewModel extends AndroidViewModel {
     public void update(final Preferences preferences) {
         preferencesRoomRepository.update(preferences);
     }
-
-    public void deletePreference(final Preferences preferences) {
-        preferencesRoomRepository.deletePreference(preferences);
-    }
-
-    public void deleteAllPreferences() {
-        preferencesRoomRepository.deleteAllPreferences();
-    }
-
-    //---------------------------------------------------------------------------
-
+//
+//    public void deletePreference(final Preferences preferences) {
+//        preferencesRoomRepository.deletePreference(preferences);
+//    }
+//
+//    public void deleteAllPreferences() {
+//        preferencesRoomRepository.deleteAllPreferences();
+//    }
+//
+//    //---------------------------------------------------------------------------
+//
     public void showPrefrences() {
         preferencesRoomRepository.showPreferences();
     }
