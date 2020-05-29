@@ -11,6 +11,7 @@ import androidx.room.DatabaseConfiguration;
 import androidx.room.InvalidationTracker;
 import androidx.sqlite.db.SupportSQLiteOpenHelper;
 
+import com.example.sep4androidapp.Entities.Device;
 import com.example.sep4androidapp.Entities.Preferences;
 import com.example.sep4androidapp.LocalStorage.PreferencesDAO;
 import com.example.sep4androidapp.LocalStorage.PreferencesDatabase;
@@ -31,11 +32,13 @@ public class PreferencesRepository {
     private static PreferencesRepository instance;
     private LiveData< List< Preferences > > allPreferences;
     private MutableLiveData< Preferences > pre;
+    private static MutableLiveData<List<Device>> list ;
 
     private PreferencesRepository(Application application) {
         PreferencesDatabase preferencesDatabase = PreferencesDatabase.getInstance(application);
         preferencesDao = preferencesDatabase.preferencesDAO();
         pre = new MutableLiveData<>();
+        list =new MutableLiveData<>();
 
         allPreferences = preferencesDao.getAllPreferences();
     }
@@ -44,6 +47,10 @@ public class PreferencesRepository {
         if (instance == null)
             instance = new PreferencesRepository(application);
         return instance;
+    }
+
+    public static LiveData< List< Device>> getList() {
+        return list;
     }
 
     public LiveData< List< Preferences > > getAllPreferences() {
@@ -118,9 +125,9 @@ public class PreferencesRepository {
 
 
     // GET API
-    public void showPreferences() {
+    public void showPreferences(String deviceId) {
         PreferenceApi preferenceApi = ServiceGenerator.getPreferenceApi();
-        Call< PreferencesResponse > call = preferenceApi.getPreferences();
+        Call< PreferencesResponse > call = preferenceApi.getPreferences(deviceId);
         call.enqueue(new Callback< PreferencesResponse >() {
             @Override
             public void onResponse(Call< PreferencesResponse > call, Response< PreferencesResponse > response) {

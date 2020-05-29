@@ -281,21 +281,6 @@
         android:padding="10dp">
 
         <Button
-            android:id="@+id/buttonView"
-            android:layout_width="103dp"
-            android:layout_height="50dp"
-            android:layout_marginBottom="40dp"
-            android:text="View"
-            android:textSize="10sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.288"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.2" />
-
-        <Button
             android:id="@+id/buttonSave"
             android:layout_width="100dp"
             android:layout_height="50dp"
@@ -304,10 +289,10 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.717"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.32" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
