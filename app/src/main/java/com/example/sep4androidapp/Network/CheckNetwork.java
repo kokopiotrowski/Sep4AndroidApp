@@ -77,7 +77,7 @@ public class CheckNetwork {
 
 
 
-    void registerNetworkCallback(){
+    public void registerNetworkCallback(){
         try {
             ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkRequest.Builder builder = new NetworkRequest.Builder();

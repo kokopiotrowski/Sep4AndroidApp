@@ -4,8 +4,12 @@ import android.app.Application;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.room.DatabaseConfiguration;
+import androidx.room.InvalidationTracker;
+import androidx.sqlite.db.SupportSQLiteOpenHelper;
 
 import com.example.sep4androidapp.Entities.Preferences;
 import com.example.sep4androidapp.LocalStorage.PreferencesDAO;
@@ -184,4 +188,9 @@ public class PreferencesRepository {
     }
 
 
+//    private static PreferencesDatabase.Callback pCalback = new PreferencesDatabase() {
+//
+//        @Override
+//        public void onCreate(@NonNull)
+//
 }

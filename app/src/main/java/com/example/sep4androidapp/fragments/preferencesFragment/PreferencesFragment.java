@@ -6,6 +6,7 @@ import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkInfo;
 import android.net.NetworkRequest;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.util.Log;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
@@ -32,6 +34,7 @@ import com.example.sep4androidapp.R;
 import com.example.sep4androidapp.ViewModels.PrefrencesViewModel;
 
 import java.util.List;
+
 
 import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
@@ -61,25 +64,24 @@ public class PreferencesFragment extends Fragment {
         Minco2EditText = view.findViewById(R.id.minCo2EditText);
         Maxco2EditText = view.findViewById(R.id.MaxCo2EditText);
 
-        //Minco2EditText = view.findViewById(R.id.minCo2EditText);
-
         save = view.findViewById(R.id.buttonSave);
         yourPrefernces = view.findViewById(R.id.buttonYourPreferences);
 
         viewModel = new ViewModelProvider(this).get(PrefrencesViewModel.class);
 
-
         CheckNetwork network = new CheckNetwork(getActivity().getApplicationContext());
-        network.registerDefaultNetworkCallback();
+        network.registerNetworkCallback();
 
-        Variables.counter++;
-        if (Variables.isNetworkConnected) {
-            Toast.makeText(getActivity(), "yesyesyesyesyes" +
-                    "", Toast.LENGTH_LONG).show();
+
+        //Variables.counter++;
+        if (Variables.isNetworkConnected)  {
+            Toast.makeText(getActivity(), "Connected to the network" + "", Toast.LENGTH_LONG).show();
 
             viewModel.getLastPreference().observe(getViewLifecycleOwner(), new Observer< Preferences >() {
+                @SuppressLint({"SetTextI18n", "DefaultLocale"})
                 @Override
                 public void onChanged(Preferences preferences) {
+
 
                     MintempEditText.setText(String.format("%.1f", preferences.getTemperatureMin()));
                     MaxtempEditText.setText(String.format("%.1f", preferences.getTemperatureMax()));
@@ -94,15 +96,16 @@ public class PreferencesFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     viewModel.showPrefrences();
-                    // viewModel.getAllPreferences();
+                    viewModel.getAllPreferences();
 
 
                 }
             });
 
         }else {
-              Toast.makeText(getActivity(), "nononononon", Toast.LENGTH_LONG).show();
+              Toast.makeText(getActivity(), "No internet connection", Toast.LENGTH_LONG).show();
             viewModel.getAllPreferences().observe(getViewLifecycleOwner(), new Observer<List<Preferences>>() {
+                @SuppressLint({"SetTextI18n", "DefaultLocale"})
                 @Override
                 public void onChanged(List<Preferences> preferences) {
 
@@ -123,12 +126,13 @@ public class PreferencesFragment extends Fragment {
 
                         }
                     } else {
-                        MintempEditText.setText("Empty");
-                        MaxtempEditText.setText("Empty");
-                        MinhumEditText.setText("Empty");
-                        MaxhumEditText.setText("Empty");
-                        Minco2EditText.setText("Empty");
-                        Maxco2EditText.setText("Empty");
+
+//                        MintempEditText.setText("Empty");
+//                        MaxtempEditText.setText("Empty");
+//                        MinhumEditText.setText("Empty");
+//                        MaxhumEditText.setText("Empty");
+//                        Minco2EditText.setText("Empty");
+//                        Maxco2EditText.setText("Empty");
                     }
 
                 }
@@ -137,12 +141,10 @@ public class PreferencesFragment extends Fragment {
 
             }
 
-
-        
-
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 viewModel.update(new Preferences("0004A30B002181EC",
                        true,
                         Integer.parseInt(Maxco2EditText.getText().toString()),
