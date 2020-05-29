@@ -72,10 +72,10 @@ public class SleepFragment extends Fragment {
         viewModel.getSleepData().observe(getViewLifecycleOwner(), new Observer<SleepData>() {
             @Override
             public void onChanged(SleepData sleepData) {
-                sound.setText(String.valueOf(sleepData.getAverageSound()) + " dB");
-                temperature.setText(String.valueOf(sleepData.getAverageTemperature()) + " °C");
-                humidity.setText(String.valueOf(sleepData.getAverageHumidity()) + " %");
-                co2.setText(String.valueOf(sleepData.getAverageCo2()) + " ppm");
+                sound.setText(String.format("%.0f",sleepData.getAverageSound()) + " dB");
+                temperature.setText(String.format("%.0f",sleepData.getAverageTemperature()) + " °C");
+                humidity.setText(String.format("%.0f",sleepData.getAverageHumidity()) + " %");
+                co2.setText(String.format("%.0f",sleepData.getAverageCo2()) + " ppm");
 
                 ArrayList<RoomCondition> roomConditions = sleepData.getRoomConditions();
 
@@ -103,7 +103,7 @@ public class SleepFragment extends Fragment {
 
                     if (counting > 0) {
 
-                        timeInSeconds = (float) seconds + 86399;
+                        timeInSeconds = (float) seconds + 86400;
                     } else {
                         timeInSeconds = (float) seconds;
                     }
@@ -128,7 +128,7 @@ public class SleepFragment extends Fragment {
         viewModel.updateSleepData();
 
         String[] arraySpinner = new String[]{
-                "", "Temperature", "Sound", "Humidity", "Co2"
+                "-choose parameter-", "Temperature", "Sound", "Humidity", "Co2"
         };
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_spinner_item, arraySpinner);
