@@ -34,6 +34,7 @@ public class FragmentFirstPageViewModel extends ViewModel {
 
     public void setDeviceId(String deviceId) {
         this.deviceId = deviceId;
+        Log.i("TAG", "DEVICEIDTO: " + deviceId);
     }
 
     public FragmentFirstPageViewModel() {
@@ -53,17 +54,17 @@ public class FragmentFirstPageViewModel extends ViewModel {
         reportRepository.updateRoomCondition(deviceId);
     }
 
-    public void update(String deviceId) {
+    public void update() {
         timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
                 handler.post(() -> {
-                    Log.i("TIMINGG", String.valueOf(Calendar.getInstance().getTime()));
-                    updateRoomCondition(deviceId);
+                    Log.i("TIMINGG", String.valueOf(Calendar.getInstance().getTime()) + " Id: " + getDeviceId());
+                    updateRoomCondition(getDeviceId());
                 });
             }
-        }, 0, 1000);
+        }, 0, 4000);
     }
 
     public void stopTimer() {
@@ -93,7 +94,7 @@ public class FragmentFirstPageViewModel extends ViewModel {
     public void switchCheck(boolean isChecked) {
         if (isChecked) {
             start(getDeviceId());
-            update(getDeviceId());
+            update();
         } else {
             stop(getDeviceId());
             stopTimer();
