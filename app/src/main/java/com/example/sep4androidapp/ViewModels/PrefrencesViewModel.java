@@ -54,8 +54,6 @@ public class PrefrencesViewModel extends AndroidViewModel {
         return preferencesRoomRepository.getAllPreferences();
     }
 
-
-
    public LiveData<Preferences> getLastPreference() {
        return preferencesRoomRepository.getPre();
    }

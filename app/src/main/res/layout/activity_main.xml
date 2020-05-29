@@ -17,7 +17,18 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="#46A14A" />
+            android:background="#46A14A"
+
+
+
+
+
+
+
+
+
+
+            />
 
         <FrameLayout
             android:id="@+id/fragment_container"
