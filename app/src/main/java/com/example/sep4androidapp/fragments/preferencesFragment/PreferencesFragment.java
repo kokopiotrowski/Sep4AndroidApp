@@ -65,7 +65,7 @@ public class PreferencesFragment extends Fragment {
         Maxco2EditText = view.findViewById(R.id.MaxCo2EditText);
 
         save = view.findViewById(R.id.buttonSave);
-        yourPrefernces = view.findViewById(R.id.buttonYourPreferences);
+//        yourPrefernces = view.findViewById(R.id.buttonYourPreferences);
 
         viewModel = new ViewModelProvider(this).get(PrefrencesViewModel.class);
 
