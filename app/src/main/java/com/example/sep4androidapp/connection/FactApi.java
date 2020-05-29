@@ -14,8 +14,8 @@ import retrofit2.http.Path;
 
 public interface FactApi {
     @GET("facts/random")
-    Call < FactResponse > getRandomFact();
+    Call<FactResponse> getRandomFact();
 
     @GET("facts")
-    Call< List< Fact > > getFact();
+    Call<List<Fact>> getFact();
 }

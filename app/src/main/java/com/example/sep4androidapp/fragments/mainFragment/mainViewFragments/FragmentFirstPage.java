@@ -15,10 +15,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.sep4androidapp.Entities.Fact;
 import com.example.sep4androidapp.R;
 import com.example.sep4androidapp.ViewModels.FragmentFirstPageViewModel;
+import com.example.sep4androidapp.fragments.factFragment.FactFragmentDialog;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,10 +32,11 @@ public class FragmentFirstPage extends Fragment {
     private FragmentFirstPageViewModel viewModel;
     private TextView currentTemperature, currentHumidity, currentCO2, currentSound, timeStamp;
     private Switch deviceSwitch;
+    private FactFragmentDialog factFragmentDialog = new FactFragmentDialog();
+    private FloatingActionButton floatingButton;
 
     private List<String> nameList = new ArrayList<>();
     private List<String> idList = new ArrayList<>();
-
 
     @SuppressLint({"SetTextI18n", "DefaultLocale"})
     @Nullable
@@ -45,8 +50,26 @@ public class FragmentFirstPage extends Fragment {
         currentSound = v.findViewById(R.id.currentSound);
         currentCO2 = v.findViewById(R.id.currentCo2);
         timeStamp = v.findViewById(R.id.timeStamp);
+        floatingButton = v.findViewById(R.id.floatingButton);
+
 
         viewModel = new ViewModelProvider(this).get(FragmentFirstPageViewModel.class);
+
+
+        floatingButton.setOnClickListener(v1 -> {
+            viewModel.getFactRandomly();
+        });
+        viewModel.getFact().observe(getViewLifecycleOwner(), fact -> {
+            Bundle args = new Bundle();
+            args.putString("title", fact.getTitle());
+            args.putString("content", fact.getContent());
+            args.putString("source", fact.getSource());
+            args.putString("url", fact.getSourceUrl());;
+            factFragmentDialog.setArguments(args);
+            factFragmentDialog.show(getChildFragmentManager(), "Chosen");
+
+        });
+
 
         viewModel.updateRooms();
         viewModel.getDevices().observe(getViewLifecycleOwner(), devices -> {
