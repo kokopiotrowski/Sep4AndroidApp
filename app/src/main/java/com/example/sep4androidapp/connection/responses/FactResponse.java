@@ -11,8 +11,12 @@ public class FactResponse implements Serializable {
     private String title;
     @SerializedName("content")
     private String content;
+    @SerializedName("source")
+    private String source;
+    @SerializedName("sourceUrl")
+    private String sourceUrl;
 
     public Fact getFact(){
-        return new Fact(title,content);
+        return new Fact(title,content, source, sourceUrl);
     }
 }
