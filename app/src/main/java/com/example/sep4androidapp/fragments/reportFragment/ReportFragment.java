@@ -98,6 +98,9 @@ public class ReportFragment extends Fragment {
         co2Entries = new ArrayList<>();
 
 
+        ratingBar.setStepSize(1);
+
+
 
 
         radioGroup.setOnCheckedChangeListener((radioGroup, i) -> {
@@ -190,7 +193,8 @@ public class ReportFragment extends Fragment {
     {
         temperatureChart.setAutoScaleMinMaxEnabled(true);
         co2Chart.setAutoScaleMinMaxEnabled(true);
-
+        temperatureChart.setScaleX(1);
+        co2Chart.setScaleX(1);
     }
 
     private void updateChartsFakeData(int lastDays)
