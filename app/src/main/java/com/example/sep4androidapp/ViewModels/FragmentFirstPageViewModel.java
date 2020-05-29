@@ -7,7 +7,9 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.sep4androidapp.Entities.Device;
+import com.example.sep4androidapp.Entities.Fact;
 import com.example.sep4androidapp.Entities.RoomCondition;
+import com.example.sep4androidapp.Repositories.FactRepository;
 import com.example.sep4androidapp.Repositories.ReportRepository;
 import com.example.sep4androidapp.Repositories.RoomsRepository;
 import com.example.sep4androidapp.Repositories.StartStopRepository;
@@ -21,6 +23,7 @@ public class FragmentFirstPageViewModel extends ViewModel {
     private ReportRepository reportRepository;
     private StartStopRepository startStopRepository;
     private RoomsRepository roomsRepository;
+    private FactRepository factRepository;
     private Handler handler = new Handler();
     private Timer timer = new Timer();
     private String deviceId;
@@ -38,6 +41,7 @@ public class FragmentFirstPageViewModel extends ViewModel {
         reportRepository = ReportRepository.getInstance();
         startStopRepository = StartStopRepository.getInstance();
         roomsRepository = RoomsRepository.getInstance();
+        factRepository = FactRepository.getInstance();
     }
 
     public LiveData<RoomCondition> getRoomCondition() {
@@ -94,5 +98,15 @@ public class FragmentFirstPageViewModel extends ViewModel {
             stop(getDeviceId());
             stopTimer();
         }
+    }
+
+    public void getFactRandomly()
+    {
+        factRepository.getFactRandomly();
+    }
+
+    public LiveData<Fact> getFact()
+    {
+        return factRepository.getFact();
     }
 }
