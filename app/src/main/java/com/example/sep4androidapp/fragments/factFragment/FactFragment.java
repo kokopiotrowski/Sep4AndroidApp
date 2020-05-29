@@ -49,7 +49,7 @@ public class FactFragment extends Fragment {
 
         viewModel = new ViewModelProvider(this).get(FactViewModel.class);
         viewModel.getFacts().observe(getViewLifecycleOwner(),facts -> adapter.setFacts(facts));
-        
+
         viewModel.updateFacts();
         return view;
     }
