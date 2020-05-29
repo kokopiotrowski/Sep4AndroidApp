@@ -92,9 +92,4 @@ public class StartStopRepository {
 
     }
 
-
-    public MutableLiveData<Boolean> getStatus() {
-        return status;
-    }
-
 }

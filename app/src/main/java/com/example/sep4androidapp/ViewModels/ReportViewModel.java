@@ -7,11 +7,9 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.room.Room;
 
-import com.example.sep4androidapp.Entities.Fact;
 import com.example.sep4androidapp.Entities.RoomCondition;
 import com.example.sep4androidapp.Entities.SleepData;
 import com.example.sep4androidapp.Entities.SleepSession;
-import com.example.sep4androidapp.Repositories.FactRepository;
 import com.example.sep4androidapp.Repositories.ReportRepository;
 import com.example.sep4androidapp.connection.responses.SleepSessionResponse;
 
@@ -24,15 +22,22 @@ import java.util.TimerTask;
 
 public class ReportViewModel extends ViewModel {
 
-    private FactRepository randomRepository;
     private ReportRepository repository;
     private Handler handler = new Handler();
     private Timer timer = new Timer();
+    private String deviceId;
+
+    public String getDeviceId() {
+        return deviceId;
+    }
+
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
+    }
 
     public ReportViewModel() {
 
         repository = ReportRepository.getInstance();
-        randomRepository = FactRepository.getInstance();
     }
 
     public LiveData<RoomCondition> getRoomCondition() {
@@ -40,28 +45,26 @@ public class ReportViewModel extends ViewModel {
        return repository.getRoomCondition();
     }
 
-    public LiveData< Fact > getFact(){
-        return randomRepository.getFact();
+    public void updateRoomCondition(String deviceId){
+        repository.updateRoomCondition(deviceId);
     }
 
-    public void getRandomFact(){
-        randomRepository.getFactRandomly();
-    }
-
-    public void updateRoomCondition(){
-        repository.updateRoomCondition();
-    }
-
-    public void update() {
+    public void update(String deviceId) {
+        timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
                 handler.post(()-> {
-                        Log.i("TAG", String.valueOf(Calendar.getInstance().getTime()));
-                        updateRoomCondition();
+                        Log.i("TIMINGG", String.valueOf(Calendar.getInstance().getTime()));
+                        updateRoomCondition(deviceId);
                 });
             }
         }, 0, 1000);
+    }
+
+    public void stopTimer()
+    {
+        timer.cancel();
     }
 
     public LiveData<SleepData> getSleepData() {
@@ -76,8 +79,8 @@ public class ReportViewModel extends ViewModel {
         return repository.getSleepSessions();
     }
 
-    public void updateSleepSessions(int deviceId, LocalDate start, LocalDate end)
+    public void updateSleepSessions(String deviceId)
     {
-        repository.updateSleepSessions(deviceId, start, end);
+        repository.updateSleepSessions(deviceId);
     }
 }

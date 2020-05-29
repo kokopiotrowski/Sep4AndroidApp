@@ -1,52 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+    android:orientation="vertical">
 
-        <!--        <Button-->
-        <!--            android:id="@+id/updateButton"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:text="Update" />-->
+<!--        <Button-->
+<!--            android:id="@+id/updateButton"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Update" />-->
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="54dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="5dp"
             android:orientation="horizontal">
 
-            <Spinner
-                android:id="@+id/spinner"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="300dp"
                 android:layout_height="match_parent"
+                android:layout_weight="4"
+                android:orientation="vertical">
+
+                <Spinner
+                    android:id="@+id/spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp" />
+
+                <TextView
+                    android:id="@+id/timeStamp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:text="05/12  14:30" />
+
+            </LinearLayout>
+
+            <Switch
+                android:id="@+id/deviceSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="47dp"
                 android:layout_weight="4" />
 
-            <TextView
-                android:id="@+id/timeStamp"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginStart="45dp"
-
-                android:layout_weight="4"
-                android:gravity="center_vertical"
-                android:text="Last updated: 05/12  14:30"
-                android:textAlignment="viewEnd" />
         </LinearLayout>
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="115dp"
+            android:layout_height="130dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
@@ -64,8 +76,7 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="20dp"
                     android:text="Temperature:"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
+                    android:textSize="30sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -75,8 +86,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="40dp"
-                    android:text="15 °C"
-                    android:textSize="20sp"
+                    android:text="20 °C"
+                    android:textSize="30sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -87,7 +98,7 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="20dp"
                     android:text="Expected:"
-                    android:textSize="14sp"
+                    android:textSize="24sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvCurrentTemperature" />
 
@@ -97,15 +108,15 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="20dp"
-                    android:text="18 °C"
-                    android:textSize="20sp"
+                    android:text="22 °C"
+                    android:textSize="24sp"
                     app:layout_constraintStart_toEndOf="@+id/tvExpectedTemperature"
                     app:layout_constraintTop_toBottomOf="@+id/tvCurrentTemperature" />
 
                 <ImageView
                     android:id="@+id/temperatureStatus"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:layout_marginTop="10dp"
                     app:layout_constraintEnd_toEndOf="@+id/currentTemperature"
                     app:layout_constraintTop_toBottomOf="@+id/currentTemperature"
@@ -115,7 +126,7 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="115dp"
+            android:layout_height="130dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
@@ -124,7 +135,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="104dp">
+                android:layout_height="match_parent">
 
                 <TextView
                     android:id="@+id/tvCurrentCo2"
@@ -133,8 +144,7 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="20dp"
                     android:text="Co2:"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
+                    android:textSize="30sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -145,7 +155,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="40dp"
                     android:text="420 ppm"
-                    android:textSize="20sp"
+                    android:textSize="30sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -156,7 +166,7 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="20dp"
                     android:text="Expected:"
-                    android:textSize="15sp"
+                    android:textSize="24sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvCurrentCo2" />
 
@@ -167,14 +177,14 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="20dp"
                     android:text="416"
-                    android:textSize="20sp"
+                    android:textSize="24sp"
                     app:layout_constraintStart_toEndOf="@+id/tvExpectedCo2"
                     app:layout_constraintTop_toBottomOf="@+id/tvCurrentCo2" />
 
                 <ImageView
                     android:id="@+id/Co2Status"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:layout_marginTop="10dp"
                     app:layout_constraintEnd_toEndOf="@+id/currentCo2"
                     app:layout_constraintTop_toBottomOf="@+id/currentCo2"
@@ -184,7 +194,7 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="115dp"
+            android:layout_height="130dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
@@ -202,8 +212,7 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="20dp"
                     android:text="Humidity:"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
+                    android:textSize="30sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -214,7 +223,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="40dp"
                     android:text="38%"
-                    android:textSize="20sp"
+                    android:textSize="30sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -225,7 +234,7 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="20dp"
                     android:text="Expected:"
-                    android:textSize="15sp"
+                    android:textSize="24sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvCurrentHumidity" />
 
@@ -236,14 +245,14 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="20dp"
                     android:text="35%"
-                    android:textSize="20sp"
+                    android:textSize="24sp"
                     app:layout_constraintStart_toEndOf="@+id/tvExpectedHumidity"
                     app:layout_constraintTop_toBottomOf="@+id/tvCurrentHumidity" />
 
                 <ImageView
                     android:id="@+id/HumidityStatus"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:layout_marginTop="10dp"
                     app:layout_constraintEnd_toEndOf="@+id/currentHumidity"
                     app:layout_constraintTop_toBottomOf="@+id/currentHumidity"
@@ -253,7 +262,7 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="115dp"
+            android:layout_height="130dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
@@ -271,8 +280,7 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="20dp"
                     android:text="Sound:"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
+                    android:textSize="30sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -283,7 +291,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="40dp"
                     android:text="20dB"
-                    android:textSize="20sp"
+                    android:textSize="30sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -294,7 +302,7 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="20dp"
                     android:text="Expected:"
-                    android:textSize="15sp"
+                    android:textSize="24sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvCurrentSound" />
 
@@ -305,82 +313,20 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="20dp"
                     android:text="15dB"
-                    android:textSize="20sp"
+                    android:textSize="24sp"
                     app:layout_constraintStart_toEndOf="@+id/tvExpectedSound"
                     app:layout_constraintTop_toBottomOf="@+id/tvCurrentSound" />
 
                 <ImageView
                     android:id="@+id/SoundStatus"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:layout_marginTop="10dp"
                     app:layout_constraintEnd_toEndOf="@+id/currentSound"
                     app:layout_constraintTop_toBottomOf="@+id/currentSound"
                     app:srcCompat="@drawable/correct" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
-
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/randomFactLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="5dp"
-            android:visibility="invisible"
-            app:cardBackgroundColor="#E3E3E3">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-
-                <TextView
-                    android:id="@+id/randomTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/blue_night"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.043"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.056" />
-
-                <TextView
-                    android:id="@+id/randomText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="18dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginBottom="10dp"
-                    android:textSize="12sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.091"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/randomTitle"
-                    app:layout_constraintVertical_bias="0.67" />
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
-
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floatingButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_margin="8dp"
-            android:backgroundTint="@color/blue_night"
-            android:src="@drawable/night"/>
-
 
     </LinearLayout>
 

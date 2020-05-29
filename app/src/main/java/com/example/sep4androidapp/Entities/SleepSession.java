@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class SleepSession implements Serializable {
+public class SleepSession {
     @SerializedName("sleepId")
     private int sleepId;
     @SerializedName("deviceId")

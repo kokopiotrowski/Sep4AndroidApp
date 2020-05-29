@@ -24,4 +24,9 @@ public class RoomsViewModel extends ViewModel {
     public void updateRooms(){
         repository.updateRooms();
     }
+
+    public void deleteDevice(String deviceId)
+    {
+        repository.deleteDevice(deviceId);
+    }
 }

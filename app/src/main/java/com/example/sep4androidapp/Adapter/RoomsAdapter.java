@@ -25,7 +25,6 @@ import java.util.List;
 
 public class RoomsAdapter extends ListAdapter<Device, RoomsAdapter.RoomHolder> {
 
-    private List<Device> devices = new ArrayList<>();
     private StartStopViewModel startStopViewModel = new StartStopViewModel();
 
     public RoomsAdapter() {
@@ -56,33 +55,25 @@ public class RoomsAdapter extends ListAdapter<Device, RoomsAdapter.RoomHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull RoomHolder holder, int position) {
-        Device currentDevice = devices.get(position);
+        Device currentDevice = getItem(position);
         holder.roomLabelTextView.setText(currentDevice.getName());
 
-        startStopViewModel.receiveStatus(devices.get(position).getDeviceId(), success -> {
-           Log.i("StartStopRepo",  "Result is: " + success);
-           holder.roomsSwitch.setChecked(success);
+        startStopViewModel.receiveStatus(getItem(position).getDeviceId(), success -> {
+            Log.i("StartStopRepo", "Result is: " + success);
+            holder.roomsSwitch.setChecked(success);
         });
 
         holder.roomsSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if(isChecked)
-            {
-                startStopViewModel.start(devices.get(position).getDeviceId());
-            }else{
-                startStopViewModel.stop(devices.get(position).getDeviceId());
+            if (isChecked) {
+                startStopViewModel.start(getItem(position).getDeviceId());
+            } else {
+                startStopViewModel.stop(getItem(position).getDeviceId());
             }
         });
     }
 
-    public void setDevices(List<Device> devices)
-    {
-        this.devices = devices;
-        notifyDataSetChanged();
-    }
-
-    @Override
-    public int getItemCount() {
-        return devices.size();
+    public Device getDeviceAt(int position) {
+        return getItem(position);
     }
 
     class RoomHolder extends RecyclerView.ViewHolder {

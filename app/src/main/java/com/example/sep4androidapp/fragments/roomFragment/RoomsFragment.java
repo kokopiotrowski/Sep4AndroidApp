@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -40,8 +42,21 @@ public class RoomsFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         viewModel = new ViewModelProvider(this).get(RoomsViewModel.class);
-        viewModel.getDevices().observe(getViewLifecycleOwner(), devices -> adapter.setDevices(devices));
+        viewModel.getDevices().observe(getViewLifecycleOwner(), devices -> adapter.submitList(devices));
 
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                String id = adapter.getDeviceAt(viewHolder.getAdapterPosition()).getDeviceId();
+                Log.i("TAG", "Device to delete: " + id);
+                viewModel.deleteDevice(id);
+            }
+        }).attachToRecyclerView(recyclerView);
 
         viewModel.updateRooms();
         return view;

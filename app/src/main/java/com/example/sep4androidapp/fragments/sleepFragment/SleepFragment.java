@@ -42,11 +42,14 @@ public class SleepFragment extends Fragment {
     TextView sound, temperature, humidity, co2;
     LineChart mpLineChart;
 
-    ArrayList<Entry> temperatureValues = new ArrayList<>();;
-    ArrayList<Entry> soundValues = new ArrayList<>();;
-    ArrayList<Entry> co2Values = new ArrayList<>();;
-    ArrayList<Entry> humidityValues = new ArrayList<>();;
+    ArrayList<Entry> temperatureValues = new ArrayList<>();
+    ArrayList<Entry> soundValues = new ArrayList<>();
+    ArrayList<Entry> co2Values = new ArrayList<>();
+    ArrayList<Entry> humidityValues = new ArrayList<>();
     ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+    int lastSavedDay = 0;
+    float timeInSeconds = 0;
+    int counting = 0;
 
     LineDataSet temperatureDataSet, soundDataSet, humidityDataSet, co2DataSet;
     LineData data;
@@ -77,30 +80,52 @@ public class SleepFragment extends Fragment {
                 ArrayList<RoomCondition> roomConditions = sleepData.getRoomConditions();
 
                 Collections.sort(roomConditions);
+                 lastSavedDay = roomConditions.get(0).getTimestamp().getDayOfYear();
 
 
                 int size = roomConditions.size();
+
+
 
                 for (int i = 0; i < size ; i++) {
                     float count = i;
                     RoomCondition temp = roomConditions.get(i);
                     LocalDateTime time = temp.getTimestamp();
-                    ZoneId zoneId = ZoneId.systemDefault();
+
+                   /* ZoneId zoneId = ZoneId.systemDefault();
                     long epoch = time.atZone(zoneId).toEpochSecond();
-                    double toDouble = epoch;
-                    float value = (float) toDouble;
+                    float value = (float) epoch;*/
+
+                    int seconds = time.getHour()*3600 + time.getMinute()*60 + time.getSecond();
+
+                    if(lastSavedDay < time.getDayOfYear())
+                    {
+                        counting++;
+                    }
+
+                    if(counting > 0){
+
+                        timeInSeconds = (float)seconds + 86399;
+                    }
+                    else
+                        {
+
+                        timeInSeconds = (float) seconds;
+
+                        }
+
 
                     float temperature = (float) temp.getTemperature();
                     float sound = (float) temp.getSound();
                     float humidity = (float) temp.getHumidity();
                     float co2 = (float) temp.getCo2();
 
-                    setTemperatureValues(temperature, epoch);
-                    setSoundValues(sound, epoch);
-                    setHumidityValues(humidity, epoch);
-                    setCo2Values(co2, epoch);
+                    setTemperatureValues(temperature, timeInSeconds);
+                    setSoundValues(sound, timeInSeconds);
+                    setHumidityValues(humidity, timeInSeconds);
+                    setCo2Values(co2, timeInSeconds);
 
-
+                    lastSavedDay = time.getDayOfYear();
 
                 }
 
@@ -108,6 +133,7 @@ public class SleepFragment extends Fragment {
         });
 
         viewModel.updateSleepData();
+
 
 
         String[] arraySpinner = new String[] {
@@ -159,6 +185,7 @@ public class SleepFragment extends Fragment {
                 xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
                 xAxis.setValueFormatter(new MyValueFormatter());
                 mpLineChart.setData(data);
+                mpLineChart.getMarker();
                 mpLineChart.invalidate();
 
 
