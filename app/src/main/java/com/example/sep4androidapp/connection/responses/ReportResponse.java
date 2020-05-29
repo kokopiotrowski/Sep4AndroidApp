@@ -11,6 +11,7 @@ public class ReportResponse implements Serializable {
     @SerializedName("sleepSessions")
     private List<SleepSession> sleepSessions;
 
-
-
+    public List<SleepSession> getSleepSessions() {
+        return sleepSessions;
+    }
 }

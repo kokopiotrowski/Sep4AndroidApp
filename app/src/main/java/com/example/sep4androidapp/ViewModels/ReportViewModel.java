@@ -79,8 +79,8 @@ public class ReportViewModel extends ViewModel {
         return repository.getSleepSessions();
     }
 
-    public void updateSleepSessions(int deviceId, LocalDate start, LocalDate end)
+    public void updateSleepSessions(String deviceId)
     {
-        repository.updateSleepSessions(deviceId, start, end);
+        repository.updateSleepSessions(deviceId);
     }
 }
