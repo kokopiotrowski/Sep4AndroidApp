@@ -27,9 +27,9 @@ public class MyValueFormatter implements IAxisValueFormatter {
         String actualTime = date.getHour() + ":" + date.getMinute() + ":" + date.getSecond();*/
         int timeInSeconds = (int) value;
 
-        if(value > 86399){
+        if(value > 86400){
 
-            timeInSeconds = timeInSeconds - 86399;
+            timeInSeconds = timeInSeconds - 86400;
 
         }
 

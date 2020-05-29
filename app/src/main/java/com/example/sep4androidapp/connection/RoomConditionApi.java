@@ -13,8 +13,6 @@ import retrofit2.http.Path;
 
 public interface RoomConditionApi {
 
-
-
     @GET("room-conditions/{deviceId}")
-    public Call<RoomConditionResponse> getRoomCondition(@Path("deviceId") String deviceId);
+    Call<RoomConditionResponse> getRoomCondition(@Path("deviceId") String deviceId);
 }

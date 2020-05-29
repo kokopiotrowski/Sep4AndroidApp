@@ -24,15 +24,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class ServiceGenerator {
-    //    private static Gson gson = new GsonBuilder().
-//            setDateFormat("yyyy-MM-dd HH:mm:ss").create();
     private static Gson gson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class, new JsonDeserializer<LocalDateTime>() {
         @Override
         public LocalDateTime deserialize(JsonElement json, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
-//            Instant instant = Instant.ofEpochMilli(json.getAsJsonPrimitive().getAsLong());
-//            return LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
-//            return ZonedDateTime.parse(json.getAsJsonPrimitive().getAsString()).toLocalDateTime();
-//            return LocalDateTime.now();
             String str = json.getAsJsonPrimitive().getAsString();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
@@ -44,17 +38,12 @@ public class ServiceGenerator {
             baseUrl("https://zzleep-api-dev.herokuapp.com/api/").addConverterFactory(GsonConverterFactory.create(gson)).client(client);
     private static Retrofit retrofit = retrofitBuilder.build();
 
-    private static UserApi userApi = retrofit.create(UserApi.class);
     private static ReportApi reportApi = retrofit.create(ReportApi.class);
     private static RoomConditionApi roomConditionApi = retrofit.create(RoomConditionApi.class);
     private static AccountDevicesApi accountDevicesApi = retrofit.create(AccountDevicesApi.class);
     private static FactApi factApi = retrofit.create(FactApi.class);
     private static PreferenceApi preferenceApi = retrofit.create(PreferenceApi.class);
     private static SleepTrackingApi sleepTrackingApi = retrofit.create(SleepTrackingApi.class);
-
-    public static UserApi getUserApi() {
-        return userApi;
-    }
 
     public static ReportApi getReportApi() {
         return reportApi;
@@ -79,28 +68,4 @@ public class ServiceGenerator {
     public static SleepTrackingApi getSleepTrackingApi() {
         return sleepTrackingApi;
     }
-
-    /*
-    COPY THIS METHOD TO THE REGISTER THAT USES UserApi
-
-        public void requestUser(int id)
-        {
-        UserApi userApi = ServiceGenerator.getUserApi();
-        Call call = userApi.getUser(id);
-        call.enqueue(new Callback(){
-            @Override
-            public void onResponse(Call call, Response response)
-            {
-            if(response.code() == 200)
-            {
-
-            }
-            }
-
-        });
-        }
-
-
-     */
-
 }

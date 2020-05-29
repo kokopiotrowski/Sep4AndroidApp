@@ -76,9 +76,7 @@ public class SetUpDeviceRepository {
             @Override
             public void onFailure(Call<Device> call, Throwable t) {
                 Log.i("SetUpRepo", "Failing with posting device: " + t.getMessage());
-
             }
         });
     }
-
 }

@@ -28,7 +28,4 @@ public class BasicAuthInterceptor implements Interceptor {
         request = request.newBuilder().header("Authorization", Credentials.basic(userId, "1234")).build();
         return chain.proceed(request);
     }
-
-
-
 }

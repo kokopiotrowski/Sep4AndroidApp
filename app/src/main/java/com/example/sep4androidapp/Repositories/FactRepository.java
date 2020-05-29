@@ -29,8 +29,8 @@ import static android.content.ContentValues.TAG;
 
 public class FactRepository {
     private static FactRepository instance;
-    private MutableLiveData< List< Fact > > Factlist;
-    private MutableLiveData< Fact > fact;
+    private MutableLiveData<List<Fact>> Factlist;
+    private MutableLiveData<Fact> fact;
 
     private FactRepository() {
         Factlist = new MutableLiveData<>();
@@ -46,11 +46,11 @@ public class FactRepository {
 
     public void updateFacts() {
         FactApi factApi = ServiceGenerator.getFactApi();
-        Call< List< Fact > > call = factApi.getFact();
-        call.enqueue(new Callback< List< Fact > >() {
+        Call<List<Fact>> call = factApi.getFact();
+        call.enqueue(new Callback<List<Fact>>() {
             @SuppressLint("RestrictedApi")
             @Override
-            public void onResponse(Call< List< Fact > > call, Response< List< Fact > > response) {
+            public void onResponse(Call<List<Fact>> call, Response<List<Fact>> response) {
                 if (response.code() == 200) {
                     Factlist.setValue(response.body());
                 }
@@ -59,13 +59,13 @@ public class FactRepository {
 
             @SuppressLint("RestrictedApi")
             @Override
-            public void onFailure(Call< List< Fact > > call, Throwable t) {
+            public void onFailure(Call<List<Fact>> call, Throwable t) {
                 Log.i("factRepo", "Pouneh2" + t.getMessage());
             }
         });
     }
 
-    public LiveData< List< Fact > > getFactList() {
+    public LiveData<List<Fact>> getFactList() {
         return Factlist;
     }
 
@@ -73,10 +73,10 @@ public class FactRepository {
     public void getFactRandomly() {
 
         FactApi factApi = ServiceGenerator.getFactApi();
-        Call< FactResponse > call = factApi.getRandomFact();
-        call.enqueue(new Callback< FactResponse >() {
+        Call<FactResponse> call = factApi.getRandomFact();
+        call.enqueue(new Callback<FactResponse>() {
             @Override
-            public void onResponse(Call< FactResponse > call, Response< FactResponse > response) {
+            public void onResponse(Call<FactResponse> call, Response<FactResponse> response) {
                 if (response.code() == 200) {
 
                     fact.setValue(response.body().getFact());
@@ -90,7 +90,7 @@ public class FactRepository {
             }
 
             @Override
-            public void onFailure(Call< FactResponse > call, Throwable t) {
+            public void onFailure(Call<FactResponse> call, Throwable t) {
                 Log.i("RandomFact", t.getMessage());
 
             }
@@ -98,7 +98,7 @@ public class FactRepository {
 
     }
 
-    public LiveData< Fact > getFact() {
+    public LiveData<Fact> getFact() {
         return fact;
     }
 }

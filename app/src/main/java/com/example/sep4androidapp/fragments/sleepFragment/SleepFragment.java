@@ -72,22 +72,21 @@ public class SleepFragment extends Fragment {
         viewModel.getSleepData().observe(getViewLifecycleOwner(), new Observer<SleepData>() {
             @Override
             public void onChanged(SleepData sleepData) {
-                sound.setText(String.valueOf(sleepData.getAverageSound()) + " dB");
-                temperature.setText(String.valueOf(sleepData.getAverageTemperature()) + " °C");
-                humidity.setText(String.valueOf(sleepData.getAverageHumidity()) + " %");
-                co2.setText(String.valueOf(sleepData.getAverageCo2()) + " ppm");
+                sound.setText(String.format("%.0f",sleepData.getAverageSound()) + " dB");
+                temperature.setText(String.format("%.0f",sleepData.getAverageTemperature()) + " °C");
+                humidity.setText(String.format("%.0f",sleepData.getAverageHumidity()) + " %");
+                co2.setText(String.format("%.0f",sleepData.getAverageCo2()) + " ppm");
 
                 ArrayList<RoomCondition> roomConditions = sleepData.getRoomConditions();
 
                 Collections.sort(roomConditions);
-                 lastSavedDay = roomConditions.get(0).getTimestamp().getDayOfYear();
+                lastSavedDay = roomConditions.get(0).getTimestamp().getDayOfYear();
 
 
                 int size = roomConditions.size();
 
 
-
-                for (int i = 0; i < size ; i++) {
+                for (int i = 0; i < size; i++) {
                     float count = i;
                     RoomCondition temp = roomConditions.get(i);
                     LocalDateTime time = temp.getTimestamp();
@@ -96,24 +95,18 @@ public class SleepFragment extends Fragment {
                     long epoch = time.atZone(zoneId).toEpochSecond();
                     float value = (float) epoch;*/
 
-                    int seconds = time.getHour()*3600 + time.getMinute()*60 + time.getSecond();
+                    int seconds = time.getHour() * 3600 + time.getMinute() * 60 + time.getSecond();
 
-                    if(lastSavedDay < time.getDayOfYear())
-                    {
+                    if (lastSavedDay < time.getDayOfYear()) {
                         counting++;
                     }
 
-                    if(counting > 0){
+                    if (counting > 0) {
 
-                        timeInSeconds = (float)seconds + 86399;
-                    }
-                    else
-                        {
-
+                        timeInSeconds = (float) seconds + 86400;
+                    } else {
                         timeInSeconds = (float) seconds;
-
-                        }
-
+                    }
 
                     float temperature = (float) temp.getTemperature();
                     float sound = (float) temp.getSound();
@@ -134,10 +127,8 @@ public class SleepFragment extends Fragment {
 
         viewModel.updateSleepData();
 
-
-
-        String[] arraySpinner = new String[] {
-                "","Temperature", "Sound", "Humidity", "Co2"
+        String[] arraySpinner = new String[]{
+                "-choose parameter-", "Temperature", "Sound", "Humidity", "Co2"
         };
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_spinner_item, arraySpinner);
@@ -145,37 +136,35 @@ public class SleepFragment extends Fragment {
         spinner.setAdapter(adapter);
 
         //selection doesn't work on position 0, otherwise listener is activated while initializing the fragment and the array lists are still empty at that point (throws null pointer)
-        spinner.setSelection(0,false);
+        spinner.setSelection(0, false);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 Object item = parentView.getItemAtPosition(position).toString();
-                if(item.equals("")){
+                if (item.equals("")) {
 
                     //do nothing
-                }
-                else
-                    {
+                } else {
                     dataSets.clear();
-                    }
+                }
 
-                if(item.equals("Temperature")){
-                    temperatureDataSet = new LineDataSet(getTemperatureValues(),"Temperature");
+                if (item.equals("Temperature")) {
+                    temperatureDataSet = new LineDataSet(getTemperatureValues(), "Temperature");
                     dataSets.add(temperatureDataSet);
                 }
-                if(item.equals("Sound")){
+                if (item.equals("Sound")) {
 
-                    soundDataSet = new LineDataSet(getSoundValues(),"Sound");
+                    soundDataSet = new LineDataSet(getSoundValues(), "Sound");
                     dataSets.add(soundDataSet);
                 }
-                if(item.equals("Humidity")){
+                if (item.equals("Humidity")) {
 
-                    humidityDataSet = new LineDataSet(getHumidityValues(),"Humidity");
+                    humidityDataSet = new LineDataSet(getHumidityValues(), "Humidity");
                     dataSets.add(humidityDataSet);
                 }
-                if(item.equals("Co2")){
+                if (item.equals("Co2")) {
 
-                    co2DataSet = new LineDataSet(getCo2Values(),"Co2");
+                    co2DataSet = new LineDataSet(getCo2Values(), "Co2");
                     dataSets.add(co2DataSet);
                 }
 
@@ -187,8 +176,6 @@ public class SleepFragment extends Fragment {
                 mpLineChart.setData(data);
                 mpLineChart.getMarker();
                 mpLineChart.invalidate();
-
-
             }
 
             @Override
@@ -203,54 +190,54 @@ public class SleepFragment extends Fragment {
 
     private void setTemperatureValues(float temperature, float index) {
 
-        temperatureValues.add(new Entry(index,temperature));
-
+        temperatureValues.add(new Entry(index, temperature));
     }
+
     private void setSoundValues(float sound, float index) {
 
-        soundValues.add(new Entry(index,sound));
-
+        soundValues.add(new Entry(index, sound));
     }
+
     private void setHumidityValues(float humidity, float index) {
 
-        humidityValues.add(new Entry(index,humidity));
-
+        humidityValues.add(new Entry(index, humidity));
     }
+
     private void setCo2Values(float co2, float index) {
 
-        co2Values.add(new Entry(index,co2));
+        co2Values.add(new Entry(index, co2));
 
     }
+
     private ArrayList<Entry> getTemperatureValues() {
 
         return temperatureValues;
     }
+
     private ArrayList<Entry> getSoundValues() {
 
         return soundValues;
     }
+
     private ArrayList<Entry> getCo2Values() {
 
         return co2Values;
     }
+
     private ArrayList<Entry> getHumidityValues() {
 
         return humidityValues;
     }
 
-    private ArrayList<Entry> getTestValues(){
-        temperatureValues.add(new Entry(1,1));
-        temperatureValues.add(new Entry(2,2));
-        temperatureValues.add(new Entry(19,19));
-        temperatureValues.add(new Entry(20,20));
-        temperatureValues.add(new Entry(21,21));
+    private ArrayList<Entry> getTestValues() {
+        temperatureValues.add(new Entry(1, 1));
+        temperatureValues.add(new Entry(2, 2));
+        temperatureValues.add(new Entry(19, 19));
+        temperatureValues.add(new Entry(20, 20));
+        temperatureValues.add(new Entry(21, 21));
 
-
-return temperatureValues;
+        return temperatureValues;
     }
-
-
-
 
 
 }

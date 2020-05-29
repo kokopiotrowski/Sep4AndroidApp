@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase;
 
 import com.example.sep4androidapp.Entities.Preferences;
 
-@Database(entities ={Preferences.class}, version = 2)
+@Database(entities ={Preferences.class}, version = 1)
 public abstract class PreferencesDatabase extends RoomDatabase {
 
     private static PreferencesDatabase instance;

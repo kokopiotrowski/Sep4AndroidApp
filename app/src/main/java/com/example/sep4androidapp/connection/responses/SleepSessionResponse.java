@@ -29,7 +29,6 @@ public class SleepSessionResponse implements Serializable {
     @SerializedName("averageTemperature")
     private double averageTemperature;
 
-
     public SleepSession getSleepSession(){
         return new SleepSession(sleepId, deviceId, timeStart,timeFinish, rating,averageCo2, averageHumidity, averageSound, averageTemperature);
 
