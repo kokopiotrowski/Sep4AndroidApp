@@ -67,10 +67,11 @@ public class PreferencesFragment extends Fragment {
         save = view.findViewById(R.id.buttonSave);
 //        yourPrefernces = view.findViewById(R.id.buttonYourPreferences);
 
-        viewModel = new ViewModelProvider(this).get(PrefrencesViewModel.class);
+
 
         CheckNetwork network = new CheckNetwork(getActivity().getApplicationContext());
         network.registerNetworkCallback();
+        viewModel = new ViewModelProvider(this).get(PrefrencesViewModel.class);
 
 
         //Variables.counter++;
@@ -90,16 +91,8 @@ public class PreferencesFragment extends Fragment {
                     Maxco2EditText.setText(String.valueOf(preferences.getCo2Max()) );
                 }
             });
-
-            yourPrefernces.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
                     viewModel.showPrefrences();
-                    //viewModel.getAllPreferences();
 
-
-                }
-            });
 
         }else {
               Toast.makeText(getActivity(), "No internet connection", Toast.LENGTH_LONG).show();
@@ -126,12 +119,12 @@ public class PreferencesFragment extends Fragment {
                         }
                     } else {
 
-//                        MintempEditText.setText("Empty");
-//                        MaxtempEditText.setText("Empty");
-//                        MinhumEditText.setText("Empty");
-//                        MaxhumEditText.setText("Empty");
-//                        Minco2EditText.setText("Empty");
-//                        Maxco2EditText.setText("Empty");
+                        MintempEditText.setText("Empty");
+                        MaxtempEditText.setText("Empty");
+                        MinhumEditText.setText("Empty");
+                        MaxhumEditText.setText("Empty");
+                        Minco2EditText.setText("Empty");
+                        Maxco2EditText.setText("Empty");
                     }
 
                 }
