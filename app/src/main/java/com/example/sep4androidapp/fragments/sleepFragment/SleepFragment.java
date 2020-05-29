@@ -128,7 +128,7 @@ public class SleepFragment extends Fragment {
         viewModel.updateSleepData();
 
         String[] arraySpinner = new String[]{
-                "", "Temperature", "Sound", "Humidity", "Co2"
+                "Choose kurwa", "Temperature", "Sound", "Humidity", "Co2"
         };
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_spinner_item, arraySpinner);
@@ -173,6 +173,7 @@ public class SleepFragment extends Fragment {
                 XAxis xAxis = mpLineChart.getXAxis();
                 xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
                 xAxis.setValueFormatter(new MyValueFormatter());
+                mpLineChart.setVisibleXRangeMaximum(5);
                 mpLineChart.setData(data);
                 mpLineChart.getMarker();
                 mpLineChart.invalidate();

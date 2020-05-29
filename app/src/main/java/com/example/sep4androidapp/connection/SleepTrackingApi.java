@@ -5,6 +5,7 @@ import com.example.sep4androidapp.connection.responses.StartStopResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
@@ -22,6 +23,8 @@ public interface SleepTrackingApi {
     @GET("tracking/{deviceId}")
     Call<Boolean> getStatus(@Path("deviceId") String deviceId);
 
+    @PUT("tracking/{sleepId}/")
+    Call rateSleep(@Path("sleepId") int sleepId, @Field("rating") int rating);
 
 
 }

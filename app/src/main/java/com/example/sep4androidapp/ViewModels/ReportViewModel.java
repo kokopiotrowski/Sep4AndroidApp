@@ -83,4 +83,6 @@ public class ReportViewModel extends ViewModel {
     {
         repository.updateSleepSessions(deviceId);
     }
+
+    public void rateSleep(int sleepId, int rating) { repository.rateSleep(sleepId, rating);}
 }

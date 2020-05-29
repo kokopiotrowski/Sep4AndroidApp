@@ -13,6 +13,7 @@ import com.example.sep4androidapp.Entities.SleepSession;
 import com.example.sep4androidapp.connection.ReportApi;
 import com.example.sep4androidapp.connection.RoomConditionApi;
 import com.example.sep4androidapp.connection.ServiceGenerator;
+import com.example.sep4androidapp.connection.SleepTrackingApi;
 import com.example.sep4androidapp.connection.responses.ReportResponse;
 import com.example.sep4androidapp.connection.responses.RoomConditionResponse;
 import com.example.sep4androidapp.connection.responses.SleepDataResponse;
@@ -136,6 +137,30 @@ public class ReportRepository {
     public LiveData<List<SleepSession>> getSleepSessions()
     {
         return sleepSessions;
+    }
+
+    public void rateSleep(int sleepId, int rating){
+
+
+        SleepTrackingApi sleepTrackingApi = ServiceGenerator.getSleepTrackingApi();
+        Call call = sleepTrackingApi.rateSleep(sleepId, rating);
+        call.enqueue(new Callback() {
+
+            @Override
+            public void onResponse(Call call, Response response) {
+                if (response.code() == 200){
+                    Log.i("Retrofit", "Rating given");
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                Log.i("Retrofit", "Sleep rating wasn't registered on server :(");
+                Log.i("Why", "" + t.getCause());
+            }
+
+        });
     }
 
 }
