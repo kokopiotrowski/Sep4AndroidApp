@@ -30,82 +30,77 @@ import retrofit2.Response;
 
 
 public class ReportRepository {
-
     private static ReportRepository instance;
-    private MutableLiveData< RoomCondition > roomCondition;
-    private MutableLiveData< SleepData > sleepData;
-    private MutableLiveData< List< SleepSession > > sleepSessions;
+    private MutableLiveData<RoomCondition> roomCondition;
+    private MutableLiveData<SleepData> sleepData;
+    private MutableLiveData<List<SleepSession>> sleepSessions;
 
-    private ReportRepository() {
+    private ReportRepository (){
         roomCondition = new MutableLiveData<>();
         sleepData = new MutableLiveData<>();
         sleepSessions = new MutableLiveData<>();
-
     }
 
-    public static synchronized ReportRepository getInstance() {
-        if (instance == null) {
+    public static synchronized ReportRepository getInstance(){
+        if (instance == null){
             instance = new ReportRepository();
         }
         return instance;
     }
 
-
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void updateRoomCondition(String deviceId) {
+    public void updateRoomCondition(String deviceId){
 
         RoomConditionApi roomConditionApi = ServiceGenerator.getRoomConditionApi();
-        Call< RoomConditionResponse > call = roomConditionApi.getRoomCondition(deviceId);
-        call.enqueue(new Callback< RoomConditionResponse >() {
+        Call<RoomConditionResponse> call = roomConditionApi.getRoomCondition(deviceId);
+        call.enqueue(new Callback<RoomConditionResponse>() {
             @Override
-            public void onResponse(Call< RoomConditionResponse > call, Response< RoomConditionResponse > response) {
-                if (response.code() == 200) {
+            public void onResponse(Call<RoomConditionResponse> call, Response<RoomConditionResponse> response) {
+                if (response.code() == 200){
 
                     roomCondition.setValue(response.body().getRoomCondition());
+                }else{
+                    Log.i("ReportRepo", "Response code: " + response.code());
                 }
             }
 
             @Override
-            public void onFailure(Call< RoomConditionResponse > call, Throwable t) {
-                Log.i("Retrofit", t.getMessage());
+            public void onFailure(Call<RoomConditionResponse> call, Throwable t) {
+                Log.i("ReportRepo", "Failure at updating: " + t.getMessage());
 
             }
         });
     }
 
-    public LiveData< RoomCondition > getRoomCondition() {
+    public LiveData<RoomCondition> getRoomCondition(){
 
         return roomCondition;
     }
 
-
     public void updateSleepData() {
         ReportApi reportApi = ServiceGenerator.getReportApi();
-        Call< SleepDataResponse > call = reportApi.getSleepData();
-        call.enqueue(new Callback< SleepDataResponse >() {
-
+        Call<SleepDataResponse> call = reportApi.getSleepData();
+        call.enqueue(new Callback<SleepDataResponse>() {
             @Override
-            public void onResponse(Call< SleepDataResponse > call, Response< SleepDataResponse > response) {
-
-                if (response.code() == 200) {
+            public void onResponse(Call<SleepDataResponse> call, Response<SleepDataResponse> response) {
+                if (response.code() == 200){
                     sleepData.setValue(response.body().getSleepData());
-
                 }
             }
 
             @Override
-            public void onFailure(Call< SleepDataResponse > call, Throwable t) {
+            public void onFailure(Call<SleepDataResponse> call, Throwable t) {
                 Log.i("Retrofit", "Something went wrong in update sleep data :(");
                 Log.i("Why", "" + t.getCause());
             }
         });
     }
 
-    public LiveData< SleepData > getSleepData() {
+    public LiveData<SleepData> getSleepData() {
         return sleepData;
     }
 
-    public void updateSleepSessions(String deviceId) {
+    public void updateSleepSessions(String deviceId){
 
         LocalDate today = LocalDate.now();
         LocalDate monthAgo = today.minusMonths(1);
@@ -113,26 +108,26 @@ public class ReportRepository {
         monthAgo.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
         ReportApi reportApi = ServiceGenerator.getReportApi();
-        Call< ReportResponse > call = reportApi.getReport(deviceId);
-        call.enqueue(new Callback< ReportResponse >() {
+        Call<ReportResponse> call = reportApi.getReport(deviceId);
+        call.enqueue(new Callback<ReportResponse>() {
 
             @Override
-            public void onResponse(Call< ReportResponse > call, Response< ReportResponse > response) {
-                if (response.code() == 200) {
+            public void onResponse(Call<ReportResponse> call, Response<ReportResponse> response) {
+                if (response.code() == 200){
                     sleepSessions.setValue(response.body().getSleepSessions());
                 }
             }
 
             @Override
-            public void onFailure(Call< ReportResponse > call, Throwable t) {
+            public void onFailure(Call<ReportResponse> call, Throwable t) {
                 Log.i("Retrofit", "Something went wrong in update sleep data :(");
                 Log.i("Why", "" + t.getCause());
             }
-
         });
     }
 
-    public LiveData< List< SleepSession > > getSleepSessions() {
+    public LiveData<List<SleepSession>> getSleepSessions()
+    {
         return sleepSessions;
     }
 

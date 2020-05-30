@@ -62,7 +62,7 @@ public class SetUpDeviceRepository {
     }
 
     public void postNewDevice(NewDeviceModel model) {
-        Log.i("TAG", "Device id: " + model.getDeviceId() + " Name: " + model.getName());
+        Log.i("SetUpRepo", "Device id: " + model.getDeviceId() + " Name: " + model.getName());
 
         AccountDevicesApi devicesApi = ServiceGenerator.getAccountDevicesApi();
         Call<Device> call = devicesApi.addDevice(model);
