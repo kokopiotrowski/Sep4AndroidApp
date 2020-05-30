@@ -44,7 +44,7 @@ public class PreferencesFragment extends Fragment {
 
     private Spinner spinner;
     private PrefrencesViewModel viewModel;
-    private Button save, yourPrefernces;
+    private Button save;
     private EditText MintempEditText, MinhumEditText, Minco2EditText,
             MaxtempEditText, MaxhumEditText, Maxco2EditText;
     private List<String> nameList = new ArrayList<>();
@@ -55,8 +55,6 @@ public class PreferencesFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_preferences, container, false);
 
         spinner = view.findViewById(R.id.prefrencesSpinner);
-
-
         MintempEditText = view.findViewById(R.id.minTempEditText);
         MaxtempEditText = view.findViewById(R.id.MaxTempEditText);
         MinhumEditText = view.findViewById(R.id.minHumEditText);
@@ -76,7 +74,7 @@ public class PreferencesFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                viewModel.update(new Preferences("fake_device1",
+                viewModel.update(new Preferences(viewModel.getDeviceId(),
                         true,
                         Integer.parseInt(Maxco2EditText.getText().toString()),
                         Integer.parseInt(Minco2EditText.getText().toString()),
@@ -89,7 +87,7 @@ public class PreferencesFragment extends Fragment {
 
 
                 Preferences preference = new Preferences(
-                        "fake_device1",
+                        viewModel.getDeviceId(),
                         true,
                         Integer.parseInt(Maxco2EditText.getText().toString()),
                         Integer.parseInt(Minco2EditText.getText().toString()),
@@ -135,8 +133,9 @@ public class PreferencesFragment extends Fragment {
                             Minco2EditText.setText(String.valueOf(preferences.getCo2Min()));
                             Maxco2EditText.setText(String.valueOf(preferences.getCo2Max()));
                         }
+
+
                     });
-                    //viewModel.showPrefrences();
                 } else {
                     Toast.makeText(getActivity(), "No internet connection", Toast.LENGTH_LONG).show();
                     viewModel.getAllPreferences().observe(getViewLifecycleOwner(), new Observer< List< Preferences > >() {

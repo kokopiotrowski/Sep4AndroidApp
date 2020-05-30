@@ -42,7 +42,6 @@ public class SetUpDeviceFragment extends Fragment {
         viewModel.getAvailableDevices().observe(getViewLifecycleOwner(), strings -> {
             availableDevices.setText("");
             for (int i = 0; i < strings.size(); i++) {
-
                 availableDevices.append(strings.get(i) + "\n");
             }
         });
