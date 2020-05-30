@@ -64,7 +64,6 @@ public class RoomsFragment extends Fragment {
                 Snackbar.make(recyclerView, id, Snackbar.LENGTH_LONG)
                         .setAction("Undo", v -> {
                             viewModel.postDevice(saveDevice);
-                            adapter.notifyDataSetChanged();
                         }).show();
             }
         }).attachToRecyclerView(recyclerView);
