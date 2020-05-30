@@ -18,6 +18,7 @@ import retrofit2.Response;
 
 public class SetUpDeviceRepository {
     private static SetUpDeviceRepository instance;
+    private RoomsRepository roomsRepository = RoomsRepository.getInstance();
     private MutableLiveData<List<String>> availableDevicesList;
 
     public SetUpDeviceRepository() {
@@ -62,15 +63,13 @@ public class SetUpDeviceRepository {
     }
 
     public void postNewDevice(NewDeviceModel model) {
-        Log.i("SetUpRepo", "Device id: " + model.getDeviceId() + " Name: " + model.getName());
-
         AccountDevicesApi devicesApi = ServiceGenerator.getAccountDevicesApi();
         Call<Device> call = devicesApi.addDevice(model);
         call.enqueue(new Callback<Device>() {
             @Override
             public void onResponse(Call<Device> call, Response<Device> response) {
                 Log.i("SetUpRepo", "Post device response: " + response.code() + " Device id: " +response.body().getDeviceId());
-
+                roomsRepository.updateRooms();
             }
 
             @Override
