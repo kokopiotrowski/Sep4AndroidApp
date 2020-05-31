@@ -18,10 +18,13 @@ import retrofit2.Response;
 
 public class SetUpDeviceRepository {
     private static SetUpDeviceRepository instance;
+    private RoomsRepository roomsRepository = RoomsRepository.getInstance();
     private MutableLiveData<List<String>> availableDevicesList;
+    private  MutableLiveData<String> message;
 
     public SetUpDeviceRepository() {
         availableDevicesList = new MutableLiveData<>();
+        message = new MutableLiveData<>();
     }
 
     public static synchronized SetUpDeviceRepository getInstance()
@@ -55,22 +58,30 @@ public class SetUpDeviceRepository {
         });
     }
 
-    public LiveData<List<String>> getAvailableDevices()
-    {
-        return availableDevicesList;
-
-    }
-
     public void postNewDevice(NewDeviceModel model) {
-        Log.i("TAG", "Device id: " + model.getDeviceId() + " Name: " + model.getName());
-
         AccountDevicesApi devicesApi = ServiceGenerator.getAccountDevicesApi();
         Call<Device> call = devicesApi.addDevice(model);
         call.enqueue(new Callback<Device>() {
             @Override
             public void onResponse(Call<Device> call, Response<Device> response) {
-                Log.i("SetUpRepo", "Post device response: " + response.code() + " Device id: " +response.body().getDeviceId());
-
+               if(response.code() == 200)
+               {
+                   message.setValue("success");
+                   roomsRepository.updateRooms();
+                   message.setValue("");
+               }else{
+                   Log.i("SetUpRepo", "Error-response code received during posting: " + response.code());
+                   if(response.code() == 403)
+                   {
+                       message.setValue("This device is already associated with another user");
+                   }else if(response.code() == 404)
+                   {
+                       message.setValue("DeviceId is invalid");
+                   }else if(response.code() == 406)
+                   {
+                        message.setValue("This device is already associated with this user");
+                   }
+               }
             }
 
             @Override
@@ -78,5 +89,15 @@ public class SetUpDeviceRepository {
                 Log.i("SetUpRepo", "Failing with posting device: " + t.getMessage());
             }
         });
+    }
+
+    public LiveData<List<String>> getAvailableDevices()
+    {
+        return availableDevicesList;
+    }
+
+    public LiveData<String> getMessage()
+    {
+        return message;
     }
 }

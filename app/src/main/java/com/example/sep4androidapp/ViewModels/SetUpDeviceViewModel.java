@@ -25,8 +25,14 @@ public class SetUpDeviceViewModel extends ViewModel {
         return repository.getAvailableDevices();
     }
 
+    public LiveData<String> getMessage()
+    {
+        return  repository.getMessage();
+    }
+
     public void postNewDevice(NewDeviceModel model)
     {
         repository.postNewDevice(model);
     }
+
 }
