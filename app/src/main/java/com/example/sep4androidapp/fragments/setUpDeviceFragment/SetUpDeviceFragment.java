@@ -13,20 +13,21 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sep4androidapp.Entities.NewDeviceModel;
 import com.example.sep4androidapp.R;
 import com.example.sep4androidapp.ViewModels.SetUpDeviceViewModel;
-
-import java.util.List;
+import com.example.sep4androidapp.fragments.mainFragment.mainViewFragments.FragmentFirstPage;
+import com.example.sep4androidapp.fragments.roomFragment.RoomsFragment;
 
 public class SetUpDeviceFragment extends Fragment {
     private SetUpDeviceViewModel viewModel;
     private TextView availableDevices;
     private EditText deviceId, newRoomName;
     private Button setupDevice;
+    private String deviceIdToSend;
 
     @Nullable
     @Override
@@ -47,13 +48,27 @@ public class SetUpDeviceFragment extends Fragment {
             }
         });
 
+        viewModel.getMessage().observe(getViewLifecycleOwner(), s -> {
+            Log.i("TAG", "OHFUCK");
+            if (s.equals("success")) {
+                Bundle args = new Bundle();
+                args.putString("device", deviceIdToSend);
+                FragmentFirstPage fragment = new FragmentFirstPage();
+                fragment.setArguments(args);
+                getParentFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+            } else if(!s.isEmpty()) {
+                Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
+            }
+
+        });
+
         setupDevice.setOnClickListener(v -> {
 
             if (!deviceId.getText().toString().isEmpty() && !newRoomName.getText().toString().isEmpty()) {
-//                Log.i("TAG", "DeviceId: " + deviceId.getText() + " name: " + newRoomName.getText());
                 NewDeviceModel model = new NewDeviceModel(deviceId.getText().toString(), newRoomName.getText().toString());
+                deviceIdToSend = deviceId.getText().toString();
                 viewModel.postNewDevice(new NewDeviceModel(deviceId.getText().toString(), newRoomName.getText().toString()));
-            }else{
+            } else {
                 Toast.makeText(getActivity(), "Fill up all the required fields", Toast.LENGTH_SHORT).show();
             }
         });

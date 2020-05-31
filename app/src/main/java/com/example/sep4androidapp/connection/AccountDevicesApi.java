@@ -26,7 +26,7 @@ public interface AccountDevicesApi {
     @GET("devices/{deviceId}")
     Call<Device> getDevice(@Path("deviceId") String deviceId);
 
-    @Headers("Content-Type: application/json")
+//    @Headers("Content-Type: application/json")
     @POST("devices")
     Call<Device> addDevice(@Body NewDeviceModel device);
 

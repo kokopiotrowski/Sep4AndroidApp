@@ -55,6 +55,8 @@ public class FragmentFirstPage extends Fragment {
         viewModel = new ViewModelProvider(this).get(FragmentFirstPageViewModel.class);
         viewModel.updateRooms();
 
+
+
         setListeners();
 
         viewModel.getFact().observe(getViewLifecycleOwner(), fact -> {
@@ -120,5 +122,14 @@ public class FragmentFirstPage extends Fragment {
     public void onPause() {
         super.onPause();
         viewModel.stopTimer();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(getArguments() != null)
+            {
+                Log.i("TAG", "Receivedd: " + getArguments().getString("device"));
+            }
     }
 }
