@@ -37,6 +37,7 @@ public class FragmentFirstPage extends Fragment {
 
     private List<String> nameList = new ArrayList<>();
     private List<String> idList = new ArrayList<>();
+    ArrayAdapter<String> adapter;
 
     @SuppressLint({"SetTextI18n", "DefaultLocale"})
     @Nullable
@@ -52,26 +53,22 @@ public class FragmentFirstPage extends Fragment {
         timeStamp = v.findViewById(R.id.timeStamp);
         floatingButton = v.findViewById(R.id.floatingButton);
 
-
         viewModel = new ViewModelProvider(this).get(FragmentFirstPageViewModel.class);
+        viewModel.updateRooms();
 
+        setListeners();
 
-        floatingButton.setOnClickListener(v1 -> {
-            viewModel.getFactRandomly();
-        });
         viewModel.getFact().observe(getViewLifecycleOwner(), fact -> {
             Bundle args = new Bundle();
             args.putString("title", fact.getTitle());
             args.putString("content", fact.getContent());
             args.putString("source", fact.getSource());
-            args.putString("url", fact.getSourceUrl());;
+            args.putString("url", fact.getSourceUrl());
+            ;
             factFragmentDialog.setArguments(args);
             factFragmentDialog.show(getChildFragmentManager(), "Chosen");
-
         });
 
-
-        viewModel.updateRooms();
         viewModel.getDevices().observe(getViewLifecycleOwner(), devices -> {
             nameList.clear();
             idList.clear();
@@ -79,24 +76,13 @@ public class FragmentFirstPage extends Fragment {
                 nameList.add(devices.get(i).getName());
                 idList.add(devices.get(i).getDeviceId());
             }
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
+            adapter = new ArrayAdapter<>(getActivity(),
                     android.R.layout.simple_spinner_item, nameList);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner.setAdapter(adapter);
-        });
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                viewModel.setDeviceId(idList.get(position));
-                viewModel.receiveStatus(viewModel.getDeviceId(), success -> {
-                    Log.i("StartStopRepo",  "Result is: " + success);
-                    deviceSwitch.setChecked(success);
-                });
+            if (getArguments() != null) {
+                spinner.setSelection(adapter.getPosition(getArguments().getString("deviceName")));
             }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
         });
 
         viewModel.getRoomCondition().observe(getViewLifecycleOwner(), roomCondition -> {
@@ -107,11 +93,32 @@ public class FragmentFirstPage extends Fragment {
             timeStamp.setText("Updated: " + roomCondition.getTimestamp());
         });
 
+        return v;
+    }
+
+    private void setListeners() {
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                viewModel.setDeviceId(idList.get(position));
+                viewModel.receiveStatus(viewModel.getDeviceId(), success -> {
+                    Log.i("StartStopRepo", "Result is: " + success);
+                    deviceSwitch.setChecked(success);
+                });
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
         deviceSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             viewModel.switchCheck(isChecked);
         });
 
-        return v;
+        floatingButton.setOnClickListener(v1 -> {
+            viewModel.getFactRandomly();
+        });
     }
 
     @Override

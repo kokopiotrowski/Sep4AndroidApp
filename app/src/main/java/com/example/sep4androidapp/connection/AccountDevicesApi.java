@@ -23,7 +23,10 @@ public interface AccountDevicesApi {
     @GET("devices/available")
     Call<List<String>> getAvailableDevices();
 
-    @Headers("Content-Type: application/json")
+    @GET("devices/{deviceId}")
+    Call<Device> getDevice(@Path("deviceId") String deviceId);
+
+//    @Headers("Content-Type: application/json")
     @POST("devices")
     Call<Device> addDevice(@Body NewDeviceModel device);
 
