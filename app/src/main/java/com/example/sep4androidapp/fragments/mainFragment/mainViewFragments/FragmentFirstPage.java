@@ -37,6 +37,7 @@ public class FragmentFirstPage extends Fragment {
 
     private List<String> nameList = new ArrayList<>();
     private List<String> idList = new ArrayList<>();
+    ArrayAdapter<String> adapter;
 
     @SuppressLint({"SetTextI18n", "DefaultLocale"})
     @Nullable
@@ -55,8 +56,6 @@ public class FragmentFirstPage extends Fragment {
         viewModel = new ViewModelProvider(this).get(FragmentFirstPageViewModel.class);
         viewModel.updateRooms();
 
-
-
         setListeners();
 
         viewModel.getFact().observe(getViewLifecycleOwner(), fact -> {
@@ -64,7 +63,8 @@ public class FragmentFirstPage extends Fragment {
             args.putString("title", fact.getTitle());
             args.putString("content", fact.getContent());
             args.putString("source", fact.getSource());
-            args.putString("url", fact.getSourceUrl());;
+            args.putString("url", fact.getSourceUrl());
+            ;
             factFragmentDialog.setArguments(args);
             factFragmentDialog.show(getChildFragmentManager(), "Chosen");
         });
@@ -76,10 +76,13 @@ public class FragmentFirstPage extends Fragment {
                 nameList.add(devices.get(i).getName());
                 idList.add(devices.get(i).getDeviceId());
             }
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
+            adapter = new ArrayAdapter<>(getActivity(),
                     android.R.layout.simple_spinner_item, nameList);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner.setAdapter(adapter);
+            if (getArguments() != null) {
+                spinner.setSelection(adapter.getPosition(getArguments().getString("deviceName")));
+            }
         });
 
         viewModel.getRoomCondition().observe(getViewLifecycleOwner(), roomCondition -> {
@@ -93,20 +96,20 @@ public class FragmentFirstPage extends Fragment {
         return v;
     }
 
-    private void setListeners()
-    {
+    private void setListeners() {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 viewModel.setDeviceId(idList.get(position));
                 viewModel.receiveStatus(viewModel.getDeviceId(), success -> {
-                    Log.i("StartStopRepo",  "Result is: " + success);
+                    Log.i("StartStopRepo", "Result is: " + success);
                     deviceSwitch.setChecked(success);
                 });
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
 
         deviceSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -122,14 +125,5 @@ public class FragmentFirstPage extends Fragment {
     public void onPause() {
         super.onPause();
         viewModel.stopTimer();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if(getArguments() != null)
-            {
-                Log.i("TAG", "Receivedd: " + getArguments().getString("device"));
-            }
     }
 }

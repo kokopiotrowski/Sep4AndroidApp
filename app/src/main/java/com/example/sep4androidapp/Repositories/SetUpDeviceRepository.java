@@ -82,7 +82,6 @@ public class SetUpDeviceRepository {
                         message.setValue("This device is already associated with this user");
                    }
                }
-
             }
 
             @Override
