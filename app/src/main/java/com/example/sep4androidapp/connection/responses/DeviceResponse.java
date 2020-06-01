@@ -19,4 +19,5 @@ public class DeviceResponse implements Serializable {
     {
         return new Device(deviceId, name, userId);
     }
+
 }

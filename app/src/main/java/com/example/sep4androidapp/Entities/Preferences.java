@@ -2,7 +2,6 @@ package com.example.sep4androidapp.Entities;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
-import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "preferences_table")
@@ -20,7 +19,7 @@ public class Preferences {
     private double temperatureMax;
 
 
-    public Preferences(String deviceId, boolean regulationEnabled, int co2Max,int co2Min, int humidityMax, int humidityMin, double temperatureMin, double temperatureMax) {
+    public Preferences(String deviceId, boolean regulationEnabled, int co2Max, int co2Min, int humidityMax, int humidityMin, double temperatureMin, double temperatureMax) {
         this.deviceId = deviceId;
         this.regulationEnabled = regulationEnabled;
         this.co2Max = co2Max;

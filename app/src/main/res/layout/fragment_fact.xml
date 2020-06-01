@@ -25,7 +25,8 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/factRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="300dp"
+            android:paddingBottom="40dp"
             tools:listitem="@layout/fact_item">
 
         </androidx.recyclerview.widget.RecyclerView>
