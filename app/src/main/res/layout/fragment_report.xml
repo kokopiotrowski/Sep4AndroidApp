@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.reportFragment.ReportFragment">
+    tools:context=".fragments.reportFragment.ReportFragment"
+    android:orientation="vertical">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
+<<<<<<< Updated upstream
         android:layout_height="match_parent">
 
         <Spinner
@@ -47,43 +49,95 @@
                 android:layout_height="wrap_content"
                 android:checked="true"
                 android:text="Last sleep" />
+=======
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+>>>>>>> Stashed changes
 
-            <RadioButton
-                android:id="@+id/reportLastWeekRadioButton"
-                android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/reportTextView"
+                android:layout_width="131dp"
+                android:layout_height="46dp"
+                android:autoText="false"
+                android:text="Report"
+                android:textAlignment="center"
+                android:textSize="30dp" />
+
+            <RadioGroup
+                android:id="@+id/lastReportRadioGroup"
+                android:layout_width="150sp"
                 android:layout_height="wrap_content"
+                android:checkedButton="@id/reportLastWeekRadioButton"
+                android:visibility="visible">
 
-                android:text="Last week" />
+                <RadioButton
+                    android:id="@+id/lastSleepRadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="Last sleep" />
 
-            <RadioButton
-                android:id="@+id/reportLastMonthRadioButton"
-                style="@style/Widget.AppCompat.CompoundButton.RadioButton"
-                android:layout_width="match_parent"
+                <RadioButton
+                    android:id="@+id/reportLastWeekRadioButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
 
-                android:layout_height="wrap_content"
-                android:text="Last month" />
+                    android:text="Last week" />
 
-        </RadioGroup>
+                <RadioButton
+                    android:id="@+id/reportLastMonthRadioButton"
+                    style="@style/Widget.AppCompat.CompoundButton.RadioButton"
+                    android:layout_width="match_parent"
 
+                    android:layout_height="wrap_content"
+                    android:text="Last month" />
 
-        <Button
-            android:id="@+id/rateYourSleepButton"
-            android:layout_width="wrap_content"
+            </RadioGroup>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="274dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Rate your last sleep"
-            android:visibility="visible"
-            app:layout_constraintBottom_toTopOf="@+id/ratingBar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
+            android:orientation="vertical">
+
+            <com.github.mikephil.charting.charts.HorizontalBarChart
+                android:id="@+id/co2Chart"
+                android:layout_width="match_parent"
+                android:layout_height="200dp">
+
+            </com.github.mikephil.charting.charts.HorizontalBarChart>
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/temperatureChart"
+                android:layout_width="match_parent"
+                android:layout_height="200dp">
+
+            </com.github.mikephil.charting.charts.LineChart>
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <RatingBar
             android:id="@+id/ratingBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
             android:visibility="visible"
+<<<<<<< Updated upstream
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.51"
@@ -115,5 +169,17 @@
         </com.github.mikephil.charting.charts.HorizontalBarChart>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+=======
+            android:layout_gravity="center_horizontal"/>
 
-</FrameLayout>
+        <Button
+            android:id="@+id/rateYourSleepButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rate your last sleep"
+            android:visibility="visible"
+            android:layout_gravity="center_horizontal"/>
+    </LinearLayout>
+>>>>>>> Stashed changes
+
+</LinearLayout>
