@@ -19,7 +19,6 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sep4androidapp.Entities.Fact;
-import com.example.sep4androidapp.Entities.Preferences;
 import com.example.sep4androidapp.R;
 import com.example.sep4androidapp.ViewModels.FragmentFirstPageViewModel;
 import com.example.sep4androidapp.fragments.factFragment.FactFragmentDialog;
@@ -91,10 +90,6 @@ public class FragmentFirstPage extends Fragment {
             timeStamp.setText("Updated: " + roomCondition.getTimestamp());
         });
 
-        viewModel.getPreferences().observe(getViewLifecycleOwner(), preferences -> {
-            
-        });
-
         viewModel.updateRooms();
         setListeners();
 
@@ -105,7 +100,6 @@ public class FragmentFirstPage extends Fragment {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                viewModel.showPreferences(idList.get(position));
                 viewModel.setDeviceId(idList.get(position));
                 viewModel.receiveStatus(viewModel.getDeviceId(), success -> {
                     Log.i("StartStopRepo", "Result is: " + success);

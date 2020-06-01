@@ -1,6 +1,8 @@
 package com.example.sep4androidapp.fragments.preferencesFragment;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +16,15 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.sep4androidapp.Entities.Device;
 import com.example.sep4androidapp.Entities.Preferences;
 import com.example.sep4androidapp.Network.CheckNetwork;
 import com.example.sep4androidapp.Network.Variables;
 import com.example.sep4androidapp.R;
-import com.example.sep4androidapp.ViewModels.PreferencesViewModel;
+import com.example.sep4androidapp.ViewModels.PrefrencesViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +32,7 @@ import java.util.List;
 public class PreferencesFragment extends Fragment {
 
     private Spinner spinner;
-    private PreferencesViewModel viewModel;
+    private PrefrencesViewModel viewModel;
     private Button save;
     private EditText MintempEditText, MinhumEditText, Minco2EditText,
             MaxtempEditText, MaxhumEditText, Maxco2EditText;
@@ -50,7 +54,7 @@ public class PreferencesFragment extends Fragment {
 
         CheckNetwork network = new CheckNetwork(getActivity().getApplicationContext());
         network.registerNetworkCallback();
-        viewModel = new ViewModelProvider(this).get(PreferencesViewModel.class);
+        viewModel = new ViewModelProvider(this).get(PrefrencesViewModel.class);
 
         save.setOnClickListener(v -> {
             Preferences preference = new Preferences(
@@ -137,6 +141,7 @@ public class PreferencesFragment extends Fragment {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+
 
         return view;
     }

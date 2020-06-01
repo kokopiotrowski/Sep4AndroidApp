@@ -9,20 +9,25 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sep4androidapp.Entities.Preferences;
 import com.example.sep4androidapp.Entities.RoomCondition;
 import com.example.sep4androidapp.R;
-import com.example.sep4androidapp.ViewModels.PreferencesViewModel;
+import com.example.sep4androidapp.ViewModels.PrefrencesViewModel;
 import com.example.sep4androidapp.ViewModels.ReportViewModel;
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.Chart;
+import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineDataSet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +36,7 @@ public class FragmentTemperature extends Fragment {
 
 
     private ReportViewModel viewModelReport;
-    private PreferencesViewModel viewModelPreferences;
+    private PrefrencesViewModel viewModelPreferences;
     float temperatureValue;
     private List<BarEntry> temperature = new ArrayList<>();
     private BarDataSet barDataSet;
@@ -46,7 +51,7 @@ public class FragmentTemperature extends Fragment {
         barChart = v.findViewById(R.id.barChart);
 
         viewModelReport = new ViewModelProvider(this).get(ReportViewModel.class);
-        viewModelPreferences = new ViewModelProvider(this).get(PreferencesViewModel.class);
+        viewModelPreferences = new ViewModelProvider(this).get(PrefrencesViewModel.class);
 
         viewModelPreferences.getLastPreference().observe(getViewLifecycleOwner(), new Observer<Preferences>() {
             @Override

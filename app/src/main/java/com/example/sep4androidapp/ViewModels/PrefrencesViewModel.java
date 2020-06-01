@@ -8,37 +8,36 @@ import androidx.lifecycle.LiveData;
 
 import com.example.sep4androidapp.Entities.Device;
 import com.example.sep4androidapp.Entities.Preferences;
-import com.example.sep4androidapp.LocalStorage.DatabaseRepository;
+import com.example.sep4androidapp.Entities.RoomCondition;
 import com.example.sep4androidapp.Repositories.PreferencesRepository;
+import com.example.sep4androidapp.Repositories.ReportRepository;
 import com.example.sep4androidapp.Repositories.RoomsRepository;
 
 import java.util.List;
 
-public class PreferencesViewModel extends AndroidViewModel {
+public class PrefrencesViewModel extends AndroidViewModel {
 
-    private DatabaseRepository databaseRepository;
     private PreferencesRepository preferencesRepository;
     private RoomsRepository roomsRepository;
    // private Device deviceId;
     private String deviceId;
 
-    public PreferencesViewModel(@NonNull Application application) {
+    public PrefrencesViewModel(@NonNull Application application) {
         super(application);
-        databaseRepository = DatabaseRepository.getInstance(application);
+        preferencesRepository = PreferencesRepository.getInstance(application);
         roomsRepository = RoomsRepository.getInstance();
-        preferencesRepository = PreferencesRepository.getInstance();
     }
 
     public LiveData< List< Preferences > > getAllPreferences() {
-        return databaseRepository.getAllPreferences();
+        return preferencesRepository.getAllPreferences();
     }
 
     public void insert(final Preferences preferences) {
-        databaseRepository.insert(preferences);
+        preferencesRepository.insert(preferences);
     }
 
     public void update(final Preferences preferences) {
-        databaseRepository.update(preferences);
+        preferencesRepository.update(preferences);
     }
 
     public void showPrefrences(String deviceId) {
@@ -50,11 +49,12 @@ public class PreferencesViewModel extends AndroidViewModel {
     }
 
     public LiveData< List< Preferences > > getPrefrences() {
-        return databaseRepository.getAllPreferences();
+        return preferencesRepository.getAllPreferences();
     }
 
    public LiveData<Preferences> getLastPreference() {
-        return preferencesRepository.getPreferences();
+
+        return preferencesRepository.getPre();
    }
 
     public void updateRooms() {
@@ -62,8 +62,10 @@ public class PreferencesViewModel extends AndroidViewModel {
     }
 
     public LiveData<List< Device >> getDevices() {
+
         return roomsRepository.getList();
     }
+
 
     public void setDeviceId(String deviceId) {
         this.deviceId = deviceId;

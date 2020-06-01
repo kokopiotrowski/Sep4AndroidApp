@@ -14,7 +14,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.sep4androidapp.Entities.Preferences;
 import com.example.sep4androidapp.Entities.RoomCondition;
 import com.example.sep4androidapp.R;
-import com.example.sep4androidapp.ViewModels.PreferencesViewModel;
+import com.example.sep4androidapp.ViewModels.PrefrencesViewModel;
 import com.example.sep4androidapp.ViewModels.ReportViewModel;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.LimitLine;
@@ -29,7 +29,7 @@ import java.util.List;
 
 public class FragmentCo2 extends Fragment {
     private ReportViewModel viewModelReport;
-    private PreferencesViewModel viewModelPreferences;
+    private PrefrencesViewModel viewModelPreferences;
     float co2Value;
     private List<BarEntry> co2 = new ArrayList<>();
     private BarDataSet barDataSet;
@@ -44,7 +44,7 @@ public class FragmentCo2 extends Fragment {
         barChart = v.findViewById(R.id.barChart);
 
         viewModelReport = new ViewModelProvider(this).get(ReportViewModel.class);
-        viewModelPreferences = new ViewModelProvider(this).get(PreferencesViewModel.class);
+        viewModelPreferences = new ViewModelProvider(this).get(PrefrencesViewModel.class);
 
         viewModelPreferences.getLastPreference().observe(getViewLifecycleOwner(), new Observer<Preferences>() {
             @Override

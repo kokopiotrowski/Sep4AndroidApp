@@ -31,11 +31,11 @@ public interface AppDAO {
 
     @Query("SELECT*FROM preferences_table")
     LiveData<List<Preferences>> getAllPreferences();
-//
-//    @Insert
-//    void insertDevice(Device device);
-//
-//    @Update
-//    void updateDevice(Device device);
+
+    @Insert
+    void insertDevice(Device device);
+
+    @Update
+    void updateDevice(Device device);
 
 }
