@@ -19,7 +19,7 @@ public interface PreferenceApi {
     @GET("preferences/{deviceId}")
     Call<PreferencesResponse> getPreferences(@Path("deviceId") String deviceId);
 
-    @Headers("Content-Type: application/json")
+//    @Headers("Content-Type: application/json")
     @PUT("preferences")
     Call <PreferencesResponse>updatePreferences(@Body Preferences preferences);
 

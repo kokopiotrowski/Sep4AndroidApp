@@ -30,15 +30,15 @@ import static android.content.ContentValues.TAG;
 public class PreferencesRepository {
     private PreferencesDAO preferencesDao;
     private static PreferencesRepository instance;
-    private LiveData< List< Preferences > > allPreferences;
-    private MutableLiveData< Preferences > pre;
-    private static MutableLiveData<List<Device>> list ;
+    private LiveData<List<Preferences>> allPreferences;
+    private MutableLiveData<Preferences> pre;
+    private static MutableLiveData<List<Device>> list;
 
     private PreferencesRepository(Application application) {
         PreferencesDatabase preferencesDatabase = PreferencesDatabase.getInstance(application);
         preferencesDao = preferencesDatabase.preferencesDAO();
         pre = new MutableLiveData<>();
-        list =new MutableLiveData<>();
+        list = new MutableLiveData<>();
 
         allPreferences = preferencesDao.getAllPreferences();
     }
@@ -49,11 +49,11 @@ public class PreferencesRepository {
         return instance;
     }
 
-    public static LiveData< List< Device>> getList() {
+    public static LiveData<List<Device>> getList() {
         return list;
     }
 
-    public LiveData< List< Preferences > > getAllPreferences() {
+    public LiveData<List<Preferences>> getAllPreferences() {
         return allPreferences;
     }
 
@@ -65,7 +65,7 @@ public class PreferencesRepository {
         new UpdatePreferencesAsync(preferencesDao).execute(preferences);
     }
 
-    private static class InsertPreferencesAsync extends AsyncTask< Preferences, Void, Void > {
+    private static class InsertPreferencesAsync extends AsyncTask<Preferences, Void, Void> {
         private PreferencesDAO preferencesDAO;
 
         private InsertPreferencesAsync(PreferencesDAO preferencesDAO) {
@@ -79,7 +79,7 @@ public class PreferencesRepository {
         }
     }
 
-    private static class UpdatePreferencesAsync extends AsyncTask< Preferences, Void, Void > {
+    private static class UpdatePreferencesAsync extends AsyncTask<Preferences, Void, Void> {
         private PreferencesDAO preferencesDAO;
 
         private UpdatePreferencesAsync(PreferencesDAO preferencesDAO) {
@@ -93,44 +93,13 @@ public class PreferencesRepository {
         }
     }
 
-//    private static class DeletePreferenceAsync extends AsyncTask< Preferences, Void, Void > {
-//        private PreferencesDAO preferencesDAO;
-//
-//        private DeletePreferenceAsync(PreferencesDAO preferencesDAO) {
-//            this.preferencesDAO = preferencesDAO;
-//        }
-//
-//        @Override
-//        protected Void doInBackground(Preferences... preferences) {
-//            preferencesDAO.deletePreference(preferences[0]);
-//            return null;
-//        }
-//    }
-
-//    private static class DeleteAllPreferencesAsync extends AsyncTask< Preferences, Void, Void > {
-//        private PreferencesDAO preferencesDAO;
-//
-//        private DeleteAllPreferencesAsync(PreferencesDAO preferencesDAO) {
-//            this.preferencesDAO = preferencesDAO;
-//        }
-//
-//        @Override
-//        protected Void doInBackground(Preferences... preferences) {
-//            preferencesDAO.deleteAllPreferences();
-//            return null;
-//        }
-//    }
-
-    //_________________________________________________________________________
-
-
     // GET API
     public void showPreferences(String deviceId) {
         PreferenceApi preferenceApi = ServiceGenerator.getPreferenceApi();
-        Call< PreferencesResponse > call = preferenceApi.getPreferences(deviceId);
-        call.enqueue(new Callback< PreferencesResponse >() {
+        Call<PreferencesResponse> call = preferenceApi.getPreferences(deviceId);
+        call.enqueue(new Callback<PreferencesResponse>() {
             @Override
-            public void onResponse(Call< PreferencesResponse > call, Response< PreferencesResponse > response) {
+            public void onResponse(Call<PreferencesResponse> call, Response<PreferencesResponse> response) {
 
                 if (response.code() == 200) {
 
@@ -143,7 +112,7 @@ public class PreferencesRepository {
                             , response.body().getHumidityMin()
                             , response.body().getTemperatureMin()
                             , response.body().getTemperatureMax());
-                     pre.setValue(P1);
+                    pre.setValue(P1);
 
                     Log.i(TAG, "Pouneh0" + response.code());
 
@@ -153,13 +122,13 @@ public class PreferencesRepository {
             }
 
             @Override
-            public void onFailure(Call< PreferencesResponse > call, Throwable t) {
+            public void onFailure(Call<PreferencesResponse> call, Throwable t) {
                 Log.e(TAG, "Pouneh3 ");
             }
         });
     }
 
-    public LiveData< Preferences > getPre() {
+    public LiveData<Preferences> getPre() {
         return pre;
     }
 
@@ -168,28 +137,23 @@ public class PreferencesRepository {
     public void updatePrefrences(Preferences preference) {
 
         PreferenceApi preferenceApi = ServiceGenerator.getPreferenceApi();
-        Call< PreferencesResponse > call = preferenceApi.updatePreferences(preference);
-        call.enqueue(new Callback< PreferencesResponse >() {
+        Call<PreferencesResponse> call = preferenceApi.updatePreferences(preference);
+        call.enqueue(new Callback<PreferencesResponse>() {
             @Override
-            public void onResponse(Call< PreferencesResponse > call, Response< PreferencesResponse > response) {
+            public void onResponse(Call<PreferencesResponse> call, Response<PreferencesResponse> response) {
                 Log.i(TAG, "Pouneh1 " + response.code());
             }
 
             @Override
-            public void onFailure(Call< PreferencesResponse > call, Throwable t) {
+            public void onFailure(Call<PreferencesResponse> call, Throwable t) {
                 Log.i(TAG, "Pouneh2");
             }
         });
     }
 
-    public LiveData< Preferences > getPreFrence() {
+    public LiveData<Preferences> getPreFrence() {
         return pre;
     }
 
 
-//    private static PreferencesDatabase.Callback pCalback = new PreferencesDatabase() {
-//
-//        @Override
-//        public void onCreate(@NonNull)
-//
 }

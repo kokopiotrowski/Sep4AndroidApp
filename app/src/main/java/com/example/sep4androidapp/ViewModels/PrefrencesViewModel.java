@@ -44,7 +44,7 @@ public class PrefrencesViewModel extends AndroidViewModel {
         preferencesRepository.showPreferences(deviceId);
     }
 
-    public void updatePrefrences(Preferences preference) {
+    public void updatePreferences(Preferences preference) {
         preferencesRepository.updatePrefrences(preference);
     }
 
@@ -75,19 +75,4 @@ public class PrefrencesViewModel extends AndroidViewModel {
 
         return deviceId;
     }
-
-/*
-    public void setDeviceId(String devId) {
-        deviceId.setDeviceId(devId);
-    }
-
-    public String getDeviceId() {
-
-        return deviceId.getDeviceId();
-    }
-
- */
-
-
-
 }
