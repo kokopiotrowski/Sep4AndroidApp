@@ -35,7 +35,7 @@ public class ServiceGenerator {
     }).create();
     private static OkHttpClient client = new OkHttpClient.Builder().addInterceptor(new BasicAuthInterceptor()).build();
     private static Retrofit.Builder retrofitBuilder = new Retrofit.Builder().
-            baseUrl("https://zzleep-api-dev.herokuapp.com/api/").addConverterFactory(GsonConverterFactory.create(gson)).client(client);
+            baseUrl("https://zzleep-api.herokuapp.com/api/").addConverterFactory(GsonConverterFactory.create(gson)).client(client);
     private static Retrofit retrofit = retrofitBuilder.build();
 
     private static ReportApi reportApi = retrofit.create(ReportApi.class);
