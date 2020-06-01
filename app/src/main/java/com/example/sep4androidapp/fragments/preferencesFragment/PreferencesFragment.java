@@ -68,13 +68,13 @@ public class PreferencesFragment extends Fragment {
         network.registerNetworkCallback();
         viewModel = new ViewModelProvider(this).get(PrefrencesViewModel.class);
 
-        //Variables.counter++;
-
+        //Throuing 403:
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                viewModel.update(new Preferences(viewModel.getDeviceId(),
+                viewModel.update(new Preferences(
+                        viewModel.getDeviceId(),
                         true,
                         Integer.parseInt(Maxco2EditText.getText().toString()),
                         Integer.parseInt(Minco2EditText.getText().toString()),
@@ -136,7 +136,39 @@ public class PreferencesFragment extends Fragment {
 
 
                     });
-                } else {
+
+                    /* throughing code 400:
+        save.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                viewModel.update(new Preferences(idList.get(position),
+                                        true,
+                                        Integer.parseInt(Maxco2EditText.getText().toString()),
+                                        Integer.parseInt(Minco2EditText.getText().toString()),
+                                        Integer.parseInt(MaxhumEditText.getText().toString()),
+                                        Integer.parseInt(MinhumEditText.getText().toString()),
+                                        Double.parseDouble(MaxtempEditText.getText().toString()),
+                                        Double.parseDouble(MintempEditText.getText().toString())
+                                ));
+                                Toast.makeText(getActivity(), "Your preferences are updated!", Toast.LENGTH_LONG).show();
+
+
+                                Preferences preference = new Preferences(
+                                        idList.get(position),
+                                        true,
+                                        Integer.parseInt(Maxco2EditText.getText().toString()),
+                                        Integer.parseInt(Minco2EditText.getText().toString()),
+                                        Integer.parseInt(MaxhumEditText.getText().toString()),
+                                        Integer.parseInt(MinhumEditText.getText().toString()),
+                                        Double.parseDouble(MintempEditText.getText().toString()),
+                                        Double.parseDouble(MaxtempEditText.getText().toString()));
+
+                                viewModel.updatePrefrences(preference);
+                            }
+                        });
+                         */
+                    } else {
                     Toast.makeText(getActivity(), "No internet connection", Toast.LENGTH_LONG).show();
                     viewModel.getAllPreferences().observe(getViewLifecycleOwner(), new Observer< List< Preferences > >() {
                         @SuppressLint({"SetTextI18n", "DefaultLocale"})
