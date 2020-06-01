@@ -4,17 +4,13 @@ import android.app.Application;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.room.DatabaseConfiguration;
-import androidx.room.InvalidationTracker;
-import androidx.sqlite.db.SupportSQLiteOpenHelper;
 
 import com.example.sep4androidapp.Entities.Device;
 import com.example.sep4androidapp.Entities.Preferences;
-import com.example.sep4androidapp.LocalStorage.PreferencesDAO;
-import com.example.sep4androidapp.LocalStorage.PreferencesDatabase;
+import com.example.sep4androidapp.LocalStorage.AppDAO;
+import com.example.sep4androidapp.LocalStorage.AppDatabase;
 import com.example.sep4androidapp.connection.PreferenceApi;
 import com.example.sep4androidapp.connection.ServiceGenerator;
 import com.example.sep4androidapp.connection.responses.PreferencesResponse;
@@ -28,19 +24,19 @@ import retrofit2.Response;
 import static android.content.ContentValues.TAG;
 
 public class PreferencesRepository {
-    private PreferencesDAO preferencesDao;
+    private AppDAO appDao;
     private static PreferencesRepository instance;
     private LiveData<List<Preferences>> allPreferences;
     private MutableLiveData<Preferences> pre;
     private static MutableLiveData<List<Device>> list;
 
     private PreferencesRepository(Application application) {
-        PreferencesDatabase preferencesDatabase = PreferencesDatabase.getInstance(application);
-        preferencesDao = preferencesDatabase.preferencesDAO();
+        AppDatabase appDatabase = AppDatabase.getInstance(application);
+        appDao = appDatabase.preferencesDAO();
         pre = new MutableLiveData<>();
         list = new MutableLiveData<>();
 
-        allPreferences = preferencesDao.getAllPreferences();
+        allPreferences = appDao.getAllPreferences();
     }
 
     public static synchronized PreferencesRepository getInstance(Application application) {
@@ -58,37 +54,37 @@ public class PreferencesRepository {
     }
 
     public void insert(Preferences preferences) {
-        new InsertPreferencesAsync(preferencesDao).execute(preferences);
+        new InsertPreferencesAsync(appDao).execute(preferences);
     }
 
     public void update(Preferences preferences) {
-        new UpdatePreferencesAsync(preferencesDao).execute(preferences);
+        new UpdatePreferencesAsync(appDao).execute(preferences);
     }
 
     private static class InsertPreferencesAsync extends AsyncTask<Preferences, Void, Void> {
-        private PreferencesDAO preferencesDAO;
+        private AppDAO appDAO;
 
-        private InsertPreferencesAsync(PreferencesDAO preferencesDAO) {
-            this.preferencesDAO = preferencesDAO;
+        private InsertPreferencesAsync(AppDAO appDAO) {
+            this.appDAO = appDAO;
         }
 
         @Override
         protected Void doInBackground(Preferences... preferences) {
-            preferencesDAO.insertPreference(preferences[0]);
+            appDAO.insertPreference(preferences[0]);
             return null;
         }
     }
 
     private static class UpdatePreferencesAsync extends AsyncTask<Preferences, Void, Void> {
-        private PreferencesDAO preferencesDAO;
+        private AppDAO appDAO;
 
-        private UpdatePreferencesAsync(PreferencesDAO preferencesDAO) {
-            this.preferencesDAO = preferencesDAO;
+        private UpdatePreferencesAsync(AppDAO appDAO) {
+            this.appDAO = appDAO;
         }
 
         @Override
         protected Void doInBackground(Preferences... preferences) {
-            preferencesDAO.updatePreference(preferences[0]);
+            appDAO.updatePreference(preferences[0]);
             return null;
         }
     }

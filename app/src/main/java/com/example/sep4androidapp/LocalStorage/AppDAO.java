@@ -7,12 +7,13 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import com.example.sep4androidapp.Entities.Device;
 import com.example.sep4androidapp.Entities.Preferences;
 
 import java.util.List;
 
 @Dao
-public interface PreferencesDAO {
+public interface AppDAO {
     @Insert
     void insertPreference(Preferences preferences);
 
@@ -30,5 +31,11 @@ public interface PreferencesDAO {
 
     @Query("SELECT*FROM preferences_table")
     LiveData<List<Preferences>> getAllPreferences();
+
+    @Insert
+    void insertDevice(Device device);
+
+    @Update
+    void updateDevice(Device device);
 
 }
