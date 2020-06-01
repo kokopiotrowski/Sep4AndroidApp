@@ -2,7 +2,10 @@ package com.example.sep4androidapp.Entities;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
+
+import static androidx.room.ForeignKey.CASCADE;
 
 @Entity(tableName = "preferences_table")
 public class Preferences {

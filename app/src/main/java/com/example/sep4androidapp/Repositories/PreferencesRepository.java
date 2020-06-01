@@ -8,9 +8,13 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.sep4androidapp.Entities.Device;
+import com.example.sep4androidapp.Entities.NewDeviceModel;
 import com.example.sep4androidapp.Entities.Preferences;
-import com.example.sep4androidapp.LocalStorage.AppDAO;
-import com.example.sep4androidapp.LocalStorage.AppDatabase;
+import com.example.sep4androidapp.LocalStorage.ApplicationDatabase;
+import com.example.sep4androidapp.LocalStorage.NewDeviceDAO;
+import com.example.sep4androidapp.LocalStorage.PrefDAO;
+
+
 import com.example.sep4androidapp.connection.PreferenceApi;
 import com.example.sep4androidapp.connection.ServiceGenerator;
 import com.example.sep4androidapp.connection.responses.PreferencesResponse;
@@ -24,30 +28,47 @@ import retrofit2.Response;
 import static android.content.ContentValues.TAG;
 
 public class PreferencesRepository {
-    private AppDAO appDao;
+    private PrefDAO prefDao;
+    private NewDeviceDAO newDeviceDAO;
     private static PreferencesRepository instance;
     private LiveData<List<Preferences>> allPreferences;
     private MutableLiveData<Preferences> preferences;
     private static MutableLiveData<List<Device>> list;
+    private LiveData<List<NewDeviceModel>> allDevices;
 
     private PreferencesRepository(Application application) {
-        AppDatabase appDatabase = AppDatabase.getInstance(application);
-<<<<<<< HEAD
-        appDao = appDatabase.appDAO();
-        pre = new MutableLiveData<>();
-=======
-        appDao = appDatabase.preferencesDAO();
+        ApplicationDatabase appDatabase = ApplicationDatabase.getInstance(application);
+
+        prefDao = appDatabase.prefDAO();
+        newDeviceDAO = appDatabase.newDeviceDAO();
+
+        //pre = new MutableLiveData<>();
+
         preferences = new MutableLiveData<>();
->>>>>>> f1dee7106410cbf0527e324f6c75241f77bc25e2
+
         list = new MutableLiveData<>();
 
-        allPreferences = appDao.getAllPreferences();
+        allPreferences = prefDao.getAllPreferences();
+
+        allDevices = newDeviceDAO.getAllDevices();
     }
 
     public static synchronized PreferencesRepository getInstance(Application application) {
         if (instance == null)
             instance = new PreferencesRepository(application);
         return instance;
+    }
+
+    public void insertDevice(NewDeviceModel model){
+        new InsertNewDeviceAsync(newDeviceDAO).execute(model);
+    }
+
+//    public void deleteDevice(Device device){
+//        new DeleteDeviceAsync(appDao).execute(device);
+//    }
+
+    public LiveData<List<NewDeviceModel>> getAllDevices(){
+        return allDevices;
     }
 
     public static LiveData<List<Device>> getList() {
@@ -58,41 +79,57 @@ public class PreferencesRepository {
         return allPreferences;
     }
 
+
     public void insert(Preferences preferences) {
-        new InsertPreferencesAsync(appDao).execute(preferences);
+        new InsertPreferencesAsync(prefDao).execute(preferences);
     }
 
     public void update(Preferences preferences) {
-        new UpdatePreferencesAsync(appDao).execute(preferences);
+        new UpdatePreferencesAsync(prefDao).execute(preferences);
     }
 
     private static class InsertPreferencesAsync extends AsyncTask<Preferences, Void, Void> {
-        private AppDAO appDAO;
+        private PrefDAO prefDAO;
 
-        private InsertPreferencesAsync(AppDAO appDAO) {
-            this.appDAO = appDAO;
+        private InsertPreferencesAsync(PrefDAO prefDAO) {
+            this.prefDAO = prefDAO;
         }
 
         @Override
         protected Void doInBackground(Preferences... preferences) {
-            appDAO.insertPreference(preferences[0]);
+            prefDAO.insertPreference(preferences[0]);
             return null;
         }
     }
 
     private static class UpdatePreferencesAsync extends AsyncTask<Preferences, Void, Void> {
-        private AppDAO appDAO;
+        private PrefDAO prefDAO;
 
-        private UpdatePreferencesAsync(AppDAO appDAO) {
-            this.appDAO = appDAO;
+        private UpdatePreferencesAsync(PrefDAO prefDAO) {
+            this.prefDAO = prefDAO;
         }
 
         @Override
         protected Void doInBackground(Preferences... preferences) {
-            appDAO.updatePreference(preferences[0]);
+            prefDAO.updatePreference(preferences[0]);
             return null;
         }
     }
+
+    private static class InsertNewDeviceAsync extends AsyncTask<NewDeviceModel, Void, Void> {
+        private NewDeviceDAO newDeviceDAO;
+
+        private InsertNewDeviceAsync(NewDeviceDAO newDeviceDAO) {
+            this.newDeviceDAO = newDeviceDAO;
+        }
+
+        @Override
+        protected Void doInBackground(NewDeviceModel... newDeviceModels) {
+            newDeviceDAO.insertNewDevice(newDeviceModels[0]);
+            return null;
+        }
+    }
+
 
     // GET API
     public void showPreferences(String deviceId) {

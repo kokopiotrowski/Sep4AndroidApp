@@ -69,6 +69,7 @@ public class PreferencesFragment extends Fragment {
 
         //spinner
         viewModel.updateRooms();
+       // viewModel.getAllDevices();
         viewModel.getDevices().observe(getViewLifecycleOwner(), devices -> {
             nameList.clear();
             idList.clear();

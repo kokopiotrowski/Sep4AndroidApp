@@ -8,11 +8,10 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-@Entity(tableName = "device_table")
+
 public class Device implements Serializable {
 
-    @PrimaryKey
-    @NonNull
+
     private String deviceId;
     private String name;
     private String userId;

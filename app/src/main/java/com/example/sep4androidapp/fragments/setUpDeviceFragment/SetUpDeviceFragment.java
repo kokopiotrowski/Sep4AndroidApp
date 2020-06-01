@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sep4androidapp.Entities.NewDeviceModel;
 import com.example.sep4androidapp.R;
+import com.example.sep4androidapp.ViewModels.PreferencesViewModel;
 import com.example.sep4androidapp.ViewModels.SetUpDeviceViewModel;
 import com.example.sep4androidapp.fragments.mainFragment.mainViewFragments.FragmentFirstPage;
 
@@ -26,6 +27,7 @@ public class SetUpDeviceFragment extends Fragment {
     private EditText deviceId, newRoomName;
     private Button setupDevice;
     private String deviceNameToSend;
+    private PreferencesViewModel preferencesViewModel;
 
     @Nullable
     @Override
@@ -62,8 +64,14 @@ public class SetUpDeviceFragment extends Fragment {
 
             if (!deviceId.getText().toString().isEmpty() && !newRoomName.getText().toString().isEmpty()) {
                 NewDeviceModel model = new NewDeviceModel(deviceId.getText().toString(), newRoomName.getText().toString());
+
                 deviceNameToSend = newRoomName.getText().toString();
+
                 viewModel.postNewDevice(new NewDeviceModel(deviceId.getText().toString(), newRoomName.getText().toString()));
+
+                preferencesViewModel.insertDevice(model);
+                Toast.makeText(getActivity(), "saved", Toast.LENGTH_LONG).show();
+
             } else {
                 Toast.makeText(getActivity(), "Fill up all the required fields", Toast.LENGTH_SHORT).show();
             }

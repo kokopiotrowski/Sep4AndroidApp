@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.example.sep4androidapp.Entities.Device;
+import com.example.sep4androidapp.Entities.NewDeviceModel;
 import com.example.sep4androidapp.Entities.Preferences;
 import com.example.sep4androidapp.Repositories.PreferencesRepository;
 import com.example.sep4androidapp.Repositories.RoomsRepository;
@@ -44,6 +45,14 @@ public class PreferencesViewModel extends AndroidViewModel {
 
     public void updatePreferences(Preferences preference) {
         preferencesRepository.updatePrefrences(preference);
+    }
+
+    public void insertDevice(final NewDeviceModel model){
+        preferencesRepository.insertDevice(model);
+    }
+
+    public LiveData<List<NewDeviceModel>> getAllDevices(){
+        return preferencesRepository.getAllDevices();
     }
 
     public LiveData< List< Preferences > > getPrefrences() {
