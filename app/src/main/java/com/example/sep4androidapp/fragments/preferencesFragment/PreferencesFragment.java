@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+import static com.firebase.ui.auth.AuthUI.TAG;
 import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
 public class PreferencesFragment extends Fragment {
@@ -74,7 +75,7 @@ public class PreferencesFragment extends Fragment {
             public void onClick(View v) {
 
                 viewModel.update(new Preferences(
-                        viewModel.getDeviceId(),
+                       viewModel.getDeviceId(),
                         true,
                         Integer.parseInt(Maxco2EditText.getText().toString()),
                         Integer.parseInt(Minco2EditText.getText().toString()),
@@ -117,7 +118,9 @@ public class PreferencesFragment extends Fragment {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                viewModel.setDeviceId(idList.get(position));
                 viewModel.showPrefrences(idList.get(position));
+
                 if (Variables.isNetworkConnected) {
                     Toast.makeText(getActivity(), "Connected to the network" + "", Toast.LENGTH_LONG).show();
 
@@ -132,9 +135,8 @@ public class PreferencesFragment extends Fragment {
                             MaxhumEditText.setText(String.valueOf(preferences.getHumidityMax()));
                             Minco2EditText.setText(String.valueOf(preferences.getCo2Min()));
                             Maxco2EditText.setText(String.valueOf(preferences.getCo2Max()));
+                            // viewModel.updatePrefrences(preferences);
                         }
-
-
                     });
 
                     /* throughing code 400:

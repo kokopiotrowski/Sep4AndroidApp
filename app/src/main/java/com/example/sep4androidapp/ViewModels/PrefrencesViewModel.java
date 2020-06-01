@@ -18,13 +18,8 @@ import java.util.List;
 public class PrefrencesViewModel extends AndroidViewModel {
 
     private PreferencesRepository preferencesRepository;
-
-    //extra for spinner
-    //private ReportRepository reportRepository;
     private RoomsRepository roomsRepository;
-
-
-
+   // private Device deviceId;
     private String deviceId;
 
     public PrefrencesViewModel(@NonNull Application application) {
@@ -71,6 +66,7 @@ public class PrefrencesViewModel extends AndroidViewModel {
         return roomsRepository.getList();
     }
 
+
     public void setDeviceId(String deviceId) {
         this.deviceId = deviceId;
     }
@@ -79,6 +75,19 @@ public class PrefrencesViewModel extends AndroidViewModel {
 
         return deviceId;
     }
+
+/*
+    public void setDeviceId(String devId) {
+        deviceId.setDeviceId(devId);
+    }
+
+    public String getDeviceId() {
+
+        return deviceId.getDeviceId();
+    }
+
+ */
+
 
 
 }
