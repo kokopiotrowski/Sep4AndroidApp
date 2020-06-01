@@ -14,6 +14,9 @@ import java.util.List;
 
 @Dao
 public interface AppDAO {
+
+    //--------preferences
+
     @Insert
     void insertPreference(Preferences preferences);
 
@@ -32,10 +35,17 @@ public interface AppDAO {
     @Query("SELECT*FROM preferences_table")
     LiveData<List<Preferences>> getAllPreferences();
 
+    //--------device
+
     @Insert
     void insertDevice(Device device);
 
-    @Update
-    void updateDevice(Device device);
+    @Delete
+    void deleteDevice(Device device);
+
+    @Query("SELECT*FROM device_table")
+    LiveData<List<Device>> getAllDevices();
+
+
 
 }
