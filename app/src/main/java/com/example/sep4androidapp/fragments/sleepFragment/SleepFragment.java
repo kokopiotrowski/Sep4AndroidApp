@@ -29,6 +29,7 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -48,8 +49,12 @@ public class SleepFragment extends Fragment {
     ArrayList<Entry> humidityValues = new ArrayList<>();
     ArrayList<ILineDataSet> dataSets = new ArrayList<>();
     int lastSavedDay = 0;
+    int firstDay = 0;
     float timeInSeconds = 0;
-    int counting = 0;
+    int days = 0;
+    long numberOfSeconds = 0;
+    float totalSeconds = 0;
+
 
     LineDataSet temperatureDataSet, soundDataSet, humidityDataSet, co2DataSet;
     LineData data;
@@ -80,45 +85,36 @@ public class SleepFragment extends Fragment {
                 ArrayList<RoomCondition> roomConditions = sleepData.getRoomConditions();
 
                 Collections.sort(roomConditions);
-                lastSavedDay = roomConditions.get(0).getTimestamp().getDayOfYear();
-
+                firstDay = roomConditions.get(0).getTimestamp().getDayOfYear();
 
                 int size = roomConditions.size();
 
 
+
                 for (int i = 0; i < size; i++) {
-                    float count = i;
                     RoomCondition temp = roomConditions.get(i);
-                    LocalDateTime time = temp.getTimestamp();
 
-                   /* ZoneId zoneId = ZoneId.systemDefault();
-                    long epoch = time.atZone(zoneId).toEpochSecond();
-                    float value = (float) epoch;*/
 
-                    int seconds = time.getHour() * 3600 + time.getMinute() * 60 + time.getSecond();
+                    LocalDateTime ldt1 = roomConditions.get(0).getTimestamp();
+                    LocalDateTime ldt2 = roomConditions.get(i).getTimestamp();
 
-                    if (lastSavedDay < time.getDayOfYear()) {
-                        counting++;
-                    }
+                    numberOfSeconds = Duration.between(ldt1, ldt2).toMillis() / 1000;
 
-                    if (counting > 0) {
 
-                        timeInSeconds = (float) seconds + 86400;
-                    } else {
-                        timeInSeconds = (float) seconds;
-                    }
+                    int seconds = ldt1.getHour() * 3600 + ldt1.getMinute() * 60 + ldt1.getSecond();
+
+                    float totalSeconds = (float) seconds + (float) numberOfSeconds;
+
 
                     float temperature = (float) temp.getTemperature();
                     float sound = (float) temp.getSound();
                     float humidity = (float) temp.getHumidity();
                     float co2 = (float) temp.getCo2();
 
-                    setTemperatureValues(temperature, timeInSeconds);
-                    setSoundValues(sound, timeInSeconds);
-                    setHumidityValues(humidity, timeInSeconds);
-                    setCo2Values(co2, timeInSeconds);
-
-                    lastSavedDay = time.getDayOfYear();
+                    setTemperatureValues(temperature, totalSeconds);
+                    setSoundValues(sound, totalSeconds);
+                    setHumidityValues(humidity, totalSeconds);
+                    setCo2Values(co2, totalSeconds);
 
                 }
 
