@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RatingBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.sep4androidapp.Entities.SleepSession;
@@ -51,8 +52,11 @@ public class ReportFragment extends Fragment {
 
     private final String deviceId = "fake_device1";
 
+
     private ReportViewModel mViewModel;
     private View v;
+
+    private Spinner deviceReportSpinner;
     private TextView reportTextView;
     private RadioGroup radioGroup;
     private RadioButton yesterday, lastWeek, lastMonth;
@@ -82,6 +86,7 @@ public class ReportFragment extends Fragment {
         v = inflater.inflate(R.layout.fragment_report, container, false);
         mViewModel = new ViewModelProvider(this).get(ReportViewModel.class);
 
+        deviceReportSpinner = v.findViewById(R.id.deviceReportSpinner);
         reportTextView = v.findViewById(R.id.reportTextView);
 
         radioGroup = v.findViewById(R.id.lastReportRadioGroup);
@@ -99,6 +104,8 @@ public class ReportFragment extends Fragment {
         co2Entries = new ArrayList<>();
 
         ratingBar.setStepSize(1);
+
+
 
         settingListenersAndObservers();
 

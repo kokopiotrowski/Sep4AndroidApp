@@ -10,6 +10,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <Spinner
+            android:id="@+id/deviceReportSpinner"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:spinnerMode="dropdown"
+            app:layout_constraintBottom_toTopOf="@+id/temperatureChart"
+            app:layout_constraintEnd_toStartOf="@+id/reportTextView"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/reportTextView"
             android:layout_width="131dp"
@@ -20,8 +29,8 @@
             android:textSize="30dp"
             app:layout_constraintBottom_toTopOf="@+id/temperatureChart"
             app:layout_constraintEnd_toStartOf="@+id/lastReportRadioGroup"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.52" />
 
         <RadioGroup
             android:id="@+id/lastReportRadioGroup"
@@ -30,8 +39,6 @@
             android:checkedButton="@id/reportLastWeekRadioButton"
             android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.86"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <RadioButton
@@ -86,9 +93,7 @@
             android:id="@+id/temperatureChart"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            app:layout_constraintTop_toBottomOf="@+id/lastReportRadioGroup">
-
-        </com.github.mikephil.charting.charts.LineChart>
+            app:layout_constraintTop_toBottomOf="@+id/lastReportRadioGroup"/>
 
         <com.github.mikephil.charting.charts.HorizontalBarChart
             android:id="@+id/co2Chart"
@@ -98,6 +103,15 @@
             app:layout_constraintTop_toBottomOf="@+id/temperatureChart"
             app:layout_constraintVertical_bias="0.25">
 
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
+            </ScrollView>
         </com.github.mikephil.charting.charts.HorizontalBarChart>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
