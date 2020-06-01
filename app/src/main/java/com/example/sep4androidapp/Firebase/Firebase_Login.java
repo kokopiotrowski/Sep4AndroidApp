@@ -41,15 +41,18 @@ public class Firebase_Login extends AppCompatActivity {
         if (user != null) {
 //            Toast.makeText(getApplicationContext(), "welcome, You are already logged in",
 //                    Toast.LENGTH_SHORT).show();
+
             startActivity(new Intent(this, MainActivity.class));
 
         } else {
             // Create and launch sign-in intent
             startActivityForResult(
                     AuthUI.getInstance().
-                            createSignInIntentBuilder().
-                            setAvailableProviders(providers).setIsSmartLockEnabled(false).
-                            build(), RC_SIGN_IN);
+                            createSignInIntentBuilder()
+                            .setAvailableProviders(providers)
+                            .setIsSmartLockEnabled(false)
+                            .setLogo(R.drawable.sleep)
+                            .build(), RC_SIGN_IN);
         }
 
     }

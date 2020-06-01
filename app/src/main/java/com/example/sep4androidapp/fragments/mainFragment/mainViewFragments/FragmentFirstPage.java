@@ -54,9 +54,6 @@ public class FragmentFirstPage extends Fragment {
         floatingButton = v.findViewById(R.id.floatingButton);
 
         viewModel = new ViewModelProvider(this).get(FragmentFirstPageViewModel.class);
-        viewModel.updateRooms();
-
-        setListeners();
 
         viewModel.getFact().observe(getViewLifecycleOwner(), fact -> {
             Bundle args = new Bundle();
@@ -64,7 +61,7 @@ public class FragmentFirstPage extends Fragment {
             args.putString("content", fact.getContent());
             args.putString("source", fact.getSource());
             args.putString("url", fact.getSourceUrl());
-            ;
+
             factFragmentDialog.setArguments(args);
             factFragmentDialog.show(getChildFragmentManager(), "Chosen");
         });
@@ -92,6 +89,9 @@ public class FragmentFirstPage extends Fragment {
             currentSound.setText(String.format("%.0f", roomCondition.getSound()) + "dB");
             timeStamp.setText("Updated: " + roomCondition.getTimestamp());
         });
+
+        viewModel.updateRooms();
+        setListeners();
 
         return v;
     }
