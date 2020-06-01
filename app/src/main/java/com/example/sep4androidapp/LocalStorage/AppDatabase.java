@@ -13,7 +13,7 @@ public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase instance;
 
-    public abstract AppDAO preferencesDAO();
+    public abstract AppDAO appDAO();
 
     public static synchronized AppDatabase getInstance(Context context){
         if(instance == null){

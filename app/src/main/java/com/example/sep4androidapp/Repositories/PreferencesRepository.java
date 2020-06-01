@@ -32,7 +32,7 @@ public class PreferencesRepository {
 
     private PreferencesRepository(Application application) {
         AppDatabase appDatabase = AppDatabase.getInstance(application);
-        appDao = appDatabase.preferencesDAO();
+        appDao = appDatabase.appDAO();
         pre = new MutableLiveData<>();
         list = new MutableLiveData<>();
 
