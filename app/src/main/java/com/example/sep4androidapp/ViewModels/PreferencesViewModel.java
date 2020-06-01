@@ -8,9 +8,7 @@ import androidx.lifecycle.LiveData;
 
 import com.example.sep4androidapp.Entities.Device;
 import com.example.sep4androidapp.Entities.Preferences;
-import com.example.sep4androidapp.Entities.RoomCondition;
 import com.example.sep4androidapp.Repositories.PreferencesRepository;
-import com.example.sep4androidapp.Repositories.ReportRepository;
 import com.example.sep4androidapp.Repositories.RoomsRepository;
 
 import java.util.List;
@@ -54,7 +52,7 @@ public class PreferencesViewModel extends AndroidViewModel {
 
    public LiveData<Preferences> getLastPreference() {
 
-        return preferencesRepository.getPre();
+        return preferencesRepository.getPreferences();
    }
 
     public void updateRooms() {

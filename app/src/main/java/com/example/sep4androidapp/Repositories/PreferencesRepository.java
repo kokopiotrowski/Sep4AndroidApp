@@ -27,13 +27,13 @@ public class PreferencesRepository {
     private AppDAO appDao;
     private static PreferencesRepository instance;
     private LiveData<List<Preferences>> allPreferences;
-    private MutableLiveData<Preferences> pre;
+    private MutableLiveData<Preferences> preferences;
     private static MutableLiveData<List<Device>> list;
 
     private PreferencesRepository(Application application) {
         AppDatabase appDatabase = AppDatabase.getInstance(application);
         appDao = appDatabase.preferencesDAO();
-        pre = new MutableLiveData<>();
+        preferences = new MutableLiveData<>();
         list = new MutableLiveData<>();
 
         allPreferences = appDao.getAllPreferences();
@@ -108,7 +108,7 @@ public class PreferencesRepository {
                             , response.body().getHumidityMin()
                             , response.body().getTemperatureMin()
                             , response.body().getTemperatureMax());
-                    pre.setValue(P1);
+                    preferences.setValue(P1);
 
                     Log.i(TAG, "Pouneh0" + response.code());
 
@@ -124,8 +124,8 @@ public class PreferencesRepository {
         });
     }
 
-    public LiveData<Preferences> getPre() {
-        return pre;
+    public LiveData<Preferences> getPreferences() {
+        return preferences;
     }
 
 
@@ -147,9 +147,6 @@ public class PreferencesRepository {
         });
     }
 
-    public LiveData<Preferences> getPreFrence() {
-        return pre;
-    }
 
 
 }
