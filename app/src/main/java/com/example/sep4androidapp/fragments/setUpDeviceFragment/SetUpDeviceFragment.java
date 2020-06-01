@@ -39,6 +39,7 @@ public class SetUpDeviceFragment extends Fragment {
         setupDevice = view.findViewById(R.id.setupDevice);
 
         viewModel = new ViewModelProvider(this).get(SetUpDeviceViewModel.class);
+        preferencesViewModel = new ViewModelProvider(this).get(PreferencesViewModel.class);
 
         viewModel.getAvailableDevices().observe(getViewLifecycleOwner(), strings -> {
             availableDevices.setText("");

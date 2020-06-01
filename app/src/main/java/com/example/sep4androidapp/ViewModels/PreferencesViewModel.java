@@ -54,6 +54,9 @@ public class PreferencesViewModel extends AndroidViewModel {
     public LiveData<List<NewDeviceModel>> getAllDevices(){
         return preferencesRepository.getAllDevices();
     }
+    public LiveData<List<NewDeviceModel>> getDeviceLocal(){
+        return preferencesRepository.getAllDevices();
+    }
 
     public LiveData< List< Preferences > > getPrefrences() {
         return preferencesRepository.getAllPreferences();
