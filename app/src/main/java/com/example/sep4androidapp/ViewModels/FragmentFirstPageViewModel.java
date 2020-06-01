@@ -9,12 +9,15 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.sep4androidapp.Entities.Device;
 import com.example.sep4androidapp.Entities.Fact;
+import com.example.sep4androidapp.Entities.Preferences;
 import com.example.sep4androidapp.Entities.RoomCondition;
 import com.example.sep4androidapp.Repositories.FactRepository;
+import com.example.sep4androidapp.Repositories.PreferencesRepository;
 import com.example.sep4androidapp.Repositories.ReportRepository;
 import com.example.sep4androidapp.Repositories.RoomsRepository;
 import com.example.sep4androidapp.Repositories.StartStopRepository;
 import com.example.sep4androidapp.connection.ApiCallBack;
+
 import java.util.Calendar;
 import java.util.List;
 import java.util.Timer;
@@ -25,6 +28,7 @@ public class FragmentFirstPageViewModel extends ViewModel {
     private StartStopRepository startStopRepository;
     private RoomsRepository roomsRepository;
     private FactRepository factRepository;
+    private PreferencesRepository preferencesRepository;
     private Handler handler = new Handler();
     private Timer timer = new Timer();
     private String deviceId;
@@ -42,6 +46,7 @@ public class FragmentFirstPageViewModel extends ViewModel {
         startStopRepository = StartStopRepository.getInstance();
         roomsRepository = RoomsRepository.getInstance();
         factRepository = FactRepository.getInstance();
+        preferencesRepository = PreferencesRepository.getInstance();
     }
 
     public LiveData<RoomCondition> getRoomCondition() {
@@ -100,13 +105,19 @@ public class FragmentFirstPageViewModel extends ViewModel {
         }
     }
 
-    public void getFactRandomly()
-    {
+    public void getFactRandomly() {
         factRepository.getFactRandomly();
     }
 
-    public LiveData<Fact> getFact()
-    {
+    public LiveData<Fact> getFact() {
         return factRepository.getFact();
+    }
+
+    public void showPreferences(String deviceId) {
+        preferencesRepository.showPreferences(deviceId);
+    }
+
+    public LiveData<Preferences> getPreferences() {
+        return preferencesRepository.getPreferences();
     }
 }
