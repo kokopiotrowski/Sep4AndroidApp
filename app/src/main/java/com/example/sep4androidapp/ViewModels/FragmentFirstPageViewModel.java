@@ -1,9 +1,12 @@
 package com.example.sep4androidapp.ViewModels;
 
+import android.app.Application;
 import android.os.Handler;
 import android.util.Log;
 import android.widget.Spinner;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -20,7 +23,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class FragmentFirstPageViewModel extends ViewModel {
+public class FragmentFirstPageViewModel extends AndroidViewModel {
     private ReportRepository reportRepository;
     private StartStopRepository startStopRepository;
     private RoomsRepository roomsRepository;
@@ -28,6 +31,14 @@ public class FragmentFirstPageViewModel extends ViewModel {
     private Handler handler = new Handler();
     private Timer timer = new Timer();
     private String deviceId;
+
+    public FragmentFirstPageViewModel(@NonNull Application application) {
+        super(application);
+        reportRepository = ReportRepository.getInstance();
+        startStopRepository = StartStopRepository.getInstance();
+        roomsRepository = RoomsRepository.getInstance();
+        factRepository = FactRepository.getInstance();
+    }
 
     public String getDeviceId() {
         return deviceId;
@@ -37,12 +48,7 @@ public class FragmentFirstPageViewModel extends ViewModel {
         this.deviceId = deviceId;
     }
 
-    public FragmentFirstPageViewModel() {
-        reportRepository = ReportRepository.getInstance();
-        startStopRepository = StartStopRepository.getInstance();
-        roomsRepository = RoomsRepository.getInstance();
-        factRepository = FactRepository.getInstance();
-    }
+
 
     public LiveData<RoomCondition> getRoomCondition() {
 

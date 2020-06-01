@@ -1,5 +1,9 @@
 package com.example.sep4androidapp.ViewModels;
 
+import android.app.Application;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -8,12 +12,14 @@ import com.example.sep4androidapp.Repositories.SetUpDeviceRepository;
 
 import java.util.List;
 
-public class SetUpDeviceViewModel extends ViewModel {
+public class SetUpDeviceViewModel extends AndroidViewModel {
     private SetUpDeviceRepository repository;
 
-    public SetUpDeviceViewModel() {
+    public SetUpDeviceViewModel(@NonNull Application application) {
+        super(application);
         repository = SetUpDeviceRepository.getInstance();
     }
+
 
     public void updateAvailableDevices()
     {

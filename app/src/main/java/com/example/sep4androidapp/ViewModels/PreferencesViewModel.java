@@ -15,14 +15,14 @@ import com.example.sep4androidapp.Repositories.RoomsRepository;
 
 import java.util.List;
 
-public class PrefrencesViewModel extends AndroidViewModel {
+public class PreferencesViewModel extends AndroidViewModel {
 
     private PreferencesRepository preferencesRepository;
     private RoomsRepository roomsRepository;
    // private Device deviceId;
     private String deviceId;
 
-    public PrefrencesViewModel(@NonNull Application application) {
+    public PreferencesViewModel(@NonNull Application application) {
         super(application);
         preferencesRepository = PreferencesRepository.getInstance(application);
         roomsRepository = RoomsRepository.getInstance();
