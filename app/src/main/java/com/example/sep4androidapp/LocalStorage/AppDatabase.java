@@ -9,16 +9,16 @@ import androidx.room.RoomDatabase;
 import com.example.sep4androidapp.Entities.Preferences;
 
 @Database(entities ={Preferences.class}, version = 1)
-public abstract class PreferencesDatabase extends RoomDatabase {
+public abstract class AppDatabase extends RoomDatabase {
 
-    private static PreferencesDatabase instance;
+    private static AppDatabase instance;
 
-    public abstract PreferencesDAO preferencesDAO();
+    public abstract AppDAO preferencesDAO();
 
-    public static synchronized PreferencesDatabase getInstance(Context context){
+    public static synchronized AppDatabase getInstance(Context context){
         if(instance == null){
             instance = Room.databaseBuilder(context.getApplicationContext(),
-                    PreferencesDatabase.class, "preferences_table")
+                    AppDatabase.class, "app_database")
                     .fallbackToDestructiveMigration()
                     .build();
         }

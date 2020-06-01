@@ -1,10 +1,18 @@
 package com.example.sep4androidapp.Entities;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
+@Entity(tableName = "device_table")
 public class Device implements Serializable {
+
+    @PrimaryKey
+    @NonNull
     private String deviceId;
     private String name;
     private String userId;
