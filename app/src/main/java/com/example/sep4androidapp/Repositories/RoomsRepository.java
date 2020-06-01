@@ -60,6 +60,7 @@ public class RoomsRepository {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 Log.i("roomsRepo", "Delete device succeeded" + response.code());
+                updateRooms();
             }
 
             @Override

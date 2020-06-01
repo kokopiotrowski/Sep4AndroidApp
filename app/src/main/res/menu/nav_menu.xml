@@ -11,8 +11,7 @@
         android:title="Reports" />
     <item
         android:id="@+id/itemRooms"
-        android:title="Room"
-        app:actionLayout="@layout/switch_item" />
+        android:title="Room"/>
     <item
         android:id="@+id/itemPreferences"
         android:title="Preferences" />
