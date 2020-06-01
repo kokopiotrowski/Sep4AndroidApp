@@ -16,20 +16,19 @@ public class MyValueFormatter implements IAxisValueFormatter {
     int hours;
     int minutes;
     int seconds;
+    int count;
 
     @Override
     public String getFormattedValue(float value, AxisBase axis) {
 
 
-        /*long time = (long)value;
-        Instant instant = Instant.ofEpochSecond(time);
-        LocalDateTime date = instant.atZone(ZoneId.systemDefault()).toLocalDateTime();
-        String actualTime = date.getHour() + ":" + date.getMinute() + ":" + date.getSecond();*/
         int timeInSeconds = (int) value;
 
-        if(value > 86400){
+        count = timeInSeconds/86400;
 
-            timeInSeconds = timeInSeconds - 86400;
+        if(count > 0){
+
+            timeInSeconds = timeInSeconds - 86400*count;
 
         }
 
