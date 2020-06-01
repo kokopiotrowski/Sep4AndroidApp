@@ -35,6 +35,7 @@ public interface AppDAO {
     @Query("SELECT*FROM preferences_table")
     LiveData<List<Preferences>> getAllPreferences();
 
+<<<<<<< HEAD
     //--------device
 
     @Insert
@@ -47,5 +48,12 @@ public interface AppDAO {
     LiveData<List<Device>> getAllDevices();
 
 
+=======
+//    @Insert
+//    void insertDevice(Device device);
+//
+//    @Update
+//    void updateDevice(Device device);
+>>>>>>> f1dee7106410cbf0527e324f6c75241f77bc25e2
 
 }

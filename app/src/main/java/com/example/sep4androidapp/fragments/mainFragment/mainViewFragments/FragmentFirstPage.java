@@ -19,6 +19,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sep4androidapp.Entities.Fact;
+import com.example.sep4androidapp.Entities.Preferences;
 import com.example.sep4androidapp.R;
 import com.example.sep4androidapp.ViewModels.FragmentFirstPageViewModel;
 import com.example.sep4androidapp.fragments.factFragment.FactFragmentDialog;
@@ -54,9 +55,6 @@ public class FragmentFirstPage extends Fragment {
         floatingButton = v.findViewById(R.id.floatingButton);
 
         viewModel = new ViewModelProvider(this).get(FragmentFirstPageViewModel.class);
-        viewModel.updateRooms();
-
-        setListeners();
 
         viewModel.getFact().observe(getViewLifecycleOwner(), fact -> {
             Bundle args = new Bundle();
@@ -64,7 +62,7 @@ public class FragmentFirstPage extends Fragment {
             args.putString("content", fact.getContent());
             args.putString("source", fact.getSource());
             args.putString("url", fact.getSourceUrl());
-            ;
+
             factFragmentDialog.setArguments(args);
             factFragmentDialog.show(getChildFragmentManager(), "Chosen");
         });
@@ -93,6 +91,13 @@ public class FragmentFirstPage extends Fragment {
             timeStamp.setText("Updated: " + roomCondition.getTimestamp());
         });
 
+        viewModel.getPreferences().observe(getViewLifecycleOwner(), preferences -> {
+
+        });
+
+        viewModel.updateRooms();
+        setListeners();
+
         return v;
     }
 
@@ -100,6 +105,7 @@ public class FragmentFirstPage extends Fragment {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                viewModel.showPreferences(idList.get(position));
                 viewModel.setDeviceId(idList.get(position));
                 viewModel.receiveStatus(viewModel.getDeviceId(), success -> {
                     Log.i("StartStopRepo", "Result is: " + success);

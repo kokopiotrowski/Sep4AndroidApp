@@ -1,8 +1,11 @@
 package com.example.sep4androidapp.ViewModels;
 
+import android.app.Application;
 import android.os.Handler;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.room.Room;
@@ -20,12 +23,17 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class ReportViewModel extends ViewModel {
+public class ReportViewModel extends AndroidViewModel {
 
     private ReportRepository repository;
     private Handler handler = new Handler();
     private Timer timer = new Timer();
     private String deviceId;
+
+    public ReportViewModel(@NonNull Application application) {
+        super(application);
+        repository = ReportRepository.getInstance();
+    }
 
     public String getDeviceId() {
         return deviceId;
@@ -35,10 +43,7 @@ public class ReportViewModel extends ViewModel {
         this.deviceId = deviceId;
     }
 
-    public ReportViewModel() {
 
-        repository = ReportRepository.getInstance();
-    }
 
     public LiveData<RoomCondition> getRoomCondition() {
 

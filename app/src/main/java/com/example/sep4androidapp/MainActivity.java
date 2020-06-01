@@ -10,6 +10,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sep4androidapp.Firebase.Firebase_Login;
@@ -25,11 +28,18 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     ActionBarDrawerToggle toggle;
     NavigationView navigationView;
     DrawerLayout drawerLayout;
+    TextView email;
+    TextView name;
+    ImageView profilePic;
+    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +53,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        View headerView = navigationView.getHeaderView(0);
+        email = headerView.findViewById(R.id.email);
+        name = headerView.findViewById(R.id.name);
+        profilePic = headerView.findViewById(R.id.profilePic);
+
         toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
@@ -50,6 +65,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainFragment()).commit();
             navigationView.setCheckedItem(R.id.itemMain);
+        }
+        mAuth = FirebaseAuth.getInstance();
+        userInfoUpdate(mAuth.getCurrentUser());
+    }
+
+    public void userInfoUpdate(FirebaseUser user)
+    {
+        mAuth = FirebaseAuth.getInstance();
+        if(user != null)
+        {
+            String name = user.getDisplayName();
+            String email = user.getEmail();
+            String photo = String.valueOf(user.getPhotoUrl());
+
+            this.name.setText(name);
+            this.email.setText(email);
+
+            if(user.getPhotoUrl() == null)
+            {
+                Picasso.get().load(R.drawable.sleep).into(this.profilePic);
+            }else {
+                Picasso.get().load(photo).into(this.profilePic);
+            }
         }
     }
 

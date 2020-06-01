@@ -1,5 +1,9 @@
 package com.example.sep4androidapp.ViewModels;
 
+import android.app.Application;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -10,27 +14,29 @@ import com.example.sep4androidapp.Repositories.SetUpDeviceRepository;
 
 import java.util.List;
 
-public class RoomsViewModel extends ViewModel {
-    private RoomsRepository repository;
+public class RoomsViewModel extends AndroidViewModel {
+    private RoomsRepository roomsRepository;
     private SetUpDeviceRepository setUpDeviceRepository;
 
-    public RoomsViewModel() {
-        repository = RoomsRepository.getInstance();
+    public RoomsViewModel(@NonNull Application application) {
+        super(application);
+        roomsRepository = RoomsRepository.getInstance();
         setUpDeviceRepository = SetUpDeviceRepository.getInstance();
     }
 
+
     public LiveData<List<Device>> getDevices()
     {
-        return repository.getList();
+        return roomsRepository.getList();
     }
 
     public void updateRooms(){
-        repository.updateRooms();
+        roomsRepository.updateRooms();
     }
 
     public void deleteDevice(String deviceId)
     {
-        repository.deleteDevice(deviceId);
+        roomsRepository.deleteDevice(deviceId);
     }
 
     public void postDevice(NewDeviceModel model)
