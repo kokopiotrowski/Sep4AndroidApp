@@ -15,12 +15,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RatingBar;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.example.sep4androidapp.Entities.SleepSession;
@@ -52,7 +54,6 @@ import java.util.List;
 public class ReportFragment extends Fragment {
 
     private final String deviceId = "fake_device1";
-
 
     private ReportViewModel mViewModel;
     private View v;
@@ -105,6 +106,8 @@ public class ReportFragment extends Fragment {
         ratingBar = v.findViewById(R.id.ratingBar);
         rateSleepButton = v.findViewById(R.id.rateYourSleepButton);
 
+
+
         temperatureEntries = new ArrayList<>();
         co2Entries = new ArrayList<>();
 
@@ -113,7 +116,7 @@ public class ReportFragment extends Fragment {
         settingListenersAndObservers();
 
 
-        mViewModel.updateSleepSessions(deviceId);
+        mViewModel.updateSleepSessions();
 
 
         //updateChartsFakeData(1);
@@ -131,6 +134,7 @@ public class ReportFragment extends Fragment {
     private void updateCharts(int lastDays) {
         temperatureChart.clear();
         co2Chart.clear();
+
 
         temperatureEntries.clear();
         co2Entries.clear();
@@ -175,14 +179,11 @@ public class ReportFragment extends Fragment {
 
     private void settingListenersAndObservers()
     {
-        rateSleepButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        rateSleepButton.setOnClickListener(v -> {
 
-                Log.i("SleepSession", "Last sleep: " + sleepSessionsData.get(0).getTimeFinish());
-                mViewModel.rateSleep(sleepSessionsData.get(0).getSleepId(), ratingBar.getNumStars());
-                mViewModel.updateSleepSessions(deviceId);
-            }
+            Log.i("SleepSession", "Last sleep: " + sleepSessionsData.get(0).getTimeFinish());
+            mViewModel.rateSleep(sleepSessionsData.get(0).getSleepId(), ratingBar.getNumStars());
+            mViewModel.updateSleepSessions();
         });
 
         radioGroup.setOnCheckedChangeListener((radioGroup, i) -> {
@@ -205,18 +206,28 @@ public class ReportFragment extends Fragment {
             }
         });
 
-        mViewModel.getSleepSessions().observe(getViewLifecycleOwner(), new Observer<List<SleepSession>>() {
-            @Override
-            public void onChanged(List<SleepSession> sleepSessions) {
-                sleepSessionsData = sleepSessions;
-                updateCharts(1);
-                if(sleepSessionsData.size() != 0) {
-                    int lastSleepRating = sleepSessionsData.get(0).getRating();
-                    if (lastSleepRating != 0) {
-                        ratingBar.setRating(lastSleepRating);
-                        rateSleepButton.setClickable(false);
-                    }
+        mViewModel.getSleepSessions().observe(getViewLifecycleOwner(), sleepSessions -> {
+            sleepSessionsData = sleepSessions;
+            updateCharts(1);
+            if(sleepSessionsData.size() != 0) {
+                int lastSleepRating = sleepSessionsData.get(0).getRating();
+                if (lastSleepRating != 0) {
+                    ratingBar.setRating(lastSleepRating);
+                    rateSleepButton.setClickable(false);
+                    rateSleepButton.setText("Already Rated!");
                 }
+                else
+                {
+                    rateSleepButton.setText("Rate your last sleep");
+                    rateSleepButton.setClickable(true);
+                    ratingBar.setRating(0);
+                }
+            }
+            else
+            {
+                ratingBar.setRating(0);
+                rateSleepButton.setClickable(false);
+                rateSleepButton.setText("Nothing to rate");
             }
         });
 
@@ -233,9 +244,17 @@ public class ReportFragment extends Fragment {
             deviceReportSpinner.setAdapter(adapter);
         });
 
-//        deviceReportSpinner.setOnItemClickListener(() -> {
-//
-//        });
+        deviceReportSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                mViewModel.setDeviceId(idList.get(position));
+                mViewModel.updateSleepSessions();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
 
     }
 

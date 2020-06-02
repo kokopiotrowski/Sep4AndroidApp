@@ -89,7 +89,7 @@ public class ReportViewModel extends AndroidViewModel {
         repository.updateDevicesList("account_1");
         return repository.getDevices();}
 
-    public void updateSleepSessions(String deviceId)
+    public void updateSleepSessions()
     {
         repository.updateSleepSessions(deviceId);
     }
