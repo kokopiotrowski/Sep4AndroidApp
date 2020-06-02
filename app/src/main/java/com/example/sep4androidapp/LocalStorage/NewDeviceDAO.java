@@ -15,7 +15,7 @@ import java.util.List;
 public interface NewDeviceDAO {
 
 
-    @Update
+    @Insert
     void insertNewDevice(NewDeviceModel deviceModel);
 
     @Query("SELECT*FROM newDevice_table")
