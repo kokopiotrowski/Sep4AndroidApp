@@ -27,6 +27,7 @@ import android.widget.TextView;
 
 import com.example.sep4androidapp.Entities.SleepSession;
 import com.example.sep4androidapp.R;
+import com.example.sep4androidapp.ViewModels.ChartsReportViewModel;
 import com.example.sep4androidapp.ViewModels.ReportViewModel;
 import com.github.mikephil.charting.charts.CandleStickChart;
 import com.github.mikephil.charting.charts.CombinedChart;
@@ -55,7 +56,7 @@ public class ReportFragment extends Fragment {
 
     private final String deviceId = "fake_device1";
 
-    private ReportViewModel mViewModel;
+    private ChartsReportViewModel mViewModel;
     private View v;
 
     private Spinner deviceReportSpinner;
@@ -90,7 +91,7 @@ public class ReportFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         v = inflater.inflate(R.layout.fragment_report, container, false);
-        mViewModel = new ViewModelProvider(this).get(ReportViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(ChartsReportViewModel.class);
 
         deviceReportSpinner = v.findViewById(R.id.deviceReportSpinner);
         reportTextView = v.findViewById(R.id.reportTextView);
@@ -115,9 +116,7 @@ public class ReportFragment extends Fragment {
 
         settingListenersAndObservers();
 
-
         mViewModel.updateSleepSessions();
-
 
         //updateChartsFakeData(1);
         return v;
@@ -127,7 +126,7 @@ public class ReportFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(ReportViewModel.class);
+        mViewModel = ViewModelProviders.of(this).get(ChartsReportViewModel.class);
         // TODO: Use the ViewModel
     }
 
@@ -213,6 +212,7 @@ public class ReportFragment extends Fragment {
                 int lastSleepRating = sleepSessionsData.get(0).getRating();
                 if (lastSleepRating != 0) {
                     ratingBar.setRating(lastSleepRating);
+                    ratingBar.setIsIndicator(true);
                     rateSleepButton.setClickable(false);
                     rateSleepButton.setText("Already Rated!");
                 }
@@ -221,11 +221,13 @@ public class ReportFragment extends Fragment {
                     rateSleepButton.setText("Rate your last sleep");
                     rateSleepButton.setClickable(true);
                     ratingBar.setRating(0);
+                    ratingBar.setIsIndicator(false);
                 }
             }
             else
             {
                 ratingBar.setRating(0);
+                ratingBar.setIsIndicator(true);
                 rateSleepButton.setClickable(false);
                 rateSleepButton.setText("Nothing to rate");
             }
