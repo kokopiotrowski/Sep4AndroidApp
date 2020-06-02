@@ -17,7 +17,7 @@ import com.example.sep4androidapp.Entities.RoomCondition;
 import com.example.sep4androidapp.Entities.SleepSession;
 import com.example.sep4androidapp.R;
 import com.example.sep4androidapp.ViewModels.FragmentFirstPageViewModel;
-import com.example.sep4androidapp.ViewModels.PrefrencesViewModel;
+import com.example.sep4androidapp.ViewModels.PreferencesViewModel;
 import com.example.sep4androidapp.ViewModels.ReportViewModel;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.Chart;
@@ -41,7 +41,7 @@ public class FragmentTemperature extends Fragment {
 
 
     private ReportViewModel viewModelReport;
-    private PrefrencesViewModel viewModelPreferences;
+    private PreferencesViewModel viewModelPreferences;
     private FragmentFirstPageViewModel viewModelFirstPage;
     float temperatureValue;
     private List<BarEntry> dailyTemperature = new ArrayList<>();
@@ -69,7 +69,7 @@ public class FragmentTemperature extends Fragment {
         monthlyBarChart = v.findViewById(R.id.monthlyBarChart);
 
         viewModelReport = new ViewModelProvider(this).get(ReportViewModel.class);
-        viewModelPreferences = new ViewModelProvider(this).get(PrefrencesViewModel.class);
+        viewModelPreferences = new ViewModelProvider(this).get(PreferencesViewModel.class);
         viewModelFirstPage = new ViewModelProvider(this).get(FragmentFirstPageViewModel.class);
 
 
@@ -133,7 +133,7 @@ public class FragmentTemperature extends Fragment {
 
             }
         });
-        viewModelReport.updateSleepSessions("fake_device3");
+//        viewModelReport.updateSleepSessions("fake_device3");
 
         return v;
     }
