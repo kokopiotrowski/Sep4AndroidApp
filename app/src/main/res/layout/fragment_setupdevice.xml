@@ -22,14 +22,18 @@
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Currently available devices" />
+            android:paddingStart="10dp"
+            android:text="Currently available devices"
+            tools:ignore="RtlSymmetry" />
 
         <TextView
             android:id="@+id/availableDevices"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingStart="10dp"
             android:background="#EAEAEA"
-            android:gravity="center_vertical" />
+            android:gravity="center_vertical"
+            tools:ignore="RtlSymmetry" />
     </LinearLayout>
 
     <TextView
@@ -47,8 +51,8 @@
     <EditText
         android:id="@+id/deviceId"
         android:layout_width="160dp"
-        android:layout_height="39dp"
-        android:layout_marginTop="20dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="17dp"
         android:layout_marginEnd="24dp"
         android:ems="10"
         android:gravity="center_vertical"
@@ -71,8 +75,8 @@
     <EditText
         android:id="@+id/newRoomName"
         android:layout_width="160dp"
-        android:layout_height="37dp"
-        android:layout_marginTop="8dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="24dp"
         android:ems="10"
         android:inputType="textPersonName"

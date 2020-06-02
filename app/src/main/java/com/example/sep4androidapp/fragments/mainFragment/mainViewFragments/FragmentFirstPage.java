@@ -138,10 +138,7 @@ public class FragmentFirstPage extends Fragment {
             humidityStatus.setImageResource(R.drawable.correct);
         }
 
-        if(preferences.getCo2Min() > co2)
-        {
-            CO2Status.setImageResource(R.drawable.lower);
-        }else if(preferences.getCo2Max() < co2)
+        if(preferences.getCo2Max() < co2)
         {
             CO2Status.setImageResource(R.drawable.higher);
         }else{
