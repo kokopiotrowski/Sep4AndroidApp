@@ -2,21 +2,23 @@ package com.example.sep4androidapp.LocalStorage;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
-import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.example.sep4androidapp.Entities.Device;
+import com.example.sep4androidapp.Entities.NewDeviceModel;
 import com.example.sep4androidapp.Entities.Preferences;
 
 import java.util.List;
 
 @Dao
-public interface AppDAO {
+public interface PrefDAO {
+
+    //--------preferences
+
     @Insert
     void insertPreference(Preferences preferences);
-
+    //
     @Update
     void updatePreference(Preferences preferences);
 
@@ -32,10 +34,5 @@ public interface AppDAO {
     @Query("SELECT*FROM preferences_table")
     LiveData<List<Preferences>> getAllPreferences();
 
-//    @Insert
-//    void insertDevice(Device device);
-//
-//    @Update
-//    void updateDevice(Device device);
 
 }
