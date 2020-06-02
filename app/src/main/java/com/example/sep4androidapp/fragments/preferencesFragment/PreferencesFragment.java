@@ -52,7 +52,7 @@ public class PreferencesFragment extends Fragment {
         CheckNetwork network = new CheckNetwork(getActivity().getApplicationContext());
         network.registerNetworkCallback();
         viewModel = new ViewModelProvider(this).get(PreferencesViewModel.class);
-        viewModel.updateRooms();
+
 
         save.setOnClickListener(v -> {
             Preferences preference = new Preferences(
@@ -65,8 +65,14 @@ public class PreferencesFragment extends Fragment {
                     Double.parseDouble(MintempEditText.getText().toString()),
                     Double.parseDouble(MaxtempEditText.getText().toString()));
 
-            viewModel.insert(preference);
-            viewModel.updatePreferences(preference);
+            if(preference==null){
+                viewModel.insert(preference);
+
+            }else{
+                viewModel.update(preference);
+            }
+
+        viewModel.updatePreferences(preference);
         });
 
         viewModel.getAllDevices().observe(getViewLifecycleOwner(), savedDevices -> {
@@ -85,7 +91,7 @@ public class PreferencesFragment extends Fragment {
 
 
         });
-
+        viewModel.updateRooms();
         viewModel.getDevices().observe(getViewLifecycleOwner(), devices -> {
             nameList.clear();
             idList.clear();
@@ -109,6 +115,7 @@ public class PreferencesFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (Variables.isNetworkConnected) {
                     viewModel.setDeviceId(idList.get(position));
+                    viewModel.showPrefrences(idList.get(position));
 
                     Toast.makeText(getActivity(), "Connected to the network" + "", Toast.LENGTH_LONG).show();
 
