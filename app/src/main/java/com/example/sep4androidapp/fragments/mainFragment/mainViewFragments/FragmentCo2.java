@@ -41,7 +41,7 @@ public class FragmentCo2 extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_temp_sound_co2_hum, container, false);
-        barChart = v.findViewById(R.id.barChart);
+       /* barChart = v.findViewById(R.id.barChart);*/
 
         viewModelReport = new ViewModelProvider(this).get(ReportViewModel.class);
         viewModelPreferences = new ViewModelProvider(this).get(PreferencesViewModel.class);
@@ -60,7 +60,7 @@ public class FragmentCo2 extends Fragment {
             @Override
             public void onChanged(RoomCondition roomCondition) {
 
-                co2.clear();
+               /* co2.clear();
 
                 co2Value = (float)roomCondition.getCo2();
                 co2.add(new BarEntry(0,co2Value));
@@ -93,7 +93,7 @@ public class FragmentCo2 extends Fragment {
                 barChart.getLegend().setEnabled(false);
                 barChart.setData(barData);
                 barChart.setFitBars(true);
-                barChart.invalidate();
+                barChart.invalidate();*/
 
 
 
