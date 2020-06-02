@@ -93,7 +93,8 @@ public class ReportFragment extends Fragment {
         v = inflater.inflate(R.layout.fragment_report, container, false);
         mViewModel = new ViewModelProvider(this).get(ChartsReportViewModel.class);
 
-        deviceReportSpinner = v.findViewById(R.id.deviceReportSpinner);
+
+        deviceReportSpinner = v.findViewById(R.id.twojaStara);
         reportTextView = v.findViewById(R.id.reportTextView);
 
         radioGroup = v.findViewById(R.id.lastReportRadioGroup);

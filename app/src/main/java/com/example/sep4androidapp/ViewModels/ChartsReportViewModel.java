@@ -5,6 +5,7 @@ import android.app.Application;
 import com.example.sep4androidapp.Entities.Device;
 import com.example.sep4androidapp.Entities.SleepSession;
 import com.example.sep4androidapp.Repositories.ReportRepository;
+import com.example.sep4androidapp.Repositories.RoomsRepository;
 
 import java.util.List;
 
@@ -14,11 +15,13 @@ import androidx.lifecycle.LiveData;
 
 public class ChartsReportViewModel extends AndroidViewModel {
     ReportRepository repository;
+    RoomsRepository roomsRepository;
     private String deviceId;
 
     public ChartsReportViewModel(@NonNull Application application) {
         super(application);
         repository = ReportRepository.getInstance();
+        roomsRepository = RoomsRepository.getInstance();
     }
 
     public LiveData<List<SleepSession>> getSleepSessions(){
@@ -26,8 +29,8 @@ public class ChartsReportViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<Device>> getDevices() {
-        repository.updateDevicesList("account_1");
-        return repository.getDevices();}
+        roomsRepository.updateRooms();
+        return roomsRepository.getList();}
 
     public void updateSleepSessions()
     {
