@@ -34,6 +34,7 @@ public class PreferencesFragment extends Fragment {
             MaxtempEditText, MaxhumEditText, Maxco2EditText;
     private List<String> nameList = new ArrayList<>();
     private List<String> idList = new ArrayList<>();
+    private ArrayAdapter<String> adapter;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -51,6 +52,7 @@ public class PreferencesFragment extends Fragment {
         CheckNetwork network = new CheckNetwork(getActivity().getApplicationContext());
         network.registerNetworkCallback();
         viewModel = new ViewModelProvider(this).get(PreferencesViewModel.class);
+        viewModel.updateRooms();
 
         save.setOnClickListener(v -> {
             Preferences preference = new Preferences(
@@ -67,30 +69,46 @@ public class PreferencesFragment extends Fragment {
             viewModel.updatePreferences(preference);
         });
 
-        //spinner
-        viewModel.updateRooms();
+        viewModel.getAllDevices().observe(getViewLifecycleOwner(), savedDevices -> {
+            if (!Variables.isNetworkConnected) {
+                nameList.clear();
+                idList.clear();
+                for (int i = 0; i < savedDevices.size(); i++) {
+                    nameList.add(savedDevices.get(i).getName());
+                    idList.add(savedDevices.get(i).getDeviceId());
+                }
+                adapter = new ArrayAdapter<>(getActivity(),
+                        android.R.layout.simple_spinner_item, nameList);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner.setAdapter(adapter);
+            }
 
+
+        });
 
         viewModel.getDevices().observe(getViewLifecycleOwner(), devices -> {
             nameList.clear();
             idList.clear();
-            for (int i = 0; i < devices.size(); i++) {
-                nameList.add(devices.get(i).getName());
-                idList.add(devices.get(i).getDeviceId());
+            if (Variables.isNetworkConnected) {
+                for (int i = 0; i < devices.size(); i++) {
+                    nameList.add(devices.get(i).getName());
+                    idList.add(devices.get(i).getDeviceId());
+                }
+                adapter = new ArrayAdapter<>(getActivity(),
+                        android.R.layout.simple_spinner_item, nameList);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner.setAdapter(adapter);
             }
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
-                    android.R.layout.simple_spinner_item, nameList);
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinner.setAdapter(adapter);
         });
 
+//spinner
 
-        if (Variables.isNetworkConnected) {
-            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (Variables.isNetworkConnected) {
                     viewModel.setDeviceId(idList.get(position));
-                    viewModel.showPrefrences(idList.get(position));
 
                     Toast.makeText(getActivity(), "Connected to the network" + "", Toast.LENGTH_LONG).show();
 
@@ -103,73 +121,48 @@ public class PreferencesFragment extends Fragment {
                         Minco2EditText.setText(String.valueOf(preferences.getCo2Min()));
                         Maxco2EditText.setText(String.valueOf(preferences.getCo2Max()));
                     });
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {
-                }
-            });
-
-        } else {
-            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected (AdapterView < ? > parent, View view,int position, long id){
-                viewModel.setDeviceId(idList.get(position));
-              //  viewModel.getNewDevice(idList.get(position));
-
-                viewModel.getAllDevices().observe(getViewLifecycleOwner(), devices -> {
-                    nameList.clear();
-                    idList.clear();
-                    for (int i = 0; i < devices.size(); i++) {
-                        nameList.add(devices.get(i).getName());
-                        idList.add(devices.get(i).getDeviceId());
-                    }
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
-                            android.R.layout.simple_spinner_item, nameList);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinner.setAdapter(adapter);
-
-                });
+                } else {
+                    viewModel.setDeviceId(idList.get(position));
+                    //  viewModel.getNewDevice(idList.get(position));
 
 
-                Toast.makeText(getActivity(), "No internet connection", Toast.LENGTH_LONG).show();
-                viewModel.getAllPreferences().observe(getViewLifecycleOwner(), preferences -> {
+                    Toast.makeText(getActivity(), "No internet connection", Toast.LENGTH_LONG).show();
+                    viewModel.getAllPreferences().observe(getViewLifecycleOwner(), preferences -> {
 
-                    if (!preferences.isEmpty()) {
-                        MintempEditText.setText("");
-                        MaxtempEditText.setText("");
-                        MinhumEditText.setText("");
-                        MaxhumEditText.setText("");
-                        Minco2EditText.setText("");
-                        Maxco2EditText.setText("");
-                        for (Preferences p : preferences) {
-                            MintempEditText.append(p.getTemperatureMin() + "\n");
-                            MaxtempEditText.append(p.getTemperatureMax() + "\n");
-                            MinhumEditText.append(p.getHumidityMin() + "\n");
-                            MaxhumEditText.append(p.getHumidityMax() + "\n");
-                            Minco2EditText.append(p.getCo2Min() + "\n");
-                            Maxco2EditText.append(p.getCo2Max() + "\n");
+                        if (!preferences.isEmpty()) {
+                            MintempEditText.setText("");
+                            MaxtempEditText.setText("");
+                            MinhumEditText.setText("");
+                            MaxhumEditText.setText("");
+                            Minco2EditText.setText("");
+                            Maxco2EditText.setText("");
+                            for (Preferences p : preferences) {
+                                MintempEditText.append(p.getTemperatureMin() + "\n");
+                                MaxtempEditText.append(p.getTemperatureMax() + "\n");
+                                MinhumEditText.append(p.getHumidityMin() + "\n");
+                                MaxhumEditText.append(p.getHumidityMax() + "\n");
+                                Minco2EditText.append(p.getCo2Min() + "\n");
+                                Maxco2EditText.append(p.getCo2Max() + "\n");
+                            }
+                        } else {
+
+                            MintempEditText.setText("Empty");
+                            MaxtempEditText.setText("Empty");
+                            MinhumEditText.setText("Empty");
+                            MaxhumEditText.setText("Empty");
+                            Minco2EditText.setText("Empty");
+                            Maxco2EditText.setText("Empty");
                         }
-                    } else {
-
-                        MintempEditText.setText("Empty");
-                        MaxtempEditText.setText("Empty");
-                        MinhumEditText.setText("Empty");
-                        MaxhumEditText.setText("Empty");
-                        Minco2EditText.setText("Empty");
-                        Maxco2EditText.setText("Empty");
-                    }
-                });
-                save.setEnabled(false);
-            }
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {
+                    });
+                    save.setEnabled(false);
                 }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
         });
-    }
-
-
-
 
         return view;
     }
