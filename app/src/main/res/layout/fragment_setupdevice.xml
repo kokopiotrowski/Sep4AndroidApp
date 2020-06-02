@@ -9,7 +9,7 @@
     <TextView
         android:id="@+id/availableDevices"
         android:layout_width="300dp"
-        android:layout_height="292dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
         android:background="#EAEAEA"
         android:gravity="center_vertical"
@@ -22,10 +22,11 @@
         android:id="@+id/deviceIdtext"
         android:layout_width="130dp"
         android:layout_height="40dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="88dp"
         android:text="Device id:"
         android:textSize="15sp"
+        android:gravity="center_vertical"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -34,22 +35,21 @@
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
         android:ems="10"
         android:gravity="center_vertical"
         android:inputType="textPersonName"
         app:layout_constraintStart_toEndOf="@+id/deviceIdtext"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/deviceIdtext" />
 
     <TextView
         android:id="@+id/newRoomtext"
         android:layout_width="130dp"
         android:layout_height="40dp"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:text="New room's name: "
         android:textSize="15sp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:gravity="center_vertical"
+        app:layout_constraintStart_toStartOf="@+id/deviceIdtext"
         app:layout_constraintTop_toBottomOf="@+id/deviceIdtext" />
 
     <EditText
@@ -61,7 +61,7 @@
         android:ems="10"
         android:inputType="textPersonName"
         app:layout_constraintStart_toEndOf="@+id/newRoomtext"
-        app:layout_constraintTop_toBottomOf="@+id/deviceId" />
+        app:layout_constraintTop_toBottomOf="@+id/deviceIdtext" />
 
     <Button
         android:id="@+id/setupDevice"
@@ -72,5 +72,14 @@
         android:text="Create device"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/newRoomName" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="356dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="24dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="16dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

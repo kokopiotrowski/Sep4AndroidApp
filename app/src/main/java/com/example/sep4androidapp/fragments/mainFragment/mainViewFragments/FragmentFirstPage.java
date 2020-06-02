@@ -16,10 +16,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.sep4androidapp.Entities.Fact;
 import com.example.sep4androidapp.Entities.Preferences;
 import com.example.sep4androidapp.R;
 import com.example.sep4androidapp.ViewModels.FragmentFirstPageViewModel;
@@ -155,7 +153,7 @@ public class FragmentFirstPage extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 viewModel.showPreferences(idList.get(position));
-                viewModel.setDeviceId(idList.get(position));
+                viewModel.setChosenDeviceId(idList.get(position));
                 viewModel.receiveStatus(viewModel.getDeviceId(), success -> {
                     Log.i("StartStopRepo", "Result is: " + success);
                     deviceSwitch.setChecked(success);

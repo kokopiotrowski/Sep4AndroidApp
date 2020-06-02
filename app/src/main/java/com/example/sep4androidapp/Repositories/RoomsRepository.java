@@ -18,10 +18,12 @@ import retrofit2.Response;
 public class RoomsRepository {
     private static RoomsRepository instance;
     private MutableLiveData<List<Device>> list;
+    private MutableLiveData<String> chosenDeviceId;
 
     private RoomsRepository()
     {
         list = new MutableLiveData<>();
+        chosenDeviceId = new MutableLiveData<>();
     }
 
     public static synchronized  RoomsRepository getInstance()
@@ -73,5 +75,14 @@ public class RoomsRepository {
 
     public LiveData<List<Device>> getList(){
         return list;
+    }
+
+    public void setChosenDeviceId(String deviceId) {
+        chosenDeviceId.setValue(deviceId);
+    }
+
+    public LiveData<String> getChosenDeviceId()
+    {
+        return chosenDeviceId;
     }
 }

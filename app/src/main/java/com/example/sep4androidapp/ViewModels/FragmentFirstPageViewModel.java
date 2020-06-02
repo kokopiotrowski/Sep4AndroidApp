@@ -42,15 +42,14 @@ public class FragmentFirstPageViewModel extends AndroidViewModel {
         preferencesRepository = PreferencesRepository.getInstance(application);
     }
 
+    public void setChosenDeviceId(String deviceId) {
+        this.deviceId = deviceId;
+        roomsRepository.setChosenDeviceId(deviceId);
+    }
+
     public String getDeviceId() {
         return deviceId;
     }
-
-    public void setDeviceId(String deviceId) {
-        this.deviceId = deviceId;
-    }
-
-
 
     public LiveData<RoomCondition> getRoomCondition() {
 
