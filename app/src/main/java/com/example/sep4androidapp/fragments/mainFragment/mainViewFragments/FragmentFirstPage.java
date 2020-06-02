@@ -75,6 +75,7 @@ public class FragmentFirstPage extends Fragment {
         });
 
         viewModel.getDevices().observe(getViewLifecycleOwner(), devices -> {
+
             nameList.clear();
             idList.clear();
             for (int i = 0; i < devices.size(); i++) {
@@ -152,6 +153,7 @@ public class FragmentFirstPage extends Fragment {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                viewModel.updateRoomCondition(idList.get(position));
                 viewModel.showPreferences(idList.get(position));
                 viewModel.setChosenDeviceId(idList.get(position));
                 viewModel.receiveStatus(viewModel.getDeviceId(), success -> {

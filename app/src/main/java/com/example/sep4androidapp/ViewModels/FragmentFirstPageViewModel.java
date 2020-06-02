@@ -56,7 +56,7 @@ public class FragmentFirstPageViewModel extends AndroidViewModel {
         return reportRepository.getRoomCondition();
     }
 
-    private void updateRoomCondition(String deviceId) {
+    public void updateRoomCondition(String deviceId) {
         reportRepository.updateRoomCondition(deviceId);
     }
 
