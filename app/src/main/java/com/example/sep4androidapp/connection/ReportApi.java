@@ -20,7 +20,10 @@ public interface ReportApi {
 
     @GET("reports/{deviceId}")
     Call<ReportResponse> getReport(@Path("deviceId") String deviceId);
-//@Path("deviceId") int deviceId
+
+    @GET("reports/{deviceId}")
+    Call<ReportResponse> getReport(@Path("deviceId") String deviceId, @Query("dateStart") String dateStart, @Query("dateFinish") String dateFinish);
+
     @GET("reports/sleeps/1")
     Call<SleepDataResponse> getSleepData();
 
