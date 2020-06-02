@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -74,6 +75,10 @@ public class ReportFragment extends Fragment {
     private LineData temperatureData;
     private BarData co2Data;
 
+    private List<String> nameList = new ArrayList<>();
+    private List<String> idList = new ArrayList<>();
+    ArrayAdapter<String> adapter;
+
 
     public static ReportFragment newInstance() {
         return new ReportFragment();
@@ -105,8 +110,6 @@ public class ReportFragment extends Fragment {
 
         ratingBar.setStepSize(1);
 
-
-
         settingListenersAndObservers();
 
 
@@ -132,33 +135,35 @@ public class ReportFragment extends Fragment {
         temperatureEntries.clear();
         co2Entries.clear();
 
-        for (int i = 0; i < (sleepSessionsData.size() <= lastDays ? sleepSessionsData.size() : lastDays); i++) {
+        if(sleepSessionsData.size() != 0) {
+            for (int i = 0; i < (sleepSessionsData.size() <= lastDays ? sleepSessionsData.size() : lastDays); i++) {
 
-            SleepSession cSleep = sleepSessionsData.get(i);
-            int dayOfMonth = cSleep.getTimeStart().getDayOfMonth();
+                SleepSession cSleep = sleepSessionsData.get(i);
+                int dayOfMonth = cSleep.getTimeStart().getDayOfMonth();
 
-            temperatureEntries.add(new Entry(dayOfMonth, (float) cSleep.getAverageTemperature()));
-            co2Entries.add(new BarEntry(dayOfMonth, (float) cSleep.getAverageCo2()));
+                temperatureEntries.add(new Entry(dayOfMonth, (float) cSleep.getAverageTemperature()));
+                co2Entries.add(new BarEntry(dayOfMonth, (float) cSleep.getAverageCo2()));
+            }
+            Collections.sort(temperatureEntries, new EntryXComparator());
+            Collections.sort(co2Entries, new EntryXComparator());
+
+            LineDataSet temperatureDataSet = new LineDataSet(temperatureEntries, "Temperature");
+            BarDataSet co2DataSet = new BarDataSet(co2Entries, "Co2");
+
+            temperatureData = new LineData(temperatureDataSet);
+
+            temperatureChart.setData(temperatureData);
+
+
+            co2Data = new BarData(co2DataSet);
+            co2Data.setBarWidth(0.9f);
+            co2Chart.setData(co2Data);
+            co2Chart.setFitBars(true);
+
+            temperatureChart.invalidate();
+            co2Chart.invalidate();
+            styleCharts();
         }
-        Collections.sort(temperatureEntries, new EntryXComparator());
-        Collections.sort(co2Entries, new EntryXComparator());
-
-        LineDataSet temperatureDataSet = new LineDataSet(temperatureEntries, "Temperature");
-        BarDataSet co2DataSet = new BarDataSet(co2Entries, "Co2");
-
-        temperatureData = new LineData(temperatureDataSet);
-
-        temperatureChart.setData(temperatureData);
-
-
-        co2Data = new BarData(co2DataSet);
-        co2Data.setBarWidth(0.9f);
-        co2Chart.setData(co2Data);
-        co2Chart.setFitBars(true);
-
-        temperatureChart.invalidate();
-        co2Chart.invalidate();
-        styleCharts();
     }
 
     private void styleCharts() {
@@ -205,13 +210,33 @@ public class ReportFragment extends Fragment {
             public void onChanged(List<SleepSession> sleepSessions) {
                 sleepSessionsData = sleepSessions;
                 updateCharts(1);
-                int lastSleepRating = sleepSessions.get(0).getRating();
-                if(lastSleepRating != 0) {
-                    ratingBar.setRating(lastSleepRating);
-                    rateSleepButton.setClickable(false);
+                if(sleepSessionsData.size() != 0) {
+                    int lastSleepRating = sleepSessionsData.get(0).getRating();
+                    if (lastSleepRating != 0) {
+                        ratingBar.setRating(lastSleepRating);
+                        rateSleepButton.setClickable(false);
+                    }
                 }
             }
         });
+
+        mViewModel.getDevices().observe(getViewLifecycleOwner(), devices -> {
+            nameList.clear();
+            idList.clear();
+            for (int i = 0; i < devices.size(); i++) {
+                nameList.add(devices.get(i).getName());
+                idList.add(devices.get(i).getDeviceId());
+            }
+            adapter = new ArrayAdapter<>(getActivity(),
+                    android.R.layout.simple_spinner_item, nameList);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            deviceReportSpinner.setAdapter(adapter);
+        });
+
+//        deviceReportSpinner.setOnItemClickListener(() -> {
+//
+//        });
+
     }
 
     private void updateChartsFakeData(int lastDays) {

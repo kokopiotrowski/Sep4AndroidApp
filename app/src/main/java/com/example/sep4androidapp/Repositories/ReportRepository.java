@@ -7,13 +7,16 @@ import androidx.annotation.RequiresApi;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.sep4androidapp.Entities.Device;
 import com.example.sep4androidapp.Entities.RoomCondition;
 import com.example.sep4androidapp.Entities.SleepData;
 import com.example.sep4androidapp.Entities.SleepSession;
+import com.example.sep4androidapp.connection.AccountDevicesApi;
 import com.example.sep4androidapp.connection.ReportApi;
 import com.example.sep4androidapp.connection.RoomConditionApi;
 import com.example.sep4androidapp.connection.ServiceGenerator;
 import com.example.sep4androidapp.connection.SleepTrackingApi;
+import com.example.sep4androidapp.connection.responses.DeviceResponse;
 import com.example.sep4androidapp.connection.responses.ReportResponse;
 import com.example.sep4androidapp.connection.responses.RoomConditionResponse;
 import com.example.sep4androidapp.connection.responses.SleepDataResponse;
@@ -35,11 +38,13 @@ public class ReportRepository {
     private MutableLiveData<RoomCondition> roomCondition;
     private MutableLiveData<SleepData> sleepData;
     private MutableLiveData<List<SleepSession>> sleepSessions;
+    private MutableLiveData<List<Device>> devices;
 
     private ReportRepository (){
         roomCondition = new MutableLiveData<>();
         sleepData = new MutableLiveData<>();
         sleepSessions = new MutableLiveData<>();
+        devices = new MutableLiveData<>();
     }
 
     public static synchronized ReportRepository getInstance(){
@@ -133,8 +138,6 @@ public class ReportRepository {
     }
 
     public void rateSleep(int sleepId, int rating){
-
-
         SleepTrackingApi sleepTrackingApi = ServiceGenerator.getSleepTrackingApi();
         Call call = sleepTrackingApi.rateSleep(sleepId, rating);
         call.enqueue(new Callback() {
@@ -150,6 +153,29 @@ public class ReportRepository {
             @Override
             public void onFailure(Call call, Throwable t) {
                 Log.i("Retrofit", "Sleep rating wasn't registered on server :(");
+                Log.i("Why", "" + t.getCause());
+            }
+
+        });
+    }
+
+    public LiveData<List<Device>> getDevices() { return devices;}
+
+    public void updateDevicesList(String userId){
+        AccountDevicesApi accountDevicesApi = ServiceGenerator.getAccountDevicesApi();
+        Call<List<Device>> call = accountDevicesApi.getDevices();
+        call.enqueue(new Callback<List<Device>>() {
+            @Override
+            public void onResponse(Call<List<Device>> call, Response<List<Device>> response) {
+                if (response.code() == 200){
+                    devices.setValue(response.body());
+                    Log.i("Retrofit", "Devices received");
+
+                }
+            }
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                Log.i("Retrofit", "Devices couldn't be retrieved");
                 Log.i("Why", "" + t.getCause());
             }
 

@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.room.Room;
 
+import com.example.sep4androidapp.Entities.Device;
 import com.example.sep4androidapp.Entities.RoomCondition;
 import com.example.sep4androidapp.Entities.SleepData;
 import com.example.sep4androidapp.Entities.SleepSession;
@@ -78,6 +79,10 @@ public class ReportViewModel extends ViewModel {
     public LiveData<List<SleepSession>> getSleepSessions(){
         return repository.getSleepSessions();
     }
+
+    public LiveData<List<Device>> getDevices() {
+        repository.updateDevicesList("account_1");
+        return repository.getDevices();}
 
     public void updateSleepSessions(String deviceId)
     {
