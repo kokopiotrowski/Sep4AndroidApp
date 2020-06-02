@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -19,6 +20,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sep4androidapp.Entities.Fact;
+import com.example.sep4androidapp.Entities.Preferences;
 import com.example.sep4androidapp.R;
 import com.example.sep4androidapp.ViewModels.FragmentFirstPageViewModel;
 import com.example.sep4androidapp.fragments.factFragment.FactFragmentDialog;
@@ -30,14 +32,17 @@ import java.util.List;
 public class FragmentFirstPage extends Fragment {
     private Spinner spinner;
     private FragmentFirstPageViewModel viewModel;
-    private TextView currentTemperature, currentHumidity, currentCO2, currentSound, timeStamp;
+    private TextView currentTemperature, currentHumidity, currentCO2, timeStamp;
+    private TextView expectedTemperature, expectedHumidity, expectedCO2;
     private Switch deviceSwitch;
     private FactFragmentDialog factFragmentDialog = new FactFragmentDialog();
     private FloatingActionButton floatingButton;
+    private ImageView temperatureStatus, humidityStatus, CO2Status;
 
     private List<String> nameList = new ArrayList<>();
     private List<String> idList = new ArrayList<>();
     ArrayAdapter<String> adapter;
+    private double temp, humidity, co2;
 
     @SuppressLint({"SetTextI18n", "DefaultLocale"})
     @Nullable
@@ -48,15 +53,17 @@ public class FragmentFirstPage extends Fragment {
         deviceSwitch = v.findViewById(R.id.deviceSwitch);
         currentTemperature = v.findViewById(R.id.currentTemperature);
         currentHumidity = v.findViewById(R.id.currentHumidity);
-        currentSound = v.findViewById(R.id.currentSound);
         currentCO2 = v.findViewById(R.id.currentCo2);
         timeStamp = v.findViewById(R.id.timeStamp);
         floatingButton = v.findViewById(R.id.floatingButton);
+        expectedTemperature = v.findViewById(R.id.expectedTemperature);
+        expectedHumidity = v.findViewById(R.id.expectedHumidity);
+        expectedCO2 = v.findViewById(R.id.expectedCo2);
+        temperatureStatus = v.findViewById(R.id.temperatureStatus);
+        humidityStatus = v.findViewById(R.id.humidityStatus);
+        CO2Status = v.findViewById(R.id.Co2Status);
 
         viewModel = new ViewModelProvider(this).get(FragmentFirstPageViewModel.class);
-        viewModel.updateRooms();
-
-        setListeners();
 
         viewModel.getFact().observe(getViewLifecycleOwner(), fact -> {
             Bundle args = new Bundle();
@@ -64,7 +71,7 @@ public class FragmentFirstPage extends Fragment {
             args.putString("content", fact.getContent());
             args.putString("source", fact.getSource());
             args.putString("url", fact.getSourceUrl());
-            ;
+
             factFragmentDialog.setArguments(args);
             factFragmentDialog.show(getChildFragmentManager(), "Chosen");
         });
@@ -89,17 +96,65 @@ public class FragmentFirstPage extends Fragment {
             currentTemperature.setText(String.format("%.0f", roomCondition.getTemperature()) + " °C");
             currentCO2.setText(String.format("%.0f", roomCondition.getCo2()) + " ppm");
             currentHumidity.setText(String.format("%.0f", roomCondition.getHumidity()) + "%");
-            currentSound.setText(String.format("%.0f", roomCondition.getSound()) + "dB");
             timeStamp.setText("Updated: " + roomCondition.getTimestamp());
+            temp = roomCondition.getTemperature();
+            Log.i("TAG", "TEMPERATURE: " + temp);
+            humidity = roomCondition.getHumidity();
+            co2 = roomCondition.getHumidity();
+            //Following line might not be needed
+            viewModel.showPreferences(viewModel.getDeviceId());
         });
 
+        viewModel.getPreferences().observe(getViewLifecycleOwner(), preferences -> {
+            expectedTemperature.setText(preferences.getTemperatureMin() + " - " + preferences.getTemperatureMax());
+            expectedHumidity.setText(preferences.getHumidityMin() + " - " + preferences.getHumidityMax());
+            expectedCO2.setText(" < " + preferences.getCo2Max());
+            setIcons(preferences);
+        });
+
+        viewModel.updateRooms();
+        setListeners();
+
         return v;
+    }
+
+    private void setIcons(Preferences preferences) {
+        if(preferences.getTemperatureMin() > temp)
+        {
+            temperatureStatus.setImageResource(R.drawable.lower);
+        }else if(preferences.getTemperatureMax() < temp)
+        {
+            temperatureStatus.setImageResource(R.drawable.higher);
+        }else{
+            temperatureStatus.setImageResource(R.drawable.correct);
+        }
+
+        if(preferences.getHumidityMin() > humidity)
+        {
+            humidityStatus.setImageResource(R.drawable.lower);
+        }else if(preferences.getHumidityMax() < humidity)
+        {
+            humidityStatus.setImageResource(R.drawable.higher);
+        }else{
+            humidityStatus.setImageResource(R.drawable.correct);
+        }
+
+        if(preferences.getCo2Min() > co2)
+        {
+            CO2Status.setImageResource(R.drawable.lower);
+        }else if(preferences.getCo2Max() < co2)
+        {
+            CO2Status.setImageResource(R.drawable.higher);
+        }else{
+            CO2Status.setImageResource(R.drawable.correct);
+        }
     }
 
     private void setListeners() {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                viewModel.showPreferences(idList.get(position));
                 viewModel.setDeviceId(idList.get(position));
                 viewModel.receiveStatus(viewModel.getDeviceId(), success -> {
                     Log.i("StartStopRepo", "Result is: " + success);

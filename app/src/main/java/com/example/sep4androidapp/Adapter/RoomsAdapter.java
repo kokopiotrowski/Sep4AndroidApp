@@ -25,7 +25,7 @@ import java.util.List;
 
 public class RoomsAdapter extends ListAdapter<Device, RoomsAdapter.RoomHolder> {
 
-    private StartStopViewModel startStopViewModel = new StartStopViewModel();
+    private StartStopViewModel startStopViewModel = new StartStopViewModel(null);
 
     public RoomsAdapter() {
         super(DIFF_CALLBACK);

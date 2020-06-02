@@ -14,10 +14,9 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.sep4androidapp.Entities.Preferences;
 import com.example.sep4androidapp.Entities.RoomCondition;
 import com.example.sep4androidapp.R;
-import com.example.sep4androidapp.ViewModels.PrefrencesViewModel;
+import com.example.sep4androidapp.ViewModels.PreferencesViewModel;
 import com.example.sep4androidapp.ViewModels.ReportViewModel;
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
@@ -29,7 +28,7 @@ import java.util.List;
 
 public class FragmentSound extends Fragment {
     private ReportViewModel viewModelReport;
-    private PrefrencesViewModel viewModelPreferences;
+    private PreferencesViewModel viewModelPreferences;
     float soundValue;
     private List<BarEntry> sound = new ArrayList<>();
     private BarDataSet barDataSet;
@@ -44,7 +43,7 @@ public class FragmentSound extends Fragment {
        /* barChart = v.findViewById(R.id.barChart);
 */
         viewModelReport = new ViewModelProvider(this).get(ReportViewModel.class);
-        viewModelPreferences = new ViewModelProvider(this).get(PrefrencesViewModel.class);
+        viewModelPreferences = new ViewModelProvider(this).get(PreferencesViewModel.class);
 
         viewModelPreferences.getLastPreference().observe(getViewLifecycleOwner(), new Observer<Preferences>() {
             @Override

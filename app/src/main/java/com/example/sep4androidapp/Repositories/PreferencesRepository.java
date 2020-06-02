@@ -4,17 +4,17 @@ import android.app.Application;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.room.DatabaseConfiguration;
-import androidx.room.InvalidationTracker;
-import androidx.sqlite.db.SupportSQLiteOpenHelper;
 
 import com.example.sep4androidapp.Entities.Device;
+import com.example.sep4androidapp.Entities.NewDeviceModel;
 import com.example.sep4androidapp.Entities.Preferences;
-import com.example.sep4androidapp.LocalStorage.PreferencesDAO;
-import com.example.sep4androidapp.LocalStorage.PreferencesDatabase;
+import com.example.sep4androidapp.LocalStorage.ApplicationDatabase;
+import com.example.sep4androidapp.LocalStorage.NewDeviceDAO;
+import com.example.sep4androidapp.LocalStorage.PrefDAO;
+
+
 import com.example.sep4androidapp.connection.PreferenceApi;
 import com.example.sep4androidapp.connection.ServiceGenerator;
 import com.example.sep4androidapp.connection.responses.PreferencesResponse;
@@ -28,19 +28,29 @@ import retrofit2.Response;
 import static android.content.ContentValues.TAG;
 
 public class PreferencesRepository {
-    private PreferencesDAO preferencesDao;
+    private PrefDAO prefDao;
+    private NewDeviceDAO newDeviceDAO;
     private static PreferencesRepository instance;
-    private LiveData< List< Preferences > > allPreferences;
-    private MutableLiveData< Preferences > pre;
-    private static MutableLiveData<List<Device>> list ;
+    private LiveData<List<Preferences>> allPreferences;
+    private MutableLiveData<Preferences> preferences;
+    private static MutableLiveData<List<Device>> list;
+    private LiveData<List<NewDeviceModel>> allDevices;
 
     private PreferencesRepository(Application application) {
-        PreferencesDatabase preferencesDatabase = PreferencesDatabase.getInstance(application);
-        preferencesDao = preferencesDatabase.preferencesDAO();
-        pre = new MutableLiveData<>();
-        list =new MutableLiveData<>();
+        ApplicationDatabase appDatabase = ApplicationDatabase.getInstance(application);
 
-        allPreferences = preferencesDao.getAllPreferences();
+        prefDao = appDatabase.prefDAO();
+        newDeviceDAO = appDatabase.newDeviceDAO();
+
+        //pre = new MutableLiveData<>();
+
+        preferences = new MutableLiveData<>();
+
+        list = new MutableLiveData<>();
+
+        allPreferences = prefDao.getAllPreferences();
+
+        allDevices = newDeviceDAO.getAllDevices();
     }
 
     public static synchronized PreferencesRepository getInstance(Application application) {
@@ -49,88 +59,85 @@ public class PreferencesRepository {
         return instance;
     }
 
-    public static LiveData< List< Device>> getList() {
+    public void insertDevice(NewDeviceModel model){
+        new InsertNewDeviceAsync(newDeviceDAO).execute(model);
+    }
+
+//    public void deleteDevice(Device device){
+//        new DeleteDeviceAsync(appDao).execute(device);
+//    }
+
+    public LiveData<List<NewDeviceModel>> getAllDevices(){
+        return allDevices;
+    }
+
+    public static LiveData<List<Device>> getList() {
         return list;
     }
 
-    public LiveData< List< Preferences > > getAllPreferences() {
+    public LiveData<List<Preferences>> getAllPreferences() {
         return allPreferences;
     }
 
+
     public void insert(Preferences preferences) {
-        new InsertPreferencesAsync(preferencesDao).execute(preferences);
+        new InsertPreferencesAsync(prefDao).execute(preferences);
     }
 
     public void update(Preferences preferences) {
-        new UpdatePreferencesAsync(preferencesDao).execute(preferences);
+        new UpdatePreferencesAsync(prefDao).execute(preferences);
     }
 
-    private static class InsertPreferencesAsync extends AsyncTask< Preferences, Void, Void > {
-        private PreferencesDAO preferencesDAO;
+    private static class InsertPreferencesAsync extends AsyncTask<Preferences, Void, Void> {
+        private PrefDAO prefDAO;
 
-        private InsertPreferencesAsync(PreferencesDAO preferencesDAO) {
-            this.preferencesDAO = preferencesDAO;
+        private InsertPreferencesAsync(PrefDAO prefDAO) {
+            this.prefDAO = prefDAO;
         }
 
         @Override
         protected Void doInBackground(Preferences... preferences) {
-            preferencesDAO.insertPreference(preferences[0]);
+            prefDAO.insertPreference(preferences[0]);
             return null;
         }
     }
 
-    private static class UpdatePreferencesAsync extends AsyncTask< Preferences, Void, Void > {
-        private PreferencesDAO preferencesDAO;
+    private static class UpdatePreferencesAsync extends AsyncTask<Preferences, Void, Void> {
+        private PrefDAO prefDAO;
 
-        private UpdatePreferencesAsync(PreferencesDAO preferencesDAO) {
-            this.preferencesDAO = preferencesDAO;
+        private UpdatePreferencesAsync(PrefDAO prefDAO) {
+            this.prefDAO = prefDAO;
         }
 
         @Override
         protected Void doInBackground(Preferences... preferences) {
-            preferencesDAO.updatePreference(preferences[0]);
+            prefDAO.updatePreference(preferences[0]);
             return null;
         }
     }
 
-//    private static class DeletePreferenceAsync extends AsyncTask< Preferences, Void, Void > {
-//        private PreferencesDAO preferencesDAO;
-//
-//        private DeletePreferenceAsync(PreferencesDAO preferencesDAO) {
-//            this.preferencesDAO = preferencesDAO;
-//        }
-//
-//        @Override
-//        protected Void doInBackground(Preferences... preferences) {
-//            preferencesDAO.deletePreference(preferences[0]);
-//            return null;
-//        }
-//    }
+    private static class InsertNewDeviceAsync extends AsyncTask<NewDeviceModel, Void, Void> {
+        private NewDeviceDAO newDeviceDAO;
 
-//    private static class DeleteAllPreferencesAsync extends AsyncTask< Preferences, Void, Void > {
-//        private PreferencesDAO preferencesDAO;
-//
-//        private DeleteAllPreferencesAsync(PreferencesDAO preferencesDAO) {
-//            this.preferencesDAO = preferencesDAO;
-//        }
-//
-//        @Override
-//        protected Void doInBackground(Preferences... preferences) {
-//            preferencesDAO.deleteAllPreferences();
-//            return null;
-//        }
-//    }
+        private InsertNewDeviceAsync(NewDeviceDAO newDeviceDAO) {
+            this.newDeviceDAO = newDeviceDAO;
+        }
 
-    //_________________________________________________________________________
+        @Override
+        protected Void doInBackground(NewDeviceModel... newDeviceModels) {
+            newDeviceDAO.insertNewDevice(newDeviceModels[0]);
+            return null;
+        }
+    }
 
 
     // GET API
     public void showPreferences(String deviceId) {
         PreferenceApi preferenceApi = ServiceGenerator.getPreferenceApi();
-        Call< PreferencesResponse > call = preferenceApi.getPreferences(deviceId);
-        call.enqueue(new Callback< PreferencesResponse >() {
+        Call<PreferencesResponse> call = preferenceApi.getPreferences(deviceId);
+        call.enqueue(new Callback<PreferencesResponse>() {
             @Override
-            public void onResponse(Call< PreferencesResponse > call, Response< PreferencesResponse > response) {
+            public void onResponse(Call<PreferencesResponse> call, Response<PreferencesResponse> response) {
 
                 if (response.code() == 200) {
 
@@ -143,7 +150,7 @@ public class PreferencesRepository {
                             , response.body().getHumidityMin()
                             , response.body().getTemperatureMin()
                             , response.body().getTemperatureMax());
-                     pre.setValue(P1);
+                    preferences.setValue(P1);
 
                     Log.i(TAG, "Pouneh0" + response.code());
 
@@ -153,14 +160,14 @@ public class PreferencesRepository {
             }
 
             @Override
-            public void onFailure(Call< PreferencesResponse > call, Throwable t) {
+            public void onFailure(Call<PreferencesResponse> call, Throwable t) {
                 Log.e(TAG, "Pouneh3 ");
             }
         });
     }
 
-    public LiveData< Preferences > getPre() {
-        return pre;
+    public LiveData<Preferences> getPreferences() {
+        return preferences;
     }
 
 
@@ -168,28 +175,21 @@ public class PreferencesRepository {
     public void updatePrefrences(Preferences preference) {
 
         PreferenceApi preferenceApi = ServiceGenerator.getPreferenceApi();
-        Call< PreferencesResponse > call = preferenceApi.updatePreferences(preference);
-        call.enqueue(new Callback< PreferencesResponse >() {
+        Call<PreferencesResponse> call = preferenceApi.updatePreferences(preference);
+        call.enqueue(new Callback<PreferencesResponse>() {
             @Override
-            public void onResponse(Call< PreferencesResponse > call, Response< PreferencesResponse > response) {
+            public void onResponse(Call<PreferencesResponse> call, Response<PreferencesResponse> response) {
                 Log.i(TAG, "Pouneh1 " + response.code());
             }
 
             @Override
-            public void onFailure(Call< PreferencesResponse > call, Throwable t) {
+            public void onFailure(Call<PreferencesResponse> call, Throwable t) {
                 Log.i(TAG, "Pouneh2");
             }
         });
     }
 
-    public LiveData< Preferences > getPreFrence() {
-        return pre;
-    }
 
 
-//    private static PreferencesDatabase.Callback pCalback = new PreferencesDatabase() {
-//
-//        @Override
-//        public void onCreate(@NonNull)
-//
+
 }
