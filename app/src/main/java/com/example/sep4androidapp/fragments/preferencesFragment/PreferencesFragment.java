@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -30,8 +31,9 @@ public class PreferencesFragment extends Fragment {
     private Spinner spinner;
     private PreferencesViewModel viewModel;
     private Button save;
-    private EditText MintempEditText, MinhumEditText, Minco2EditText,
+    private EditText MintempEditText, MinhumEditText,
             MaxtempEditText, MaxhumEditText, Maxco2EditText;
+    private TextView Minco2EditText;
     private List<String> nameList = new ArrayList<>();
     private List<String> idList = new ArrayList<>();
 
@@ -57,7 +59,7 @@ public class PreferencesFragment extends Fragment {
                     viewModel.getDeviceId(),
                     true,
                     Integer.parseInt(Maxco2EditText.getText().toString()),
-                    Integer.parseInt(Minco2EditText.getText().toString()),
+                    0,
                     Integer.parseInt(MaxhumEditText.getText().toString()),
                     Integer.parseInt(MinhumEditText.getText().toString()),
                     Double.parseDouble(MintempEditText.getText().toString()),
@@ -69,7 +71,6 @@ public class PreferencesFragment extends Fragment {
 
         //spinner
         viewModel.updateRooms();
-
 
         viewModel.getDevices().observe(getViewLifecycleOwner(), devices -> {
             nameList.clear();
@@ -100,7 +101,7 @@ public class PreferencesFragment extends Fragment {
                         MaxtempEditText.setText(String.format("%.1f", preferences.getTemperatureMax()));
                         MinhumEditText.setText(String.valueOf(preferences.getHumidityMin()));
                         MaxhumEditText.setText(String.valueOf(preferences.getHumidityMax()));
-                        Minco2EditText.setText(String.valueOf(preferences.getCo2Min()));
+                        Minco2EditText.getText();
                         Maxco2EditText.setText(String.valueOf(preferences.getCo2Max()));
                     });
                 }
@@ -140,7 +141,9 @@ public class PreferencesFragment extends Fragment {
                         MaxtempEditText.setText("");
                         MinhumEditText.setText("");
                         MaxhumEditText.setText("");
-                        Minco2EditText.setText("");
+                        Minco2EditText.getText();
+
+
                         Maxco2EditText.setText("");
                         for (Preferences p : preferences) {
                             MintempEditText.append(p.getTemperatureMin() + "\n");
@@ -156,7 +159,7 @@ public class PreferencesFragment extends Fragment {
                         MaxtempEditText.setText("Empty");
                         MinhumEditText.setText("Empty");
                         MaxhumEditText.setText("Empty");
-                        Minco2EditText.setText("Empty");
+                        Minco2EditText.getText();
                         Maxco2EditText.setText("Empty");
                     }
                 });
