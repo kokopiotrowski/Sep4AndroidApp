@@ -41,8 +41,8 @@ public class FragmentSound extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_temp_sound_co2_hum, container, false);
-        barChart = v.findViewById(R.id.barChart);
-
+       /* barChart = v.findViewById(R.id.barChart);
+*/
         viewModelReport = new ViewModelProvider(this).get(ReportViewModel.class);
         viewModelPreferences = new ViewModelProvider(this).get(PrefrencesViewModel.class);
 
@@ -60,19 +60,19 @@ public class FragmentSound extends Fragment {
             @Override
             public void onChanged(RoomCondition roomCondition) {
 
-                sound.clear();
+              /*  sound.clear();
 
                 soundValue = (float)roomCondition.getSound();
                 sound.add(new BarEntry(0,soundValue));
 
 
-               /* LimitLine limitMax = new LimitLine((float) soundMax, "Max temperature");
-                LimitLine limitMin = new LimitLine((float) soundMin, "Min temperature");*/
+               *//* LimitLine limitMax = new LimitLine((float) soundMax, "Max temperature");
+                LimitLine limitMin = new LimitLine((float) soundMin, "Min temperature");*//*
 
 
-               /* barChart.getAxisLeft().addLimitLine(limitMax);
+               *//* barChart.getAxisLeft().addLimitLine(limitMax);
                 barChart.getAxisLeft().addLimitLine(limitMin);
-*/
+*//*
 
                 YAxis leftYAxis = barChart.getAxisLeft();
                 YAxis rightYAxis = barChart.getAxisRight();
@@ -93,7 +93,7 @@ public class FragmentSound extends Fragment {
                 barChart.getLegend().setEnabled(false);
                 barChart.setData(barData);
                 barChart.setFitBars(true);
-                barChart.invalidate();
+                barChart.invalidate();*/
 
 
 
