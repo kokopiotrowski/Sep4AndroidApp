@@ -39,9 +39,9 @@ public interface PrefDAO {
 
     @Query("SELECT*FROM preferences_table")
     LiveData<List<Preferences>> getAllPreferences();
-//
-    @Query("SELECT*FROM preferences_table where deviceId=:deviceId")
-    LiveData<Preferences> getPreferencesById(String deviceId);
+
+    @Query("SELECT * FROM preferences_table WHERE deviceId = :deviceId ")
+    Preferences getPreferencesById(String deviceId);
 
 
 }

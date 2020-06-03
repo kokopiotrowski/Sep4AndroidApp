@@ -93,8 +93,8 @@ public class PreferencesRepository {
         return prefs.get(prefs.size()-1);
     }
 
-    public void getPreferencesById(String deviceId){
-        prefDao.getPreferencesById(deviceId);
+    public Preferences getPreferencesById(String deviceId){
+        return prefDao.getPreferencesById(deviceId);
     }
 
     public void insert(Preferences preferences) {

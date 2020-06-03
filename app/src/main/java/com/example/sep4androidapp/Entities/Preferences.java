@@ -10,8 +10,9 @@ import static androidx.room.ForeignKey.CASCADE;
 @Entity(tableName = "preferences_table")
 public class Preferences {
 
-    @PrimaryKey
-    @NonNull
+    @PrimaryKey(autoGenerate = true)
+    private int id;
+
     private String deviceId;
     private boolean regulationEnabled;
     private int co2Max;
@@ -20,7 +21,6 @@ public class Preferences {
     private int humidityMin;
     private double temperatureMin;
     private double temperatureMax;
-
 
     public Preferences(String deviceId, boolean regulationEnabled, int co2Max, int co2Min, int humidityMax, int humidityMin, double temperatureMin, double temperatureMax) {
         this.deviceId = deviceId;
@@ -33,14 +33,13 @@ public class Preferences {
         this.temperatureMax = temperatureMax;
     }
 
-//    public Preferences(int co2Max,int co2Min, int humidityMax, int humidityMin, double temperatureMin, double temperatureMax){
-//        this.co2Max = co2Max;
-//        this.co2Min = co2Min;
-//        this.humidityMax = humidityMax;
-//        this.humidityMin = humidityMin;
-//        this.temperatureMin = temperatureMin;
-//        this.temperatureMax = temperatureMax;
-//    }
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
 
     public String getDeviceId() {
         return deviceId;

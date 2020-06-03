@@ -60,8 +60,8 @@ public class PreferencesViewModel extends AndroidViewModel {
         preferencesRepository.insertDevice(model);
     }
 
-    public void getPreferencesById(String deviceId){
-        preferencesRepository.getPreferencesById(deviceId);
+    public Preferences getPreferencesById(String deviceId){
+        return preferencesRepository.getPreferencesById(deviceId);
     }
 
     public Preferences getPreference(){

@@ -134,7 +134,8 @@ public class PreferencesFragment extends Fragment {
                 } else {
                     viewModel.setDeviceId(idList.get(position));
                     //  viewModel.getNewDevice(idList.get(position));
-                    viewModel.getPreferencesById(idList.get(position));
+//                    Preferences prefs = viewModel.getPreferencesById(idList.get(position));
+//                    Log.i("PREFERENCESSS", "HUMIMAX: " + prefs.getHumidityMax());
                     viewModel.getAllPreferences().observe(getViewLifecycleOwner(), preferences -> {
 
                         if (!preferences.isEmpty()) {

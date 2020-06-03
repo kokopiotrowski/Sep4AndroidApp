@@ -10,8 +10,7 @@ import androidx.room.RoomDatabase;
 import com.example.sep4androidapp.Entities.NewDeviceModel;
 import com.example.sep4androidapp.Entities.Preferences;
 
-//@Database(entities ={Preferences.class}, version = 1)
-@Database(entities = {Preferences.class, NewDeviceModel.class}, version = 1)
+@Database(entities = {Preferences.class, NewDeviceModel.class}, version = 2)
 public abstract class ApplicationDatabase extends RoomDatabase {
 
     private static ApplicationDatabase instance;
