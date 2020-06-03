@@ -38,6 +38,9 @@ public class ReportRepository {
     private MutableLiveData<RoomCondition> roomCondition;
     private MutableLiveData<SleepData> sleepData;
     private MutableLiveData<List<SleepSession>> sleepSessions;
+    private MutableLiveData<List<SleepSession>> sleepSessionsDaily;
+    private MutableLiveData<List<SleepSession>> sleepSessionsWeekly;
+    private MutableLiveData<List<SleepSession>> sleepSessionsMonthly;
     private MutableLiveData<List<Device>> devices;
 
     private ReportRepository (){
@@ -45,6 +48,9 @@ public class ReportRepository {
         sleepData = new MutableLiveData<>();
         sleepSessions = new MutableLiveData<>();
         devices = new MutableLiveData<>();
+        sleepSessionsDaily = new MutableLiveData<>();
+        sleepSessionsWeekly = new MutableLiveData<>();
+        sleepSessionsMonthly = new MutableLiveData<>();
     }
 
     public static synchronized ReportRepository getInstance(){
@@ -83,9 +89,9 @@ public class ReportRepository {
         return roomCondition;
     }
 
-    public void updateSleepData() {
+    public void updateSleepData(int sleepId) {
         ReportApi reportApi = ServiceGenerator.getReportApi();
-        Call<SleepDataResponse> call = reportApi.getSleepData();
+        Call<SleepDataResponse> call = reportApi.getSleepData(sleepId);
         call.enqueue(new Callback<SleepDataResponse>() {
             @Override
             public void onResponse(Call<SleepDataResponse> call, Response<SleepDataResponse> response) {
@@ -181,5 +187,86 @@ public class ReportRepository {
 
         });
     }
+
+    public void updateDailySleepSessions(String deviceId, String today, String then){
+
+
+        ReportApi reportApi = ServiceGenerator.getReportApi();
+        Call<ReportResponse> call = reportApi.getReport(deviceId, then, today);
+        call.enqueue(new Callback<ReportResponse>() {
+
+            @Override
+            public void onResponse(Call<ReportResponse> call, Response<ReportResponse> response) {
+                if (response.code() == 200){
+                    sleepSessionsDaily.setValue(response.body().getSleepSessions());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ReportResponse> call, Throwable t) {
+                Log.i("Retrofit", "Something went wrong in update sleep data :(");
+                Log.i("Why", "" + t.getCause());
+            }
+        });
+    }
+    public void updateWeeklySleepSessions(String deviceId, String today, String then){
+
+
+        ReportApi reportApi = ServiceGenerator.getReportApi();
+        Call<ReportResponse> call = reportApi.getReport(deviceId, then, today);
+        call.enqueue(new Callback<ReportResponse>() {
+
+            @Override
+            public void onResponse(Call<ReportResponse> call, Response<ReportResponse> response) {
+                if (response.code() == 200){
+                    sleepSessionsWeekly.setValue(response.body().getSleepSessions());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ReportResponse> call, Throwable t) {
+                Log.i("Retrofit", "Something went wrong in update sleep data :(");
+                Log.i("Why", "" + t.getCause());
+            }
+        });
+    }
+    public void updateMonthlySleepSessions(String deviceId, String today, String then){
+
+
+        ReportApi reportApi = ServiceGenerator.getReportApi();
+        Call<ReportResponse> call = reportApi.getReport(deviceId, then, today);
+        call.enqueue(new Callback<ReportResponse>() {
+
+            @Override
+            public void onResponse(Call<ReportResponse> call, Response<ReportResponse> response) {
+                if (response.code() == 200){
+                    sleepSessionsMonthly.setValue(response.body().getSleepSessions());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ReportResponse> call, Throwable t) {
+                Log.i("Retrofit", "Something went wrong in update sleep data :(");
+                Log.i("Why", "" + t.getCause());
+            }
+        });
+    }
+
+    public LiveData<List<SleepSession>> getSleepSessionsDaily()
+    {
+        return sleepSessionsDaily;
+    }
+
+    public LiveData<List<SleepSession>> getSleepSessionsWeekly()
+    {
+        return sleepSessionsWeekly;
+    }
+
+    public LiveData<List<SleepSession>> getSleepSessionsMonthly()
+    {
+        return sleepSessionsMonthly;
+    }
+
+
 
 }

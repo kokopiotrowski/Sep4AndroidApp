@@ -19,9 +19,14 @@ import retrofit2.http.Query;
 public interface ReportApi {
 
     @GET("reports/{deviceId}")
+
     Call<ReportResponse> getReport(@Path("deviceId") String deviceId);
+
+    @GET("reports/{deviceId}")
+    Call<ReportResponse> getReport(@Path("deviceId") String deviceId, @Query("dateStart") String dateStart,
+                                   @Query("dateFinish") String dateFinish);
 //@Path("deviceId") int deviceId
-    @GET("reports/sleeps/1")
-    Call<SleepDataResponse> getSleepData();
+    @GET("reports/sleeps/{sleepId}")
+    Call<SleepDataResponse> getSleepData(@Path("sleepId") int sleepId);
 
 }

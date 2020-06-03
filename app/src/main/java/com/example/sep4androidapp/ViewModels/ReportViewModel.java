@@ -77,8 +77,8 @@ public class ReportViewModel extends AndroidViewModel {
         return repository.getSleepData();
     }
 
-    public void updateSleepData() {
-        repository.updateSleepData();
+    public void updateSleepData(int sleepId) {
+        repository.updateSleepData(sleepId);
     }
 
     public LiveData<List<SleepSession>> getSleepSessions(){
@@ -96,3 +96,4 @@ public class ReportViewModel extends AndroidViewModel {
 
     public void rateSleep(int sleepId, int rating) { repository.rateSleep(sleepId, rating);}
 }
+

@@ -19,8 +19,10 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sep4androidapp.Entities.RoomCondition;
 import com.example.sep4androidapp.Entities.SleepData;
+import com.example.sep4androidapp.Entities.SleepSession;
 import com.example.sep4androidapp.R;
 import com.example.sep4androidapp.ViewModels.ReportViewModel;
+import com.example.sep4androidapp.ViewModels.SleepDataViewModel;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.Entry;
@@ -35,13 +37,25 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 
 public class SleepFragment extends Fragment {
-    ReportViewModel viewModel;
-    Button button;
+    SleepDataViewModel viewModel;
     TextView sound, temperature, humidity, co2;
     LineChart mpLineChart;
+    Spinner deviceSpinner;
+    Spinner sleepSpinner;
+
+    private List<String> deviceNameList = new ArrayList<>();
+    private List<String> deviceIdList = new ArrayList<>();
+    private List<String> sleepDateList = new ArrayList<>();
+    private List<Integer> sleepIdList = new ArrayList<>();
+
+
+    private List<SleepSession> sleepSessions = new ArrayList<>();
+    ArrayAdapter<String> deviceAdapter;
+    ArrayAdapter<String> sleepAdapter;
 
     ArrayList<Entry> temperatureValues = new ArrayList<>();
     ArrayList<Entry> soundValues = new ArrayList<>();
@@ -58,29 +72,66 @@ public class SleepFragment extends Fragment {
 
     LineDataSet temperatureDataSet, soundDataSet, humidityDataSet, co2DataSet;
     LineData data;
-    Spinner spinner;
+    Spinner sleepDataSpinner;
 
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sleep, container, false);
-        spinner = view.findViewById(R.id.spinnerSleepData);
-        mpLineChart = (LineChart) view.findViewById(R.id.lineChart);
+        deviceSpinner = view.findViewById(R.id.deviceSpinner);
+        sleepSpinner = view.findViewById(R.id.sleepSpinner);
+        sleepDataSpinner = view.findViewById(R.id.spinnerSleepData);
+        mpLineChart = view.findViewById(R.id.lineChart);
         sound = view.findViewById(R.id.averageSoundNum);
         temperature = view.findViewById(R.id.averageTemperatureNum);
         humidity = view.findViewById(R.id.averageHumidityNum);
         co2 = view.findViewById(R.id.averageCo2Num);
 
+        viewModel = new ViewModelProvider(this).get(SleepDataViewModel.class);
 
-        viewModel = new ViewModelProvider(this).get(ReportViewModel.class);
+
+        viewModel.getDevices().observe(getViewLifecycleOwner(), devices -> {
+            deviceNameList.clear();
+            deviceIdList.clear();
+            for (int i = 0; i < devices.size(); i++) {
+                deviceNameList.add(devices.get(i).getName());
+                deviceIdList.add(devices.get(i).getDeviceId());
+            }
+            deviceAdapter = new ArrayAdapter<>(getActivity(),
+                    android.R.layout.simple_spinner_item, deviceNameList);
+            deviceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            deviceSpinner.setAdapter(deviceAdapter);
+            if (getArguments() != null) {
+                deviceSpinner.setSelection(deviceAdapter.getPosition(getArguments().getString("deviceName")));
+            }
+        });
+
+        viewModel.getSleepSessions().observe(getViewLifecycleOwner(), sleepSessions -> {
+            sleepDateList.clear();
+            sleepIdList.clear();
+            for (int i = 0; i < sleepSessions.size(); i++) {
+                String date = sleepSessions.get(i).getTimeStart().getYear()+ "/" + sleepSessions.get(i).getTimeStart().getMonthValue()+ "/" + sleepSessions.get(i).getTimeStart().getDayOfMonth()
+                        + "-" + sleepSessions.get(i).getTimeFinish().getYear()+ "/" + sleepSessions.get(i).getTimeFinish().getMonthValue()+ "/" + sleepSessions.get(i).getTimeFinish().getDayOfMonth();
+                sleepDateList.add(date);
+                sleepIdList.add(sleepSessions.get(i).getSleepId());
+            }
+            sleepAdapter = new ArrayAdapter<>(getActivity(),
+                    android.R.layout.simple_spinner_item, sleepDateList);
+            sleepAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            sleepSpinner.setAdapter(sleepAdapter);
+            if (getArguments() != null) {
+                deviceSpinner.setSelection(deviceAdapter.getPosition(getArguments().getString("deviceName")));
+            }
+        });
+
         viewModel.getSleepData().observe(getViewLifecycleOwner(), new Observer<SleepData>() {
             @Override
             public void onChanged(SleepData sleepData) {
-                sound.setText(String.format("%.0f",sleepData.getAverageSound()) + " dB");
-                temperature.setText(String.format("%.0f",sleepData.getAverageTemperature()) + " °C");
-                humidity.setText(String.format("%.0f",sleepData.getAverageHumidity()) + " %");
-                co2.setText(String.format("%.0f",sleepData.getAverageCo2()) + " ppm");
+                sound.setText(String.format("%.0f", sleepData.getAverageSound()) + " dB");
+                temperature.setText(String.format("%.0f", sleepData.getAverageTemperature()) + " °C");
+                humidity.setText(String.format("%.0f", sleepData.getAverageHumidity()) + " %");
+                co2.setText(String.format("%.0f", sleepData.getAverageCo2()) + " ppm");
 
                 ArrayList<RoomCondition> roomConditions = sleepData.getRoomConditions();
 
@@ -88,7 +139,6 @@ public class SleepFragment extends Fragment {
                 firstDay = roomConditions.get(0).getTimestamp().getDayOfYear();
 
                 int size = roomConditions.size();
-
 
 
                 for (int i = 0; i < size; i++) {
@@ -121,7 +171,7 @@ public class SleepFragment extends Fragment {
             }
         });
 
-        viewModel.updateSleepData();
+        /* oldViewModel.updateSleepData();*/
 
         String[] arraySpinner = new String[]{
                 "-choose parameter-", "Temperature", "Sound", "Humidity", "Co2"
@@ -129,18 +179,16 @@ public class SleepFragment extends Fragment {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_spinner_item, arraySpinner);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
+        sleepDataSpinner.setAdapter(adapter);
 
         //selection doesn't work on position 0, otherwise listener is activated while initializing the fragment and the array lists are still empty at that point (throws null pointer)
-        spinner.setSelection(0, false);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        sleepDataSpinner.setSelection(0, false);
+        sleepDataSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 Object item = parentView.getItemAtPosition(position).toString();
-                if (item.equals("")) {
 
-                    //do nothing
-                } else {
+                if(item.equals("-choose parameter-")) {
                     dataSets.clear();
                 }
 
@@ -180,8 +228,10 @@ public class SleepFragment extends Fragment {
             }
 
         });
-
+        setDeviceListeners();
+        setSleepListeners();
         return view;
+
     }
 
     private void setTemperatureValues(float temperature, float index) {
@@ -225,17 +275,35 @@ public class SleepFragment extends Fragment {
         return humidityValues;
     }
 
-    private ArrayList<Entry> getTestValues() {
-        temperatureValues.add(new Entry(1, 1));
-        temperatureValues.add(new Entry(2, 2));
-        temperatureValues.add(new Entry(19, 19));
-        temperatureValues.add(new Entry(20, 20));
-        temperatureValues.add(new Entry(21, 21));
 
-        return temperatureValues;
+    public void setDeviceListeners() {
+        deviceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                viewModel.updateSleepSessions(deviceIdList.get(position));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
     }
 
+    public void setSleepListeners() {
+        sleepSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                viewModel.updateSleepData(sleepIdList.get(position));
+                sleepDataSpinner.setSelection(0);
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+    }
 }
 
 
