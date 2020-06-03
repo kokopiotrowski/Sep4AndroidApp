@@ -44,8 +44,6 @@ public class ReportViewModel extends AndroidViewModel {
         this.deviceId = deviceId;
     }
 
-
-
     public LiveData<RoomCondition> getRoomCondition() {
 
        return repository.getRoomCondition();
@@ -94,6 +92,5 @@ public class ReportViewModel extends AndroidViewModel {
         repository.updateSleepSessions(deviceId);
     }
 
-    public void rateSleep(int sleepId, int rating) { repository.rateSleep(sleepId, rating);}
 }
 

@@ -120,7 +120,7 @@ public class ReportRepository {
         monthAgo.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
         ReportApi reportApi = ServiceGenerator.getReportApi();
-        Call<ReportResponse> call = reportApi.getReport(deviceId);
+        Call<ReportResponse> call = reportApi.getReport(deviceId, today.toString(), monthAgo.toString());
         call.enqueue(new Callback<ReportResponse>() {
 
             @Override
