@@ -10,7 +10,7 @@ import androidx.room.RoomDatabase;
 import com.example.sep4androidapp.Entities.NewDeviceModel;
 import com.example.sep4androidapp.Entities.Preferences;
 
-@Database(entities = {Preferences.class, NewDeviceModel.class}, version = 2)
+@Database(entities = {Preferences.class, NewDeviceModel.class}, version = 1)
 public abstract class ApplicationDatabase extends RoomDatabase {
 
     private static ApplicationDatabase instance;
@@ -23,6 +23,7 @@ public abstract class ApplicationDatabase extends RoomDatabase {
             instance = Room.databaseBuilder(context.getApplicationContext(),
                     ApplicationDatabase.class, "applicationDatabase")
                     .fallbackToDestructiveMigration()
+                    .allowMainThreadQueries()
                     .build();
         }
         return instance;
