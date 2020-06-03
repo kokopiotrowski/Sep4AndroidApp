@@ -24,7 +24,7 @@ public interface SleepTrackingApi {
     Call<Boolean> getStatus(@Path("deviceId") String deviceId);
 
     @PUT("tracking/{sleepId}/{rating}")
-    Call rateSleep(@Path("sleepId") int sleepId, @Path("rating") int rating);
+    Call<Void> rateSleep(@Path("sleepId") int sleepId, @Path("rating") int rating);
 
 
 }
