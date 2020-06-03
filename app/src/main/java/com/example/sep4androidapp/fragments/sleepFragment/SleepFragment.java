@@ -1,13 +1,11 @@
 package com.example.sep4androidapp.fragments.sleepFragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -21,7 +19,7 @@ import com.example.sep4androidapp.Entities.RoomCondition;
 import com.example.sep4androidapp.Entities.SleepData;
 import com.example.sep4androidapp.Entities.SleepSession;
 import com.example.sep4androidapp.R;
-import com.example.sep4androidapp.ViewModels.ReportViewModel;
+import com.example.sep4androidapp.ValueFormatters.SleepFragmentValueFormatter;
 import com.example.sep4androidapp.ViewModels.SleepDataViewModel;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -33,10 +31,8 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 
@@ -216,7 +212,7 @@ public class SleepFragment extends Fragment {
                 data = new LineData(dataSets);
                 XAxis xAxis = mpLineChart.getXAxis();
                 xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-                xAxis.setValueFormatter(new MyValueFormatter());
+                xAxis.setValueFormatter(new SleepFragmentValueFormatter());
                 mpLineChart.setData(data);
                 mpLineChart.getMarker();
                 mpLineChart.invalidate();

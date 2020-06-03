@@ -18,11 +18,14 @@ import retrofit2.Response;
 public class RoomsRepository {
     private static RoomsRepository instance;
     private MutableLiveData<List<Device>> list;
+    private MutableLiveData<List<Device>> listForFragments;
+
     private MutableLiveData<String> chosenDeviceId;
 
     private RoomsRepository()
     {
         list = new MutableLiveData<>();
+        listForFragments = new MutableLiveData<>();
         chosenDeviceId = new MutableLiveData<>();
     }
 
@@ -35,6 +38,7 @@ public class RoomsRepository {
     }
 
     public void updateRooms(){
+        Log.i("Kurwa", "Japierdole");
         AccountDevicesApi api = ServiceGenerator.getAccountDevicesApi();
         Call<List<Device>> call = api.getDevices();
         call.enqueue(new Callback<List<Device>>() {
@@ -43,6 +47,26 @@ public class RoomsRepository {
                 if(response.code() == 200)
                 {
                     list.setValue(response.body());
+                }
+                Log.i("roomsRepo", "Update room: " + response.code());
+            }
+
+            @Override
+            public void onFailure(Call<List<Device>> call, Throwable t) {
+                Log.i("roomsRepo", "Update room failed" + t.getCause());
+            }
+        });
+    }
+
+    public void updateRoomsForFragments(){
+        AccountDevicesApi api = ServiceGenerator.getAccountDevicesApi();
+        Call<List<Device>> call = api.getDevices();
+        call.enqueue(new Callback<List<Device>>() {
+            @Override
+            public void onResponse(Call<List<Device>> call, Response<List<Device>> response) {
+                if(response.code() == 200)
+                {
+                    listForFragments.setValue(response.body());
                 }
                 Log.i("roomsRepo", "Update room: " + response.code());
             }
@@ -75,6 +99,9 @@ public class RoomsRepository {
 
     public LiveData<List<Device>> getList(){
         return list;
+    }
+    public LiveData<List<Device>> getListForFragments(){
+        return listForFragments;
     }
 
     public void setChosenDeviceId(String deviceId) {
