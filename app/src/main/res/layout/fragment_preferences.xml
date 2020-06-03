@@ -222,12 +222,12 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
 
-            <EditText
+            <TextView
                 android:id="@+id/minCo2EditText"
                 android:layout_width="38dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:inputType="number"
+                android:text="0"
                 android:textSize="14dp"
                 app:layout_constraintStart_toEndOf="@+id/Co2MinTextView"
                 app:layout_constraintTop_toBottomOf="@+id/co2Text" />
