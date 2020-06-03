@@ -1,6 +1,7 @@
 package com.example.sep4androidapp.connection;
 
 import com.example.sep4androidapp.Entities.Device;
+import com.example.sep4androidapp.connection.responses.RatingResponse;
 import com.example.sep4androidapp.connection.responses.StartStopResponse;
 
 import retrofit2.Call;
@@ -24,7 +25,7 @@ public interface SleepTrackingApi {
     Call<Boolean> getStatus(@Path("deviceId") String deviceId);
 
     @PUT("tracking/{sleepId}/{rating}")
-    Call<Void> rateSleep(@Path("sleepId") int sleepId, @Path("rating") int rating);
+    Call<RatingResponse> rateSleep(@Path("sleepId") int sleepId, @Path("rating") int rating);
 
 
 }

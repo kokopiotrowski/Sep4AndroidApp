@@ -179,9 +179,10 @@ public class ReportFragment extends Fragment {
     {
         rateSleepButton.setOnClickListener(v -> {
 
-            Log.i("SleepSession", "Last sleep: " + sleepSessionsData.get(0).getTimeFinish());
-            mViewModel.rateSleep(sleepSessionsData.get(0).getSleepId(), ratingBar.getNumStars());
+            Log.i("SleepSession", "Last sleep id: " + sleepSessionsData.get(0).getSleepId());
+            mViewModel.rateSleep(sleepSessionsData.get(0).getSleepId(), (int) ratingBar.getRating());
             mViewModel.updateSleepSessions();
+
         });
 
         radioGroup.setOnCheckedChangeListener((radioGroup, i) -> {
