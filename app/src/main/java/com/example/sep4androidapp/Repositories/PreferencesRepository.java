@@ -42,15 +42,9 @@ public class PreferencesRepository {
 
         prefDao = appDatabase.prefDAO();
         newDeviceDAO = appDatabase.newDeviceDAO();
-
-        //pre = new MutableLiveData<>();
-
         preferences = new MutableLiveData<>();
-
         list = new MutableLiveData<>();
-
         allPreferences = prefDao.getAllPreferences();
-
         allDevices = newDeviceDAO.getAllDevices();
     }
 
@@ -101,7 +95,7 @@ public class PreferencesRepository {
         new InsertPreferencesAsync(prefDao).execute(preferences);
     }
 
-    public void update(Preferences preferences) {
+    public void savePreferencesToDb(Preferences preferences) {
         new UpdatePreferencesAsync(prefDao).execute(preferences);
     }
 
@@ -204,7 +198,7 @@ public class PreferencesRepository {
 
 
     // PUT API
-    public void updatePrefrences(Preferences preference) {
+    public void savePreferencesToNetwork(Preferences preference) {
 
         PreferenceApi preferenceApi = ServiceGenerator.getPreferenceApi();
         Call<PreferencesResponse> call = preferenceApi.updatePreferences(preference);
@@ -212,6 +206,17 @@ public class PreferencesRepository {
             @Override
             public void onResponse(Call<PreferencesResponse> call, Response<PreferencesResponse> response) {
                 Log.i(TAG, "Pouneh1 " + response.code());
+                if(response.code() == 200)
+                {
+                    if(getPreference() == null)
+                    {
+                        insert(preference);
+                    }else{
+                        savePreferencesToDb(preference);
+                    }
+
+                }
+
             }
 
             @Override
