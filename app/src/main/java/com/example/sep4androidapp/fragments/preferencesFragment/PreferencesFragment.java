@@ -2,6 +2,7 @@ package com.example.sep4androidapp.fragments.preferencesFragment;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +15,11 @@ import android.widget.Spinner;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sep4androidapp.Entities.NewDeviceModel;
 import com.example.sep4androidapp.Entities.Preferences;
 import com.example.sep4androidapp.LocalStorage.ConnectionLiveData;
-import com.example.sep4androidapp.LocalStorage.ConnectionModel;
 import com.example.sep4androidapp.R;
 import com.example.sep4androidapp.ViewModels.PreferencesViewModel;
 
@@ -30,7 +29,6 @@ import java.util.List;
 import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
 public class PreferencesFragment extends Fragment {
-
     private Spinner spinner;
     private PreferencesViewModel viewModel;
     private Button save;
@@ -38,13 +36,12 @@ public class PreferencesFragment extends Fragment {
             MaxtempEditText, MaxhumEditText, Maxco2EditText;
     private List<String> nameList = new ArrayList<>();
     private List<String> idList = new ArrayList<>();
-    private ArrayAdapter<String> adapter;
     private List<NewDeviceModel> localList = new ArrayList<>();
     private List<NewDeviceModel> apiList = new ArrayList<>();
     private boolean isActiveFragment;
     private boolean isConnected;
 
-
+    @SuppressLint("DefaultLocale")
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_preferences, container, false);
 
@@ -68,24 +65,31 @@ public class PreferencesFragment extends Fragment {
                     Integer.parseInt(MinhumEditText.getText().toString()),
                     Double.parseDouble(MintempEditText.getText().toString()),
                     Double.parseDouble(MaxtempEditText.getText().toString()));
-
             viewModel.savePreferencesToNetwork(preference);
         });
 
         @SuppressLint("RestrictedApi") ConnectionLiveData connectionLiveData = new ConnectionLiveData(getApplicationContext());
-        connectionLiveData.observe(getActivity(), new Observer<ConnectionModel>() {
-            @Override
-            public void onChanged(@Nullable ConnectionModel connection) {
-                if (isActiveFragment) {
-
-                    if (connection.getIsConnected()) {
-                        isConnected = true;
-                    } else {
-                        isConnected = false;
-                    }
-                    viewModel.updateRooms();
-                    refreshSpinner();
+        connectionLiveData.observe(getActivity(), connection -> {
+            if (isActiveFragment) {
+                if (connection.getIsConnected()) {
+                    isConnected = true;
+                    MintempEditText.setEnabled(true);
+                    MaxtempEditText.setEnabled(true);
+                    MinhumEditText.setEnabled(true);
+                    MaxhumEditText.setEnabled(true);
+                    Maxco2EditText.setEnabled(true);
+                    save.setEnabled(true);
+                } else {
+                    isConnected = false;
+                    MintempEditText.setEnabled(false);
+                    MaxtempEditText.setEnabled(false);
+                    MinhumEditText.setEnabled(false);
+                    MaxhumEditText.setEnabled(false);
+                    Maxco2EditText.setEnabled(false);
+                    save.setEnabled(false);
                 }
+                viewModel.updateRooms();
+                refreshSpinner();
             }
         });
 
@@ -116,25 +120,18 @@ public class PreferencesFragment extends Fragment {
         });
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (isConnected) {
-                    MintempEditText.setEnabled(true);
-                    MaxtempEditText.setEnabled(true);
-                    MinhumEditText.setEnabled(true);
-                    MaxhumEditText.setEnabled(true);
-                    Maxco2EditText.setEnabled(true);
+
                     viewModel.setDeviceId(idList.get(position));
                     viewModel.showPreferences(idList.get(position));
-                    save.setEnabled(true);
+
                 } else {
                     viewModel.setDeviceId(idList.get(position));
                     Preferences prefs = viewModel.getPreferencesById(idList.get(position));
-                    MintempEditText.setEnabled(false);
-                    MaxtempEditText.setEnabled(false);
-                    MinhumEditText.setEnabled(false);
-                    MaxhumEditText.setEnabled(false);
-                    Maxco2EditText.setEnabled(false);
+
                     if (prefs == null) {
                         MintempEditText.setText("Empty");
                         MaxtempEditText.setText("Empty");
@@ -149,7 +146,6 @@ public class PreferencesFragment extends Fragment {
                         MaxhumEditText.setText(String.valueOf(prefs.getHumidityMax()));
                         Maxco2EditText.setText(String.valueOf(prefs.getCo2Max()));
                     }
-                    save.setEnabled(false);
                 }
             }
 
@@ -157,7 +153,6 @@ public class PreferencesFragment extends Fragment {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-
         return view;
     }
 
@@ -175,7 +170,7 @@ public class PreferencesFragment extends Fragment {
                 idList.add(localList.get(i).getDeviceId());
             }
         }
-        adapter = new ArrayAdapter<>(getActivity(),
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_spinner_item, nameList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);

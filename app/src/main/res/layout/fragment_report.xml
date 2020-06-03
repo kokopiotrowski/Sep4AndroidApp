@@ -17,20 +17,28 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <Spinner
-                android:id="@+id/twojaStara"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/reportTextView"
-                android:layout_width="131dp"
-                android:layout_height="46dp"
-                android:autoText="false"
-                android:text="Report"
-                android:textAlignment="center"
-                android:textSize="30dp" />
+                <TextView
+                    android:id="@+id/reportTextView"
+                    android:layout_width="131dp"
+                    android:layout_height="46dp"
+                    android:autoText="false"
+                    android:text="Report"
+                    android:textAlignment="center"
+                    android:textSize="30dp" />
+
+                <Spinner
+                    android:id="@+id/twojaStara"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
 
             <RadioGroup
                 android:id="@+id/lastReportRadioGroup"

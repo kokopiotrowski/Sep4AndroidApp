@@ -107,7 +107,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="20dp"
-                        android:text="22 °C"
+                        android:text="-"
                         android:textSize="24sp"
                         app:layout_constraintStart_toEndOf="@+id/tvExpectedTemperature"
                         app:layout_constraintTop_toBottomOf="@+id/tvCurrentTemperature" />
@@ -175,7 +175,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="20dp"
-                        android:text="416"
+                        android:text="-"
                         android:textSize="24sp"
                         app:layout_constraintStart_toEndOf="@+id/tvExpectedCo2"
                         app:layout_constraintTop_toBottomOf="@+id/tvCurrentCo2" />
@@ -243,7 +243,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="20dp"
-                        android:text="35%"
+                        android:text="-"
                         android:textSize="24sp"
                         app:layout_constraintStart_toEndOf="@+id/tvExpectedHumidity"
                         app:layout_constraintTop_toBottomOf="@+id/tvCurrentHumidity" />
@@ -263,7 +263,7 @@
     </ScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingButton"
+        android:id="@+id/randomFactButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"

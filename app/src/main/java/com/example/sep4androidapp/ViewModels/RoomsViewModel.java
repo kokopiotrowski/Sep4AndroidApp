@@ -5,10 +5,10 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.example.sep4androidapp.Entities.Device;
 import com.example.sep4androidapp.Entities.NewDeviceModel;
+import com.example.sep4androidapp.Entities.Preferences;
 import com.example.sep4androidapp.Repositories.DatabaseRepository;
 import com.example.sep4androidapp.Repositories.RoomsRepository;
 import com.example.sep4androidapp.Repositories.SetUpDeviceRepository;
@@ -27,10 +27,20 @@ public class RoomsViewModel extends AndroidViewModel {
         databaseRepository = DatabaseRepository.getInstance(application);
     }
 
-    public void deleteDeviceFromDb(NewDeviceModel device)
-    {
-        databaseRepository.deleteDevice(device);
-    }
+//    public void deletePreferencesFromDb(Preferences preferences)
+//    {
+//        databaseRepository.deletePreferences(preferences);
+//    }
+//
+//    public void deleteDevicee(NewDeviceModel device)
+//    {
+//        databaseRepository.deleteDevice(device);
+//    }
+//
+//    public Preferences getPreferencesById(String deviceId)
+//    {
+//       return databaseRepository.getPreferencesById(deviceId);
+//    }
 
     public LiveData<List<Device>> getDevices()
     {
@@ -41,9 +51,9 @@ public class RoomsViewModel extends AndroidViewModel {
         roomsRepository.updateRooms();
     }
 
-    public void deleteDevice(String deviceId)
+    public void deleteDevice(String deviceId, NewDeviceModel device)
     {
-        roomsRepository.deleteDevice(deviceId);
+        roomsRepository.deleteDevice(deviceId, device);
     }
 
     public void insertDevice(NewDeviceModel model) {

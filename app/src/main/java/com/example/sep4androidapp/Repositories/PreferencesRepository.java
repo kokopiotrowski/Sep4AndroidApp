@@ -1,25 +1,19 @@
 package com.example.sep4androidapp.Repositories;
 
 import android.app.Application;
-import android.os.AsyncTask;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.sep4androidapp.Entities.Device;
-import com.example.sep4androidapp.Entities.NewDeviceModel;
 import com.example.sep4androidapp.Entities.Preferences;
-import com.example.sep4androidapp.LocalStorage.ApplicationDatabase;
-import com.example.sep4androidapp.LocalStorage.NewDeviceDAO;
-import com.example.sep4androidapp.LocalStorage.PrefDAO;
 
 
 import com.example.sep4androidapp.connection.PreferenceApi;
 import com.example.sep4androidapp.connection.ServiceGenerator;
 import com.example.sep4androidapp.connection.responses.PreferencesResponse;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -93,23 +87,26 @@ public class PreferencesRepository {
 
 
     // PUT API
-    public void savePreferencesToNetwork(Preferences preference) {
+    public void savePreferencesToNetwork(Preferences p) {
 
         PreferenceApi preferenceApi = ServiceGenerator.getPreferenceApi();
-        Call<PreferencesResponse> call = preferenceApi.updatePreferences(preference);
+        Call<PreferencesResponse> call = preferenceApi.updatePreferences(p);
         call.enqueue(new Callback<PreferencesResponse>() {
             @Override
             public void onResponse(Call<PreferencesResponse> call, Response<PreferencesResponse> response) {
-                Log.i(TAG, "Pouneh1 " + response.code());
                 if(response.code() == 200)
                 {
-                    if(databaseRepository.getPreference() == null)
+                    Preferences pref = databaseRepository.getPreferencesById(p.getDeviceId());
+                    if(pref == null)
                     {
-                        databaseRepository.insert(preference);
+                        databaseRepository.insert(p);
                     }else{
-                        databaseRepository.savePreferencesToDb(preference);
+                        p.setId(pref.getId());
+                        databaseRepository.updatePreferencesToDb(p);
                     }
 
+                }else{
+                    Log.i("PreferencesRepo", "basszus " + response.code());
                 }
 
             }

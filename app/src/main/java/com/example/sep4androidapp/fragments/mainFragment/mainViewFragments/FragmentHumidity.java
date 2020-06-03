@@ -1,7 +1,6 @@
 package com.example.sep4androidapp.fragments.mainFragment.mainViewFragments;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,11 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.sep4androidapp.Entities.Device;
-import com.example.sep4androidapp.Entities.Preferences;
 import com.example.sep4androidapp.Entities.SleepSession;
 import com.example.sep4androidapp.R;
 import com.example.sep4androidapp.ValueFormatters.FragmentsValueFormatter;
@@ -72,171 +68,153 @@ public class FragmentHumidity extends Fragment {
         deviceName = v.findViewById(R.id.deviceText);
         viewModel = new ViewModelProvider(this).get(HumidityFragmentViewModel.class);
 
-        viewModel.getPreferences().observe(getViewLifecycleOwner(), new Observer<Preferences>() {
-            @Override
-            public void onChanged(Preferences preferences) {
-                humidityMax = preferences.getHumidityMax();
-                humidityMin = preferences.getHumidityMin();
-            }
+        viewModel.getPreferences().observe(getViewLifecycleOwner(), preferences -> {
+            humidityMax = preferences.getHumidityMax();
+            humidityMin = preferences.getHumidityMin();
         });
 
-        viewModel.getChosenDeviceId().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                deviceId = s;
-                viewModel.updateDailySleepSessions(deviceId);
-                viewModel.updateWeeklySleepSessions(deviceId);
-                viewModel.updateMonthlySleepSessions(deviceId);
-                viewModel.updateRoomsForFragments();
-            }
+        viewModel.getChosenDeviceId().observe(getViewLifecycleOwner(), s -> {
+            deviceId = s;
+            viewModel.updateDailySleepSessions(deviceId);
+            viewModel.updateWeeklySleepSessions(deviceId);
+            viewModel.updateMonthlySleepSessions(deviceId);
+            viewModel.updateRoomsForFragments();
         });
 
-        viewModel.getDevicesForFragments().observe(getViewLifecycleOwner(), new Observer<List<Device>>() {
-            @Override
-            public void onChanged(List<Device> devices) {
-                for (int i = 0; i < devices.size(); i++) {
-                    if (devices.get(i).getDeviceId().equals(deviceId)) {
-                        deviceName.setText(devices.get(i).getName());
-                    }
+        viewModel.getDevicesForFragments().observe(getViewLifecycleOwner(), devices -> {
+            for (int i = 0; i < devices.size(); i++) {
+                if (devices.get(i).getDeviceId().equals(deviceId)) {
+                    deviceName.setText(devices.get(i).getName());
                 }
             }
         });
 
 
-        viewModel.getSleepSessionsDaily().observe(getViewLifecycleOwner(), new Observer<List<SleepSession>>() {
-            @Override
-            public void onChanged(List<SleepSession> sleepSessions) {
-                dailyBarChart.clear();
-                sleepSessionsDaily.clear();
-                dailyBarChart.getAxisLeft().removeAllLimitLines();
-                sleepSessionsDaily = sleepSessions;
+        viewModel.getSleepSessionsDaily().observe(getViewLifecycleOwner(), sleepSessions -> {
+            dailyBarChart.clear();
+            sleepSessionsDaily.clear();
+            dailyBarChart.getAxisLeft().removeAllLimitLines();
+            sleepSessionsDaily = sleepSessions;
 
-                for (int i = 0; i < sleepSessionsDaily.size(); i++) {
-                    SleepSession cSleep = sleepSessionsDaily.get(i);
-                    int days = cSleep.getTimeStart().getDayOfYear();
-                    dailyHumidity.add(new BarEntry(days, (float) cSleep.getAverageHumidity()));
-                }
-
-                Collections.sort(dailyHumidity, new EntryXComparator());
-                dailyBarDataSet = new BarDataSet(dailyHumidity, "Humidity");
-
-                dailyBarData = new BarData(dailyBarDataSet);
-                dailyBarData.setBarWidth(0.9f);
-
-                LimitLine limitMax = new LimitLine((float) humidityMax, "Max humidity");
-                LimitLine limitMin = new LimitLine((float) humidityMin, "Min humidity");
-
-                dailyBarChart.setData(dailyBarData);
-                dailyBarChart.setFitBars(true);
-                dailyBarChart.getDescription().setText("Humidity");
-                dailyBarChart.getLegend().setEnabled(false);
-
-                dailyBarChart.getAxisLeft().addLimitLine(limitMax);
-                dailyBarChart.getAxisLeft().addLimitLine(limitMin);
-
-                YAxis leftYAxis = dailyBarChart.getAxisLeft();
-                YAxis rightYAxis = dailyBarChart.getAxisRight();
-                XAxis xAxis = dailyBarChart.getXAxis();
-
-                leftYAxis.setAxisMinimum(0);
-                rightYAxis.setAxisMinimum(0);
-                leftYAxis.setAxisMaximum((float) 100);
-                rightYAxis.setAxisMaximum((float) 100);
-                xAxis.setDrawLabels(true);
-                xAxis.setValueFormatter(new FragmentsValueFormatter());
-                dailyBarChart.invalidate();
+            for (int i = 0; i < sleepSessionsDaily.size(); i++) {
+                SleepSession cSleep = sleepSessionsDaily.get(i);
+                int days = cSleep.getTimeStart().getDayOfYear();
+                dailyHumidity.add(new BarEntry(days, (float) cSleep.getAverageHumidity()));
             }
+
+            Collections.sort(dailyHumidity, new EntryXComparator());
+            dailyBarDataSet = new BarDataSet(dailyHumidity, "Humidity");
+
+            dailyBarData = new BarData(dailyBarDataSet);
+            dailyBarData.setBarWidth(0.9f);
+
+            LimitLine limitMax = new LimitLine((float) humidityMax, "Max humidity");
+            LimitLine limitMin = new LimitLine((float) humidityMin, "Min humidity");
+
+            dailyBarChart.setData(dailyBarData);
+            dailyBarChart.setFitBars(true);
+            dailyBarChart.getDescription().setText("Humidity");
+            dailyBarChart.getLegend().setEnabled(false);
+
+            dailyBarChart.getAxisLeft().addLimitLine(limitMax);
+            dailyBarChart.getAxisLeft().addLimitLine(limitMin);
+
+            YAxis leftYAxis = dailyBarChart.getAxisLeft();
+            YAxis rightYAxis = dailyBarChart.getAxisRight();
+            XAxis xAxis = dailyBarChart.getXAxis();
+
+            leftYAxis.setAxisMinimum(0);
+            rightYAxis.setAxisMinimum(0);
+            leftYAxis.setAxisMaximum((float) 100);
+            rightYAxis.setAxisMaximum((float) 100);
+            xAxis.setDrawLabels(true);
+            xAxis.setValueFormatter(new FragmentsValueFormatter());
+            dailyBarChart.invalidate();
         });
-        viewModel.getSleepSessionsWeekly().observe(getViewLifecycleOwner(), new Observer<List<SleepSession>>() {
-            @Override
-            public void onChanged(List<SleepSession> sleepSessions) {
-                weeklyBarChart.clear();
-                sleepSessionsWeekly.clear();
-                weeklyBarChart.getAxisLeft().removeAllLimitLines();
-                sleepSessionsWeekly = sleepSessions;
+        viewModel.getSleepSessionsWeekly().observe(getViewLifecycleOwner(), sleepSessions -> {
+            weeklyBarChart.clear();
+            sleepSessionsWeekly.clear();
+            weeklyBarChart.getAxisLeft().removeAllLimitLines();
+            sleepSessionsWeekly = sleepSessions;
 
-                for (int i = 0; i < sleepSessionsWeekly.size(); i++) {
-                    SleepSession cSleep = sleepSessionsWeekly.get(i);
-                    int days = cSleep.getTimeStart().getDayOfYear();
-                    weeklyHumidity.add(new BarEntry(days, (float) cSleep.getAverageHumidity()));
-                }
-
-                Collections.sort(weeklyHumidity, new EntryXComparator());
-                weeklyBarDataSet = new BarDataSet(weeklyHumidity, "Humidity");
-
-                weeklyBarData = new BarData(weeklyBarDataSet);
-                weeklyBarData.setBarWidth(0.9f);
-
-                LimitLine limitMax = new LimitLine((float) humidityMax, "Max humidity");
-                LimitLine limitMin = new LimitLine((float) humidityMin, "Min humidity");
-
-                weeklyBarChart.setData(weeklyBarData);
-                weeklyBarChart.setFitBars(true);
-                weeklyBarChart.getDescription().setText("Humidity");
-                weeklyBarChart.getLegend().setEnabled(false);
-
-                weeklyBarChart.getAxisLeft().addLimitLine(limitMax);
-                weeklyBarChart.getAxisLeft().addLimitLine(limitMin);
-
-                YAxis leftYAxis = weeklyBarChart.getAxisLeft();
-                YAxis rightYAxis = weeklyBarChart.getAxisRight();
-                XAxis xAxis = weeklyBarChart.getXAxis();
-
-                leftYAxis.setAxisMinimum(0);
-                rightYAxis.setAxisMinimum(0);
-                leftYAxis.setAxisMaximum((float) 100);
-                rightYAxis.setAxisMaximum((float) 100);
-                xAxis.setDrawLabels(true);
-                xAxis.setValueFormatter(new FragmentsValueFormatter());
-
-                weeklyBarChart.invalidate();
+            for (int i = 0; i < sleepSessionsWeekly.size(); i++) {
+                SleepSession cSleep = sleepSessionsWeekly.get(i);
+                int days = cSleep.getTimeStart().getDayOfYear();
+                weeklyHumidity.add(new BarEntry(days, (float) cSleep.getAverageHumidity()));
             }
+
+            Collections.sort(weeklyHumidity, new EntryXComparator());
+            weeklyBarDataSet = new BarDataSet(weeklyHumidity, "Humidity");
+
+            weeklyBarData = new BarData(weeklyBarDataSet);
+            weeklyBarData.setBarWidth(0.9f);
+
+            LimitLine limitMax = new LimitLine((float) humidityMax, "Max humidity");
+            LimitLine limitMin = new LimitLine((float) humidityMin, "Min humidity");
+
+            weeklyBarChart.setData(weeklyBarData);
+            weeklyBarChart.setFitBars(true);
+            weeklyBarChart.getDescription().setText("Humidity");
+            weeklyBarChart.getLegend().setEnabled(false);
+
+            weeklyBarChart.getAxisLeft().addLimitLine(limitMax);
+            weeklyBarChart.getAxisLeft().addLimitLine(limitMin);
+
+            YAxis leftYAxis = weeklyBarChart.getAxisLeft();
+            YAxis rightYAxis = weeklyBarChart.getAxisRight();
+            XAxis xAxis = weeklyBarChart.getXAxis();
+
+            leftYAxis.setAxisMinimum(0);
+            rightYAxis.setAxisMinimum(0);
+            leftYAxis.setAxisMaximum((float) 100);
+            rightYAxis.setAxisMaximum((float) 100);
+            xAxis.setDrawLabels(true);
+            xAxis.setValueFormatter(new FragmentsValueFormatter());
+
+            weeklyBarChart.invalidate();
         });
 
-        viewModel.getSleepSessionsMonthly().observe(getViewLifecycleOwner(), new Observer<List<SleepSession>>() {
-            @Override
-            public void onChanged(List<SleepSession> sleepSessions) {
-                monthlyBarChart.clear();
-                sleepSessionsMonthly.clear();
-                monthlyBarChart.getAxisLeft().removeAllLimitLines();
-                sleepSessionsMonthly = sleepSessions;
+        viewModel.getSleepSessionsMonthly().observe(getViewLifecycleOwner(), sleepSessions -> {
+            monthlyBarChart.clear();
+            sleepSessionsMonthly.clear();
+            monthlyBarChart.getAxisLeft().removeAllLimitLines();
+            sleepSessionsMonthly = sleepSessions;
 
-                for (int i = 0; i < sleepSessionsMonthly.size(); i++) {
-                    SleepSession cSleep = sleepSessionsMonthly.get(i);
-                    int days = cSleep.getTimeStart().getDayOfYear();
-                    monthlyHumidity.add(new BarEntry(days, (float) cSleep.getAverageHumidity()));
-                }
-
-                Collections.sort(monthlyHumidity, new EntryXComparator());
-                monthlyBarDataSet = new BarDataSet(monthlyHumidity, "Humidity");
-
-                monthlyBarData = new BarData(monthlyBarDataSet);
-                monthlyBarData.setBarWidth(0.9f);
-
-                LimitLine limitMax = new LimitLine((float) humidityMax, "Max humidity");
-                LimitLine limitMin = new LimitLine((float) humidityMin, "Min humidity");
-
-                monthlyBarChart.setData(monthlyBarData);
-                monthlyBarChart.setFitBars(true);
-                monthlyBarChart.getDescription().setText("Humidity");
-                monthlyBarChart.getLegend().setEnabled(false);
-
-                monthlyBarChart.getAxisLeft().addLimitLine(limitMax);
-                monthlyBarChart.getAxisLeft().addLimitLine(limitMin);
-
-                YAxis leftYAxis = monthlyBarChart.getAxisLeft();
-                YAxis rightYAxis = monthlyBarChart.getAxisRight();
-                XAxis xAxis = monthlyBarChart.getXAxis();
-
-                leftYAxis.setAxisMinimum(0);
-                rightYAxis.setAxisMinimum(0);
-                leftYAxis.setAxisMaximum((float) 100);
-                rightYAxis.setAxisMaximum((float) 100);
-                xAxis.setDrawLabels(true);
-                xAxis.setValueFormatter(new FragmentsValueFormatter());
-
-                monthlyBarChart.invalidate();
+            for (int i = 0; i < sleepSessionsMonthly.size(); i++) {
+                SleepSession cSleep = sleepSessionsMonthly.get(i);
+                int days = cSleep.getTimeStart().getDayOfYear();
+                monthlyHumidity.add(new BarEntry(days, (float) cSleep.getAverageHumidity()));
             }
+
+            Collections.sort(monthlyHumidity, new EntryXComparator());
+            monthlyBarDataSet = new BarDataSet(monthlyHumidity, "Humidity");
+
+            monthlyBarData = new BarData(monthlyBarDataSet);
+            monthlyBarData.setBarWidth(0.9f);
+
+            LimitLine limitMax = new LimitLine((float) humidityMax, "Max humidity");
+            LimitLine limitMin = new LimitLine((float) humidityMin, "Min humidity");
+
+            monthlyBarChart.setData(monthlyBarData);
+            monthlyBarChart.setFitBars(true);
+            monthlyBarChart.getDescription().setText("Humidity");
+            monthlyBarChart.getLegend().setEnabled(false);
+
+            monthlyBarChart.getAxisLeft().addLimitLine(limitMax);
+            monthlyBarChart.getAxisLeft().addLimitLine(limitMin);
+
+            YAxis leftYAxis = monthlyBarChart.getAxisLeft();
+            YAxis rightYAxis = monthlyBarChart.getAxisRight();
+            XAxis xAxis = monthlyBarChart.getXAxis();
+
+            leftYAxis.setAxisMinimum(0);
+            rightYAxis.setAxisMinimum(0);
+            leftYAxis.setAxisMaximum((float) 100);
+            rightYAxis.setAxisMaximum((float) 100);
+            xAxis.setDrawLabels(true);
+            xAxis.setValueFormatter(new FragmentsValueFormatter());
+
+            monthlyBarChart.invalidate();
         });
         return v;
     }

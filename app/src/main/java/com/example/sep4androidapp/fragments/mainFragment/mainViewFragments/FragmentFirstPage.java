@@ -2,7 +2,6 @@ package com.example.sep4androidapp.fragments.mainFragment.mainViewFragments;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,16 +15,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sep4androidapp.Entities.NewDeviceModel;
 import com.example.sep4androidapp.Entities.Preferences;
 import com.example.sep4androidapp.LocalStorage.ConnectionLiveData;
-import com.example.sep4androidapp.LocalStorage.ConnectionModel;
 import com.example.sep4androidapp.R;
 import com.example.sep4androidapp.ViewModels.FragmentFirstPageViewModel;
-import com.example.sep4androidapp.fragments.factFragment.FactFragmentDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -36,26 +32,22 @@ import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 public class FragmentFirstPage extends Fragment {
     private Spinner spinner;
     private FragmentFirstPageViewModel viewModel;
-    private TextView currentTemperature, currentHumidity, currentCO2, timeStamp;
-    private TextView expectedTemperature, expectedHumidity, expectedCO2;
+    private TextView currentTemperature, currentHumidity,
+            currentCO2, timeStamp, expectedTemperature, expectedHumidity, expectedCO2;
     private Switch deviceSwitch;
-    private FactFragmentDialog factFragmentDialog = new FactFragmentDialog();
-    private FloatingActionButton floatingButton;
+
+    private FloatingActionButton randomFactButton;
     private ImageView temperatureStatus, humidityStatus, CO2Status;
 
     private List<String> nameList = new ArrayList<>();
     private List<String> idList = new ArrayList<>();
     private List<NewDeviceModel> localList = new ArrayList<>();
     private List<NewDeviceModel> apiList = new ArrayList<>();
-    ArrayAdapter<String> adapter;
+    private ArrayAdapter<String> adapter;
     private double temp, humidity, co2;
-    private boolean isConnected;
+    private boolean isConnected, isActiveFragment;
 
-
-
-    private boolean isActiveFragment;
-
-    @SuppressLint({"SetTextI18n", "DefaultLocale"})
+    @SuppressLint({"SetTextI18n", "DefaultLocale", "RestrictedApi"})
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -66,7 +58,7 @@ public class FragmentFirstPage extends Fragment {
         currentHumidity = v.findViewById(R.id.currentHumidity);
         currentCO2 = v.findViewById(R.id.currentCo2);
         timeStamp = v.findViewById(R.id.timeStamp);
-        floatingButton = v.findViewById(R.id.floatingButton);
+        randomFactButton = v.findViewById(R.id.randomFactButton);
         expectedTemperature = v.findViewById(R.id.expectedTemperature);
         expectedHumidity = v.findViewById(R.id.expectedHumidity);
         expectedCO2 = v.findViewById(R.id.expectedCo2);
@@ -77,22 +69,26 @@ public class FragmentFirstPage extends Fragment {
         viewModel = new ViewModelProvider(this).get(FragmentFirstPageViewModel.class);
 
         @SuppressLint("RestrictedApi") ConnectionLiveData connectionLiveData = new ConnectionLiveData(getApplicationContext());
-        connectionLiveData.observe(getActivity(), new Observer<ConnectionModel>() {
-            @Override
-            public void onChanged(@Nullable ConnectionModel connection) {
-                if(isActiveFragment)
-                {
-                    if (connection.getIsConnected())
-                    {
-                        isConnected = true;
-                        deviceSwitch.setEnabled(true);
-                    } else {
-                        isConnected = false;
-                        deviceSwitch.setEnabled(false);
-                    }
-                    viewModel.updateRooms();
-                    refreshSpinner();
+        connectionLiveData.observe(getActivity(), connection -> {
+            if (isActiveFragment && connection != null) {
+
+                if (connection.getIsConnected()) {
+                    isConnected = true;
+                    deviceSwitch.setEnabled(true);
+                    randomFactButton.setVisibility(FloatingActionButton.VISIBLE);
+                    temperatureStatus.setVisibility(ImageView.VISIBLE);
+                    humidityStatus.setVisibility(ImageView.VISIBLE);
+                    CO2Status.setVisibility(ImageView.VISIBLE);
+                } else {
+                    isConnected = false;
+                    deviceSwitch.setEnabled(false);
+                    randomFactButton.setVisibility(FloatingActionButton.INVISIBLE);
+                    temperatureStatus.setVisibility(ImageView.INVISIBLE);
+                    humidityStatus.setVisibility(ImageView.INVISIBLE);
+                    CO2Status.setVisibility(ImageView.INVISIBLE);
                 }
+                viewModel.updateRooms();
+                refreshSpinner();
             }
         });
 
@@ -102,16 +98,7 @@ public class FragmentFirstPage extends Fragment {
             refreshSpinner();
         });
 
-        viewModel.getFact().observe(getViewLifecycleOwner(), fact -> {
-            Bundle args = new Bundle();
-            args.putString("title", fact.getTitle());
-            args.putString("content", fact.getContent());
-            args.putString("source", fact.getSource());
-            args.putString("url", fact.getSourceUrl());
-
-            factFragmentDialog.setArguments(args);
-            factFragmentDialog.show(getChildFragmentManager(), "Chosen");
-        });
+        viewModel.getFact().observe(getViewLifecycleOwner(), fact -> viewModel.showDialogFragment(fact, this));
 
         viewModel.getDevicesFromApi().observe(getViewLifecycleOwner(), devices -> {
 
@@ -121,10 +108,19 @@ public class FragmentFirstPage extends Fragment {
                 formattedDeviceList.add(new NewDeviceModel(devices.get(i).getDeviceId(), devices.get(i).getName()));
             }
             apiList = formattedDeviceList;
-            refreshSpinner();
 
             if (getArguments() != null) {
                 spinner.setSelection(adapter.getPosition(getArguments().getString("deviceName")));
+            }
+            refreshSpinner();
+        });
+
+        viewModel.getPreferencesFromApi().observe(getViewLifecycleOwner(), preferences -> {
+            if (isConnected) {
+                expectedTemperature.setText(preferences.getTemperatureMin() + " - " + preferences.getTemperatureMax());
+                expectedHumidity.setText(preferences.getHumidityMin() + " - " + preferences.getHumidityMax());
+                expectedCO2.setText(" < " + preferences.getCo2Max());
+                setIcons(preferences);
             }
         });
 
@@ -134,22 +130,12 @@ public class FragmentFirstPage extends Fragment {
             currentHumidity.setText(String.format("%.0f", roomCondition.getHumidity()) + "%");
             timeStamp.setText("Updated: " + roomCondition.getTimestamp());
             temp = roomCondition.getTemperature();
-            Log.i("TAG", "TEMPERATURE: " + temp);
+
             humidity = roomCondition.getHumidity();
             co2 = roomCondition.getHumidity();
-            //Following line might not be needed
+
             viewModel.showPreferences(viewModel.getDeviceId());
         });
-
-        viewModel.getPreferencesFromApi().observe(getViewLifecycleOwner(), preferences -> {
-            if(isConnected) {
-                expectedTemperature.setText(preferences.getTemperatureMin() + " - " + preferences.getTemperatureMax());
-                expectedHumidity.setText(preferences.getHumidityMin() + " - " + preferences.getHumidityMax());
-                expectedCO2.setText(" < " + preferences.getCo2Max());
-                setIcons(preferences);
-            }
-        });
-
         viewModel.updateRooms();
         setListeners();
 
@@ -164,8 +150,7 @@ public class FragmentFirstPage extends Fragment {
                 nameList.add(apiList.get(i).getName());
                 idList.add(apiList.get(i).getDeviceId());
             }
-        }
-        else {
+        } else {
             for (int i = 0; i < localList.size(); i++) {
                 nameList.add(localList.get(i).getName());
                 idList.add(localList.get(i).getDeviceId());
@@ -178,30 +163,25 @@ public class FragmentFirstPage extends Fragment {
     }
 
     private void setIcons(Preferences preferences) {
-        if(preferences.getTemperatureMin() > temp)
-        {
+        if (preferences.getTemperatureMin() > temp) {
             temperatureStatus.setImageResource(R.drawable.lower);
-        }else if(preferences.getTemperatureMax() < temp)
-        {
+        } else if (preferences.getTemperatureMax() < temp) {
             temperatureStatus.setImageResource(R.drawable.higher);
-        }else{
+        } else {
             temperatureStatus.setImageResource(R.drawable.correct);
         }
 
-        if(preferences.getHumidityMin() > humidity)
-        {
+        if (preferences.getHumidityMin() > humidity) {
             humidityStatus.setImageResource(R.drawable.lower);
-        }else if(preferences.getHumidityMax() < humidity)
-        {
+        } else if (preferences.getHumidityMax() < humidity) {
             humidityStatus.setImageResource(R.drawable.higher);
-        }else{
+        } else {
             humidityStatus.setImageResource(R.drawable.correct);
         }
 
-        if(preferences.getCo2Max() < co2)
-        {
+        if (preferences.getCo2Max() < co2) {
             CO2Status.setImageResource(R.drawable.higher);
-        }else{
+        } else {
             CO2Status.setImageResource(R.drawable.correct);
         }
     }
@@ -220,26 +200,19 @@ public class FragmentFirstPage extends Fragment {
                 viewModel.showPreferences(idList.get(position));
                 viewModel.setChosenDeviceId(idList.get(position));
 
-                if(!isConnected)
-                {
+                if (!isConnected) {
                     Preferences preferences = viewModel.getPreferencesById(idList.get(position));
-                    if(preferences == null)
-                    {
+                    if (preferences == null) {
                         expectedTemperature.setText("Empty");
                         expectedHumidity.setText("Empty");
                         expectedCO2.setText("Empty");
-                    }else{
+                    } else {
                         expectedTemperature.setText(preferences.getTemperatureMin() + " - " + preferences.getTemperatureMax());
                         expectedHumidity.setText(preferences.getHumidityMin() + " - " + preferences.getHumidityMax());
                         expectedCO2.setText(" < " + preferences.getCo2Max());
                     }
-
-
                 }
-                viewModel.receiveStatus(viewModel.getDeviceId(), success -> {
-                    Log.i("StartStopRepo", "Result is: " + success);
-                    deviceSwitch.setChecked(success);
-                });
+                viewModel.receiveStatus(viewModel.getDeviceId(), success -> deviceSwitch.setChecked(success));
             }
 
             @Override
@@ -247,13 +220,8 @@ public class FragmentFirstPage extends Fragment {
             }
         });
 
-        deviceSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            viewModel.switchCheck(isChecked);
-        });
-
-        floatingButton.setOnClickListener(v1 -> {
-            viewModel.getFactRandomly();
-        });
+        deviceSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> viewModel.switchCheck(isChecked));
+        randomFactButton.setOnClickListener(v1 -> viewModel.getFactRandomly());
     }
 
     @Override

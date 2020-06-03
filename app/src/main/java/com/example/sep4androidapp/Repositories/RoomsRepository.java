@@ -1,11 +1,14 @@
 package com.example.sep4androidapp.Repositories;
 
+import android.app.Application;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.sep4androidapp.Entities.Device;
+import com.example.sep4androidapp.Entities.NewDeviceModel;
+import com.example.sep4androidapp.Entities.Preferences;
 import com.example.sep4androidapp.connection.AccountDevicesApi;
 import com.example.sep4androidapp.connection.ServiceGenerator;
 
@@ -17,6 +20,7 @@ import retrofit2.Response;
 
 public class RoomsRepository {
     private static RoomsRepository instance;
+    private DatabaseRepository databaseRepository;
     private MutableLiveData<List<Device>> list;
     private MutableLiveData<List<Device>> listForFragments;
 
@@ -78,7 +82,7 @@ public class RoomsRepository {
         });
     }
 
-    public void deleteDevice(String deviceId)
+    public void deleteDevice(String deviceId, NewDeviceModel device)
     {
         AccountDevicesApi api = ServiceGenerator.getAccountDevicesApi();
         Call<Void> call = api.deleteDevice(deviceId);
@@ -86,6 +90,12 @@ public class RoomsRepository {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 Log.i("roomsRepo", "Delete device succeeded" + response.code());
+                if(response.code() == 200)
+                {
+                    DatabaseRepository databaseRepository = DatabaseRepository.getInstance(null);
+                    databaseRepository.deleteDevice(device);
+                    databaseRepository.deletePreferences(databaseRepository.getPreferencesById(device.getDeviceId()));
+                }
                 updateRooms();
             }
 

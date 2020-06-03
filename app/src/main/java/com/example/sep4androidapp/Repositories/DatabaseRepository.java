@@ -45,28 +45,24 @@ public class DatabaseRepository {
         return allDevices;
     }
 
-    public Preferences getPreference() {
-        List<Preferences> prefs = new ArrayList<>();
-        prefs = allPreferences.getValue();
-
-        assert prefs != null;
-        return prefs.get(prefs.size() - 1);
-    }
-
     public Preferences getPreferencesById(String deviceId) {
         return prefDao.getPreferencesById(deviceId);
     }
 
     public void insert(Preferences preferences) {
-        new DatabaseRepository.InsertPreferencesAsync(prefDao).execute(preferences);
+        new InsertPreferencesAsync(prefDao).execute(preferences);
     }
 
-    public void savePreferencesToDb(Preferences preferences) {
-        new DatabaseRepository.UpdatePreferencesAsync(prefDao).execute(preferences);
+    public void updatePreferencesToDb(Preferences preferences) {
+        new UpdatePreferencesAsync(prefDao).execute(preferences);
     }
 
-    public void deleteDevice(NewDeviceModel device)
+    public void deletePreferences(Preferences preferences)
     {
+        new DeletePreferencesAsync(prefDao).execute(preferences);
+    }
+
+    public void deleteDevice(NewDeviceModel device) {
         new DeleteDeviceAsyncTask(newDeviceDAO).execute(device);
     }
 
@@ -98,11 +94,27 @@ public class DatabaseRepository {
         }
     }
 
-    private static class DeleteDeviceAsyncTask extends  AsyncTask<NewDeviceModel, Void, Void>
-    {
+    private static class DeletePreferencesAsync extends AsyncTask<Preferences, Void, Void> {
+        private PrefDAO prefDAO;
+
+        private DeletePreferencesAsync(PrefDAO prefDAO) {
+            this.prefDAO = prefDAO;
+        }
+
+        @Override
+        protected Void doInBackground(Preferences... preferences) {
+            prefDAO.deletePreference(preferences[0]);
+            return null;
+        }
+    }
+
+    private static class DeleteDeviceAsyncTask extends AsyncTask<NewDeviceModel, Void, Void> {
         private NewDeviceDAO deviceDao;
 
-        private DeleteDeviceAsyncTask(NewDeviceDAO dao){this.deviceDao = dao;}
+        private DeleteDeviceAsyncTask(NewDeviceDAO dao) {
+            this.deviceDao = dao;
+        }
+
         @Override
         protected Void doInBackground(NewDeviceModel... newDeviceModels) {
             deviceDao.deleteDevice(newDeviceModels[0]);

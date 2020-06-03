@@ -1,6 +1,7 @@
 package com.example.sep4androidapp.ViewModels;
 
 import android.app.Application;
+import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 
@@ -20,6 +21,9 @@ import com.example.sep4androidapp.Repositories.ReportRepository;
 import com.example.sep4androidapp.Repositories.RoomsRepository;
 import com.example.sep4androidapp.Repositories.StartStopRepository;
 import com.example.sep4androidapp.connection.ApiCallBack;
+import com.example.sep4androidapp.fragments.factFragment.FactFragmentDialog;
+import com.example.sep4androidapp.fragments.mainFragment.mainViewFragments.FragmentFirstPage;
+
 import java.util.Calendar;
 import java.util.List;
 import java.util.Timer;
@@ -35,6 +39,7 @@ public class FragmentFirstPageViewModel extends AndroidViewModel {
     private Handler handler = new Handler();
     private Timer timer = new Timer();
     private String deviceId;
+    private FactFragmentDialog factFragmentDialog = new FactFragmentDialog();
 
     public FragmentFirstPageViewModel(@NonNull Application application) {
         super(application);
@@ -137,5 +142,17 @@ public class FragmentFirstPageViewModel extends AndroidViewModel {
 
     public LiveData<List<NewDeviceModel>> getAllLocalDevices() {
         return databaseRepository.getAllDevices();
+    }
+
+
+    public void showDialogFragment(Fact fact, FragmentFirstPage fragmentFirstPage) {
+        Bundle args = new Bundle();
+        args.putString("title", fact.getTitle());
+        args.putString("content", fact.getContent());
+        args.putString("source", fact.getSource());
+        args.putString("url", fact.getSourceUrl());
+
+        factFragmentDialog.setArguments(args);
+        factFragmentDialog.show(fragmentFirstPage.getChildFragmentManager(), "Chosen");
     }
 }

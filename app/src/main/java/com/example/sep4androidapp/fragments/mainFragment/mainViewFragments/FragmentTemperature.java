@@ -10,11 +10,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
+
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.sep4androidapp.Entities.Device;
-import com.example.sep4androidapp.Entities.Preferences;
 import com.example.sep4androidapp.Entities.SleepSession;
 import com.example.sep4androidapp.R;
 import com.example.sep4androidapp.ValueFormatters.FragmentsValueFormatter;
@@ -60,6 +58,7 @@ public class FragmentTemperature extends Fragment {
 
     private double temperatureMax;
     private double temperatureMin;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -71,172 +70,154 @@ public class FragmentTemperature extends Fragment {
         deviceName = v.findViewById(R.id.deviceText);
         viewModel = new ViewModelProvider(this).get(TemperatureFragmentViewModel.class);
 
-        viewModel.getPreferences().observe(getViewLifecycleOwner(), new Observer<Preferences>() {
-            @Override
-            public void onChanged(Preferences preferences) {
-               temperatureMax = preferences.getTemperatureMax();
-               temperatureMin = preferences.getTemperatureMin();
-            }
+        viewModel.getPreferences().observe(getViewLifecycleOwner(), preferences -> {
+            temperatureMax = preferences.getTemperatureMax();
+            temperatureMin = preferences.getTemperatureMin();
         });
 
-        viewModel.getChosenDeviceId().observe(getViewLifecycleOwner(),new Observer<String>(){
-            @Override
-            public void onChanged(String s) {
-                deviceId = s;
-                viewModel.updateDailySleepSessions(deviceId);
-                viewModel.updateWeeklySleepSessions(deviceId);
-                viewModel.updateMonthlySleepSessions(deviceId);
+        viewModel.getChosenDeviceId().observe(getViewLifecycleOwner(), s -> {
+            deviceId = s;
+            viewModel.updateDailySleepSessions(deviceId);
+            viewModel.updateWeeklySleepSessions(deviceId);
+            viewModel.updateMonthlySleepSessions(deviceId);
 
-                viewModel.updateRoomsForFragments();
-            }
+            viewModel.updateRoomsForFragments();
         });
 
-        viewModel.getDevicesForFragments().observe(getViewLifecycleOwner(), new Observer<List<Device>>() {
-            @Override
-            public void onChanged(List<Device> devices) {
-                for (int i = 0; i < devices.size(); i++) {
-                    if(devices.get(i).getDeviceId().equals(deviceId)){
+        viewModel.getDevicesForFragments().observe(getViewLifecycleOwner(), devices -> {
+            for (int i = 0; i < devices.size(); i++) {
+                if (devices.get(i).getDeviceId().equals(deviceId)) {
 
-                        deviceName.setText(devices.get(i).getName());
-                    }
+                    deviceName.setText(devices.get(i).getName());
                 }
             }
         });
 
-        viewModel.getSleepSessionsDaily().observe(getViewLifecycleOwner(), new Observer<List<SleepSession>>() {
-            @Override
-            public void onChanged(List<SleepSession> sleepSessions) {
-                dailyBarChart.clear();
-                sleepSessionsDaily.clear();
-                dailyBarChart.getAxisLeft().removeAllLimitLines();
+        viewModel.getSleepSessionsDaily().observe(getViewLifecycleOwner(), sleepSessions -> {
+            dailyBarChart.clear();
+            sleepSessionsDaily.clear();
+            dailyBarChart.getAxisLeft().removeAllLimitLines();
 
-                sleepSessionsDaily = sleepSessions;
+            sleepSessionsDaily = sleepSessions;
 
-                for (int i = 0; i < sleepSessionsDaily.size(); i++) {
-                    SleepSession cSleep = sleepSessionsDaily.get(i);
-                    int days = cSleep.getTimeStart().getDayOfYear();
-                    dailyTemperature.add(new BarEntry(days, (float) cSleep.getAverageTemperature()));
-                }
-                Collections.sort(dailyTemperature, new EntryXComparator());
-
-                dailyBarDataSet = new BarDataSet(dailyTemperature, "Temperature");
-
-                dailyBarData = new BarData(dailyBarDataSet);
-                dailyBarData.setBarWidth(0.9f);
-
-                LimitLine limitMax = new LimitLine((float) temperatureMax, "Max temperature");
-                LimitLine limitMin = new LimitLine((float) temperatureMin, "Min temperature");
-
-                dailyBarChart.setData(dailyBarData);
-                dailyBarChart.setFitBars(true);
-                dailyBarChart.getDescription().setText("Temperature");
-                dailyBarChart.getLegend().setEnabled(false);
-
-                dailyBarChart.getAxisLeft().addLimitLine(limitMax);
-                dailyBarChart.getAxisLeft().addLimitLine(limitMin);
-
-                YAxis leftYAxis = dailyBarChart.getAxisLeft();
-                YAxis rightYAxis = dailyBarChart.getAxisRight();
-                XAxis xAxis = dailyBarChart.getXAxis();
-
-                leftYAxis.setAxisMinimum(0);
-                rightYAxis.setAxisMinimum(0);
-                leftYAxis.setAxisMaximum((float)temperatureMax + 5);
-                rightYAxis.setAxisMaximum((float)temperatureMax + 5);
-                xAxis.setDrawLabels(true);
-                xAxis.setValueFormatter(new FragmentsValueFormatter());
-                dailyBarChart.invalidate();
+            for (int i = 0; i < sleepSessionsDaily.size(); i++) {
+                SleepSession cSleep = sleepSessionsDaily.get(i);
+                int days = cSleep.getTimeStart().getDayOfYear();
+                dailyTemperature.add(new BarEntry(days, (float) cSleep.getAverageTemperature()));
             }
+            Collections.sort(dailyTemperature, new EntryXComparator());
+
+            dailyBarDataSet = new BarDataSet(dailyTemperature, "Temperature");
+
+            dailyBarData = new BarData(dailyBarDataSet);
+            dailyBarData.setBarWidth(0.9f);
+
+            LimitLine limitMax = new LimitLine((float) temperatureMax, "Max temperature");
+            LimitLine limitMin = new LimitLine((float) temperatureMin, "Min temperature");
+
+            dailyBarChart.setData(dailyBarData);
+            dailyBarChart.setFitBars(true);
+            dailyBarChart.getDescription().setText("Temperature");
+            dailyBarChart.getLegend().setEnabled(false);
+
+            dailyBarChart.getAxisLeft().addLimitLine(limitMax);
+            dailyBarChart.getAxisLeft().addLimitLine(limitMin);
+
+            YAxis leftYAxis = dailyBarChart.getAxisLeft();
+            YAxis rightYAxis = dailyBarChart.getAxisRight();
+            XAxis xAxis = dailyBarChart.getXAxis();
+
+            leftYAxis.setAxisMinimum(0);
+            rightYAxis.setAxisMinimum(0);
+            leftYAxis.setAxisMaximum((float) temperatureMax + 5);
+            rightYAxis.setAxisMaximum((float) temperatureMax + 5);
+            xAxis.setDrawLabels(true);
+            xAxis.setValueFormatter(new FragmentsValueFormatter());
+            dailyBarChart.invalidate();
         });
-        viewModel.getSleepSessionsWeekly().observe(getViewLifecycleOwner(), new Observer<List<SleepSession>>() {
-                    @Override
-                    public void onChanged(List<SleepSession> sleepSessions) {
-                        weeklyBarChart.clear();
-                        sleepSessionsWeekly.clear();
-                        weeklyBarChart.getAxisLeft().removeAllLimitLines();
-                        sleepSessionsWeekly = sleepSessions;
+        viewModel.getSleepSessionsWeekly().observe(getViewLifecycleOwner(), sleepSessions -> {
+            weeklyBarChart.clear();
+            sleepSessionsWeekly.clear();
+            weeklyBarChart.getAxisLeft().removeAllLimitLines();
+            sleepSessionsWeekly = sleepSessions;
 
-                        for (int i = 0; i < sleepSessionsWeekly.size(); i++) {
-                            SleepSession cSleep = sleepSessionsWeekly.get(i);
-                            int days = cSleep.getTimeStart().getDayOfYear();
-                            weeklyTemperature.add(new BarEntry(days, (float) cSleep.getAverageTemperature()));
-                        }
-                        Collections.sort(weeklyTemperature, new EntryXComparator());
+            for (int i = 0; i < sleepSessionsWeekly.size(); i++) {
+                SleepSession cSleep = sleepSessionsWeekly.get(i);
+                int days = cSleep.getTimeStart().getDayOfYear();
+                weeklyTemperature.add(new BarEntry(days, (float) cSleep.getAverageTemperature()));
+            }
+            Collections.sort(weeklyTemperature, new EntryXComparator());
 
-                        weeklyBarDataSet = new BarDataSet(weeklyTemperature, "Temperature");
-                        weeklyBarData = new BarData(weeklyBarDataSet);
-                        weeklyBarData.setBarWidth(0.9f);
+            weeklyBarDataSet = new BarDataSet(weeklyTemperature, "Temperature");
+            weeklyBarData = new BarData(weeklyBarDataSet);
+            weeklyBarData.setBarWidth(0.9f);
 
-                        LimitLine limitMax = new LimitLine((float) temperatureMax, "Max temperature");
-                        LimitLine limitMin = new LimitLine((float) temperatureMin, "Min temperature");
+            LimitLine limitMax = new LimitLine((float) temperatureMax, "Max temperature");
+            LimitLine limitMin = new LimitLine((float) temperatureMin, "Min temperature");
 
-                        weeklyBarChart.setData(weeklyBarData);
-                        weeklyBarChart.setFitBars(true);
-                        weeklyBarChart.getDescription().setText("Temperature");
-                        weeklyBarChart.getLegend().setEnabled(false);
+            weeklyBarChart.setData(weeklyBarData);
+            weeklyBarChart.setFitBars(true);
+            weeklyBarChart.getDescription().setText("Temperature");
+            weeklyBarChart.getLegend().setEnabled(false);
 
-                        weeklyBarChart.getAxisLeft().addLimitLine(limitMax);
-                        weeklyBarChart.getAxisLeft().addLimitLine(limitMin);
+            weeklyBarChart.getAxisLeft().addLimitLine(limitMax);
+            weeklyBarChart.getAxisLeft().addLimitLine(limitMin);
 
-                        YAxis leftYAxis = weeklyBarChart.getAxisLeft();
-                        YAxis rightYAxis = weeklyBarChart.getAxisRight();
-                        XAxis xAxis = weeklyBarChart.getXAxis();
+            YAxis leftYAxis = weeklyBarChart.getAxisLeft();
+            YAxis rightYAxis = weeklyBarChart.getAxisRight();
+            XAxis xAxis = weeklyBarChart.getXAxis();
 
-                        leftYAxis.setAxisMinimum(0);
-                        rightYAxis.setAxisMinimum(0);
-                        leftYAxis.setAxisMaximum((float)temperatureMax + 5);
-                        rightYAxis.setAxisMaximum((float)temperatureMax + 5);
-                        xAxis.setDrawLabels(true);
-                        xAxis.setValueFormatter(new FragmentsValueFormatter());
-                        weeklyBarChart.invalidate();
-                    }
-                });
+            leftYAxis.setAxisMinimum(0);
+            rightYAxis.setAxisMinimum(0);
+            leftYAxis.setAxisMaximum((float) temperatureMax + 5);
+            rightYAxis.setAxisMaximum((float) temperatureMax + 5);
+            xAxis.setDrawLabels(true);
+            xAxis.setValueFormatter(new FragmentsValueFormatter());
+            weeklyBarChart.invalidate();
+        });
 
-        viewModel.getSleepSessionsMonthly().observe(getViewLifecycleOwner(), new Observer<List<SleepSession>>() {
-                    @Override
-                    public void onChanged(List<SleepSession> sleepSessions) {
-                        monthlyBarChart.clear();
-                        sleepSessionsMonthly.clear();
-                        monthlyBarChart.getAxisLeft().removeAllLimitLines();
-                        sleepSessionsMonthly = sleepSessions;
+        viewModel.getSleepSessionsMonthly().observe(getViewLifecycleOwner(), sleepSessions -> {
+            monthlyBarChart.clear();
+            sleepSessionsMonthly.clear();
+            monthlyBarChart.getAxisLeft().removeAllLimitLines();
+            sleepSessionsMonthly = sleepSessions;
 
-                        for (int i = 0; i < sleepSessionsMonthly.size(); i++) {
+            for (int i = 0; i < sleepSessionsMonthly.size(); i++) {
 
-                            SleepSession cSleep = sleepSessionsMonthly.get(i);
-                            int days = cSleep.getTimeStart().getDayOfYear();
-                            monthlyTemperature.add(new BarEntry(days, (float) cSleep.getAverageTemperature()));
-                        }
-                        Collections.sort(monthlyTemperature, new EntryXComparator());
-                        monthlyBarDataSet = new BarDataSet(monthlyTemperature, "Temperature");
+                SleepSession cSleep = sleepSessionsMonthly.get(i);
+                int days = cSleep.getTimeStart().getDayOfYear();
+                monthlyTemperature.add(new BarEntry(days, (float) cSleep.getAverageTemperature()));
+            }
+            Collections.sort(monthlyTemperature, new EntryXComparator());
+            monthlyBarDataSet = new BarDataSet(monthlyTemperature, "Temperature");
 
-                        monthlyBarData = new BarData(monthlyBarDataSet);
-                        monthlyBarData.setBarWidth(0.9f);
+            monthlyBarData = new BarData(monthlyBarDataSet);
+            monthlyBarData.setBarWidth(0.9f);
 
-                        LimitLine limitMax = new LimitLine((float) temperatureMax, "Max temperature");
-                        LimitLine limitMin = new LimitLine((float) temperatureMin, "Min temperature");
+            LimitLine limitMax = new LimitLine((float) temperatureMax, "Max temperature");
+            LimitLine limitMin = new LimitLine((float) temperatureMin, "Min temperature");
 
-                        monthlyBarChart.setData(monthlyBarData);
-                        monthlyBarChart.setFitBars(true);
-                        monthlyBarChart.getDescription().setText("Temperature");
-                        monthlyBarChart.getLegend().setEnabled(false);
+            monthlyBarChart.setData(monthlyBarData);
+            monthlyBarChart.setFitBars(true);
+            monthlyBarChart.getDescription().setText("Temperature");
+            monthlyBarChart.getLegend().setEnabled(false);
 
-                        monthlyBarChart.getAxisLeft().addLimitLine(limitMax);
-                        monthlyBarChart.getAxisLeft().addLimitLine(limitMin);
+            monthlyBarChart.getAxisLeft().addLimitLine(limitMax);
+            monthlyBarChart.getAxisLeft().addLimitLine(limitMin);
 
-                        YAxis leftYAxis = monthlyBarChart.getAxisLeft();
-                        YAxis rightYAxis = monthlyBarChart.getAxisRight();
-                        XAxis xAxis = monthlyBarChart.getXAxis();
+            YAxis leftYAxis = monthlyBarChart.getAxisLeft();
+            YAxis rightYAxis = monthlyBarChart.getAxisRight();
+            XAxis xAxis = monthlyBarChart.getXAxis();
 
-                        leftYAxis.setAxisMinimum(0);
-                        rightYAxis.setAxisMinimum(0);
-                        leftYAxis.setAxisMaximum((float)temperatureMax + 5);
-                        rightYAxis.setAxisMaximum((float)temperatureMax + 5);
-                        xAxis.setDrawLabels(true);
-                        xAxis.setValueFormatter(new FragmentsValueFormatter());
+            leftYAxis.setAxisMinimum(0);
+            rightYAxis.setAxisMinimum(0);
+            leftYAxis.setAxisMaximum((float) temperatureMax + 5);
+            rightYAxis.setAxisMaximum((float) temperatureMax + 5);
+            xAxis.setDrawLabels(true);
+            xAxis.setValueFormatter(new FragmentsValueFormatter());
 
-                        monthlyBarChart.invalidate();
-                    }
-                });
+            monthlyBarChart.invalidate();
+        });
         return v;
     }
 }
