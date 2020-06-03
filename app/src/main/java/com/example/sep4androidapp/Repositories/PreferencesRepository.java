@@ -19,6 +19,7 @@ import com.example.sep4androidapp.connection.PreferenceApi;
 import com.example.sep4androidapp.connection.ServiceGenerator;
 import com.example.sep4androidapp.connection.responses.PreferencesResponse;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -84,6 +85,13 @@ public class PreferencesRepository {
         return allPreferences;
     }
 
+    public Preferences getPreference(){
+        List<Preferences> prefs = new ArrayList<>();
+        prefs = allPreferences.getValue();
+
+        assert prefs != null;
+        return prefs.get(prefs.size()-1);
+    }
 
     public void getPreferencesById(String deviceId){
         prefDao.getPreferencesById(deviceId);

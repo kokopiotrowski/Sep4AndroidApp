@@ -1,6 +1,7 @@
 package com.example.sep4androidapp.ViewModels;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -61,6 +62,10 @@ public class PreferencesViewModel extends AndroidViewModel {
 
     public void getPreferencesById(String deviceId){
         preferencesRepository.getPreferencesById(deviceId);
+    }
+
+    public Preferences getPreference(){
+        return preferencesRepository.getPreference();
     }
 
     public LiveData<List<NewDeviceModel>> getAllDevices(){
