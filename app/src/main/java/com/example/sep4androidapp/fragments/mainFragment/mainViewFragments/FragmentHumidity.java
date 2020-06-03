@@ -1,6 +1,7 @@
 package com.example.sep4androidapp.fragments.mainFragment.mainViewFragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,10 +33,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class FragmentHumidity extends Fragment {
-
-
     private HumidityFragmentViewModel viewModel;
-
 
     private String deviceId;
     private TextView deviceName;
@@ -47,8 +45,6 @@ public class FragmentHumidity extends Fragment {
     private List<SleepSession> sleepSessionsDaily = new ArrayList<>();
     private List<SleepSession> sleepSessionsWeekly = new ArrayList<>();
     private List<SleepSession> sleepSessionsMonthly = new ArrayList<>();
-
-
 
     private BarDataSet dailyBarDataSet;
     private BarDataSet weeklyBarDataSet;
@@ -74,54 +70,35 @@ public class FragmentHumidity extends Fragment {
         monthlyBarChart = v.findViewById(R.id.monthlyBarChart);
 
         deviceName = v.findViewById(R.id.deviceText);
-
         viewModel = new ViewModelProvider(this).get(HumidityFragmentViewModel.class);
-
-
-
-
 
         viewModel.getPreferences().observe(getViewLifecycleOwner(), new Observer<Preferences>() {
             @Override
             public void onChanged(Preferences preferences) {
-
                 humidityMax = preferences.getHumidityMax();
                 humidityMin = preferences.getHumidityMin();
-
             }
         });
 
-
-
-        viewModel.getChosenDeviceId().observe(getViewLifecycleOwner(),new Observer<String>(){
-
+        viewModel.getChosenDeviceId().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
-
                 deviceId = s;
                 viewModel.updateDailySleepSessions(deviceId);
                 viewModel.updateWeeklySleepSessions(deviceId);
                 viewModel.updateMonthlySleepSessions(deviceId);
-
                 viewModel.updateRoomsForFragments();
-
-
             }
         });
 
         viewModel.getDevicesForFragments().observe(getViewLifecycleOwner(), new Observer<List<Device>>() {
             @Override
             public void onChanged(List<Device> devices) {
-
                 for (int i = 0; i < devices.size(); i++) {
-
-                    if(devices.get(i).getDeviceId().equals(deviceId)){
-
+                    if (devices.get(i).getDeviceId().equals(deviceId)) {
                         deviceName.setText(devices.get(i).getName());
                     }
-
                 }
-
             }
         });
 
@@ -132,23 +109,16 @@ public class FragmentHumidity extends Fragment {
                 dailyBarChart.clear();
                 sleepSessionsDaily.clear();
                 dailyBarChart.getAxisLeft().removeAllLimitLines();
-
                 sleepSessionsDaily = sleepSessions;
 
                 for (int i = 0; i < sleepSessionsDaily.size(); i++) {
-
                     SleepSession cSleep = sleepSessionsDaily.get(i);
                     int days = cSleep.getTimeStart().getDayOfYear();
                     dailyHumidity.add(new BarEntry(days, (float) cSleep.getAverageHumidity()));
-
-
-
                 }
 
                 Collections.sort(dailyHumidity, new EntryXComparator());
-
                 dailyBarDataSet = new BarDataSet(dailyHumidity, "Humidity");
-
 
                 dailyBarData = new BarData(dailyBarDataSet);
                 dailyBarData.setBarWidth(0.9f);
@@ -168,42 +138,31 @@ public class FragmentHumidity extends Fragment {
                 YAxis rightYAxis = dailyBarChart.getAxisRight();
                 XAxis xAxis = dailyBarChart.getXAxis();
 
-
                 leftYAxis.setAxisMinimum(0);
                 rightYAxis.setAxisMinimum(0);
-                leftYAxis.setAxisMaximum((float)100);
-                rightYAxis.setAxisMaximum((float)100);
+                leftYAxis.setAxisMaximum((float) 100);
+                rightYAxis.setAxisMaximum((float) 100);
                 xAxis.setDrawLabels(true);
                 xAxis.setValueFormatter(new FragmentsValueFormatter());
-                /*xAxis.setLabelCount(sleepSessionsDaily.size() ,true );*/
-
-
                 dailyBarChart.invalidate();
-
             }
         });
         viewModel.getSleepSessionsWeekly().observe(getViewLifecycleOwner(), new Observer<List<SleepSession>>() {
             @Override
             public void onChanged(List<SleepSession> sleepSessions) {
-
                 weeklyBarChart.clear();
                 sleepSessionsWeekly.clear();
                 weeklyBarChart.getAxisLeft().removeAllLimitLines();
                 sleepSessionsWeekly = sleepSessions;
 
                 for (int i = 0; i < sleepSessionsWeekly.size(); i++) {
-
                     SleepSession cSleep = sleepSessionsWeekly.get(i);
                     int days = cSleep.getTimeStart().getDayOfYear();
                     weeklyHumidity.add(new BarEntry(days, (float) cSleep.getAverageHumidity()));
-
-
                 }
 
                 Collections.sort(weeklyHumidity, new EntryXComparator());
-
                 weeklyBarDataSet = new BarDataSet(weeklyHumidity, "Humidity");
-
 
                 weeklyBarData = new BarData(weeklyBarDataSet);
                 weeklyBarData.setBarWidth(0.9f);
@@ -225,40 +184,31 @@ public class FragmentHumidity extends Fragment {
 
                 leftYAxis.setAxisMinimum(0);
                 rightYAxis.setAxisMinimum(0);
-                leftYAxis.setAxisMaximum((float)100);
-                rightYAxis.setAxisMaximum((float)100);
+                leftYAxis.setAxisMaximum((float) 100);
+                rightYAxis.setAxisMaximum((float) 100);
                 xAxis.setDrawLabels(true);
                 xAxis.setValueFormatter(new FragmentsValueFormatter());
 
                 weeklyBarChart.invalidate();
-
             }
         });
-
-
 
         viewModel.getSleepSessionsMonthly().observe(getViewLifecycleOwner(), new Observer<List<SleepSession>>() {
             @Override
             public void onChanged(List<SleepSession> sleepSessions) {
-
                 monthlyBarChart.clear();
                 sleepSessionsMonthly.clear();
                 monthlyBarChart.getAxisLeft().removeAllLimitLines();
                 sleepSessionsMonthly = sleepSessions;
 
                 for (int i = 0; i < sleepSessionsMonthly.size(); i++) {
-
                     SleepSession cSleep = sleepSessionsMonthly.get(i);
                     int days = cSleep.getTimeStart().getDayOfYear();
                     monthlyHumidity.add(new BarEntry(days, (float) cSleep.getAverageHumidity()));
-
-
                 }
 
                 Collections.sort(monthlyHumidity, new EntryXComparator());
-
                 monthlyBarDataSet = new BarDataSet(monthlyHumidity, "Humidity");
-
 
                 monthlyBarData = new BarData(monthlyBarDataSet);
                 monthlyBarData.setBarWidth(0.9f);
@@ -280,24 +230,14 @@ public class FragmentHumidity extends Fragment {
 
                 leftYAxis.setAxisMinimum(0);
                 rightYAxis.setAxisMinimum(0);
-                leftYAxis.setAxisMaximum((float)100);
-                rightYAxis.setAxisMaximum((float)100);
+                leftYAxis.setAxisMaximum((float) 100);
+                rightYAxis.setAxisMaximum((float) 100);
                 xAxis.setDrawLabels(true);
                 xAxis.setValueFormatter(new FragmentsValueFormatter());
 
-
                 monthlyBarChart.invalidate();
-
-
             }
         });
-
-
-
         return v;
     }
-
-
-
-
 }

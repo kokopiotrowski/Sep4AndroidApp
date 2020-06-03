@@ -14,7 +14,6 @@ import com.example.sep4androidapp.R;
 import com.example.sep4androidapp.fragments.mainFragment.mainViewFragments.FragmentCo2;
 import com.example.sep4androidapp.fragments.mainFragment.mainViewFragments.FragmentHumidity;
 import com.example.sep4androidapp.fragments.mainFragment.mainViewFragments.FragmentFirstPage;
-import com.example.sep4androidapp.fragments.mainFragment.mainViewFragments.FragmentSound;
 import com.example.sep4androidapp.fragments.mainFragment.mainViewFragments.FragmentTemperature;
 import com.example.sep4androidapp.fragments.mainFragment.mainViewFragments.ViewPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
@@ -32,13 +31,14 @@ public class MainFragment extends Fragment {
 
         tabLayout = (TabLayout) v.findViewById(R.id.tablayout_id);
         viewPager = (ViewPager) v.findViewById(R.id.viewpager_id);
+        viewPager.setOffscreenPageLimit(5);
         adapter = new ViewPagerAdapter(getChildFragmentManager());
 
         adapter.AddFragment(new FragmentFirstPage(), "Main");
         adapter.AddFragment(new FragmentTemperature(), "Temp");
         adapter.AddFragment(new FragmentHumidity(), "Hum");
         adapter.AddFragment(new FragmentCo2(), "CO2");
-        adapter.AddFragment(new FragmentSound(), "Sound");
+
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
 

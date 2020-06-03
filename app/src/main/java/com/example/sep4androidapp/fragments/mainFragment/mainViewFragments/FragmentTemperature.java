@@ -1,6 +1,7 @@
 package com.example.sep4androidapp.fragments.mainFragment.mainViewFragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,10 +33,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class FragmentTemperature extends Fragment {
-
-
     private TemperatureFragmentViewModel viewModel;
-
 
     private String deviceId;
     private TextView deviceName;
@@ -47,8 +45,6 @@ public class FragmentTemperature extends Fragment {
     private List<SleepSession> sleepSessionsDaily = new ArrayList<>();
     private List<SleepSession> sleepSessionsWeekly = new ArrayList<>();
     private List<SleepSession> sleepSessionsMonthly = new ArrayList<>();
-
-
 
     private BarDataSet dailyBarDataSet;
     private BarDataSet weeklyBarDataSet;
@@ -73,57 +69,39 @@ public class FragmentTemperature extends Fragment {
         monthlyBarChart = v.findViewById(R.id.monthlyBarChart);
 
         deviceName = v.findViewById(R.id.deviceText);
-
         viewModel = new ViewModelProvider(this).get(TemperatureFragmentViewModel.class);
-
-
-
-
 
         viewModel.getPreferences().observe(getViewLifecycleOwner(), new Observer<Preferences>() {
             @Override
             public void onChanged(Preferences preferences) {
-
                temperatureMax = preferences.getTemperatureMax();
                temperatureMin = preferences.getTemperatureMin();
-
             }
         });
 
-
-
         viewModel.getChosenDeviceId().observe(getViewLifecycleOwner(),new Observer<String>(){
-
             @Override
             public void onChanged(String s) {
-
                 deviceId = s;
                 viewModel.updateDailySleepSessions(deviceId);
                 viewModel.updateWeeklySleepSessions(deviceId);
                 viewModel.updateMonthlySleepSessions(deviceId);
 
                 viewModel.updateRoomsForFragments();
-
-
             }
         });
 
         viewModel.getDevicesForFragments().observe(getViewLifecycleOwner(), new Observer<List<Device>>() {
             @Override
             public void onChanged(List<Device> devices) {
-
                 for (int i = 0; i < devices.size(); i++) {
-
                     if(devices.get(i).getDeviceId().equals(deviceId)){
 
                         deviceName.setText(devices.get(i).getName());
                     }
-
                 }
-
             }
         });
-
 
         viewModel.getSleepSessionsDaily().observe(getViewLifecycleOwner(), new Observer<List<SleepSession>>() {
             @Override
@@ -135,19 +113,13 @@ public class FragmentTemperature extends Fragment {
                 sleepSessionsDaily = sleepSessions;
 
                 for (int i = 0; i < sleepSessionsDaily.size(); i++) {
-
                     SleepSession cSleep = sleepSessionsDaily.get(i);
                     int days = cSleep.getTimeStart().getDayOfYear();
                     dailyTemperature.add(new BarEntry(days, (float) cSleep.getAverageTemperature()));
-
-
-
                 }
-
                 Collections.sort(dailyTemperature, new EntryXComparator());
 
                 dailyBarDataSet = new BarDataSet(dailyTemperature, "Temperature");
-
 
                 dailyBarData = new BarData(dailyBarDataSet);
                 dailyBarData.setBarWidth(0.9f);
@@ -167,43 +139,31 @@ public class FragmentTemperature extends Fragment {
                 YAxis rightYAxis = dailyBarChart.getAxisRight();
                 XAxis xAxis = dailyBarChart.getXAxis();
 
-
                 leftYAxis.setAxisMinimum(0);
                 rightYAxis.setAxisMinimum(0);
                 leftYAxis.setAxisMaximum((float)temperatureMax + 5);
                 rightYAxis.setAxisMaximum((float)temperatureMax + 5);
                 xAxis.setDrawLabels(true);
                 xAxis.setValueFormatter(new FragmentsValueFormatter());
-                /*xAxis.setLabelCount(sleepSessionsDaily.size() ,true );*/
-
-
                 dailyBarChart.invalidate();
-
             }
         });
         viewModel.getSleepSessionsWeekly().observe(getViewLifecycleOwner(), new Observer<List<SleepSession>>() {
                     @Override
                     public void onChanged(List<SleepSession> sleepSessions) {
-
                         weeklyBarChart.clear();
                         sleepSessionsWeekly.clear();
                         weeklyBarChart.getAxisLeft().removeAllLimitLines();
                         sleepSessionsWeekly = sleepSessions;
 
                         for (int i = 0; i < sleepSessionsWeekly.size(); i++) {
-
                             SleepSession cSleep = sleepSessionsWeekly.get(i);
                             int days = cSleep.getTimeStart().getDayOfYear();
                             weeklyTemperature.add(new BarEntry(days, (float) cSleep.getAverageTemperature()));
-
-
                         }
-
                         Collections.sort(weeklyTemperature, new EntryXComparator());
 
                         weeklyBarDataSet = new BarDataSet(weeklyTemperature, "Temperature");
-
-
                         weeklyBarData = new BarData(weeklyBarDataSet);
                         weeklyBarData.setBarWidth(0.9f);
 
@@ -228,18 +188,13 @@ public class FragmentTemperature extends Fragment {
                         rightYAxis.setAxisMaximum((float)temperatureMax + 5);
                         xAxis.setDrawLabels(true);
                         xAxis.setValueFormatter(new FragmentsValueFormatter());
-
                         weeklyBarChart.invalidate();
-
                     }
                 });
-
-
 
         viewModel.getSleepSessionsMonthly().observe(getViewLifecycleOwner(), new Observer<List<SleepSession>>() {
                     @Override
                     public void onChanged(List<SleepSession> sleepSessions) {
-
                         monthlyBarChart.clear();
                         sleepSessionsMonthly.clear();
                         monthlyBarChart.getAxisLeft().removeAllLimitLines();
@@ -250,14 +205,9 @@ public class FragmentTemperature extends Fragment {
                             SleepSession cSleep = sleepSessionsMonthly.get(i);
                             int days = cSleep.getTimeStart().getDayOfYear();
                             monthlyTemperature.add(new BarEntry(days, (float) cSleep.getAverageTemperature()));
-
-
                         }
-
                         Collections.sort(monthlyTemperature, new EntryXComparator());
-
                         monthlyBarDataSet = new BarDataSet(monthlyTemperature, "Temperature");
-
 
                         monthlyBarData = new BarData(monthlyBarDataSet);
                         monthlyBarData.setBarWidth(0.9f);
@@ -284,19 +234,9 @@ public class FragmentTemperature extends Fragment {
                         xAxis.setDrawLabels(true);
                         xAxis.setValueFormatter(new FragmentsValueFormatter());
 
-
                         monthlyBarChart.invalidate();
-
-
                     }
                 });
-
-
-
         return v;
     }
-
-
-
-
 }

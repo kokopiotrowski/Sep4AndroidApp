@@ -150,6 +150,11 @@ public class FragmentFirstPage extends Fragment {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                currentTemperature.setText("-");
+                currentCO2.setText("-");
+                currentHumidity.setText("-");
+                timeStamp.setText("No data");
+
                 viewModel.updateRoomCondition(idList.get(position));
                 viewModel.showPreferences(idList.get(position));
                 viewModel.setChosenDeviceId(idList.get(position));
@@ -178,4 +183,5 @@ public class FragmentFirstPage extends Fragment {
         super.onPause();
         viewModel.stopTimer();
     }
+
 }

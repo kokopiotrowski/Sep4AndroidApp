@@ -1,6 +1,7 @@
 package com.example.sep4androidapp.fragments.mainFragment.mainViewFragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,10 +34,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class FragmentCo2 extends Fragment {
-
-
     private Co2FragmentViewModel viewModel;
-
 
     private String deviceId;
     private TextView deviceName;
@@ -48,8 +46,6 @@ public class FragmentCo2 extends Fragment {
     private List<SleepSession> sleepSessionsDaily = new ArrayList<>();
     private List<SleepSession> sleepSessionsWeekly = new ArrayList<>();
     private List<SleepSession> sleepSessionsMonthly = new ArrayList<>();
-
-
 
     private BarDataSet dailyBarDataSet;
     private BarDataSet weeklyBarDataSet;
@@ -74,56 +70,38 @@ public class FragmentCo2 extends Fragment {
         monthlyBarChart = v.findViewById(R.id.monthlyBarChart);
 
         deviceName = v.findViewById(R.id.deviceText);
-
         viewModel = new ViewModelProvider(this).get(Co2FragmentViewModel.class);
-
-
-
-
 
         viewModel.getPreferences().observe(getViewLifecycleOwner(), new Observer<Preferences>() {
             @Override
             public void onChanged(Preferences preferences) {
-
                 co2Max = preferences.getCo2Max();
-
             }
         });
 
-
-
         viewModel.getChosenDeviceId().observe(getViewLifecycleOwner(),new Observer<String>(){
-
             @Override
             public void onChanged(String s) {
-
                 deviceId = s;
                 viewModel.updateDailySleepSessions(deviceId);
                 viewModel.updateWeeklySleepSessions(deviceId);
                 viewModel.updateMonthlySleepSessions(deviceId);
 
                 viewModel.updateRoomsForFragments();
-
-
             }
         });
 
         viewModel.getDevicesForFragments().observe(getViewLifecycleOwner(), new Observer<List<Device>>() {
             @Override
             public void onChanged(List<Device> devices) {
-
                 for (int i = 0; i < devices.size(); i++) {
-
                     if(devices.get(i).getDeviceId().equals(deviceId)){
 
                         deviceName.setText(devices.get(i).getName());
                     }
-
                 }
-
             }
         });
-
 
         viewModel.getSleepSessionsDaily().observe(getViewLifecycleOwner(), new Observer<List<SleepSession>>() {
             @Override
@@ -135,19 +113,12 @@ public class FragmentCo2 extends Fragment {
                 sleepSessionsDaily = sleepSessions;
 
                 for (int i = 0; i < sleepSessionsDaily.size(); i++) {
-
                     SleepSession cSleep = sleepSessionsDaily.get(i);
                     int days = cSleep.getTimeStart().getDayOfYear();
                     dailyCo2.add(new BarEntry(days, (float) cSleep.getAverageCo2()));
-
-
-
                 }
-
                 Collections.sort(dailyCo2, new EntryXComparator());
-
                 dailyBarDataSet = new BarDataSet(dailyCo2, "Co2");
-
 
                 dailyBarData = new BarData(dailyBarDataSet);
                 dailyBarData.setBarWidth(0.9f);
@@ -165,24 +136,19 @@ public class FragmentCo2 extends Fragment {
                 YAxis rightYAxis = dailyBarChart.getAxisRight();
                 XAxis xAxis = dailyBarChart.getXAxis();
 
-
                 leftYAxis.setAxisMinimum(0);
                 rightYAxis.setAxisMinimum(0);
                 leftYAxis.setAxisMaximum((float)co2Max + 100);
                 rightYAxis.setAxisMaximum((float)co2Max + 100);
                 xAxis.setDrawLabels(true);
                 xAxis.setValueFormatter(new FragmentsValueFormatter());
-                /*xAxis.setLabelCount(sleepSessionsDaily.size() ,true );*/
-
 
                 dailyBarChart.invalidate();
-
             }
         });
         viewModel.getSleepSessionsWeekly().observe(getViewLifecycleOwner(), new Observer<List<SleepSession>>() {
             @Override
             public void onChanged(List<SleepSession> sleepSessions) {
-
                 weeklyBarChart.clear();
                 sleepSessionsWeekly.clear();
                 weeklyBarChart.getAxisLeft().removeAllLimitLines();
@@ -193,14 +159,9 @@ public class FragmentCo2 extends Fragment {
                     SleepSession cSleep = sleepSessionsWeekly.get(i);
                     int days = cSleep.getTimeStart().getDayOfYear();
                     weeklyCo2.add(new BarEntry(days, (float) cSleep.getAverageCo2()));
-
-
                 }
-
                 Collections.sort(weeklyCo2, new EntryXComparator());
-
                 weeklyBarDataSet = new BarDataSet(weeklyCo2, "Co2");
-
 
                 weeklyBarData = new BarData(weeklyBarDataSet);
                 weeklyBarData.setBarWidth(0.9f);
@@ -226,34 +187,24 @@ public class FragmentCo2 extends Fragment {
                 xAxis.setValueFormatter(new FragmentsValueFormatter());
 
                 weeklyBarChart.invalidate();
-
             }
         });
-
-
 
         viewModel.getSleepSessionsMonthly().observe(getViewLifecycleOwner(), new Observer<List<SleepSession>>() {
             @Override
             public void onChanged(List<SleepSession> sleepSessions) {
-
                 monthlyBarChart.clear();
                 sleepSessionsMonthly.clear();
                 monthlyBarChart.getAxisLeft().removeAllLimitLines();
                 sleepSessionsMonthly = sleepSessions;
 
                 for (int i = 0; i < sleepSessionsMonthly.size(); i++) {
-
                     SleepSession cSleep = sleepSessionsMonthly.get(i);
                     int days = cSleep.getTimeStart().getDayOfYear();
                     monthlyCo2.add(new BarEntry(days, (float) cSleep.getAverageCo2()));
-
-
                 }
-
                 Collections.sort(monthlyCo2, new EntryXComparator());
-
                 monthlyBarDataSet = new BarDataSet(monthlyCo2, "Co2");
-
 
                 monthlyBarData = new BarData(monthlyBarDataSet);
                 monthlyBarData.setBarWidth(0.9f);
@@ -278,19 +229,9 @@ public class FragmentCo2 extends Fragment {
                 xAxis.setDrawLabels(true);
                 xAxis.setValueFormatter(new FragmentsValueFormatter());
 
-
                 monthlyBarChart.invalidate();
-
-
             }
         });
-
-
-
         return v;
     }
-
-
-
-
 }

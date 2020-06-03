@@ -44,7 +44,7 @@ public class ReportRepository {
     private MutableLiveData<List<SleepSession>> sleepSessionsMonthly;
     private MutableLiveData<List<Device>> devices;
 
-    private ReportRepository (){
+    private ReportRepository() {
         roomCondition = new MutableLiveData<>();
         sleepData = new MutableLiveData<>();
         sleepSessions = new MutableLiveData<>();
@@ -54,26 +54,29 @@ public class ReportRepository {
         sleepSessionsMonthly = new MutableLiveData<>();
     }
 
-    public static synchronized ReportRepository getInstance(){
-        if (instance == null){
+    public static synchronized ReportRepository getInstance() {
+        if (instance == null) {
             instance = new ReportRepository();
         }
         return instance;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void updateRoomCondition(String deviceId){
+    public void updateRoomCondition(String deviceId) {
 
         RoomConditionApi roomConditionApi = ServiceGenerator.getRoomConditionApi();
         Call<RoomConditionResponse> call = roomConditionApi.getRoomCondition(deviceId);
         call.enqueue(new Callback<RoomConditionResponse>() {
             @Override
             public void onResponse(Call<RoomConditionResponse> call, Response<RoomConditionResponse> response) {
-                if (response.code() == 200){
+                if (response.code() == 200) {
 
                     roomCondition.setValue(response.body().getRoomCondition());
-                }else{
-                    Log.i("ReportRepo", "Response code: " + response.code());
+                } else if (response.code() == 204 || response.code() == 404) {
+                    receiveLastRoomCondition(deviceId);
+
+                } else {
+                    Log.i("ReportRepo", "Update Response code: " + response.code());
                 }
             }
 
@@ -85,7 +88,28 @@ public class ReportRepository {
         });
     }
 
-    public LiveData<RoomCondition> getRoomCondition(){
+    public void receiveLastRoomCondition(String deviceId) {
+        Log.i("ReportRepo", "we are at received");
+        RoomConditionApi roomConditionApi = ServiceGenerator.getRoomConditionApi();
+        Call<RoomConditionResponse> call = roomConditionApi.getLastRoomCondition(deviceId);
+        call.enqueue(new Callback<RoomConditionResponse>() {
+            @Override
+            public void onResponse(Call<RoomConditionResponse> call, Response<RoomConditionResponse> response) {
+                if (response.code() == 200) {
+                    roomCondition.setValue(response.body().getRoomCondition());
+                }else{
+                    Log.i("ReportRepo", "Last-roomCondition Response code: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RoomConditionResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public LiveData<RoomCondition> getRoomCondition() {
 
         return roomCondition;
     }
@@ -96,7 +120,7 @@ public class ReportRepository {
         call.enqueue(new Callback<SleepDataResponse>() {
             @Override
             public void onResponse(Call<SleepDataResponse> call, Response<SleepDataResponse> response) {
-                if (response.code() == 200){
+                if (response.code() == 200) {
                     sleepData.setValue(response.body().getSleepData());
                 }
             }
@@ -113,7 +137,7 @@ public class ReportRepository {
         return sleepData;
     }
 
-    public void updateSleepSessions(String deviceId){
+    public void updateSleepSessions(String deviceId) {
 
         LocalDate today = LocalDate.now();
         LocalDate monthAgo = today.minusMonths(1);
@@ -126,7 +150,7 @@ public class ReportRepository {
 
             @Override
             public void onResponse(Call<ReportResponse> call, Response<ReportResponse> response) {
-                if (response.code() == 200){
+                if (response.code() == 200) {
                     sleepSessions.setValue(response.body().getSleepSessions());
                 }
             }
@@ -139,19 +163,18 @@ public class ReportRepository {
         });
     }
 
-    public LiveData<List<SleepSession>> getSleepSessions()
-    {
+    public LiveData<List<SleepSession>> getSleepSessions() {
         return sleepSessions;
     }
 
-    public void rateSleep(int sleepId, int rating){
+    public void rateSleep(int sleepId, int rating) {
         SleepTrackingApi sleepTrackingApi = ServiceGenerator.getSleepTrackingApi();
         Call<RatingResponse> call = sleepTrackingApi.rateSleep(sleepId, rating);
         call.enqueue(new Callback<RatingResponse>() {
 
             @Override
             public void onResponse(Call<RatingResponse> call, Response<RatingResponse> response) {
-                if (response.code() == 200){
+                if (response.code() == 200) {
                     Log.i("Retrofit", "Rating : " + response.body().getRating() + " stars. Sleep id: " + response.body().getSleepId());
 
                 }
@@ -166,20 +189,23 @@ public class ReportRepository {
         });
     }
 
-    public LiveData<List<Device>> getDevices() { return devices;}
+    public LiveData<List<Device>> getDevices() {
+        return devices;
+    }
 
-    public void updateDevicesList(String userId){
+    public void updateDevicesList(String userId) {
         AccountDevicesApi accountDevicesApi = ServiceGenerator.getAccountDevicesApi();
         Call<List<Device>> call = accountDevicesApi.getDevices();
         call.enqueue(new Callback<List<Device>>() {
             @Override
             public void onResponse(Call<List<Device>> call, Response<List<Device>> response) {
-                if (response.code() == 200){
+                if (response.code() == 200) {
                     devices.setValue(response.body());
                     Log.i("Retrofit", "Devices received");
 
                 }
             }
+
             @Override
             public void onFailure(Call call, Throwable t) {
                 Log.i("Retrofit", "Devices couldn't be retrieved");
@@ -189,7 +215,7 @@ public class ReportRepository {
         });
     }
 
-    public void updateDailySleepSessions(String deviceId, String today, String then){
+    public void updateDailySleepSessions(String deviceId, String today, String then) {
 
 
         ReportApi reportApi = ServiceGenerator.getReportApi();
@@ -198,7 +224,7 @@ public class ReportRepository {
 
             @Override
             public void onResponse(Call<ReportResponse> call, Response<ReportResponse> response) {
-                if (response.code() == 200){
+                if (response.code() == 200) {
                     sleepSessionsDaily.setValue(response.body().getSleepSessions());
                 }
             }
@@ -210,7 +236,8 @@ public class ReportRepository {
             }
         });
     }
-    public void updateWeeklySleepSessions(String deviceId, String today, String then){
+
+    public void updateWeeklySleepSessions(String deviceId, String today, String then) {
 
 
         ReportApi reportApi = ServiceGenerator.getReportApi();
@@ -219,7 +246,7 @@ public class ReportRepository {
 
             @Override
             public void onResponse(Call<ReportResponse> call, Response<ReportResponse> response) {
-                if (response.code() == 200){
+                if (response.code() == 200) {
                     sleepSessionsWeekly.setValue(response.body().getSleepSessions());
                 }
             }
@@ -231,7 +258,8 @@ public class ReportRepository {
             }
         });
     }
-    public void updateMonthlySleepSessions(String deviceId, String today, String then){
+
+    public void updateMonthlySleepSessions(String deviceId, String today, String then) {
 
 
         ReportApi reportApi = ServiceGenerator.getReportApi();
@@ -240,7 +268,7 @@ public class ReportRepository {
 
             @Override
             public void onResponse(Call<ReportResponse> call, Response<ReportResponse> response) {
-                if (response.code() == 200){
+                if (response.code() == 200) {
                     sleepSessionsMonthly.setValue(response.body().getSleepSessions());
                 }
             }
@@ -253,21 +281,17 @@ public class ReportRepository {
         });
     }
 
-    public LiveData<List<SleepSession>> getSleepSessionsDaily()
-    {
+    public LiveData<List<SleepSession>> getSleepSessionsDaily() {
         return sleepSessionsDaily;
     }
 
-    public LiveData<List<SleepSession>> getSleepSessionsWeekly()
-    {
+    public LiveData<List<SleepSession>> getSleepSessionsWeekly() {
         return sleepSessionsWeekly;
     }
 
-    public LiveData<List<SleepSession>> getSleepSessionsMonthly()
-    {
+    public LiveData<List<SleepSession>> getSleepSessionsMonthly() {
         return sleepSessionsMonthly;
     }
-
 
 
 }
