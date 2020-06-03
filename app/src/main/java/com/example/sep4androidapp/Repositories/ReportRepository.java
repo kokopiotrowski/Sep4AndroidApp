@@ -17,6 +17,7 @@ import com.example.sep4androidapp.connection.RoomConditionApi;
 import com.example.sep4androidapp.connection.ServiceGenerator;
 import com.example.sep4androidapp.connection.SleepTrackingApi;
 import com.example.sep4androidapp.connection.responses.DeviceResponse;
+import com.example.sep4androidapp.connection.responses.RatingResponse;
 import com.example.sep4androidapp.connection.responses.ReportResponse;
 import com.example.sep4androidapp.connection.responses.RoomConditionResponse;
 import com.example.sep4androidapp.connection.responses.SleepDataResponse;
@@ -139,19 +140,19 @@ public class ReportRepository {
 
     public void rateSleep(int sleepId, int rating){
         SleepTrackingApi sleepTrackingApi = ServiceGenerator.getSleepTrackingApi();
-        Call call = sleepTrackingApi.rateSleep(sleepId, rating);
-        call.enqueue(new Callback() {
+        Call<RatingResponse> call = sleepTrackingApi.rateSleep(sleepId, rating);
+        call.enqueue(new Callback<RatingResponse>() {
 
             @Override
-            public void onResponse(Call call, Response response) {
+            public void onResponse(Call<RatingResponse> call, Response<RatingResponse> response) {
                 if (response.code() == 200){
-                    Log.i("Retrofit", "Rating given");
+                    Log.i("Retrofit", "Rating : " + response.body().getRating() + " stars. Sleep id: " + response.body().getSleepId());
 
                 }
             }
 
             @Override
-            public void onFailure(Call call, Throwable t) {
+            public void onFailure(Call<RatingResponse> call, Throwable t) {
                 Log.i("Retrofit", "Sleep rating wasn't registered on server :(");
                 Log.i("Why", "" + t.getCause());
             }
