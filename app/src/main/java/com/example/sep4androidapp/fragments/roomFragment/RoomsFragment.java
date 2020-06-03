@@ -18,6 +18,7 @@ import com.example.sep4androidapp.Adapter.RoomsAdapter;
 import com.example.sep4androidapp.Entities.Device;
 import com.example.sep4androidapp.Entities.NewDeviceModel;
 import com.example.sep4androidapp.R;
+import com.example.sep4androidapp.ViewModels.PreferencesViewModel;
 import com.example.sep4androidapp.ViewModels.RoomsViewModel;
 import com.example.sep4androidapp.fragments.setUpDeviceFragment.SetUpDeviceFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -27,6 +28,7 @@ public class RoomsFragment extends Fragment {
     private RoomsAdapter adapter;
     private RoomsViewModel viewModel;
     private FloatingActionButton leadToSetUpButton;
+    private PreferencesViewModel preferencesViewModel;
 
     @Nullable
     @Override
@@ -58,6 +60,8 @@ public class RoomsFragment extends Fragment {
                 String id = adapter.getDeviceAt(viewHolder.getAdapterPosition()).getDeviceId();
                 String name = adapter.getDeviceAt(viewHolder.getAdapterPosition()).getName();
                 viewModel.deleteDevice(id);
+                //preferencesViewModel.deleteAllDevices();
+                //preferencesViewModel.deleteAllPreferences();
 
                 NewDeviceModel saveDevice = new NewDeviceModel(id, name);
 
@@ -67,6 +71,7 @@ public class RoomsFragment extends Fragment {
                         }).show();
             }
         }).attachToRecyclerView(recyclerView);
+
 
         viewModel.updateRooms();
         return view;

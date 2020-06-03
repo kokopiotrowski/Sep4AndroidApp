@@ -69,7 +69,7 @@ public class SetUpDeviceFragment extends Fragment {
                 deviceNameToSend = newRoomName.getText().toString();
 
                 viewModel.postNewDevice(new NewDeviceModel(deviceId.getText().toString(), newRoomName.getText().toString()));
-
+//---------------------------------------------------------
                 preferencesViewModel.insertDevice(model);
                 Toast.makeText(getActivity(), "saved", Toast.LENGTH_LONG).show();
 
