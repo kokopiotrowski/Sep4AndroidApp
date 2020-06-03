@@ -1,38 +1,30 @@
 package com.example.sep4androidapp.fragments.mainFragment.mainViewFragments;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.sep4androidapp.Entities.Device;
 import com.example.sep4androidapp.Entities.Preferences;
-import com.example.sep4androidapp.Entities.RoomCondition;
 import com.example.sep4androidapp.Entities.SleepSession;
 import com.example.sep4androidapp.R;
-import com.example.sep4androidapp.ViewModels.FragmentFirstPageViewModel;
-import com.example.sep4androidapp.ViewModels.PreferencesViewModel;
-import com.example.sep4androidapp.ViewModels.ReportViewModel;
+import com.example.sep4androidapp.ValueFormatters.FragmentsValueFormatter;
 import com.example.sep4androidapp.ViewModels.TemperatureFragmentViewModel;
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.charts.Chart;
-import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.utils.EntryXComparator;
 
 import java.util.ArrayList;
@@ -46,7 +38,8 @@ public class FragmentTemperature extends Fragment {
 
 
     private String deviceId;
-    float temperatureValue;
+    private TextView deviceName;
+
     private List<BarEntry> dailyTemperature = new ArrayList<>();
     private List<BarEntry> weeklyTemperature = new ArrayList<>();
     private List<BarEntry> monthlyTemperature = new ArrayList<>();
@@ -54,6 +47,8 @@ public class FragmentTemperature extends Fragment {
     private List<SleepSession> sleepSessionsDaily = new ArrayList<>();
     private List<SleepSession> sleepSessionsWeekly = new ArrayList<>();
     private List<SleepSession> sleepSessionsMonthly = new ArrayList<>();
+
+
 
     private BarDataSet dailyBarDataSet;
     private BarDataSet weeklyBarDataSet;
@@ -77,6 +72,8 @@ public class FragmentTemperature extends Fragment {
         weeklyBarChart = v.findViewById(R.id.weeklyBarChart);
         monthlyBarChart = v.findViewById(R.id.monthlyBarChart);
 
+        deviceName = v.findViewById(R.id.deviceText);
+
         viewModel = new ViewModelProvider(this).get(TemperatureFragmentViewModel.class);
 
 
@@ -87,11 +84,13 @@ public class FragmentTemperature extends Fragment {
             @Override
             public void onChanged(Preferences preferences) {
 
-               temperatureMax =  preferences.getTemperatureMax();
+               temperatureMax = preferences.getTemperatureMax();
                temperatureMin = preferences.getTemperatureMin();
 
             }
         });
+
+
 
         viewModel.getChosenDeviceId().observe(getViewLifecycleOwner(),new Observer<String>(){
 
@@ -103,15 +102,27 @@ public class FragmentTemperature extends Fragment {
                 viewModel.updateWeeklySleepSessions(deviceId);
                 viewModel.updateMonthlySleepSessions(deviceId);
 
+                viewModel.updateRoomsForFragments();
+
+
             }
         });
 
+        viewModel.getDevicesForFragments().observe(getViewLifecycleOwner(), new Observer<List<Device>>() {
+            @Override
+            public void onChanged(List<Device> devices) {
 
+                for (int i = 0; i < devices.size(); i++) {
 
+                    if(devices.get(i).getDeviceId().equals(deviceId)){
 
+                        deviceName.setText(devices.get(i).getName());
+                    }
 
+                }
 
-
+            }
+        });
 
 
         viewModel.getSleepSessionsDaily().observe(getViewLifecycleOwner(), new Observer<List<SleepSession>>() {
@@ -119,15 +130,16 @@ public class FragmentTemperature extends Fragment {
             public void onChanged(List<SleepSession> sleepSessions) {
                 dailyBarChart.clear();
                 sleepSessionsDaily.clear();
-                sleepSessionsDaily = sleepSessions;
-                Log.i("DUPA", String.valueOf(sleepSessionsDaily.size()));
+                dailyBarChart.getAxisLeft().removeAllLimitLines();
 
+                sleepSessionsDaily = sleepSessions;
 
                 for (int i = 0; i < sleepSessionsDaily.size(); i++) {
 
                     SleepSession cSleep = sleepSessionsDaily.get(i);
-                    int dayOfMonth = cSleep.getTimeStart().getDayOfMonth();
-                    dailyTemperature.add(new BarEntry(dayOfMonth, (float) cSleep.getAverageTemperature()));
+                    int days = cSleep.getTimeStart().getDayOfYear();
+                    dailyTemperature.add(new BarEntry(days, (float) cSleep.getAverageTemperature()));
+
 
 
                 }
@@ -155,51 +167,17 @@ public class FragmentTemperature extends Fragment {
                 YAxis rightYAxis = dailyBarChart.getAxisRight();
                 XAxis xAxis = dailyBarChart.getXAxis();
 
+
                 leftYAxis.setAxisMinimum(0);
                 rightYAxis.setAxisMinimum(0);
                 leftYAxis.setAxisMaximum((float)temperatureMax + 5);
                 rightYAxis.setAxisMaximum((float)temperatureMax + 5);
-                xAxis.setDrawLabels(false);
+                xAxis.setDrawLabels(true);
+                xAxis.setValueFormatter(new FragmentsValueFormatter());
+                /*xAxis.setLabelCount(sleepSessionsDaily.size() ,true );*/
+
 
                 dailyBarChart.invalidate();
-
-
-                /*temperature.clear();
-
-                temperatureValue = (float)roomCondition.getTemperature();
-                temperature.add(new BarEntry(0,temperatureValue));
-
-
-                LimitLine limitMax = new LimitLine((float) temperatureMax, "Max temperature");
-                LimitLine limitMin = new LimitLine((float) temperatureMin, "Min temperature");
-
-
-                barChart.getAxisLeft().addLimitLine(limitMax);
-                barChart.getAxisLeft().addLimitLine(limitMin);
-
-
-                YAxis leftYAxis = barChart.getAxisLeft();
-                YAxis rightYAxis = barChart.getAxisRight();
-                XAxis xAxis = barChart.getXAxis();
-
-                leftYAxis.setAxisMinimum(0);
-                rightYAxis.setAxisMinimum(0);
-                leftYAxis.setAxisMaximum((float)temperatureMax + 5);
-                rightYAxis.setAxisMaximum((float)temperatureMax + 5);
-                xAxis.setDrawLabels(false);
-
-
-            barDataSet = new BarDataSet(temperature, "Temperature");
-            barDataSet.setDrawValues(true);
-            barData = new BarData(barDataSet);
-
-            barChart.getDescription().setText("Temperature");
-            barChart.getLegend().setEnabled(false);
-            barChart.setData(barData);
-            barChart.setFitBars(true);
-            barChart.invalidate();*/
-
-
 
             }
         });
@@ -209,13 +187,14 @@ public class FragmentTemperature extends Fragment {
 
                         weeklyBarChart.clear();
                         sleepSessionsWeekly.clear();
+                        weeklyBarChart.getAxisLeft().removeAllLimitLines();
                         sleepSessionsWeekly = sleepSessions;
 
                         for (int i = 0; i < sleepSessionsWeekly.size(); i++) {
 
                             SleepSession cSleep = sleepSessionsWeekly.get(i);
-                            int dayOfMonth = cSleep.getTimeStart().getDayOfMonth();
-                            weeklyTemperature.add(new BarEntry(dayOfMonth, (float) cSleep.getAverageTemperature()));
+                            int days = cSleep.getTimeStart().getDayOfYear();
+                            weeklyTemperature.add(new BarEntry(days, (float) cSleep.getAverageTemperature()));
 
 
                         }
@@ -247,7 +226,8 @@ public class FragmentTemperature extends Fragment {
                         rightYAxis.setAxisMinimum(0);
                         leftYAxis.setAxisMaximum((float)temperatureMax + 5);
                         rightYAxis.setAxisMaximum((float)temperatureMax + 5);
-                        xAxis.setDrawLabels(false);
+                        xAxis.setDrawLabels(true);
+                        xAxis.setValueFormatter(new FragmentsValueFormatter());
 
                         weeklyBarChart.invalidate();
 
@@ -262,13 +242,14 @@ public class FragmentTemperature extends Fragment {
 
                         monthlyBarChart.clear();
                         sleepSessionsMonthly.clear();
+                        monthlyBarChart.getAxisLeft().removeAllLimitLines();
                         sleepSessionsMonthly = sleepSessions;
 
                         for (int i = 0; i < sleepSessionsMonthly.size(); i++) {
 
                             SleepSession cSleep = sleepSessionsMonthly.get(i);
-                            int dayOfMonth = cSleep.getTimeStart().getDayOfMonth();
-                            monthlyTemperature.add(new BarEntry(dayOfMonth, (float) cSleep.getAverageTemperature()));
+                            int days = cSleep.getTimeStart().getDayOfYear();
+                            monthlyTemperature.add(new BarEntry(days, (float) cSleep.getAverageTemperature()));
 
 
                         }
@@ -300,7 +281,9 @@ public class FragmentTemperature extends Fragment {
                         rightYAxis.setAxisMinimum(0);
                         leftYAxis.setAxisMaximum((float)temperatureMax + 5);
                         rightYAxis.setAxisMaximum((float)temperatureMax + 5);
-                        xAxis.setDrawLabels(false);
+                        xAxis.setDrawLabels(true);
+                        xAxis.setValueFormatter(new FragmentsValueFormatter());
+
 
                         monthlyBarChart.invalidate();
 
@@ -308,60 +291,12 @@ public class FragmentTemperature extends Fragment {
                     }
                 });
 
-//        viewModelReport.updateSleepSessions("fake_device3");
+
 
         return v;
     }
 
-    public void updateDailyChart(){
 
 
 
-    }
-
-    public void updateWeeklyChart(){
-
-        /*for (int i = 0; i < (sleepSessionsList.size() <= 7 ? sleepSessionsList.size() : 7); i++) {
-
-            SleepSession cSleep = sleepSessionsList.get(i);
-            int dayOfMonth = cSleep.getTimeStart().getDayOfMonth();
-            weeklyTemperature.add(new BarEntry(dayOfMonth, (float) cSleep.getAverageTemperature()));
-
-
-        }
-
-        Collections.sort(weeklyTemperature, new EntryXComparator());
-
-        weeklyBarDataSet = new BarDataSet(weeklyTemperature, "Temperature");
-
-
-        weeklyBarData = new BarData(weeklyBarDataSet);
-        weeklyBarData.setBarWidth(0.9f);
-
-
-        weeklyBarChart.setData(weeklyBarData);
-        weeklyBarChart.setFitBars(true);
-        weeklyBarChart.getDescription().setText("Temperature");
-        weeklyBarChart.getLegend().setEnabled(false);
-
-        YAxis leftYAxis = weeklyBarChart.getAxisLeft();
-        YAxis rightYAxis = weeklyBarChart.getAxisRight();
-        XAxis xAxis = weeklyBarChart.getXAxis();
-
-        leftYAxis.setAxisMinimum(0);
-        rightYAxis.setAxisMinimum(0);
-        leftYAxis.setAxisMaximum((float)temperatureMax + 5);
-        rightYAxis.setAxisMaximum((float)temperatureMax + 5);
-        xAxis.setDrawLabels(false);
-
-        weeklyBarChart.invalidate();*/
-
-
-    }
-
-    public void updateMonthlyChart(){
-
-
-
-    }
 }

@@ -1,4 +1,4 @@
-package com.example.sep4androidapp.fragments.sleepFragment;
+package com.example.sep4androidapp.ValueFormatters;
 
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
@@ -11,7 +11,7 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.Locale;
 
-public class MyValueFormatter implements IAxisValueFormatter {
+public class SleepFragmentValueFormatter implements IAxisValueFormatter {
 
     int hours;
     int minutes;

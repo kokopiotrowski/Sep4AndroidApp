@@ -19,13 +19,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 
-public class TemperatureFragmentViewModel extends AndroidViewModel {
+public class SoundFragmentViewModel extends AndroidViewModel {
 
     private RoomsRepository roomsRepository;
     private PreferencesRepository preferencesRepository;
     private ReportRepository reportRepository;
 
-    public TemperatureFragmentViewModel(@NonNull Application application) {
+    public SoundFragmentViewModel(@NonNull Application application) {
         super(application);
         roomsRepository = RoomsRepository.getInstance();
         preferencesRepository = PreferencesRepository.getInstance(application);
@@ -45,7 +45,7 @@ public class TemperatureFragmentViewModel extends AndroidViewModel {
         today.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         monthAgo.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
-    reportRepository.updateMonthlySleepSessions(deviceId, today.toString(), monthAgo.toString());
+        reportRepository.updateMonthlySleepSessions(deviceId, today.toString(), monthAgo.toString());
     }
 
 
