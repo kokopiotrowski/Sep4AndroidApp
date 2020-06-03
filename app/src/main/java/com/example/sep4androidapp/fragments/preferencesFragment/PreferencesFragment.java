@@ -65,12 +65,12 @@ public class PreferencesFragment extends Fragment {
                     Double.parseDouble(MintempEditText.getText().toString()),
                     Double.parseDouble(MaxtempEditText.getText().toString()));
 
-            if(preference==null){
+         // if(preference==null){
                 viewModel.insert(preference);
 
-            }else{
-                viewModel.update(preference);
-            }
+           // }else{
+           //     viewModel.update(preference);
+           // }
 
         viewModel.updatePreferences(preference);
         });
@@ -131,6 +131,7 @@ public class PreferencesFragment extends Fragment {
                 } else {
                     viewModel.setDeviceId(idList.get(position));
                     //  viewModel.getNewDevice(idList.get(position));
+                    viewModel.getPreferencesById(idList.get(position));
 
 
                     Toast.makeText(getActivity(), "No internet connection", Toast.LENGTH_LONG).show();

@@ -63,8 +63,13 @@ public class PreferencesRepository {
         new InsertNewDeviceAsync(newDeviceDAO).execute(model);
     }
 
+//    public void (Device device){
+//        new DeleteDeviceAsync().execute(device);
+//    }
+
+
 //    public void deleteDevice(Device device){
-//        new DeleteDeviceAsync(appDao).execute(device);
+//        new DeleteDeviceAsync().execute(device);
 //    }
 
     public LiveData<List<NewDeviceModel>> getAllDevices(){
@@ -80,6 +85,10 @@ public class PreferencesRepository {
     }
 
 
+    public void getPreferencesById(String deviceId){
+        prefDao.getPreferencesById(deviceId);
+    }
+
     public void insert(Preferences preferences) {
         new InsertPreferencesAsync(prefDao).execute(preferences);
     }
@@ -87,6 +96,15 @@ public class PreferencesRepository {
     public void update(Preferences preferences) {
         new UpdatePreferencesAsync(prefDao).execute(preferences);
     }
+
+    public void deleteAllPReferences(){
+        new DeleteAllPreferencesAsync(prefDao).execute();
+    }
+
+    public void deleteAllDevices(){
+        new DeleteAllDevicesAsync(newDeviceDAO).execute();
+    }
+
 
     private static class InsertPreferencesAsync extends AsyncTask<Preferences, Void, Void> {
         private PrefDAO prefDAO;
@@ -129,6 +147,12 @@ public class PreferencesRepository {
             return null;
         }
     }
+
+//    public void showLocalPreferences(Device deviceId){
+//        Preferences preferences =  new Preferences(
+//
+//        )
+//    }
 
 
     // GET API
@@ -190,6 +214,31 @@ public class PreferencesRepository {
     }
 
 
+    private class DeleteAllPreferencesAsync  extends AsyncTask<Void,Void,Void> {
+        private PrefDAO prefDAO;
 
+        public DeleteAllPreferencesAsync(PrefDAO prefDao) {
+            this.prefDAO=prefDao;
+        }
 
+        @Override
+        protected Void doInBackground(Void... voids) {
+            prefDAO.deleteAllPreferences();
+            return null;
+        }
+    }
+
+    private class DeleteAllDevicesAsync  extends AsyncTask<Void,Void,Void> {
+        private NewDeviceDAO newDeviceDAO;
+
+        public DeleteAllDevicesAsync(NewDeviceDAO newDeviceDAO) {
+            this.newDeviceDAO=newDeviceDAO;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            newDeviceDAO.deleteAllDevices();
+            return null;
+        }
+    }
 }

@@ -27,6 +27,14 @@ public class PreferencesViewModel extends AndroidViewModel {
         roomsRepository = RoomsRepository.getInstance();
     }
 
+    public void deleteAllPreferences(){
+        preferencesRepository.deleteAllPReferences();
+    }
+
+    public void deleteAllDevices(){
+        preferencesRepository.deleteAllDevices();
+    }
+
     public LiveData< List< Preferences > > getAllPreferences() {
         return preferencesRepository.getAllPreferences();
     }
@@ -49,6 +57,10 @@ public class PreferencesViewModel extends AndroidViewModel {
 
     public void insertDevice(final NewDeviceModel model){
         preferencesRepository.insertDevice(model);
+    }
+
+    public void getPreferencesById(String deviceId){
+        preferencesRepository.getPreferencesById(deviceId);
     }
 
     public LiveData<List<NewDeviceModel>> getAllDevices(){
