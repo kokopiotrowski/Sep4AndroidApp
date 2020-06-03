@@ -30,7 +30,7 @@ public class PreferencesFragment extends Fragment {
     private Spinner spinner;
     private PreferencesViewModel viewModel;
     private Button save;
-    private EditText MintempEditText, MinhumEditText, Minco2EditText,
+    private EditText MintempEditText, MinhumEditText,
             MaxtempEditText, MaxhumEditText, Maxco2EditText;
     private List<String> nameList = new ArrayList<>();
     private List<String> idList = new ArrayList<>();
@@ -45,7 +45,6 @@ public class PreferencesFragment extends Fragment {
         MaxtempEditText = view.findViewById(R.id.MaxTempEditText);
         MinhumEditText = view.findViewById(R.id.minHumEditText);
         MaxhumEditText = view.findViewById(R.id.MaxHumEditText);
-        Minco2EditText = view.findViewById(R.id.minCo2EditText);
         Maxco2EditText = view.findViewById(R.id.MaxCo2EditText);
         save = view.findViewById(R.id.buttonSave);
 
@@ -59,7 +58,7 @@ public class PreferencesFragment extends Fragment {
                     viewModel.getDeviceId(),
                     true,
                     Integer.parseInt(Maxco2EditText.getText().toString()),
-                    Integer.parseInt(Minco2EditText.getText().toString()),
+                    0,
                     Integer.parseInt(MaxhumEditText.getText().toString()),
                     Integer.parseInt(MinhumEditText.getText().toString()),
                     Double.parseDouble(MintempEditText.getText().toString()),
@@ -125,7 +124,6 @@ public class PreferencesFragment extends Fragment {
                         MaxtempEditText.setText(String.format("%.1f", preferences.getTemperatureMax()));
                         MinhumEditText.setText(String.valueOf(preferences.getHumidityMin()));
                         MaxhumEditText.setText(String.valueOf(preferences.getHumidityMax()));
-                        Minco2EditText.setText(String.valueOf(preferences.getCo2Min()));
                         Maxco2EditText.setText(String.valueOf(preferences.getCo2Max()));
                     });
                 } else {
@@ -142,14 +140,12 @@ public class PreferencesFragment extends Fragment {
                             MaxtempEditText.setText("");
                             MinhumEditText.setText("");
                             MaxhumEditText.setText("");
-                            Minco2EditText.setText("");
                             Maxco2EditText.setText("");
                             for (Preferences p : preferences) {
                                 MintempEditText.append(p.getTemperatureMin() + "\n");
                                 MaxtempEditText.append(p.getTemperatureMax() + "\n");
                                 MinhumEditText.append(p.getHumidityMin() + "\n");
                                 MaxhumEditText.append(p.getHumidityMax() + "\n");
-                                Minco2EditText.append(p.getCo2Min() + "\n");
                                 Maxco2EditText.append(p.getCo2Max() + "\n");
                             }
                         } else {
@@ -158,7 +154,6 @@ public class PreferencesFragment extends Fragment {
                             MaxtempEditText.setText("Empty");
                             MinhumEditText.setText("Empty");
                             MaxhumEditText.setText("Empty");
-                            Minco2EditText.setText("Empty");
                             Maxco2EditText.setText("Empty");
                         }
                     });
