@@ -29,18 +29,6 @@ public class PreferencesViewModel extends AndroidViewModel {
         databaseRepository = DatabaseRepository.getInstance(application);
     }
 
-    public void deleteAllPreferences() {
-        databaseRepository.deleteAllPReferences();
-    }
-
-    public void deleteAllDevices() {
-        databaseRepository.deleteAllDevices();
-    }
-
-    public LiveData<List<Preferences>> getAllPreferences() {
-        return databaseRepository.getAllPreferences();
-    }
-
     public void showPreferences(String deviceId) {
         preferencesRepository.showPreferences(deviceId);
     }
@@ -49,7 +37,7 @@ public class PreferencesViewModel extends AndroidViewModel {
         preferencesRepository.savePreferencesToNetwork(preference);
     }
 
-    public void insertDevice(final NewDeviceModel model) {
+    public void insertDevice(NewDeviceModel model) {
         databaseRepository.insertDevice(model);
     }
 
@@ -57,24 +45,12 @@ public class PreferencesViewModel extends AndroidViewModel {
         return databaseRepository.getPreferencesById(deviceId);
     }
 
-    public Preferences getPreference() {
-        return databaseRepository.getPreference();
-    }
 
-    public LiveData<List<NewDeviceModel>> getAllDevices() {
+    public LiveData<List<NewDeviceModel>> getAllLocalDevices() {
         return databaseRepository.getAllDevices();
     }
 
-    public LiveData<List<NewDeviceModel>> getDeviceLocal() {
-        return databaseRepository.getAllDevices();
-    }
-
-    public LiveData<List<Preferences>> getPrefrences() {
-        return databaseRepository.getAllPreferences();
-    }
-
-    public LiveData<Preferences> getLastPreference() {
-
+    public LiveData<Preferences> getPreferences() {
         return preferencesRepository.getPreferences();
     }
 
@@ -82,18 +58,15 @@ public class PreferencesViewModel extends AndroidViewModel {
         roomsRepository.updateRooms();
     }
 
-    public LiveData<List<Device>> getDevices() {
-
+    public LiveData<List<Device>> getDevicesFromApi() {
         return roomsRepository.getList();
     }
-
 
     public void setDeviceId(String deviceId) {
         this.deviceId = deviceId;
     }
 
     public String getDeviceId() {
-
         return deviceId;
     }
 }

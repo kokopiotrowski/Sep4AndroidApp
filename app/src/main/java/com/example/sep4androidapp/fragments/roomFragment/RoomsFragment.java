@@ -1,5 +1,6 @@
 package com.example.sep4androidapp.fragments.roomFragment;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,6 +19,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.sep4androidapp.Adapter.RoomsAdapter;
 import com.example.sep4androidapp.Entities.Device;
 import com.example.sep4androidapp.Entities.NewDeviceModel;
+import com.example.sep4androidapp.LocalStorage.ConnectionLiveData;
+import com.example.sep4androidapp.LocalStorage.ConnectionModel;
 import com.example.sep4androidapp.R;
 import com.example.sep4androidapp.ViewModels.PreferencesViewModel;
 import com.example.sep4androidapp.ViewModels.RoomsViewModel;
@@ -24,11 +28,14 @@ import com.example.sep4androidapp.fragments.setUpDeviceFragment.SetUpDeviceFragm
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import static com.firebase.ui.auth.AuthUI.getApplicationContext;
+
 public class RoomsFragment extends Fragment {
     private RoomsAdapter adapter;
     private RoomsViewModel viewModel;
     private FloatingActionButton leadToSetUpButton;
     private PreferencesViewModel preferencesViewModel;
+    private boolean isActiveFragment;
 
     @Nullable
     @Override
@@ -59,19 +66,21 @@ public class RoomsFragment extends Fragment {
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 String id = adapter.getDeviceAt(viewHolder.getAdapterPosition()).getDeviceId();
                 String name = adapter.getDeviceAt(viewHolder.getAdapterPosition()).getName();
-                viewModel.deleteDevice(id);
-                //preferencesViewModel.deleteAllDevices();
-                //preferencesViewModel.deleteAllPreferences();
 
-                NewDeviceModel saveDevice = new NewDeviceModel(id, name);
+                viewModel.deleteDevice(id);
+                NewDeviceModel savedDevice = new NewDeviceModel(id, name);
+                viewModel.deleteDeviceFromDb(savedDevice);
 
                 Snackbar.make(recyclerView, id, Snackbar.LENGTH_LONG)
                         .setAction("Undo", v -> {
-                            viewModel.postDevice(saveDevice);
+                            viewModel.postDevice(savedDevice);
+                            viewModel.insertDevice(savedDevice);
+
+
+
                         }).show();
             }
         }).attachToRecyclerView(recyclerView);
-
 
         viewModel.updateRooms();
         return view;

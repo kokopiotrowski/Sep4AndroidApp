@@ -23,10 +23,7 @@ public interface NewDeviceDAO {
     LiveData<List<NewDeviceModel>> getAllDevices();
 
     @Delete
-    void deleteDevice(NewDeviceModel model);
-
-//    @Query("SELECT*FROM newDevice_table WHERE deviceId=:deviceId")
-//    void getDevicesById(String deviceId);
+    void deleteDevice(NewDeviceModel device);
 
     @Query("DELETE FROM newDevice_table")
     void deleteAllDevices();

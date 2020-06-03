@@ -21,8 +21,6 @@ import com.example.sep4androidapp.Entities.NewDeviceModel;
 import com.example.sep4androidapp.Entities.Preferences;
 import com.example.sep4androidapp.LocalStorage.ConnectionLiveData;
 import com.example.sep4androidapp.LocalStorage.ConnectionModel;
-import com.example.sep4androidapp.Network.CheckNetwork;
-import com.example.sep4androidapp.Network.Variables;
 import com.example.sep4androidapp.R;
 import com.example.sep4androidapp.ViewModels.PreferencesViewModel;
 
@@ -44,6 +42,7 @@ public class PreferencesFragment extends Fragment {
     private List<NewDeviceModel> localList = new ArrayList<>();
     private List<NewDeviceModel> apiList = new ArrayList<>();
     private boolean isActiveFragment;
+    private boolean isConnected;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -57,8 +56,6 @@ public class PreferencesFragment extends Fragment {
         Maxco2EditText = view.findViewById(R.id.MaxCo2EditText);
         save = view.findViewById(R.id.buttonSave);
 
-        CheckNetwork network = new CheckNetwork(getActivity().getApplicationContext());
-        network.registerNetworkCallback();
         viewModel = new ViewModelProvider(this).get(PreferencesViewModel.class);
         viewModel.updateRooms();
         save.setOnClickListener(v -> {
@@ -79,15 +76,20 @@ public class PreferencesFragment extends Fragment {
         connectionLiveData.observe(getActivity(), new Observer<ConnectionModel>() {
             @Override
             public void onChanged(@Nullable ConnectionModel connection) {
-                if(isActiveFragment)
-                {
+                if (isActiveFragment) {
+
+                    if (connection.getIsConnected()) {
+                        isConnected = true;
+                    } else {
+                        isConnected = false;
+                    }
                     viewModel.updateRooms();
                     refreshSpinner();
                 }
             }
         });
 
-        viewModel.getDevices().observe(getViewLifecycleOwner(), devices -> {
+        viewModel.getDevicesFromApi().observe(getViewLifecycleOwner(), devices -> {
             apiList.clear();
             List<NewDeviceModel> formattedDeviceList = new ArrayList<>();
             for (int i = 0; i < devices.size(); i++) {
@@ -97,16 +99,26 @@ public class PreferencesFragment extends Fragment {
             refreshSpinner();
         });
 
-        viewModel.getAllDevices().observe(getViewLifecycleOwner(), savedDevices -> {
+        viewModel.getAllLocalDevices().observe(getViewLifecycleOwner(), savedDevices -> {
             localList.clear();
             localList = savedDevices;
             refreshSpinner();
         });
 
+        viewModel.getPreferences().observe(getViewLifecycleOwner(), preferences -> {
+            if (isConnected) {
+                MintempEditText.setText(String.format("%.1f", preferences.getTemperatureMin()));
+                MaxtempEditText.setText(String.format("%.1f", preferences.getTemperatureMax()));
+                MinhumEditText.setText(String.valueOf(preferences.getHumidityMin()));
+                MaxhumEditText.setText(String.valueOf(preferences.getHumidityMax()));
+                Maxco2EditText.setText(String.valueOf(preferences.getCo2Max()));
+            }
+        });
+
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (Variables.isNetworkConnected) {
+                if (isConnected) {
                     MintempEditText.setEnabled(true);
                     MaxtempEditText.setEnabled(true);
                     MinhumEditText.setEnabled(true);
@@ -114,14 +126,6 @@ public class PreferencesFragment extends Fragment {
                     Maxco2EditText.setEnabled(true);
                     viewModel.setDeviceId(idList.get(position));
                     viewModel.showPreferences(idList.get(position));
-                    viewModel.getLastPreference().observe(getViewLifecycleOwner(), preferences -> {
-
-                        MintempEditText.setText(String.format("%.1f", preferences.getTemperatureMin()));
-                        MaxtempEditText.setText(String.format("%.1f", preferences.getTemperatureMax()));
-                        MinhumEditText.setText(String.valueOf(preferences.getHumidityMin()));
-                        MaxhumEditText.setText(String.valueOf(preferences.getHumidityMax()));
-                        Maxco2EditText.setText(String.valueOf(preferences.getCo2Max()));
-                    });
                     save.setEnabled(true);
                 } else {
                     viewModel.setDeviceId(idList.get(position));
@@ -131,14 +135,13 @@ public class PreferencesFragment extends Fragment {
                     MinhumEditText.setEnabled(false);
                     MaxhumEditText.setEnabled(false);
                     Maxco2EditText.setEnabled(false);
-                    if(prefs == null)
-                    {
+                    if (prefs == null) {
                         MintempEditText.setText("Empty");
                         MaxtempEditText.setText("Empty");
                         MinhumEditText.setText("Empty");
                         MaxhumEditText.setText("Empty");
                         Maxco2EditText.setText("Empty");
-                    }else{
+                    } else {
 
                         MintempEditText.setText(String.format("%.1f", prefs.getTemperatureMin()));
                         MaxtempEditText.setText(String.format("%.1f", prefs.getTemperatureMax()));
@@ -151,7 +154,8 @@ public class PreferencesFragment extends Fragment {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
 
         return view;
@@ -160,13 +164,12 @@ public class PreferencesFragment extends Fragment {
     private void refreshSpinner() {
         nameList.clear();
         idList.clear();
-        if (Variables.isNetworkConnected) {
+        if (isConnected) {
             for (int i = 0; i < apiList.size(); i++) {
                 nameList.add(apiList.get(i).getName());
                 idList.add(apiList.get(i).getDeviceId());
             }
-        }
-        else {
+        } else {
             for (int i = 0; i < localList.size(); i++) {
                 nameList.add(localList.get(i).getName());
                 idList.add(localList.get(i).getDeviceId());

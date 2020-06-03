@@ -31,13 +31,13 @@ public class SleepDataViewModel extends AndroidViewModel {
 
     public void updateSleepSessions(String deviceId){
 
-        reportRepository.updateSleepSessions(deviceId);
+        reportRepository.updateSleepFragmentSessions(deviceId);
 
     }
 
     public LiveData<List<SleepSession>> getSleepSessions()
     {
-        return reportRepository.getSleepSessions();
+        return reportRepository.getSleepSessionForFragment();
     }
 
     public LiveData<SleepData> getSleepData()

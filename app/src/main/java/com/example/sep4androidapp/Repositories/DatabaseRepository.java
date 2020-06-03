@@ -41,14 +41,8 @@ public class DatabaseRepository {
         new DatabaseRepository.InsertNewDeviceAsync(newDeviceDAO).execute(model);
     }
 
-
     public LiveData<List<NewDeviceModel>> getAllDevices() {
         return allDevices;
-    }
-
-
-    public LiveData<List<Preferences>> getAllPreferences() {
-        return allPreferences;
     }
 
     public Preferences getPreference() {
@@ -71,14 +65,10 @@ public class DatabaseRepository {
         new DatabaseRepository.UpdatePreferencesAsync(prefDao).execute(preferences);
     }
 
-    public void deleteAllPReferences() {
-        new DatabaseRepository.DeleteAllPreferencesAsync(prefDao).execute();
+    public void deleteDevice(NewDeviceModel device)
+    {
+        new DeleteDeviceAsyncTask(newDeviceDAO).execute(device);
     }
-
-    public void deleteAllDevices() {
-        new DatabaseRepository.DeleteAllDevicesAsync(newDeviceDAO).execute();
-    }
-
 
     private static class InsertPreferencesAsync extends AsyncTask<Preferences, Void, Void> {
         private PrefDAO prefDAO;
@@ -108,6 +98,18 @@ public class DatabaseRepository {
         }
     }
 
+    private static class DeleteDeviceAsyncTask extends  AsyncTask<NewDeviceModel, Void, Void>
+    {
+        private NewDeviceDAO deviceDao;
+
+        private DeleteDeviceAsyncTask(NewDeviceDAO dao){this.deviceDao = dao;}
+        @Override
+        protected Void doInBackground(NewDeviceModel... newDeviceModels) {
+            deviceDao.deleteDevice(newDeviceModels[0]);
+            return null;
+        }
+    }
+
     private static class InsertNewDeviceAsync extends AsyncTask<NewDeviceModel, Void, Void> {
         private NewDeviceDAO newDeviceDAO;
 
@@ -122,31 +124,5 @@ public class DatabaseRepository {
         }
     }
 
-    private class DeleteAllPreferencesAsync extends AsyncTask<Void, Void, Void> {
-        private PrefDAO prefDAO;
 
-        public DeleteAllPreferencesAsync(PrefDAO prefDao) {
-            this.prefDAO = prefDao;
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            prefDAO.deleteAllPreferences();
-            return null;
-        }
-    }
-
-    private class DeleteAllDevicesAsync extends AsyncTask<Void, Void, Void> {
-        private NewDeviceDAO newDeviceDAO;
-
-        public DeleteAllDevicesAsync(NewDeviceDAO newDeviceDAO) {
-            this.newDeviceDAO = newDeviceDAO;
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            newDeviceDAO.deleteAllDevices();
-            return null;
-        }
-    }
 }

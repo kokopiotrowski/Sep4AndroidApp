@@ -112,9 +112,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.itemTipsFacts:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new FactFragment()).commit();
                 break;
-            case R.id.itemAccount:
-//                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, ).commit();
-                break;
             case R.id.itemSleep:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SleepFragment()).commit();
                 break;

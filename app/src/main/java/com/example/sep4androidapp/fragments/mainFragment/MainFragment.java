@@ -1,5 +1,6 @@
 package com.example.sep4androidapp.fragments.mainFragment;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,8 +9,11 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.sep4androidapp.LocalStorage.ConnectionLiveData;
+import com.example.sep4androidapp.LocalStorage.ConnectionModel;
 import com.example.sep4androidapp.R;
 import com.example.sep4androidapp.fragments.mainFragment.mainViewFragments.FragmentCo2;
 import com.example.sep4androidapp.fragments.mainFragment.mainViewFragments.FragmentHumidity;
@@ -17,6 +21,8 @@ import com.example.sep4androidapp.fragments.mainFragment.mainViewFragments.Fragm
 import com.example.sep4androidapp.fragments.mainFragment.mainViewFragments.FragmentTemperature;
 import com.example.sep4androidapp.fragments.mainFragment.mainViewFragments.ViewPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
+
+import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
 public class MainFragment extends Fragment {
     private TabLayout tabLayout;

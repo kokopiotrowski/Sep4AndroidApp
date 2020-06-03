@@ -100,6 +100,7 @@ public class SleepFragment extends Fragment {
                 {
                     if (connection.getIsConnected())
                     {
+
                         deviceSpinner.setEnabled(true);
                         sleepDataSpinner.setEnabled(true);
                         sleepSpinner.setEnabled(true);

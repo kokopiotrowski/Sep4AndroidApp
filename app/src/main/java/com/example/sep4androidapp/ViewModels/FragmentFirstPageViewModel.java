@@ -10,8 +10,10 @@ import androidx.lifecycle.LiveData;
 
 import com.example.sep4androidapp.Entities.Device;
 import com.example.sep4androidapp.Entities.Fact;
+import com.example.sep4androidapp.Entities.NewDeviceModel;
 import com.example.sep4androidapp.Entities.Preferences;
 import com.example.sep4androidapp.Entities.RoomCondition;
+import com.example.sep4androidapp.Repositories.DatabaseRepository;
 import com.example.sep4androidapp.Repositories.FactRepository;
 import com.example.sep4androidapp.Repositories.PreferencesRepository;
 import com.example.sep4androidapp.Repositories.ReportRepository;
@@ -29,6 +31,7 @@ public class FragmentFirstPageViewModel extends AndroidViewModel {
     private RoomsRepository roomsRepository;
     private FactRepository factRepository;
     private PreferencesRepository preferencesRepository;
+    private DatabaseRepository databaseRepository;
     private Handler handler = new Handler();
     private Timer timer = new Timer();
     private String deviceId;
@@ -40,11 +43,16 @@ public class FragmentFirstPageViewModel extends AndroidViewModel {
         roomsRepository = RoomsRepository.getInstance();
         factRepository = FactRepository.getInstance();
         preferencesRepository = PreferencesRepository.getInstance(application);
+        databaseRepository = DatabaseRepository.getInstance(application);
     }
 
     public void setChosenDeviceId(String deviceId) {
         this.deviceId = deviceId;
         roomsRepository.setChosenDeviceId(deviceId);
+    }
+
+    public Preferences getPreferencesById(String deviceId) {
+        return databaseRepository.getPreferencesById(deviceId);
     }
 
     public String getDeviceId() {
@@ -89,7 +97,7 @@ public class FragmentFirstPageViewModel extends AndroidViewModel {
         startStopRepository.receiveStatus(deviceId, callBack);
     }
 
-    public LiveData<List<Device>> getDevices() {
+    public LiveData<List<Device>> getDevicesFromApi() {
         return roomsRepository.getList();
     }
 
@@ -122,8 +130,12 @@ public class FragmentFirstPageViewModel extends AndroidViewModel {
         preferencesRepository.showPreferences(deviceId);
     }
 
-    public LiveData<Preferences> getPreferences()
+    public LiveData<Preferences> getPreferencesFromApi()
     {
         return preferencesRepository.getPreferences();
+    }
+
+    public LiveData<List<NewDeviceModel>> getAllLocalDevices() {
+        return databaseRepository.getAllDevices();
     }
 }

@@ -32,24 +32,22 @@ public class TemperatureFragmentViewModel extends AndroidViewModel {
         reportRepository = ReportRepository.getInstance();
     }
 
-    public LiveData<String> getChosenDeviceId(){
-
+    public LiveData<String> getChosenDeviceId() {
         return roomsRepository.getChosenDeviceId();
-
     }
 
 
-    public void updateMonthlySleepSessions(String deviceId){
+    public void updateMonthlySleepSessions(String deviceId) {
         LocalDate today = LocalDate.now();
         LocalDate monthAgo = today.minusMonths(1);
         today.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         monthAgo.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
-    reportRepository.updateMonthlySleepSessions(deviceId, today.toString(), monthAgo.toString());
+        reportRepository.updateMonthlySleepSessions(deviceId, today.toString(), monthAgo.toString());
     }
 
 
-    public void updateWeeklySleepSessions(String deviceId){
+    public void updateWeeklySleepSessions(String deviceId) {
         LocalDate today = LocalDate.now();
         LocalDate weekAgo = today.minusWeeks(1);
         today.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
@@ -59,7 +57,7 @@ public class TemperatureFragmentViewModel extends AndroidViewModel {
     }
 
 
-    public void updateDailySleepSessions(String deviceId){
+    public void updateDailySleepSessions(String deviceId) {
         LocalDate today = LocalDate.now();
         LocalDate dayAgo = today.minusDays(1);
         today.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
@@ -68,20 +66,21 @@ public class TemperatureFragmentViewModel extends AndroidViewModel {
         reportRepository.updateDailySleepSessions(deviceId, today.toString(), dayAgo.toString());
     }
 
-    public LiveData<Preferences> getPreferences()
-    {
+    public LiveData<Preferences> getPreferences() {
         return preferencesRepository.getPreferences();
     }
 
-    public LiveData<List<SleepSession>> getSleepSessionsDaily(){
+    public LiveData<List<SleepSession>> getSleepSessionsDaily() {
 
         return reportRepository.getSleepSessionsDaily();
     }
-    public LiveData<List<SleepSession>> getSleepSessionsWeekly(){
+
+    public LiveData<List<SleepSession>> getSleepSessionsWeekly() {
 
         return reportRepository.getSleepSessionsWeekly();
     }
-    public LiveData<List<SleepSession>> getSleepSessionsMonthly(){
+
+    public LiveData<List<SleepSession>> getSleepSessionsMonthly() {
 
         return reportRepository.getSleepSessionsMonthly();
     }

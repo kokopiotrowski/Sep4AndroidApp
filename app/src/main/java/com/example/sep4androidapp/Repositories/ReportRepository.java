@@ -43,6 +43,7 @@ public class ReportRepository {
     private MutableLiveData<List<SleepSession>> sleepSessionsWeekly;
     private MutableLiveData<List<SleepSession>> sleepSessionsMonthly;
     private MutableLiveData<List<Device>> devices;
+    private MutableLiveData<List<SleepSession>> sleepSessionsForFragment;
 
     private ReportRepository() {
         roomCondition = new MutableLiveData<>();
@@ -52,6 +53,7 @@ public class ReportRepository {
         sleepSessionsDaily = new MutableLiveData<>();
         sleepSessionsWeekly = new MutableLiveData<>();
         sleepSessionsMonthly = new MutableLiveData<>();
+        sleepSessionsForFragment = new MutableLiveData<>();
     }
 
     public static synchronized ReportRepository getInstance() {
@@ -161,6 +163,31 @@ public class ReportRepository {
                 Log.i("Why", "" + t.getCause());
             }
         });
+    }
+
+    public void updateSleepFragmentSessions(String deviceId) {
+        ReportApi reportApi = ServiceGenerator.getReportApi();
+        Call<ReportResponse> call = reportApi.getReport(deviceId);
+        call.enqueue(new Callback<ReportResponse>() {
+
+            @Override
+            public void onResponse(Call<ReportResponse> call, Response<ReportResponse> response) {
+                if (response.code() == 200) {
+                    sleepSessionsForFragment.setValue(response.body().getSleepSessions());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ReportResponse> call, Throwable t) {
+                Log.i("Retrofit", "Something went wrong in update sleep data :(");
+                Log.i("Why", "" + t.getCause());
+            }
+        });
+    }
+
+    public LiveData<List<SleepSession>> getSleepSessionForFragment()
+    {
+        return sleepSessionsForFragment;
     }
 
     public LiveData<List<SleepSession>> getSleepSessions() {

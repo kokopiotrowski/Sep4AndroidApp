@@ -5,6 +5,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -26,6 +27,8 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.example.sep4androidapp.Entities.SleepSession;
+import com.example.sep4androidapp.LocalStorage.ConnectionLiveData;
+import com.example.sep4androidapp.LocalStorage.ConnectionModel;
 import com.example.sep4androidapp.R;
 import com.example.sep4androidapp.ViewModels.ChartsReportViewModel;
 import com.example.sep4androidapp.ViewModels.ReportViewModel;
@@ -51,6 +54,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+
+import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
 public class ReportFragment extends Fragment {
 
@@ -80,6 +85,7 @@ public class ReportFragment extends Fragment {
     private List<String> nameList = new ArrayList<>();
     private List<String> idList = new ArrayList<>();
     ArrayAdapter<String> adapter;
+    private boolean isActiveFragment;
 
 
     public static ReportFragment newInstance() {
@@ -117,7 +123,32 @@ public class ReportFragment extends Fragment {
 
         mViewModel.updateSleepSessions();
 
-        //updateChartsFakeData(1);
+        @SuppressLint("RestrictedApi") ConnectionLiveData connectionLiveData = new ConnectionLiveData(getApplicationContext());
+        connectionLiveData.observe(getActivity(), new Observer<ConnectionModel>() {
+            @Override
+            public void onChanged(@Nullable ConnectionModel connection) {
+                if(isActiveFragment)
+                {
+                    if (connection.getIsConnected())
+                    {
+                        yesterday.setEnabled(true);
+                        lastWeek.setEnabled(true);
+                        lastMonth.setEnabled(true);
+                        deviceReportSpinner.setEnabled(true);
+                        ratingBar.setEnabled(true);
+                        rateSleepButton.setEnabled(true);
+                    } else {
+                        yesterday.setEnabled(false);
+                        lastWeek.setEnabled(false);
+                        lastMonth.setEnabled(false);
+                        deviceReportSpinner.setEnabled(false);
+                        ratingBar.setEnabled(false);
+                        rateSleepButton.setEnabled(false);
+                    }
+                }
+
+            }
+        });
         return v;
     }
 
@@ -132,7 +163,6 @@ public class ReportFragment extends Fragment {
     private void updateCharts(int lastDays) {
         temperatureChart.clear();
         co2Chart.clear();
-
 
         temperatureEntries.clear();
         co2Entries.clear();
@@ -284,5 +314,17 @@ public class ReportFragment extends Fragment {
 
         temperatureChart.invalidate();
         co2Chart.invalidate();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        isActiveFragment = true;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        isActiveFragment = false;
     }
 }
