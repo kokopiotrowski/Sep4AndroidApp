@@ -108,8 +108,6 @@ public class ReportFragment extends Fragment {
         ratingBar = v.findViewById(R.id.ratingBar);
         rateSleepButton = v.findViewById(R.id.rateYourSleepButton);
 
-
-
         temperatureEntries = new ArrayList<>();
         co2Entries = new ArrayList<>();
 
