@@ -1,5 +1,6 @@
 package com.example.sep4androidapp.fragments.sleepFragment;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,8 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.sep4androidapp.Entities.RoomCondition;
 import com.example.sep4androidapp.Entities.SleepData;
 import com.example.sep4androidapp.Entities.SleepSession;
+import com.example.sep4androidapp.LocalStorage.ConnectionLiveData;
+import com.example.sep4androidapp.LocalStorage.ConnectionModel;
 import com.example.sep4androidapp.R;
 import com.example.sep4androidapp.ValueFormatters.SleepFragmentValueFormatter;
 import com.example.sep4androidapp.ViewModels.SleepDataViewModel;
@@ -35,6 +38,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static com.firebase.ui.auth.AuthUI.getApplicationContext;
+
 
 public class SleepFragment extends Fragment {
     SleepDataViewModel viewModel;
@@ -48,6 +53,7 @@ public class SleepFragment extends Fragment {
     private List<String> sleepDateList = new ArrayList<>();
     private List<Integer> sleepIdList = new ArrayList<>();
 
+    private boolean isActiveFragment;
 
     private List<SleepSession> sleepSessions = new ArrayList<>();
     ArrayAdapter<String> deviceAdapter;
@@ -86,6 +92,27 @@ public class SleepFragment extends Fragment {
 
         viewModel = new ViewModelProvider(this).get(SleepDataViewModel.class);
 
+        @SuppressLint("RestrictedApi") ConnectionLiveData connectionLiveData = new ConnectionLiveData(getApplicationContext());
+        connectionLiveData.observe(getActivity(), new Observer<ConnectionModel>() {
+            @Override
+            public void onChanged(@Nullable ConnectionModel connection) {
+                if(isActiveFragment)
+                {
+                    if (connection.getIsConnected())
+                    {
+                        deviceSpinner.setEnabled(true);
+                        sleepDataSpinner.setEnabled(true);
+                        sleepSpinner.setEnabled(true);
+                    } else {
+                        deviceSpinner.setEnabled(false);
+                        sleepDataSpinner.setEnabled(false);
+                        sleepSpinner.setEnabled(false);
+                    }
+                }
+
+            }
+        });
+
 
         viewModel.getDevices().observe(getViewLifecycleOwner(), devices -> {
             deviceNameList.clear();
@@ -107,8 +134,8 @@ public class SleepFragment extends Fragment {
             sleepDateList.clear();
             sleepIdList.clear();
             for (int i = 0; i < sleepSessions.size(); i++) {
-                String date = sleepSessions.get(i).getTimeStart().getYear()+ "/" + sleepSessions.get(i).getTimeStart().getMonthValue()+ "/" + sleepSessions.get(i).getTimeStart().getDayOfMonth()
-                        + "-" + sleepSessions.get(i).getTimeFinish().getYear()+ "/" + sleepSessions.get(i).getTimeFinish().getMonthValue()+ "/" + sleepSessions.get(i).getTimeFinish().getDayOfMonth();
+                String date = sleepSessions.get(i).getTimeStart().getYear() + "/" + sleepSessions.get(i).getTimeStart().getMonthValue() + "/" + sleepSessions.get(i).getTimeStart().getDayOfMonth()
+                        + "-" + sleepSessions.get(i).getTimeFinish().getYear() + "/" + sleepSessions.get(i).getTimeFinish().getMonthValue() + "/" + sleepSessions.get(i).getTimeFinish().getDayOfMonth();
                 sleepDateList.add(date);
                 sleepIdList.add(sleepSessions.get(i).getSleepId());
             }
@@ -184,7 +211,7 @@ public class SleepFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 Object item = parentView.getItemAtPosition(position).toString();
 
-                if(item.equals("-choose parameter-")) {
+                if (item.equals("-choose parameter-")) {
                     dataSets.clear();
                 }
 
@@ -299,6 +326,18 @@ public class SleepFragment extends Fragment {
             }
         });
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        isActiveFragment = true;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        isActiveFragment = false;
     }
 }
 

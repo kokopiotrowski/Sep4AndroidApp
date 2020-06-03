@@ -29,23 +29,16 @@ import retrofit2.Response;
 import static android.content.ContentValues.TAG;
 
 public class PreferencesRepository {
-    private PrefDAO prefDao;
-    private NewDeviceDAO newDeviceDAO;
+
     private static PreferencesRepository instance;
-    private LiveData<List<Preferences>> allPreferences;
     private MutableLiveData<Preferences> preferences;
     private static MutableLiveData<List<Device>> list;
-    private LiveData<List<NewDeviceModel>> allDevices;
+    private DatabaseRepository databaseRepository;
 
     private PreferencesRepository(Application application) {
-        ApplicationDatabase appDatabase = ApplicationDatabase.getInstance(application);
-
-        prefDao = appDatabase.prefDAO();
-        newDeviceDAO = appDatabase.newDeviceDAO();
         preferences = new MutableLiveData<>();
         list = new MutableLiveData<>();
-        allPreferences = prefDao.getAllPreferences();
-        allDevices = newDeviceDAO.getAllDevices();
+        databaseRepository = DatabaseRepository.getInstance(application);
     }
 
     public static synchronized PreferencesRepository getInstance(Application application) {
@@ -54,107 +47,9 @@ public class PreferencesRepository {
         return instance;
     }
 
-    public void insertDevice(NewDeviceModel model){
-        new InsertNewDeviceAsync(newDeviceDAO).execute(model);
-    }
-
-//    public void (Device device){
-//        new DeleteDeviceAsync().execute(device);
-//    }
-
-
-//    public void deleteDevice(Device device){
-//        new DeleteDeviceAsync().execute(device);
-//    }
-
-    public LiveData<List<NewDeviceModel>> getAllDevices(){
-        return allDevices;
-    }
-
     public static LiveData<List<Device>> getList() {
         return list;
     }
-
-    public LiveData<List<Preferences>> getAllPreferences() {
-        return allPreferences;
-    }
-
-    public Preferences getPreference(){
-        List<Preferences> prefs = new ArrayList<>();
-        prefs = allPreferences.getValue();
-
-        assert prefs != null;
-        return prefs.get(prefs.size()-1);
-    }
-
-    public Preferences getPreferencesById(String deviceId){
-        return prefDao.getPreferencesById(deviceId);
-    }
-
-    public void insert(Preferences preferences) {
-        new InsertPreferencesAsync(prefDao).execute(preferences);
-    }
-
-    public void savePreferencesToDb(Preferences preferences) {
-        new UpdatePreferencesAsync(prefDao).execute(preferences);
-    }
-
-    public void deleteAllPReferences(){
-        new DeleteAllPreferencesAsync(prefDao).execute();
-    }
-
-    public void deleteAllDevices(){
-        new DeleteAllDevicesAsync(newDeviceDAO).execute();
-    }
-
-
-    private static class InsertPreferencesAsync extends AsyncTask<Preferences, Void, Void> {
-        private PrefDAO prefDAO;
-
-        private InsertPreferencesAsync(PrefDAO prefDAO) {
-            this.prefDAO = prefDAO;
-        }
-
-        @Override
-        protected Void doInBackground(Preferences... preferences) {
-            prefDAO.insertPreference(preferences[0]);
-            return null;
-        }
-    }
-
-    private static class UpdatePreferencesAsync extends AsyncTask<Preferences, Void, Void> {
-        private PrefDAO prefDAO;
-
-        private UpdatePreferencesAsync(PrefDAO prefDAO) {
-            this.prefDAO = prefDAO;
-        }
-
-        @Override
-        protected Void doInBackground(Preferences... preferences) {
-            prefDAO.updatePreference(preferences[0]);
-            return null;
-        }
-    }
-
-    private static class InsertNewDeviceAsync extends AsyncTask<NewDeviceModel, Void, Void> {
-        private NewDeviceDAO newDeviceDAO;
-
-        private InsertNewDeviceAsync(NewDeviceDAO newDeviceDAO) {
-            this.newDeviceDAO = newDeviceDAO;
-        }
-
-        @Override
-        protected Void doInBackground(NewDeviceModel... newDeviceModels) {
-            newDeviceDAO.insertNewDevice(newDeviceModels[0]);
-            return null;
-        }
-    }
-
-//    public void showLocalPreferences(Device deviceId){
-//        Preferences preferences =  new Preferences(
-//
-//        )
-//    }
 
 
     // GET API
@@ -208,11 +103,11 @@ public class PreferencesRepository {
                 Log.i(TAG, "Pouneh1 " + response.code());
                 if(response.code() == 200)
                 {
-                    if(getPreference() == null)
+                    if(databaseRepository.getPreference() == null)
                     {
-                        insert(preference);
+                        databaseRepository.insert(preference);
                     }else{
-                        savePreferencesToDb(preference);
+                        databaseRepository.savePreferencesToDb(preference);
                     }
 
                 }
@@ -227,31 +122,5 @@ public class PreferencesRepository {
     }
 
 
-    private class DeleteAllPreferencesAsync  extends AsyncTask<Void,Void,Void> {
-        private PrefDAO prefDAO;
 
-        public DeleteAllPreferencesAsync(PrefDAO prefDao) {
-            this.prefDAO=prefDao;
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            prefDAO.deleteAllPreferences();
-            return null;
-        }
-    }
-
-    private class DeleteAllDevicesAsync  extends AsyncTask<Void,Void,Void> {
-        private NewDeviceDAO newDeviceDAO;
-
-        public DeleteAllDevicesAsync(NewDeviceDAO newDeviceDAO) {
-            this.newDeviceDAO=newDeviceDAO;
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            newDeviceDAO.deleteAllDevices();
-            return null;
-        }
-    }
 }

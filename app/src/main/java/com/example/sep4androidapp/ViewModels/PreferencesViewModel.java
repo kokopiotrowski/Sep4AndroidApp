@@ -9,13 +9,14 @@ import androidx.lifecycle.LiveData;
 import com.example.sep4androidapp.Entities.Device;
 import com.example.sep4androidapp.Entities.NewDeviceModel;
 import com.example.sep4androidapp.Entities.Preferences;
+import com.example.sep4androidapp.Repositories.DatabaseRepository;
 import com.example.sep4androidapp.Repositories.PreferencesRepository;
 import com.example.sep4androidapp.Repositories.RoomsRepository;
 
 import java.util.List;
 
 public class PreferencesViewModel extends AndroidViewModel {
-
+    private DatabaseRepository databaseRepository;
     private PreferencesRepository preferencesRepository;
     private RoomsRepository roomsRepository;
     // private Device deviceId;
@@ -25,18 +26,19 @@ public class PreferencesViewModel extends AndroidViewModel {
         super(application);
         preferencesRepository = PreferencesRepository.getInstance(application);
         roomsRepository = RoomsRepository.getInstance();
+        databaseRepository = DatabaseRepository.getInstance(application);
     }
 
     public void deleteAllPreferences() {
-        preferencesRepository.deleteAllPReferences();
+        databaseRepository.deleteAllPReferences();
     }
 
     public void deleteAllDevices() {
-        preferencesRepository.deleteAllDevices();
+        databaseRepository.deleteAllDevices();
     }
 
     public LiveData<List<Preferences>> getAllPreferences() {
-        return preferencesRepository.getAllPreferences();
+        return databaseRepository.getAllPreferences();
     }
 
     public void showPreferences(String deviceId) {
@@ -48,27 +50,27 @@ public class PreferencesViewModel extends AndroidViewModel {
     }
 
     public void insertDevice(final NewDeviceModel model) {
-        preferencesRepository.insertDevice(model);
+        databaseRepository.insertDevice(model);
     }
 
     public Preferences getPreferencesById(String deviceId) {
-        return preferencesRepository.getPreferencesById(deviceId);
+        return databaseRepository.getPreferencesById(deviceId);
     }
 
     public Preferences getPreference() {
-        return preferencesRepository.getPreference();
+        return databaseRepository.getPreference();
     }
 
     public LiveData<List<NewDeviceModel>> getAllDevices() {
-        return preferencesRepository.getAllDevices();
+        return databaseRepository.getAllDevices();
     }
 
     public LiveData<List<NewDeviceModel>> getDeviceLocal() {
-        return preferencesRepository.getAllDevices();
+        return databaseRepository.getAllDevices();
     }
 
     public LiveData<List<Preferences>> getPrefrences() {
-        return preferencesRepository.getAllPreferences();
+        return databaseRepository.getAllPreferences();
     }
 
     public LiveData<Preferences> getLastPreference() {
