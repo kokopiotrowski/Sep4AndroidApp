@@ -1,4 +1,4 @@
-package com.example.sep4androidapp.Firebase;
+package com.example.sep4androidapp;
 
 
 import android.view.View;
@@ -10,6 +10,7 @@ import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
 
+import com.example.sep4androidapp.Firebase.Firebase_Login;
 import com.example.sep4androidapp.R;
 
 import org.hamcrest.Description;
