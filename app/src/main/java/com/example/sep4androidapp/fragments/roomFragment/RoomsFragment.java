@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.sep4androidapp.Adapter.RoomsAdapter;
 import com.example.sep4androidapp.Entities.NewDeviceModel;
 import com.example.sep4androidapp.LocalStorage.ConnectionLiveData;
 import com.example.sep4androidapp.R;

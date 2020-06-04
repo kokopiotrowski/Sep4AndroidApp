@@ -2,27 +2,19 @@ package com.example.sep4androidapp.Repositories;
 
 import android.util.Log;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-
-import com.example.sep4androidapp.Entities.StartStop;
-import com.example.sep4androidapp.connection.ApiCallBack;
+import com.example.sep4androidapp.connection.apis.ApiCallBack;
 import com.example.sep4androidapp.connection.ServiceGenerator;
-import com.example.sep4androidapp.connection.SleepTrackingApi;
+import com.example.sep4androidapp.connection.apis.SleepTrackingApi;
 import com.example.sep4androidapp.connection.responses.StartStopResponse;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static android.content.ContentValues.TAG;
-
 public class StartStopRepository {
     private static StartStopRepository instance;
-    private MutableLiveData<Boolean> status;
 
     private StartStopRepository() {
-        status = new MutableLiveData<>();
     }
 
     public static synchronized StartStopRepository getInstance() {
@@ -38,7 +30,11 @@ public class StartStopRepository {
         call.enqueue(new Callback<StartStopResponse>() {
             @Override
             public void onResponse(Call<StartStopResponse> call, Response<StartStopResponse> response) {
-                Log.i("StartStopRepo", "Start response: " + response.code());
+                if (response.code() == 200) {
+                    Log.i("StartStopRepo", "Successfully started device");
+                } else {
+                    Log.i("StartStopRepo", "Response during starting: " + response.code());
+                }
             }
 
             @Override
@@ -54,12 +50,16 @@ public class StartStopRepository {
         call.enqueue(new Callback<StartStopResponse>() {
             @Override
             public void onResponse(Call<StartStopResponse> call, Response<StartStopResponse> response) {
-                Log.i("StartStopRepo", "Stop response: " + response.code());
+                if (response.code() == 200) {
+                    Log.i("StartStopRepo", "Successfully stopped device");
+                } else {
+                    Log.i("StartStopRepo", "Response during stopping: " + response.code());
+                }
             }
 
             @Override
             public void onFailure(Call<StartStopResponse> call, Throwable t) {
-                Log.i("StartStopRepo", "Stop failed: " + t.getMessage());
+                Log.i("StartStopRepo", "Stopping failed: " + t.getMessage());
             }
         });
     }
@@ -67,27 +67,22 @@ public class StartStopRepository {
     public void receiveStatus(String deviceId, final ApiCallBack callBack) {
         SleepTrackingApi sleepTrackingApi = ServiceGenerator.getSleepTrackingApi();
         Call<Boolean> call = sleepTrackingApi.getStatus(deviceId);
-
         call.enqueue(new Callback<Boolean>() {
             @Override
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                Log.i("StartStopRepo", "Receiving response: " + response.code() + " DeviceId: " + deviceId + " "+ response.body());
                 if (response.code() == 200) {
-                    if(response.body() != null)
-                    {
+                    if (response.body() != null) {
                         callBack.onResponse(response.body());
                     }
+                } else {
+                    Log.i("StartStopRepo", "Response during receiveStatus: " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<Boolean> call, Throwable t) {
                 Log.i("StartStopRepo", "Receiving failed: " + t.getMessage());
-                call.cancel();
-                callBack.onResponse(false);
             }
         });
-
     }
-
 }

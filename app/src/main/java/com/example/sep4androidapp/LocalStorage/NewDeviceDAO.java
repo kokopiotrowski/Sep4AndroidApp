@@ -14,12 +14,10 @@ public interface NewDeviceDAO {
     @Insert
     void insertNewDevice(NewDeviceModel deviceModel);
 
-    @Query("SELECT*FROM newDevice_table")
-    LiveData<List<NewDeviceModel>> getAllDevices();
-
     @Delete
     void deleteDevice(NewDeviceModel device);
 
-    @Query("DELETE FROM newDevice_table")
-    void deleteAllDevices();
+    @Query("SELECT*FROM newDevice_table")
+    LiveData<List<NewDeviceModel>> getAllDevices();
+
 }

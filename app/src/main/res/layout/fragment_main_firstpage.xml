@@ -41,10 +41,10 @@
                         android:id="@+id/timeStamp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-
                         android:gravity="center_vertical"
                         android:paddingStart="10dp"
-                        tools:ignore="RtlSymmetry" />
+                        tools:ignore="RtlSymmetry"
+                        tools:text="No data" />
 
                 </LinearLayout>
 
@@ -119,8 +119,7 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="30dp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/currentTemperature"
-                        app:srcCompat="@drawable/lower" />
+                        app:layout_constraintTop_toBottomOf="@+id/currentTemperature" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 
@@ -187,8 +186,7 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="30dp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/currentCo2"
-                        app:srcCompat="@drawable/correct" />
+                        app:layout_constraintTop_toBottomOf="@+id/currentCo2" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 
@@ -255,8 +253,7 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="30dp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/currentHumidity"
-                        app:srcCompat="@drawable/higher" />
+                        app:layout_constraintTop_toBottomOf="@+id/currentHumidity" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
         </LinearLayout>

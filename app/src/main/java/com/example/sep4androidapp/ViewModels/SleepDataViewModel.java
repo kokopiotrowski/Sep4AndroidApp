@@ -20,7 +20,6 @@ public class SleepDataViewModel extends AndroidViewModel {
 
     public SleepDataViewModel(@NonNull Application application) {
         super(application);
-
         reportRepository = ReportRepository.getInstance();
         roomsRepository = RoomsRepository.getInstance();
     }
@@ -29,30 +28,21 @@ public class SleepDataViewModel extends AndroidViewModel {
         return roomsRepository.getList();
     }
 
-    public void updateSleepSessions(String deviceId){
-
+    public void updateSleepSessions(String deviceId) {
         reportRepository.updateSleepFragmentSessions(deviceId);
-
     }
 
-    public LiveData<List<SleepSession>> getSleepSessions()
-    {
+    public LiveData<List<SleepSession>> getSleepSessions() {
         return reportRepository.getSleepSessionForFragment();
     }
 
-    public LiveData<SleepData> getSleepData()
-    {
+    public LiveData<SleepData> getSleepData() {
         return reportRepository.getSleepData();
     }
 
-    public void updateSleepData(int sleepId){
+    public void updateSleepData(int sleepId) {
 
         reportRepository.updateSleepData(sleepId);
-
     }
 
-    public void updateDevices(){
-
-        roomsRepository.updateRooms();
-    }
 }

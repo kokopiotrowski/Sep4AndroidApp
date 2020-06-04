@@ -1,16 +1,13 @@
-package com.example.sep4androidapp.Adapter;
+package com.example.sep4androidapp.fragments.roomFragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,10 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.sep4androidapp.Entities.Device;
 import com.example.sep4androidapp.R;
 import com.example.sep4androidapp.ViewModels.StartStopViewModel;
-import com.example.sep4androidapp.connection.ApiCallBack;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class RoomsAdapter extends ListAdapter<Device, RoomsAdapter.RoomHolder> {
 

@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-
 import com.example.sep4androidapp.Entities.Device;
 import com.example.sep4androidapp.Entities.Preferences;
 import com.example.sep4androidapp.Entities.SleepSession;
@@ -20,7 +19,6 @@ import java.util.List;
 
 
 public class HumidityFragmentViewModel extends AndroidViewModel {
-
     private RoomsRepository roomsRepository;
     private PreferencesRepository preferencesRepository;
     private ReportRepository reportRepository;
@@ -32,14 +30,11 @@ public class HumidityFragmentViewModel extends AndroidViewModel {
         reportRepository = ReportRepository.getInstance();
     }
 
-    public LiveData<String> getChosenDeviceId(){
-
+    public LiveData<String> getChosenDeviceId() {
         return roomsRepository.getChosenDeviceId();
-
     }
 
-
-    public void updateMonthlySleepSessions(String deviceId){
+    public void updateMonthlySleepSessions(String deviceId) {
         LocalDate today = LocalDate.now();
         LocalDate monthAgo = today.minusMonths(1);
         today.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
@@ -48,8 +43,7 @@ public class HumidityFragmentViewModel extends AndroidViewModel {
         reportRepository.updateMonthlySleepSessions(deviceId, today.toString(), monthAgo.toString());
     }
 
-
-    public void updateWeeklySleepSessions(String deviceId){
+    public void updateWeeklySleepSessions(String deviceId) {
         LocalDate today = LocalDate.now();
         LocalDate weekAgo = today.minusWeeks(1);
         today.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
@@ -59,7 +53,7 @@ public class HumidityFragmentViewModel extends AndroidViewModel {
     }
 
 
-    public void updateDailySleepSessions(String deviceId){
+    public void updateDailySleepSessions(String deviceId) {
         LocalDate today = LocalDate.now();
         LocalDate dayAgo = today.minusDays(1);
         today.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
@@ -68,21 +62,19 @@ public class HumidityFragmentViewModel extends AndroidViewModel {
         reportRepository.updateDailySleepSessions(deviceId, today.toString(), dayAgo.toString());
     }
 
-    public LiveData<Preferences> getPreferences()
-    {
+    public LiveData<Preferences> getPreferences() {
         return preferencesRepository.getPreferences();
     }
 
-    public LiveData<List<SleepSession>> getSleepSessionsDaily(){
-
+    public LiveData<List<SleepSession>> getSleepSessionsDaily() {
         return reportRepository.getSleepSessionsDaily();
     }
-    public LiveData<List<SleepSession>> getSleepSessionsWeekly(){
 
+    public LiveData<List<SleepSession>> getSleepSessionsWeekly() {
         return reportRepository.getSleepSessionsWeekly();
     }
-    public LiveData<List<SleepSession>> getSleepSessionsMonthly(){
 
+    public LiveData<List<SleepSession>> getSleepSessionsMonthly() {
         return reportRepository.getSleepSessionsMonthly();
     }
 
@@ -93,5 +85,4 @@ public class HumidityFragmentViewModel extends AndroidViewModel {
     public void updateRoomsForFragments() {
         roomsRepository.updateRoomsForFragments();
     }
-
 }

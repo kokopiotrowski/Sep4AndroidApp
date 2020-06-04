@@ -18,9 +18,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-
 public class Co2FragmentViewModel extends AndroidViewModel {
-
     private RoomsRepository roomsRepository;
     private PreferencesRepository preferencesRepository;
     private ReportRepository reportRepository;
@@ -33,11 +31,8 @@ public class Co2FragmentViewModel extends AndroidViewModel {
     }
 
     public LiveData<String> getChosenDeviceId(){
-
         return roomsRepository.getChosenDeviceId();
-
     }
-
 
     public void updateMonthlySleepSessions(String deviceId){
         LocalDate today = LocalDate.now();
@@ -47,7 +42,6 @@ public class Co2FragmentViewModel extends AndroidViewModel {
 
         reportRepository.updateMonthlySleepSessions(deviceId, today.toString(), monthAgo.toString());
     }
-
 
     public void updateWeeklySleepSessions(String deviceId){
         LocalDate today = LocalDate.now();
@@ -74,15 +68,12 @@ public class Co2FragmentViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<SleepSession>> getSleepSessionsDaily(){
-
         return reportRepository.getSleepSessionsDaily();
     }
     public LiveData<List<SleepSession>> getSleepSessionsWeekly(){
-
         return reportRepository.getSleepSessionsWeekly();
     }
     public LiveData<List<SleepSession>> getSleepSessionsMonthly(){
-
         return reportRepository.getSleepSessionsMonthly();
     }
 
@@ -93,5 +84,4 @@ public class Co2FragmentViewModel extends AndroidViewModel {
     public void updateRoomsForFragments() {
         roomsRepository.updateRoomsForFragments();
     }
-
 }

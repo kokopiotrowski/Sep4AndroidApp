@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-
 import com.example.sep4androidapp.Entities.Device;
 import com.example.sep4androidapp.Entities.Preferences;
 import com.example.sep4androidapp.Entities.SleepSession;
@@ -20,7 +19,6 @@ import java.util.List;
 
 
 public class TemperatureFragmentViewModel extends AndroidViewModel {
-
     private RoomsRepository roomsRepository;
     private PreferencesRepository preferencesRepository;
     private ReportRepository reportRepository;
@@ -36,7 +34,6 @@ public class TemperatureFragmentViewModel extends AndroidViewModel {
         return roomsRepository.getChosenDeviceId();
     }
 
-
     public void updateMonthlySleepSessions(String deviceId) {
         LocalDate today = LocalDate.now();
         LocalDate monthAgo = today.minusMonths(1);
@@ -46,7 +43,6 @@ public class TemperatureFragmentViewModel extends AndroidViewModel {
         reportRepository.updateMonthlySleepSessions(deviceId, today.toString(), monthAgo.toString());
     }
 
-
     public void updateWeeklySleepSessions(String deviceId) {
         LocalDate today = LocalDate.now();
         LocalDate weekAgo = today.minusWeeks(1);
@@ -55,7 +51,6 @@ public class TemperatureFragmentViewModel extends AndroidViewModel {
 
         reportRepository.updateWeeklySleepSessions(deviceId, today.toString(), weekAgo.toString());
     }
-
 
     public void updateDailySleepSessions(String deviceId) {
         LocalDate today = LocalDate.now();
@@ -92,5 +87,4 @@ public class TemperatureFragmentViewModel extends AndroidViewModel {
     public void updateRoomsForFragments() {
         roomsRepository.updateRoomsForFragments();
     }
-
 }

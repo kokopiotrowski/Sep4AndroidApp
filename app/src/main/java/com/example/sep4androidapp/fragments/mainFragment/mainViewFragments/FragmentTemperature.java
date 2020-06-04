@@ -1,7 +1,6 @@
 package com.example.sep4androidapp.fragments.mainFragment.mainViewFragments;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sep4androidapp.Entities.SleepSession;
 import com.example.sep4androidapp.R;
-import com.example.sep4androidapp.ValueFormatters.FragmentsValueFormatter;
+import com.example.sep4androidapp.fragments.sleepFragment.ValueFormatters.FragmentsValueFormatter;
 import com.example.sep4androidapp.ViewModels.TemperatureFragmentViewModel;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.LimitLine;

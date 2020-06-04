@@ -1,4 +1,4 @@
-package com.example.sep4androidapp.connection;
+package com.example.sep4androidapp.connection.apis;
 
 public interface ApiCallBack {
     void onResponse(boolean success);

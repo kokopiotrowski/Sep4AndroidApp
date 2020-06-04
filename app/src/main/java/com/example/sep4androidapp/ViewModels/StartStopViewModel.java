@@ -4,11 +4,9 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.example.sep4androidapp.Repositories.StartStopRepository;
-import com.example.sep4androidapp.connection.ApiCallBack;
+import com.example.sep4androidapp.connection.apis.ApiCallBack;
 
 public class StartStopViewModel extends AndroidViewModel {
     private StartStopRepository repository;
