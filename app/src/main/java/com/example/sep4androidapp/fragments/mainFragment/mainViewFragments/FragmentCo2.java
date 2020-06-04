@@ -71,11 +71,6 @@ public class FragmentCo2 extends Fragment {
 
         viewModel.getChosenDeviceId().observe(getViewLifecycleOwner(), s -> {
             deviceId = s;
-            /*viewModel.updateDailySleepSessions(deviceId);
-            viewModel.updateWeeklySleepSessions(deviceId);
-            viewModel.updateMonthlySleepSessions(deviceId);
-
-            viewModel.updateRoomsForFragments();*/
         });
 
         viewModel.getDevicesForFragments().observe(getViewLifecycleOwner(), devices -> {
@@ -89,6 +84,10 @@ public class FragmentCo2 extends Fragment {
 
         viewModel.getSleepSessionsDaily().observe(getViewLifecycleOwner(), sleepSessions -> {
             dailyBarChart.clear();
+            if(dailyBarDataSet != null){
+
+                dailyBarDataSet.clear();
+            }
             sleepSessionsDaily.clear();
             dailyBarChart.getAxisLeft().removeAllLimitLines();
 
@@ -120,8 +119,8 @@ public class FragmentCo2 extends Fragment {
 
             leftYAxis.setAxisMinimum(0);
             rightYAxis.setAxisMinimum(0);
-            leftYAxis.setAxisMaximum((float) co2Max + 100);
-            rightYAxis.setAxisMaximum((float) co2Max + 100);
+            leftYAxis.setAxisMaximum((float) co2Max + 200);
+            rightYAxis.setAxisMaximum((float) co2Max + 200);
             xAxis.setDrawLabels(true);
             xAxis.setValueFormatter(new FragmentsValueFormatter());
 
@@ -129,6 +128,10 @@ public class FragmentCo2 extends Fragment {
         });
         viewModel.getSleepSessionsWeekly().observe(getViewLifecycleOwner(), sleepSessions -> {
             weeklyBarChart.clear();
+            if(weeklyBarDataSet != null){
+
+                weeklyBarDataSet.clear();
+            }
             sleepSessionsWeekly.clear();
             weeklyBarChart.getAxisLeft().removeAllLimitLines();
             sleepSessionsWeekly = sleepSessions;
@@ -160,8 +163,8 @@ public class FragmentCo2 extends Fragment {
 
             leftYAxis.setAxisMinimum(0);
             rightYAxis.setAxisMinimum(0);
-            leftYAxis.setAxisMaximum((float) co2Max + 100);
-            rightYAxis.setAxisMaximum((float) co2Max + 100);
+            leftYAxis.setAxisMaximum((float) co2Max + 200);
+            rightYAxis.setAxisMaximum((float) co2Max + 200);
             xAxis.setDrawLabels(true);
             xAxis.setValueFormatter(new FragmentsValueFormatter());
 
@@ -170,6 +173,10 @@ public class FragmentCo2 extends Fragment {
 
         viewModel.getSleepSessionsMonthly().observe(getViewLifecycleOwner(), sleepSessions -> {
             monthlyBarChart.clear();
+            if(monthlyBarDataSet != null){
+
+                monthlyBarDataSet.clear();
+            }
             sleepSessionsMonthly.clear();
             monthlyBarChart.getAxisLeft().removeAllLimitLines();
             sleepSessionsMonthly = sleepSessions;
@@ -200,8 +207,9 @@ public class FragmentCo2 extends Fragment {
 
             leftYAxis.setAxisMinimum(0);
             rightYAxis.setAxisMinimum(0);
-            leftYAxis.setAxisMaximum((float) co2Max + 100);
-            rightYAxis.setAxisMaximum((float) co2Max + 100);
+
+            leftYAxis.setAxisMaximum((float) co2Max + 200);
+            rightYAxis.setAxisMaximum((float) co2Max + 200);
             xAxis.setDrawLabels(true);
             xAxis.setValueFormatter(new FragmentsValueFormatter());
 

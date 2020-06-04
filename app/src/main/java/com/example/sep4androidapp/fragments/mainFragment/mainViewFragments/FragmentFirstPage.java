@@ -224,11 +224,11 @@ public class FragmentFirstPage extends Fragment {
                 viewModel.showPreferences(idList.get(position));
                 viewModel.setChosenDeviceId(idList.get(position));
 
-                tempViewModel.updateDailySleepSessions(idList.get(position));
-                tempViewModel.updateWeeklySleepSessions(idList.get(position));
-                tempViewModel.updateMonthlySleepSessions(idList.get(position));
+                viewModel.updateDailySleepSessions(idList.get(position));
+                viewModel.updateWeeklySleepSessions(idList.get(position));
+                viewModel.updateMonthlySleepSessions(idList.get(position));
 
-                tempViewModel.updateRoomsForFragments();
+                viewModel.updateRoomsForFragments();
 
 
                 if (!isConnected) {

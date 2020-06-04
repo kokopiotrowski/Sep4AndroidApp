@@ -51,38 +51,27 @@
                     android:id="@+id/averageCo2Num"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="36dp"
                     android:layout_marginEnd="56dp"
                     android:text="@string/dash"
                     android:textSize="23sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.983"
+                    app:layout_constraintHorizontal_bias="0.935"
                     app:layout_constraintStart_toEndOf="@+id/averageCo2"
-                    app:layout_constraintTop_toBottomOf="@+id/averageSoundNum" />
-
-                <TextView
-                    android:id="@+id/averageSoundNum"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginEnd="56dp"
-                    android:text="@string/dash"
-                    android:textSize="23sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.966"
-                    app:layout_constraintStart_toEndOf="@+id/averageSound"
-                    app:layout_constraintTop_toBottomOf="@+id/averageHumidityNum" />
+                    app:layout_constraintTop_toBottomOf="@+id/averageHumidityNum"
+                    app:layout_constraintVertical_bias="0.075" />
 
                 <TextView
                     android:id="@+id/averageHumidityNum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="32dp"
+                    android:layout_marginTop="52dp"
                     android:layout_marginEnd="56dp"
                     android:text="@string/dash"
                     android:textSize="23sp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.949"
+                    app:layout_constraintHorizontal_bias="0.935"
                     app:layout_constraintStart_toEndOf="@+id/averageHumidity"
                     app:layout_constraintTop_toBottomOf="@+id/averageTemperatureNum" />
 
@@ -91,20 +80,9 @@
                     android:layout_width="190dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="32dp"
-                    android:layout_marginTop="20dp"
                     android:text="@string/average_co2"
                     android:textSize="23sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/averageSound" />
-
-                <TextView
-                    android:id="@+id/averageSound"
-                    android:layout_width="190dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginTop="20dp"
-                    android:text="@string/average_sound"
-                    android:textSize="23sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/averageHumidity" />
 
@@ -113,7 +91,7 @@
                     android:layout_width="190dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="32dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="40dp"
                     android:text="@string/average_humidity"
                     android:textSize="23sp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -139,7 +117,7 @@
                     android:text="@string/dash"
                     android:textSize="23sp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.966"
+                    app:layout_constraintHorizontal_bias="0.935"
                     app:layout_constraintStart_toEndOf="@+id/averageTemperature"
                     app:layout_constraintTop_toTopOf="parent" />
 

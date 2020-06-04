@@ -23,6 +23,7 @@ import com.example.sep4androidapp.connection.responses.SleepDataResponse;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -192,7 +193,7 @@ public class ReportRepository {
             @Override
             public void onResponse(Call<ReportResponse> call, Response<ReportResponse> response) {
                 if (response.code() == 200) {
-                    sleepSessionsDaily.setValue(response.body().getSleepSessions());
+                    sleepSessionsDaily.setValue(setAverage(response.body().getSleepSessions()));
                 } else {
                     Log.i("ReportRepo", "Response code received on updateDailySleepSessions: " + response.code());
                 }
@@ -212,7 +213,7 @@ public class ReportRepository {
             @Override
             public void onResponse(Call<ReportResponse> call, Response<ReportResponse> response) {
                 if (response.code() == 200) {
-                    sleepSessionsWeekly.setValue(response.body().getSleepSessions());
+                    sleepSessionsWeekly.setValue(setAverage(response.body().getSleepSessions()));
                 } else {
                     Log.i("ReportRepo", "Response code received on updateWeeklySleepSessions: " + response.code());
                 }
@@ -232,7 +233,7 @@ public class ReportRepository {
             @Override
             public void onResponse(Call<ReportResponse> call, Response<ReportResponse> response) {
                 if (response.code() == 200) {
-                    sleepSessionsMonthly.setValue(response.body().getSleepSessions());
+                    sleepSessionsMonthly.setValue(setAverage(response.body().getSleepSessions()));
                 } else {
                     Log.i("ReportRepo", "Response code received on updateMonthlySleepSessions: " + response.code());
                 }
@@ -273,5 +274,29 @@ public class ReportRepository {
 
     public LiveData<RoomCondition> getRoomCondition() {
         return roomCondition;
+    }
+
+
+    public List<SleepSession> setAverage(List<SleepSession> sleepSessions){
+
+        List<SleepSession> finalSleepSessions = sleepSessions;
+
+        sleepSessions = sleepSessions.stream()
+                .map(s -> s.getTimeStart().toLocalDate()).distinct() // Get all LocalDates
+                .map(d -> finalSleepSessions.stream()
+                        .filter(s -> s.getTimeStart().toLocalDate().equals(d)).collect(Collectors.toList()))// Map sessions to dates (Stream<Stream< SleepSession >>)
+                .map(s -> new SleepSession(
+                        -1, "",
+                        s.get(0).getTimeStart().toLocalDate().atStartOfDay(),
+                        null, 0,
+                        s.stream().mapToDouble(SleepSession::getAverageCo2).average().getAsDouble(),
+                        s.stream().mapToDouble(SleepSession::getAverageHumidity).average().getAsDouble(),
+                        s.stream().mapToDouble(SleepSession::getAverageTemperature).average().getAsDouble(),
+                        s.stream().mapToDouble(SleepSession::getAverageSound).average().getAsDouble()
+                )) // Map
+                .collect(Collectors.toList());
+
+        return sleepSessions;
+
     }
 }

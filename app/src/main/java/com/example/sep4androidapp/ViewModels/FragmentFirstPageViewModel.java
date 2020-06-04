@@ -21,6 +21,8 @@ import com.example.sep4androidapp.Repositories.RoomsRepository;
 import com.example.sep4androidapp.Repositories.StartStopRepository;
 import com.example.sep4androidapp.connection.apis.ApiCallBack;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Timer;
@@ -134,5 +136,36 @@ public class FragmentFirstPageViewModel extends AndroidViewModel {
 
     public LiveData<List<NewDeviceModel>> getAllLocalDevices() {
         return databaseRepository.getAllDevices();
+    }
+
+    public void updateMonthlySleepSessions(String deviceId) {
+        LocalDate today = LocalDate.now();
+        LocalDate monthAgo = today.minusMonths(1);
+        today.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        monthAgo.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+        reportRepository.updateMonthlySleepSessions(deviceId, today.toString(), monthAgo.toString());
+    }
+
+    public void updateWeeklySleepSessions(String deviceId) {
+        LocalDate today = LocalDate.now();
+        LocalDate weekAgo = today.minusWeeks(1);
+        today.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        weekAgo.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+        reportRepository.updateWeeklySleepSessions(deviceId, today.toString(), weekAgo.toString());
+    }
+
+    public void updateDailySleepSessions(String deviceId) {
+        LocalDate today = LocalDate.now();
+        LocalDate dayAgo = today.minusDays(1);
+        today.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        dayAgo.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+        reportRepository.updateDailySleepSessions(deviceId, today.toString(), dayAgo.toString());
+    }
+
+    public void updateRoomsForFragments() {
+        roomsRepository.updateRoomsForFragments();
     }
 }

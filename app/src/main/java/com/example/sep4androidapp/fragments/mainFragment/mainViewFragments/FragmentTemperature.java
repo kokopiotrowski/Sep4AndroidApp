@@ -1,6 +1,7 @@
 package com.example.sep4androidapp.fragments.mainFragment.mainViewFragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,7 +78,6 @@ public class FragmentTemperature extends Fragment {
 
         viewModel.getChosenDeviceId().observe(getViewLifecycleOwner(), s -> {
             deviceId = s;
-
         });
 
         viewModel.getDevicesForFragments().observe(getViewLifecycleOwner(), devices -> {
@@ -91,13 +91,14 @@ public class FragmentTemperature extends Fragment {
 
         viewModel.getSleepSessionsDaily().observe(getViewLifecycleOwner(), sleepSessions -> {
             dailyBarChart.clear();
+            if(dailyBarDataSet != null){
+
+                dailyBarDataSet.clear();
+            }
             sleepSessionsDaily.clear();
             dailyBarChart.getAxisLeft().removeAllLimitLines();
 
-
-
-
-            sleepSessionsDaily = setAverage(sleepSessions);
+            sleepSessionsDaily = sleepSessions;
 
 
             for (int i = 0; i < sleepSessionsDaily.size(); i++) {
@@ -129,8 +130,8 @@ public class FragmentTemperature extends Fragment {
 
             leftYAxis.setAxisMinimum(0);
             rightYAxis.setAxisMinimum(0);
-            leftYAxis.setAxisMaximum((float) temperatureMax + 5);
-            rightYAxis.setAxisMaximum((float) temperatureMax + 5);
+            leftYAxis.setAxisMaximum((float) 100);
+            rightYAxis.setAxisMaximum((float) 100);
             xAxis.setDrawLabels(true);
             xAxis.setValueFormatter(new FragmentsValueFormatter());
             dailyBarChart.invalidate();
@@ -145,12 +146,8 @@ public class FragmentTemperature extends Fragment {
             sleepSessionsWeekly.clear();
             weeklyBarChart.getAxisLeft().removeAllLimitLines();
 
-            Log.i("SIZE1", String.valueOf(sleepSessions.size()));
 
-
-            sleepSessionsWeekly = setAverage(sleepSessions);
-
-            Log.i("SIZE2", String.valueOf(sleepSessionsWeekly.size()));
+            sleepSessionsWeekly = sleepSessions;
 
             for (int i = 0; i < sleepSessionsWeekly.size(); i++) {
                 SleepSession cSleep = sleepSessionsWeekly.get(i);
@@ -192,11 +189,14 @@ public class FragmentTemperature extends Fragment {
 
         viewModel.getSleepSessionsMonthly().observe(getViewLifecycleOwner(), sleepSessions -> {
             monthlyBarChart.clear();
+            if(monthlyBarDataSet != null){
+
+                monthlyBarDataSet.clear();
+            }
             sleepSessionsMonthly.clear();
             monthlyBarChart.getAxisLeft().removeAllLimitLines();
 
-
-            sleepSessionsMonthly = setAverage(sleepSessions);
+            sleepSessionsMonthly = sleepSessions;
 
             for (int i = 0; i < sleepSessionsMonthly.size(); i++) {
 
@@ -227,8 +227,8 @@ public class FragmentTemperature extends Fragment {
 
             leftYAxis.setAxisMinimum(0);
             rightYAxis.setAxisMinimum(0);
-            leftYAxis.setAxisMaximum((float) temperatureMax + 5);
-            rightYAxis.setAxisMaximum((float) temperatureMax + 5);
+            leftYAxis.setAxisMaximum((float) 100);
+            rightYAxis.setAxisMaximum((float) 100);
             xAxis.setDrawLabels(true);
             xAxis.setValueFormatter(new FragmentsValueFormatter());
 
@@ -237,27 +237,4 @@ public class FragmentTemperature extends Fragment {
         return v;
     }
 
-
-    public List<SleepSession> setAverage(List<SleepSession> sleepSessions){
-
-        List<SleepSession> finalSleepSessions = sleepSessions;
-
-        sleepSessions = sleepSessions.stream()
-                .map(s -> s.getTimeStart().toLocalDate()).distinct() // Get all LocalDates
-                .map(d -> finalSleepSessions.stream()
-                        .filter(s -> s.getTimeStart().toLocalDate().equals(d)).collect(Collectors.toList()))// Map sessions to dates (Stream<Stream< SleepSession >>)
-                .map(s -> new SleepSession(
-                        -1, "",
-                        s.get(0).getTimeStart().toLocalDate().atStartOfDay(),
-                        null, 0,
-                        s.stream().mapToDouble(SleepSession::getAverageCo2).average().getAsDouble(),
-                        s.stream().mapToDouble(SleepSession::getAverageHumidity).average().getAsDouble(),
-                        s.stream().mapToDouble(SleepSession::getAverageTemperature).average().getAsDouble(),
-                        s.stream().mapToDouble(SleepSession::getAverageSound).average().getAsDouble()
-                )) // Map
-                .collect(Collectors.toList());
-
-        return sleepSessions;
-
-    }
 }
