@@ -13,8 +13,6 @@ import com.example.sep4androidapp.Repositories.PreferencesRepository;
 import com.example.sep4androidapp.Repositories.ReportRepository;
 import com.example.sep4androidapp.Repositories.RoomsRepository;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 
@@ -34,33 +32,6 @@ public class HumidityFragmentViewModel extends AndroidViewModel {
         return roomsRepository.getChosenDeviceId();
     }
 
-    public void updateMonthlySleepSessions(String deviceId) {
-        LocalDate today = LocalDate.now();
-        LocalDate monthAgo = today.minusMonths(1);
-        today.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        monthAgo.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-
-        reportRepository.updateMonthlySleepSessions(deviceId, today.toString(), monthAgo.toString());
-    }
-
-    public void updateWeeklySleepSessions(String deviceId) {
-        LocalDate today = LocalDate.now();
-        LocalDate weekAgo = today.minusWeeks(1);
-        today.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        weekAgo.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-
-        reportRepository.updateWeeklySleepSessions(deviceId, today.toString(), weekAgo.toString());
-    }
-
-
-    public void updateDailySleepSessions(String deviceId) {
-        LocalDate today = LocalDate.now();
-        LocalDate dayAgo = today.minusDays(1);
-        today.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        dayAgo.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-
-        reportRepository.updateDailySleepSessions(deviceId, today.toString(), dayAgo.toString());
-    }
 
     public LiveData<Preferences> getPreferences() {
         return preferencesRepository.getPreferences();
@@ -80,9 +51,5 @@ public class HumidityFragmentViewModel extends AndroidViewModel {
 
     public LiveData<List<Device>> getDevicesForFragments() {
         return roomsRepository.getListForFragments();
-    }
-
-    public void updateRoomsForFragments() {
-        roomsRepository.updateRoomsForFragments();
     }
 }

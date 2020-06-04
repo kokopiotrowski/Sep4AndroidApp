@@ -23,6 +23,7 @@ import com.example.sep4androidapp.Entities.Preferences;
 import com.example.sep4androidapp.LocalStorage.ConnectionLiveData;
 import com.example.sep4androidapp.R;
 import com.example.sep4androidapp.ViewModels.FragmentFirstPageViewModel;
+import com.example.sep4androidapp.ViewModels.TemperatureFragmentViewModel;
 import com.example.sep4androidapp.fragments.factFragment.FactFragmentDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -34,6 +35,7 @@ import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 public class FragmentFirstPage extends Fragment {
     private Spinner spinner;
     private FragmentFirstPageViewModel viewModel;
+    private TemperatureFragmentViewModel tempViewModel;
     private TextView currentTemperature, currentHumidity,
             currentCO2, timeStamp, expectedTemperature, expectedHumidity, expectedCO2;
     private Switch deviceSwitch;
@@ -71,6 +73,10 @@ public class FragmentFirstPage extends Fragment {
         CO2Status = v.findViewById(R.id.Co2Status);
 
         viewModel = new ViewModelProvider(this).get(FragmentFirstPageViewModel.class);
+
+        tempViewModel = new ViewModelProvider(this).get(TemperatureFragmentViewModel.class);
+
+
         viewModel.getFactRandomly();
         viewModel.getFact().observe(getViewLifecycleOwner(), fact -> {
             savedFact = new Fact(fact.getTitle(), fact.getContent(), fact.getSource(), fact.getSourceUrl());
@@ -217,6 +223,13 @@ public class FragmentFirstPage extends Fragment {
                 viewModel.updateRoomCondition(idList.get(position));
                 viewModel.showPreferences(idList.get(position));
                 viewModel.setChosenDeviceId(idList.get(position));
+
+                viewModel.updateDailySleepSessions(idList.get(position));
+                viewModel.updateWeeklySleepSessions(idList.get(position));
+                viewModel.updateMonthlySleepSessions(idList.get(position));
+
+                viewModel.updateRoomsForFragments();
+
 
                 if (!isConnected) {
                     Preferences preferences = viewModel.getPreferencesById(idList.get(position));

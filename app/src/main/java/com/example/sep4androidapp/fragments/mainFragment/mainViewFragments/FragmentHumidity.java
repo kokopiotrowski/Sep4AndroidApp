@@ -75,10 +75,6 @@ public class FragmentHumidity extends Fragment {
 
         viewModel.getChosenDeviceId().observe(getViewLifecycleOwner(), s -> {
             deviceId = s;
-            viewModel.updateDailySleepSessions(deviceId);
-            viewModel.updateWeeklySleepSessions(deviceId);
-            viewModel.updateMonthlySleepSessions(deviceId);
-            viewModel.updateRoomsForFragments();
         });
 
         viewModel.getDevicesForFragments().observe(getViewLifecycleOwner(), devices -> {
@@ -91,6 +87,10 @@ public class FragmentHumidity extends Fragment {
 
         viewModel.getSleepSessionsDaily().observe(getViewLifecycleOwner(), sleepSessions -> {
             dailyBarChart.clear();
+            if(dailyBarDataSet != null){
+
+                dailyBarDataSet.clear();
+            }
             sleepSessionsDaily.clear();
             dailyBarChart.getAxisLeft().removeAllLimitLines();
             sleepSessionsDaily = sleepSessions;
@@ -132,6 +132,10 @@ public class FragmentHumidity extends Fragment {
         });
         viewModel.getSleepSessionsWeekly().observe(getViewLifecycleOwner(), sleepSessions -> {
             weeklyBarChart.clear();
+            if(weeklyBarDataSet != null){
+
+                weeklyBarDataSet.clear();
+            }
             sleepSessionsWeekly.clear();
             weeklyBarChart.getAxisLeft().removeAllLimitLines();
             sleepSessionsWeekly = sleepSessions;
@@ -175,6 +179,10 @@ public class FragmentHumidity extends Fragment {
 
         viewModel.getSleepSessionsMonthly().observe(getViewLifecycleOwner(), sleepSessions -> {
             monthlyBarChart.clear();
+
+            if(monthlyBarDataSet != null){
+                monthlyBarDataSet.clear();
+            }
             sleepSessionsMonthly.clear();
             monthlyBarChart.getAxisLeft().removeAllLimitLines();
             sleepSessionsMonthly = sleepSessions;

@@ -37,7 +37,7 @@ import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
 public class SleepFragment extends Fragment {
     private SleepDataViewModel viewModel;
-    private TextView sound, temperature, humidity, co2;
+    private TextView temperature, humidity, co2;
     private LineChart mpLineChart;
     private Spinner deviceSpinner;
     private Spinner sleepSpinner;
@@ -52,14 +52,13 @@ public class SleepFragment extends Fragment {
     private ArrayAdapter<String> sleepAdapter;
 
     private ArrayList<Entry> temperatureValues = new ArrayList<>();
-    private ArrayList<Entry> soundValues = new ArrayList<>();
     private ArrayList<Entry> co2Values = new ArrayList<>();
     private ArrayList<Entry> humidityValues = new ArrayList<>();
     private ArrayList<ILineDataSet> dataSets = new ArrayList<>();
 
     long numberOfSeconds = 0;
 
-    private LineDataSet temperatureDataSet, soundDataSet, humidityDataSet, co2DataSet;
+    private LineDataSet temperatureDataSet, humidityDataSet, co2DataSet;
     private LineData data;
     private Spinner sleepDataSpinner;
 
@@ -72,7 +71,6 @@ public class SleepFragment extends Fragment {
         sleepSpinner = view.findViewById(R.id.sleepSpinner);
         sleepDataSpinner = view.findViewById(R.id.spinnerSleepData);
         mpLineChart = view.findViewById(R.id.lineChart);
-        sound = view.findViewById(R.id.averageSoundNum);
         temperature = view.findViewById(R.id.averageTemperatureNum);
         humidity = view.findViewById(R.id.averageHumidityNum);
         co2 = view.findViewById(R.id.averageCo2Num);
@@ -131,7 +129,6 @@ public class SleepFragment extends Fragment {
         });
 
         viewModel.getSleepData().observe(getViewLifecycleOwner(), sleepData -> {
-            sound.setText(String.format("%.0f", sleepData.getAverageSound()) + " dB");
             temperature.setText(String.format("%.0f", sleepData.getAverageTemperature()) + " °C");
             humidity.setText(String.format("%.0f", sleepData.getAverageHumidity()) + " %");
             co2.setText(String.format("%.0f", sleepData.getAverageCo2()) + " ppm");
@@ -150,25 +147,22 @@ public class SleepFragment extends Fragment {
                 float totalSeconds = (float) seconds + (float) numberOfSeconds;
 
                 float temperature = (float) temp.getTemperature();
-                float sound = (float) temp.getSound();
                 float humidity = (float) temp.getHumidity();
                 float co2 = (float) temp.getCo2();
 
                 setTemperatureValues(temperature, totalSeconds);
-                setSoundValues(sound, totalSeconds);
                 setHumidityValues(humidity, totalSeconds);
                 setCo2Values(co2, totalSeconds);
             }
         });
 
         String[] arraySpinner = new String[]{
-                "-choose parameter-", "Temperature", "Sound", "Humidity", "Co2"
+                "-choose parameter-", "Temperature", "Humidity", "Co2"
         };
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_spinner_item, arraySpinner);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sleepDataSpinner.setAdapter(adapter);
-        //selection doesn't work on position 0, otherwise listener is activated while initializing the fragment and the array lists are still empty at that point (throws null pointer)
         sleepDataSpinner.setSelection(0, false);
         setListeners();
         return view;
@@ -207,10 +201,7 @@ public class SleepFragment extends Fragment {
                     temperatureDataSet = new LineDataSet(getTemperatureValues(), "Temperature");
                     dataSets.add(temperatureDataSet);
                 }
-                if (item.equals("Sound")) {
-                    soundDataSet = new LineDataSet(getSoundValues(), "Sound");
-                    dataSets.add(soundDataSet);
-                }
+
                 if (item.equals("Humidity")) {
                     humidityDataSet = new LineDataSet(getHumidityValues(), "Humidity");
                     dataSets.add(humidityDataSet);
@@ -239,10 +230,6 @@ public class SleepFragment extends Fragment {
         temperatureValues.add(new Entry(index, temperature));
     }
 
-    private void setSoundValues(float sound, float index) {
-        soundValues.add(new Entry(index, sound));
-    }
-
     private void setHumidityValues(float humidity, float index) {
         humidityValues.add(new Entry(index, humidity));
     }
@@ -255,9 +242,6 @@ public class SleepFragment extends Fragment {
         return temperatureValues;
     }
 
-    private ArrayList<Entry> getSoundValues() {
-        return soundValues;
-    }
 
     private ArrayList<Entry> getCo2Values() {
         return co2Values;
