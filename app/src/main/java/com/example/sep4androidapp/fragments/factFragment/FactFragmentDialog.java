@@ -6,18 +6,21 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
+import androidx.fragment.app.DialogFragment;
 
 import com.example.sep4androidapp.R;
 
 import java.util.Objects;
 
-public class FactFragmentDialog extends AppCompatDialogFragment {
+public class FactFragmentDialog extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -41,6 +44,8 @@ public class FactFragmentDialog extends AppCompatDialogFragment {
             }
         }
         builder.setView(view);
+        builder.setCancelable(true);
+
         return builder.create();
     }
 

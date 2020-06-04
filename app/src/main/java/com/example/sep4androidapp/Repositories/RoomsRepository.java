@@ -26,30 +26,27 @@ public class RoomsRepository {
 
     private MutableLiveData<String> chosenDeviceId;
 
-    private RoomsRepository()
-    {
+    private RoomsRepository() {
         list = new MutableLiveData<>();
         listForFragments = new MutableLiveData<>();
         chosenDeviceId = new MutableLiveData<>();
     }
 
-    public static synchronized  RoomsRepository getInstance()
-    {
-        if(instance == null){
+    public static synchronized RoomsRepository getInstance() {
+        if (instance == null) {
             instance = new RoomsRepository();
         }
         return instance;
     }
 
-    public void updateRooms(){
+    public void updateRooms() {
         Log.i("Kurwa", "Japierdole");
         AccountDevicesApi api = ServiceGenerator.getAccountDevicesApi();
         Call<List<Device>> call = api.getDevices();
         call.enqueue(new Callback<List<Device>>() {
             @Override
             public void onResponse(Call<List<Device>> call, Response<List<Device>> response) {
-                if(response.code() == 200)
-                {
+                if (response.code() == 200) {
                     list.setValue(response.body());
                 }
                 Log.i("roomsRepo", "Update room: " + response.code());
@@ -62,14 +59,13 @@ public class RoomsRepository {
         });
     }
 
-    public void updateRoomsForFragments(){
+    public void updateRoomsForFragments() {
         AccountDevicesApi api = ServiceGenerator.getAccountDevicesApi();
         Call<List<Device>> call = api.getDevices();
         call.enqueue(new Callback<List<Device>>() {
             @Override
             public void onResponse(Call<List<Device>> call, Response<List<Device>> response) {
-                if(response.code() == 200)
-                {
+                if (response.code() == 200) {
                     listForFragments.setValue(response.body());
                 }
                 Log.i("roomsRepo", "Update room: " + response.code());
@@ -82,19 +78,20 @@ public class RoomsRepository {
         });
     }
 
-    public void deleteDevice(String deviceId, NewDeviceModel device)
-    {
+    public void deleteDevice(String deviceId, NewDeviceModel device) {
         AccountDevicesApi api = ServiceGenerator.getAccountDevicesApi();
         Call<Void> call = api.deleteDevice(deviceId);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 Log.i("roomsRepo", "Delete device succeeded" + response.code());
-                if(response.code() == 200)
-                {
+                if (response.code() == 200) {
                     DatabaseRepository databaseRepository = DatabaseRepository.getInstance(null);
                     databaseRepository.deleteDevice(device);
-                    databaseRepository.deletePreferences(databaseRepository.getPreferencesById(device.getDeviceId()));
+                    if (databaseRepository.getPreferencesById(device.getDeviceId()) != null) {
+                        Log.i("RoomsRepo", "DELETEPREF");
+                        databaseRepository.deletePreferences(databaseRepository.getPreferencesById(device.getDeviceId()));
+                    }
                 }
                 updateRooms();
             }
@@ -107,10 +104,11 @@ public class RoomsRepository {
         updateRooms();
     }
 
-    public LiveData<List<Device>> getList(){
+    public LiveData<List<Device>> getList() {
         return list;
     }
-    public LiveData<List<Device>> getListForFragments(){
+
+    public LiveData<List<Device>> getListForFragments() {
         return listForFragments;
     }
 
@@ -118,8 +116,7 @@ public class RoomsRepository {
         chosenDeviceId.setValue(deviceId);
     }
 
-    public LiveData<String> getChosenDeviceId()
-    {
+    public LiveData<String> getChosenDeviceId() {
         return chosenDeviceId;
     }
 }

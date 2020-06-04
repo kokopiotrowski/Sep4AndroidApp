@@ -51,6 +51,7 @@ public class FragmentFirstPage extends Fragment {
     private ArrayAdapter<String> adapter;
     private double temp, humidity, co2;
     private boolean isConnected, isActiveFragment;
+    private Fact savedFact;
 
     @SuppressLint({"SetTextI18n", "DefaultLocale", "RestrictedApi"})
     @Nullable
@@ -72,6 +73,11 @@ public class FragmentFirstPage extends Fragment {
         CO2Status = v.findViewById(R.id.Co2Status);
 
         viewModel = new ViewModelProvider(this).get(FragmentFirstPageViewModel.class);
+        viewModel.getFactRandomly();
+        viewModel.getFact().observe(getViewLifecycleOwner(), fact -> {
+            savedFact = new Fact(fact.getTitle(), fact.getContent(), fact.getSource(), fact.getSourceUrl());
+
+        });
 
         @SuppressLint("RestrictedApi") ConnectionLiveData connectionLiveData = new ConnectionLiveData(getApplicationContext());
         connectionLiveData.observe(getActivity(), connection -> {
@@ -105,17 +111,16 @@ public class FragmentFirstPage extends Fragment {
 
 
         randomFactButton.setOnClickListener(v1 -> {
-            viewModel.getFactRandomly();
-        });
-        viewModel.getFact().observe(getViewLifecycleOwner(), fact -> {
             Bundle args = new Bundle();
-            args.putString("title", fact.getTitle());
-            args.putString("content", fact.getContent());
-            args.putString("source", fact.getSource());
-            args.putString("url", fact.getSourceUrl());;
+            args.putString("title", savedFact.getTitle());
+            args.putString("content", savedFact.getContent());
+            args.putString("source", savedFact.getSource());
+            args.putString("url", savedFact.getSourceUrl());
             factFragmentDialog.setArguments(args);
             factFragmentDialog.show(getParentFragmentManager(), "Random");
+            viewModel.getFactRandomly();
         });
+
 
         viewModel.getDevicesFromApi().observe(getViewLifecycleOwner(), devices -> {
 
@@ -220,9 +225,9 @@ public class FragmentFirstPage extends Fragment {
                 if (!isConnected) {
                     Preferences preferences = viewModel.getPreferencesById(idList.get(position));
                     if (preferences == null) {
-                        expectedTemperature.setText("Empty");
-                        expectedHumidity.setText("Empty");
-                        expectedCO2.setText("Empty");
+                        expectedTemperature.setText("-");
+                        expectedHumidity.setText("-");
+                        expectedCO2.setText("-");
                     } else {
                         expectedTemperature.setText(preferences.getTemperatureMin() + " - " + preferences.getTemperatureMax());
                         expectedHumidity.setText(preferences.getHumidityMin() + " - " + preferences.getHumidityMax());
@@ -251,5 +256,6 @@ public class FragmentFirstPage extends Fragment {
     public void onResume() {
         super.onResume();
         isActiveFragment = true;
+        viewModel.getFactRandomly();
     }
 }

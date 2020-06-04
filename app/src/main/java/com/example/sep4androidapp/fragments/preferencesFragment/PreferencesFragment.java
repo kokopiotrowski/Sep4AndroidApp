@@ -110,6 +110,7 @@ public class PreferencesFragment extends Fragment {
         });
 
         viewModel.getPreferences().observe(getViewLifecycleOwner(), preferences -> {
+            setEmptyFields();
             if (isConnected) {
                 MintempEditText.setText(String.format("%.1f", preferences.getTemperatureMin()));
                 MaxtempEditText.setText(String.format("%.1f", preferences.getTemperatureMax()));
@@ -124,6 +125,7 @@ public class PreferencesFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (isConnected) {
+                    setEmptyFields();
                     viewModel.setDeviceId(idList.get(position));
                     viewModel.showPreferences(idList.get(position));
                 } else {
@@ -131,11 +133,7 @@ public class PreferencesFragment extends Fragment {
                     Preferences prefs = viewModel.getPreferencesById(idList.get(position));
 
                     if (prefs == null) {
-                        MintempEditText.setText("-");
-                        MaxtempEditText.setText("-");
-                        MinhumEditText.setText("-");
-                        MaxhumEditText.setText("-");
-                        Maxco2EditText.setText("-");
+                        setEmptyFields();
                     } else {
 
                         MintempEditText.setText(String.format("%.1f", prefs.getTemperatureMin()));
@@ -172,6 +170,15 @@ public class PreferencesFragment extends Fragment {
                 android.R.layout.simple_spinner_item, nameList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+    }
+
+    public void setEmptyFields()
+    {
+        MintempEditText.setText("");
+        MaxtempEditText.setText("");
+        MinhumEditText.setText("");
+        MaxhumEditText.setText("");
+        Maxco2EditText.setText("");
     }
 
     @Override
