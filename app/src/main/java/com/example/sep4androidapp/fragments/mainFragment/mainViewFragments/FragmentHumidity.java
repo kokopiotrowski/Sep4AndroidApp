@@ -75,10 +75,10 @@ public class FragmentHumidity extends Fragment {
 
         viewModel.getChosenDeviceId().observe(getViewLifecycleOwner(), s -> {
             deviceId = s;
-            viewModel.updateDailySleepSessions(deviceId);
+            /*viewModel.updateDailySleepSessions(deviceId);
             viewModel.updateWeeklySleepSessions(deviceId);
             viewModel.updateMonthlySleepSessions(deviceId);
-            viewModel.updateRoomsForFragments();
+            viewModel.updateRoomsForFragments();*/
         });
 
         viewModel.getDevicesForFragments().observe(getViewLifecycleOwner(), devices -> {
