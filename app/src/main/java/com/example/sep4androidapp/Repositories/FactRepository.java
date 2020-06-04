@@ -26,7 +26,6 @@ import retrofit2.Response;
 
 import static android.content.ContentValues.TAG;
 
-
 public class FactRepository {
     private static FactRepository instance;
     private MutableLiveData<List<Fact>> Factlist;
@@ -53,49 +52,41 @@ public class FactRepository {
             public void onResponse(Call<List<Fact>> call, Response<List<Fact>> response) {
                 if (response.code() == 200) {
                     Factlist.setValue(response.body());
+                }else {
+                    Log.i("FactRepo", "Response code received on updateFacts: " + response.code());
                 }
-                Log.i("FactRepo", "Pouneh1 " + response.code());
             }
 
             @SuppressLint("RestrictedApi")
             @Override
             public void onFailure(Call<List<Fact>> call, Throwable t) {
-                Log.i("factRepo", "Pouneh2" + t.getMessage());
+                Log.i("FactRepo", "Failure at updateFacts: " + t.getMessage());
             }
         });
     }
 
-    public LiveData<List<Fact>> getFactList() {
-        return Factlist;
-    }
-
-
     public void getFactRandomly() {
-
         FactApi factApi = ServiceGenerator.getFactApi();
         Call<FactResponse> call = factApi.getRandomFact();
         call.enqueue(new Callback<FactResponse>() {
             @Override
             public void onResponse(Call<FactResponse> call, Response<FactResponse> response) {
                 if (response.code() == 200) {
-
                     fact.setValue(response.body().getFact());
-
-
-                    Log.i("RandomFact", "Pouneh0" + response.code());
-
-                } else {
-                    Log.i("RandomFact", "Pouneh1 " + response.code());
+                }else {
+                    Log.i("FactRepo", "Response code received on getFactRandomly: " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<FactResponse> call, Throwable t) {
-                Log.i("RandomFact", t.getMessage());
-
+                Log.i("FactRepo", "Failure at getFactRandomly: " + t.getMessage());
             }
         });
+    }
 
+    public LiveData<List<Fact>> getFactList() {
+        return Factlist;
     }
 
     public LiveData<Fact> getFact() {

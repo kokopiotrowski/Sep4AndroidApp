@@ -16,21 +16,15 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface AccountDevicesApi {
-
     @GET("devices")
     Call<List<Device>> getDevices();
 
     @GET("devices/available")
     Call<List<String>> getAvailableDevices();
 
-    @GET("devices/{deviceId}")
-    Call<Device> getDevice(@Path("deviceId") String deviceId);
-
-//    @Headers("Content-Type: application/json")
     @POST("devices")
     Call<Device> addDevice(@Body NewDeviceModel device);
 
     @DELETE("devices/{deviceId}")
     Call<Void> deleteDevice(@Path("deviceId") String deviceId);
-
 }

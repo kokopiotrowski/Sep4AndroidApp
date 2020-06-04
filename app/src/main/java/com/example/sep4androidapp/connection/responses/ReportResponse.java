@@ -7,7 +7,6 @@ import java.io.Serializable;
 import java.util.List;
 
 public class ReportResponse implements Serializable {
-
     @SerializedName("sleepSessions")
     private List<SleepSession> sleepSessions;
 

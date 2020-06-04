@@ -2,9 +2,6 @@ package com.example.sep4androidapp.Repositories;
 
 import android.app.Application;
 import android.os.AsyncTask;
-
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.example.sep4androidapp.Entities.NewDeviceModel;
@@ -13,21 +10,18 @@ import com.example.sep4androidapp.LocalStorage.ApplicationDatabase;
 import com.example.sep4androidapp.LocalStorage.NewDeviceDAO;
 import com.example.sep4androidapp.LocalStorage.PrefDAO;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class DatabaseRepository {
     private static DatabaseRepository instance;
     private PrefDAO prefDao;
     private NewDeviceDAO newDeviceDAO;
-    private LiveData<List<Preferences>> allPreferences;
     private LiveData<List<NewDeviceModel>> allDevices;
 
     public DatabaseRepository(Application application) {
         ApplicationDatabase appDatabase = ApplicationDatabase.getInstance(application);
         prefDao = appDatabase.prefDAO();
         newDeviceDAO = appDatabase.newDeviceDAO();
-        allPreferences = prefDao.getAllPreferences();
         allDevices = newDeviceDAO.getAllDevices();
     }
 
@@ -57,8 +51,7 @@ public class DatabaseRepository {
         new UpdatePreferencesAsync(prefDao).execute(preferences);
     }
 
-    public void deletePreferences(Preferences preferences)
-    {
+    public void deletePreferences(Preferences preferences) {
         new DeletePreferencesAsync(prefDao).execute(preferences);
     }
 
