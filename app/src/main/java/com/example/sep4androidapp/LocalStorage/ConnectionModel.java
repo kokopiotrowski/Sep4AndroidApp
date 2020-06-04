@@ -9,10 +9,6 @@ public class ConnectionModel {
         this.isConnected = isConnected;
     }
 
-    public int getType() {
-        return type;
-    }
-
     public boolean getIsConnected() {
         return isConnected;
     }

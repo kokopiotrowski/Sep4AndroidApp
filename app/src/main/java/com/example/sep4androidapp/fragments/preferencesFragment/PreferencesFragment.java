@@ -2,7 +2,6 @@ package com.example.sep4androidapp.fragments.preferencesFragment;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,6 +54,7 @@ public class PreferencesFragment extends Fragment {
 
         viewModel = new ViewModelProvider(this).get(PreferencesViewModel.class);
         viewModel.updateRooms();
+
         save.setOnClickListener(v -> {
             Preferences preference = new Preferences(
                     viewModel.getDeviceId(),
@@ -66,6 +66,34 @@ public class PreferencesFragment extends Fragment {
                     Double.parseDouble(MintempEditText.getText().toString()),
                     Double.parseDouble(MaxtempEditText.getText().toString()));
             viewModel.savePreferencesToNetwork(preference);
+        });
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (isConnected) {
+                    setEmptyFields();
+                    viewModel.setDeviceId(idList.get(position));
+                    viewModel.showPreferences(idList.get(position));
+                } else {
+                    viewModel.setDeviceId(idList.get(position));
+                    Preferences prefs = viewModel.getPreferencesById(idList.get(position));
+                    if (prefs == null) {
+                        setEmptyFields();
+                    } else {
+                        MintempEditText.setText(String.format("%.1f", prefs.getTemperatureMin()));
+                        MaxtempEditText.setText(String.format("%.1f", prefs.getTemperatureMax()));
+                        MinhumEditText.setText(String.valueOf(prefs.getHumidityMin()));
+                        MaxhumEditText.setText(String.valueOf(prefs.getHumidityMax()));
+                        Maxco2EditText.setText(String.valueOf(prefs.getCo2Max()));
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
 
         @SuppressLint("RestrictedApi") ConnectionLiveData connectionLiveData = new ConnectionLiveData(getApplicationContext());
@@ -120,35 +148,6 @@ public class PreferencesFragment extends Fragment {
             }
         });
 
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (isConnected) {
-                    setEmptyFields();
-                    viewModel.setDeviceId(idList.get(position));
-                    viewModel.showPreferences(idList.get(position));
-                } else {
-                    viewModel.setDeviceId(idList.get(position));
-                    Preferences prefs = viewModel.getPreferencesById(idList.get(position));
-
-                    if (prefs == null) {
-                        setEmptyFields();
-                    } else {
-
-                        MintempEditText.setText(String.format("%.1f", prefs.getTemperatureMin()));
-                        MaxtempEditText.setText(String.format("%.1f", prefs.getTemperatureMax()));
-                        MinhumEditText.setText(String.valueOf(prefs.getHumidityMin()));
-                        MaxhumEditText.setText(String.valueOf(prefs.getHumidityMax()));
-                        Maxco2EditText.setText(String.valueOf(prefs.getCo2Max()));
-                    }
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
         return view;
     }
 
@@ -172,8 +171,7 @@ public class PreferencesFragment extends Fragment {
         spinner.setAdapter(adapter);
     }
 
-    public void setEmptyFields()
-    {
+    private void setEmptyFields() {
         MintempEditText.setText("");
         MaxtempEditText.setText("");
         MinhumEditText.setText("");

@@ -2,7 +2,6 @@ package com.example.sep4androidapp.fragments.roomFragment;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,14 +41,13 @@ public class RoomsFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
         FloatingActionButton leadToSetUpButton = view.findViewById(R.id.leadToSetUpButton);
-        leadToSetUpButton.setOnClickListener(v -> {
-            getParentFragmentManager().beginTransaction().replace(R.id.fragment_container, new SetUpDeviceFragment()).commit();
-        });
+        leadToSetUpButton.setOnClickListener(v -> getParentFragmentManager().beginTransaction().replace(R.id.fragment_container, new SetUpDeviceFragment()).commit());
+
+        viewModel = new ViewModelProvider(this).get(RoomsViewModel.class);
 
         adapter = new RoomsAdapter();
         recyclerView.setAdapter(adapter);
 
-        viewModel = new ViewModelProvider(this).get(RoomsViewModel.class);
         viewModel.getDevices().observe(getViewLifecycleOwner(), devices -> adapter.submitList(devices));
 
         @SuppressLint("RestrictedApi") ConnectionLiveData connectionLiveData = new ConnectionLiveData(getApplicationContext());
@@ -70,7 +68,6 @@ public class RoomsFragment extends Fragment {
             @Override
             public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
                 return super.getMovementFlags(recyclerView, viewHolder);
-
             }
 
             @Override
@@ -78,12 +75,9 @@ public class RoomsFragment extends Fragment {
                 return false;
             }
 
-
-
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 if (canDelete) {
-
                     String id = adapter.getDeviceAt(viewHolder.getAdapterPosition()).getDeviceId();
                     String name = adapter.getDeviceAt(viewHolder.getAdapterPosition()).getName();
 
@@ -99,7 +93,6 @@ public class RoomsFragment extends Fragment {
                 }
             }
         }).attachToRecyclerView(recyclerView);
-
         viewModel.updateRooms();
         return view;
     }

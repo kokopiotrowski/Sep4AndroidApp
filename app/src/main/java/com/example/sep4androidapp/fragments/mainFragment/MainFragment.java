@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
+
 import com.example.sep4androidapp.R;
 import com.example.sep4androidapp.fragments.mainFragment.mainViewFragments.FragmentCo2;
 import com.example.sep4androidapp.fragments.mainFragment.mainViewFragments.FragmentHumidity;
@@ -23,8 +24,8 @@ public class MainFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_main, container, false);
 
-        TabLayout tabLayout = (TabLayout) v.findViewById(R.id.tablayout_id);
-        ViewPager viewPager = (ViewPager) v.findViewById(R.id.viewpager_id);
+        TabLayout tabLayout = v.findViewById(R.id.tablayout_id);
+        ViewPager viewPager = v.findViewById(R.id.viewpager_id);
         viewPager.setOffscreenPageLimit(5);
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
 

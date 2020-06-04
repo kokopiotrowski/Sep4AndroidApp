@@ -11,7 +11,6 @@ import androidx.lifecycle.LiveData;
 
 public class ConnectionLiveData extends LiveData<ConnectionModel> {
     private Context context;
-
     public ConnectionLiveData(Context context) {
         this.context = context;
     }
@@ -19,7 +18,7 @@ public class ConnectionLiveData extends LiveData<ConnectionModel> {
     @Override
     protected void onActive() {
         super.onActive();
-        IntentFilter filter = new    IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         context.registerReceiver(networkReceiver, filter);
     }
 
@@ -33,21 +32,21 @@ public class ConnectionLiveData extends LiveData<ConnectionModel> {
         @SuppressWarnings("deprecation")
         @Override
         public void onReceive(Context context, Intent intent) {
-            if(intent.getExtras()!=null) {
+            if (intent.getExtras() != null) {
                 NetworkInfo activeNetwork = (NetworkInfo) intent.getExtras().get(ConnectivityManager.EXTRA_NETWORK_INFO);
                 boolean isConnected = activeNetwork != null &&
                         activeNetwork.isConnectedOrConnecting();
-                if(isConnected) {
-                    switch (activeNetwork.getType()){
+                if (isConnected) {
+                    switch (activeNetwork.getType()) {
                         case ConnectivityManager.TYPE_WIFI:
-                            postValue(new ConnectionModel(0,true));
+                            postValue(new ConnectionModel(0, true));
                             break;
                         case ConnectivityManager.TYPE_MOBILE:
-                            postValue(new ConnectionModel(1,true));
+                            postValue(new ConnectionModel(1, true));
                             break;
                     }
                 } else {
-                    postValue(new ConnectionModel(0,false));
+                    postValue(new ConnectionModel(0, false));
                 }
             }
         }

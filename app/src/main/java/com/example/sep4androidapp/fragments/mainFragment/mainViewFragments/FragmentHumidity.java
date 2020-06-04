@@ -89,7 +89,6 @@ public class FragmentHumidity extends Fragment {
             }
         });
 
-
         viewModel.getSleepSessionsDaily().observe(getViewLifecycleOwner(), sleepSessions -> {
             dailyBarChart.clear();
             sleepSessionsDaily.clear();

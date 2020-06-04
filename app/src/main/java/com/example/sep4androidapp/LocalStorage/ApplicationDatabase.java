@@ -12,9 +12,7 @@ import com.example.sep4androidapp.Entities.Preferences;
 
 @Database(entities = {Preferences.class, NewDeviceModel.class}, version = 1)
 public abstract class ApplicationDatabase extends RoomDatabase {
-
     private static ApplicationDatabase instance;
-
     public abstract PrefDAO prefDAO();
     public abstract NewDeviceDAO newDeviceDAO();
 

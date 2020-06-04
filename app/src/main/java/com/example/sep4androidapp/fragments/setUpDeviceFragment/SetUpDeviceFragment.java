@@ -2,7 +2,6 @@ package com.example.sep4androidapp.fragments.setUpDeviceFragment;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +13,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sep4androidapp.Entities.NewDeviceModel;
 import com.example.sep4androidapp.LocalStorage.ConnectionLiveData;
-import com.example.sep4androidapp.LocalStorage.ConnectionModel;
 import com.example.sep4androidapp.R;
 import com.example.sep4androidapp.ViewModels.PreferencesViewModel;
 import com.example.sep4androidapp.ViewModels.SetUpDeviceViewModel;
@@ -49,23 +46,20 @@ public class SetUpDeviceFragment extends Fragment {
         preferencesViewModel = new ViewModelProvider(this).get(PreferencesViewModel.class);
 
         @SuppressLint("RestrictedApi") ConnectionLiveData connectionLiveData = new ConnectionLiveData(getApplicationContext());
-        connectionLiveData.observe(getActivity(), new Observer<ConnectionModel>() {
-            @Override
-            public void onChanged(@Nullable ConnectionModel connection) {
-                if (isActiveFragment) {
-                    if (connection.getIsConnected()) {
-                        deviceId.setEnabled(true);
-                        newRoomName.setEnabled(true);
-                        setupDevice.setEnabled(true);
-                        viewModel.updateAvailableDevices();
-                    } else {
-                        deviceId.setEnabled(false);
-                        newRoomName.setEnabled(false);
-                        setupDevice.setEnabled(false);
-                    }
+        connectionLiveData.observe(getActivity(), connection -> {
+            if (isActiveFragment) {
+                if (connection.getIsConnected()) {
+                    deviceId.setEnabled(true);
+                    newRoomName.setEnabled(true);
+                    setupDevice.setEnabled(true);
+                    viewModel.updateAvailableDevices();
+                } else {
+                    deviceId.setEnabled(false);
+                    newRoomName.setEnabled(false);
+                    setupDevice.setEnabled(false);
                 }
-
             }
+
         });
 
         viewModel.getAvailableDevices().observe(getViewLifecycleOwner(), strings -> {

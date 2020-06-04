@@ -2,7 +2,6 @@ package com.example.sep4androidapp.fragments.mainFragment.mainViewFragments;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sep4androidapp.Entities.Fact;
@@ -76,7 +74,6 @@ public class FragmentFirstPage extends Fragment {
         viewModel.getFactRandomly();
         viewModel.getFact().observe(getViewLifecycleOwner(), fact -> {
             savedFact = new Fact(fact.getTitle(), fact.getContent(), fact.getSource(), fact.getSourceUrl());
-
         });
 
         @SuppressLint("RestrictedApi") ConnectionLiveData connectionLiveData = new ConnectionLiveData(getApplicationContext());
@@ -108,7 +105,6 @@ public class FragmentFirstPage extends Fragment {
             localList = savedDevices;
             refreshSpinner();
         });
-
 
         randomFactButton.setOnClickListener(v1 -> {
             Bundle args = new Bundle();
@@ -241,7 +237,6 @@ public class FragmentFirstPage extends Fragment {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-
         deviceSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> viewModel.switchCheck(isChecked));
     }
 

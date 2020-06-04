@@ -19,6 +19,7 @@ import com.example.sep4androidapp.ViewModels.FactViewModel;
 public class FactFragment extends Fragment {
     private FactAdapter adapter;
     private FactFragmentDialog factFragmentDialog = new FactFragmentDialog();
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

@@ -13,14 +13,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sep4androidapp.Entities.RoomCondition;
-import com.example.sep4androidapp.Entities.SleepData;
-import com.example.sep4androidapp.Entities.SleepSession;
 import com.example.sep4androidapp.LocalStorage.ConnectionLiveData;
-import com.example.sep4androidapp.LocalStorage.ConnectionModel;
 import com.example.sep4androidapp.R;
 import com.example.sep4androidapp.ValueFormatters.SleepFragmentValueFormatter;
 import com.example.sep4androidapp.ViewModels.SleepDataViewModel;
@@ -30,8 +26,6 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.github.mikephil.charting.utils.EntryXComparator;
-
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -41,13 +35,12 @@ import java.util.List;
 
 import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
-
 public class SleepFragment extends Fragment {
-    SleepDataViewModel viewModel;
-    TextView sound, temperature, humidity, co2;
-    LineChart mpLineChart;
-    Spinner deviceSpinner;
-    Spinner sleepSpinner;
+    private SleepDataViewModel viewModel;
+    private TextView sound, temperature, humidity, co2;
+    private LineChart mpLineChart;
+    private Spinner deviceSpinner;
+    private Spinner sleepSpinner;
 
     private List<String> deviceNameList = new ArrayList<>();
     private List<String> deviceIdList = new ArrayList<>();
@@ -55,29 +48,22 @@ public class SleepFragment extends Fragment {
     private List<Integer> sleepIdList = new ArrayList<>();
 
     private boolean isActiveFragment;
+    private ArrayAdapter<String> deviceAdapter;
+    private ArrayAdapter<String> sleepAdapter;
 
-    private List<SleepSession> sleepSessions = new ArrayList<>();
-    ArrayAdapter<String> deviceAdapter;
-    ArrayAdapter<String> sleepAdapter;
+    private ArrayList<Entry> temperatureValues = new ArrayList<>();
+    private ArrayList<Entry> soundValues = new ArrayList<>();
+    private ArrayList<Entry> co2Values = new ArrayList<>();
+    private ArrayList<Entry> humidityValues = new ArrayList<>();
+    private ArrayList<ILineDataSet> dataSets = new ArrayList<>();
 
-    ArrayList<Entry> temperatureValues = new ArrayList<>();
-    ArrayList<Entry> soundValues = new ArrayList<>();
-    ArrayList<Entry> co2Values = new ArrayList<>();
-    ArrayList<Entry> humidityValues = new ArrayList<>();
-    ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-    int lastSavedDay = 0;
-    int firstDay = 0;
-    float timeInSeconds = 0;
-    int days = 0;
     long numberOfSeconds = 0;
-    float totalSeconds = 0;
 
+    private LineDataSet temperatureDataSet, soundDataSet, humidityDataSet, co2DataSet;
+    private LineData data;
+    private Spinner sleepDataSpinner;
 
-    LineDataSet temperatureDataSet, soundDataSet, humidityDataSet, co2DataSet;
-    LineData data;
-    Spinner sleepDataSpinner;
-
-
+    @SuppressLint({"DefaultLocale", "SetTextI18n"})
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -94,27 +80,20 @@ public class SleepFragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(SleepDataViewModel.class);
 
         @SuppressLint("RestrictedApi") ConnectionLiveData connectionLiveData = new ConnectionLiveData(getApplicationContext());
-        connectionLiveData.observe(getActivity(), new Observer<ConnectionModel>() {
-            @Override
-            public void onChanged(@Nullable ConnectionModel connection) {
-                if(isActiveFragment)
-                {
-                    if (connection.getIsConnected())
-                    {
+        connectionLiveData.observe(getActivity(), connection -> {
+            if (isActiveFragment && connection != null) {
+                if (connection.getIsConnected()) {
 
-                        deviceSpinner.setEnabled(true);
-                        sleepDataSpinner.setEnabled(true);
-                        sleepSpinner.setEnabled(true);
-                    } else {
-                        deviceSpinner.setEnabled(false);
-                        sleepDataSpinner.setEnabled(false);
-                        sleepSpinner.setEnabled(false);
-                    }
+                    deviceSpinner.setEnabled(true);
+                    sleepDataSpinner.setEnabled(true);
+                    sleepSpinner.setEnabled(true);
+                } else {
+                    deviceSpinner.setEnabled(false);
+                    sleepDataSpinner.setEnabled(false);
+                    sleepSpinner.setEnabled(false);
                 }
-
             }
         });
-
 
         viewModel.getDevices().observe(getViewLifecycleOwner(), devices -> {
             deviceNameList.clear();
@@ -151,53 +130,36 @@ public class SleepFragment extends Fragment {
             }
         });
 
-        viewModel.getSleepData().observe(getViewLifecycleOwner(), new Observer<SleepData>() {
-            @Override
-            public void onChanged(SleepData sleepData) {
-                sound.setText(String.format("%.0f", sleepData.getAverageSound()) + " dB");
-                temperature.setText(String.format("%.0f", sleepData.getAverageTemperature()) + " °C");
-                humidity.setText(String.format("%.0f", sleepData.getAverageHumidity()) + " %");
-                co2.setText(String.format("%.0f", sleepData.getAverageCo2()) + " ppm");
+        viewModel.getSleepData().observe(getViewLifecycleOwner(), sleepData -> {
+            sound.setText(String.format("%.0f", sleepData.getAverageSound()) + " dB");
+            temperature.setText(String.format("%.0f", sleepData.getAverageTemperature()) + " °C");
+            humidity.setText(String.format("%.0f", sleepData.getAverageHumidity()) + " %");
+            co2.setText(String.format("%.0f", sleepData.getAverageCo2()) + " ppm");
 
-                ArrayList<RoomCondition> roomConditions = sleepData.getRoomConditions();
+            ArrayList<RoomCondition> roomConditions = sleepData.getRoomConditions();
+            Collections.sort(roomConditions);
+            int size = roomConditions.size();
 
-                Collections.sort(roomConditions);
-                firstDay = roomConditions.get(0).getTimestamp().getDayOfYear();
+            for (int i = 0; i < size; i++) {
+                RoomCondition temp = roomConditions.get(i);
+                LocalDateTime ldt1 = roomConditions.get(0).getTimestamp();
+                LocalDateTime ldt2 = roomConditions.get(i).getTimestamp();
 
-                int size = roomConditions.size();
+                numberOfSeconds = Duration.between(ldt1, ldt2).toMillis() / 1000;
+                int seconds = ldt1.getHour() * 3600 + ldt1.getMinute() * 60 + ldt1.getSecond();
+                float totalSeconds = (float) seconds + (float) numberOfSeconds;
 
+                float temperature = (float) temp.getTemperature();
+                float sound = (float) temp.getSound();
+                float humidity = (float) temp.getHumidity();
+                float co2 = (float) temp.getCo2();
 
-                for (int i = 0; i < size; i++) {
-                    RoomCondition temp = roomConditions.get(i);
-
-
-                    LocalDateTime ldt1 = roomConditions.get(0).getTimestamp();
-                    LocalDateTime ldt2 = roomConditions.get(i).getTimestamp();
-
-                    numberOfSeconds = Duration.between(ldt1, ldt2).toMillis() / 1000;
-
-
-                    int seconds = ldt1.getHour() * 3600 + ldt1.getMinute() * 60 + ldt1.getSecond();
-
-                    float totalSeconds = (float) seconds + (float) numberOfSeconds;
-
-
-                    float temperature = (float) temp.getTemperature();
-                    float sound = (float) temp.getSound();
-                    float humidity = (float) temp.getHumidity();
-                    float co2 = (float) temp.getCo2();
-
-                    setTemperatureValues(temperature, totalSeconds);
-                    setSoundValues(sound, totalSeconds);
-                    setHumidityValues(humidity, totalSeconds);
-                    setCo2Values(co2, totalSeconds);
-
-                }
-
+                setTemperatureValues(temperature, totalSeconds);
+                setSoundValues(sound, totalSeconds);
+                setHumidityValues(humidity, totalSeconds);
+                setCo2Values(co2, totalSeconds);
             }
         });
-
-        /* oldViewModel.updateSleepData();*/
 
         String[] arraySpinner = new String[]{
                 "-choose parameter-", "Temperature", "Sound", "Humidity", "Co2"
@@ -206,101 +168,13 @@ public class SleepFragment extends Fragment {
                 android.R.layout.simple_spinner_item, arraySpinner);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sleepDataSpinner.setAdapter(adapter);
-
         //selection doesn't work on position 0, otherwise listener is activated while initializing the fragment and the array lists are still empty at that point (throws null pointer)
         sleepDataSpinner.setSelection(0, false);
-        sleepDataSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                Object item = parentView.getItemAtPosition(position).toString();
-
-                dataSets.clear();
-
-                if (item.equals("Temperature")) {
-                    temperatureDataSet = new LineDataSet(getTemperatureValues(), "Temperature");
-                    dataSets.add(temperatureDataSet);
-                }
-                if (item.equals("Sound")) {
-
-                    soundDataSet = new LineDataSet(getSoundValues(), "Sound");
-                    dataSets.add(soundDataSet);
-                }
-                if (item.equals("Humidity")) {
-
-                    humidityDataSet = new LineDataSet(getHumidityValues(), "Humidity");
-                    dataSets.add(humidityDataSet);
-                }
-                if (item.equals("Co2")) {
-
-                    co2DataSet = new LineDataSet(getCo2Values(), "Co2");
-                    dataSets.add(co2DataSet);
-                }
-
-
-                data = new LineData(dataSets);
-                XAxis xAxis = mpLineChart.getXAxis();
-                xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-                xAxis.setValueFormatter(new SleepFragmentValueFormatter());
-                mpLineChart.setData(data);
-                mpLineChart.getMarker();
-                mpLineChart.invalidate();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parentView) {
-                // your code here
-            }
-
-        });
-        setDeviceListeners();
-        setSleepListeners();
+        setListeners();
         return view;
-
     }
 
-    private void setTemperatureValues(float temperature, float index) {
-
-        temperatureValues.add(new Entry(index, temperature));
-    }
-
-    private void setSoundValues(float sound, float index) {
-
-        soundValues.add(new Entry(index, sound));
-    }
-
-    private void setHumidityValues(float humidity, float index) {
-
-        humidityValues.add(new Entry(index, humidity));
-    }
-
-    private void setCo2Values(float co2, float index) {
-
-        co2Values.add(new Entry(index, co2));
-
-    }
-
-    private ArrayList<Entry> getTemperatureValues() {
-
-        return temperatureValues;
-    }
-
-    private ArrayList<Entry> getSoundValues() {
-
-        return soundValues;
-    }
-
-    private ArrayList<Entry> getCo2Values() {
-
-        return co2Values;
-    }
-
-    private ArrayList<Entry> getHumidityValues() {
-
-        return humidityValues;
-    }
-
-
-    public void setDeviceListeners() {
+    public void setListeners() {
         deviceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -311,10 +185,6 @@ public class SleepFragment extends Fragment {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-
-    }
-
-    public void setSleepListeners() {
         sleepSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -327,6 +197,74 @@ public class SleepFragment extends Fragment {
             }
         });
 
+        sleepDataSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                Object item = parentView.getItemAtPosition(position).toString();
+                dataSets.clear();
+
+                if (item.equals("Temperature")) {
+                    temperatureDataSet = new LineDataSet(getTemperatureValues(), "Temperature");
+                    dataSets.add(temperatureDataSet);
+                }
+                if (item.equals("Sound")) {
+                    soundDataSet = new LineDataSet(getSoundValues(), "Sound");
+                    dataSets.add(soundDataSet);
+                }
+                if (item.equals("Humidity")) {
+                    humidityDataSet = new LineDataSet(getHumidityValues(), "Humidity");
+                    dataSets.add(humidityDataSet);
+                }
+                if (item.equals("Co2")) {
+                    co2DataSet = new LineDataSet(getCo2Values(), "Co2");
+                    dataSets.add(co2DataSet);
+                }
+
+                data = new LineData(dataSets);
+                XAxis xAxis = mpLineChart.getXAxis();
+                xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+                xAxis.setValueFormatter(new SleepFragmentValueFormatter());
+                mpLineChart.setData(data);
+                mpLineChart.getMarker();
+                mpLineChart.invalidate();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+            }
+        });
+    }
+
+    private void setTemperatureValues(float temperature, float index) {
+        temperatureValues.add(new Entry(index, temperature));
+    }
+
+    private void setSoundValues(float sound, float index) {
+        soundValues.add(new Entry(index, sound));
+    }
+
+    private void setHumidityValues(float humidity, float index) {
+        humidityValues.add(new Entry(index, humidity));
+    }
+
+    private void setCo2Values(float co2, float index) {
+        co2Values.add(new Entry(index, co2));
+    }
+
+    private ArrayList<Entry> getTemperatureValues() {
+        return temperatureValues;
+    }
+
+    private ArrayList<Entry> getSoundValues() {
+        return soundValues;
+    }
+
+    private ArrayList<Entry> getCo2Values() {
+        return co2Values;
+    }
+
+    private ArrayList<Entry> getHumidityValues() {
+        return humidityValues;
     }
 
     @Override

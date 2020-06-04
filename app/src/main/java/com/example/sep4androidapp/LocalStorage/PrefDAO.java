@@ -7,12 +7,9 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.example.sep4androidapp.Entities.NewDeviceModel;
 import com.example.sep4androidapp.Entities.Preferences;
 
 import java.util.List;
-
-import retrofit2.http.GET;
 
 @Dao
 public interface PrefDAO {
