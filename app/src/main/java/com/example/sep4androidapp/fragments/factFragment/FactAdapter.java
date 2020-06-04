@@ -1,4 +1,4 @@
-package com.example.sep4androidapp.Adapter;
+package com.example.sep4androidapp.fragments.factFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;

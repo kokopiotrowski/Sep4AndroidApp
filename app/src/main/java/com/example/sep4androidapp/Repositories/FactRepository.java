@@ -1,30 +1,21 @@
 package com.example.sep4androidapp.Repositories;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
-import android.os.Build;
 import android.util.Log;
 
-import androidx.annotation.RequiresApi;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.sep4androidapp.Entities.Fact;
-import com.example.sep4androidapp.connection.FactApi;
-import com.example.sep4androidapp.connection.RoomConditionApi;
+import com.example.sep4androidapp.connection.apis.FactApi;
 import com.example.sep4androidapp.connection.ServiceGenerator;
 import com.example.sep4androidapp.connection.responses.FactResponse;
-import com.example.sep4androidapp.connection.responses.RoomConditionResponse;
-import com.example.sep4androidapp.fragments.mainFragment.mainViewFragments.FragmentFirstPage;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static android.content.ContentValues.TAG;
 
 public class FactRepository {
     private static FactRepository instance;

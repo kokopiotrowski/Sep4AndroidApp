@@ -18,7 +18,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.sep4androidapp.Entities.RoomCondition;
 import com.example.sep4androidapp.LocalStorage.ConnectionLiveData;
 import com.example.sep4androidapp.R;
-import com.example.sep4androidapp.ValueFormatters.SleepFragmentValueFormatter;
+import com.example.sep4androidapp.fragments.sleepFragment.ValueFormatters.SleepFragmentValueFormatter;
 import com.example.sep4androidapp.ViewModels.SleepDataViewModel;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;

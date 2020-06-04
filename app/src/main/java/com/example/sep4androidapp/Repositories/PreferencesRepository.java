@@ -8,7 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.sep4androidapp.Entities.Preferences;
 
-import com.example.sep4androidapp.connection.PreferenceApi;
+import com.example.sep4androidapp.connection.apis.PreferenceApi;
 import com.example.sep4androidapp.connection.ServiceGenerator;
 import com.example.sep4androidapp.connection.responses.PreferencesResponse;
 

@@ -20,7 +20,7 @@ public class FactFragmentDialog extends DialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getActivity()));
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.fragment_fact_chosen, null);
+        View view = inflater.inflate(R.layout.fragment_fact_dialog, null);
 
         TextView sourceDialog = view.findViewById(R.id.sourceDialog);
         TextView urlDialog = view.findViewById(R.id.urlDialog);

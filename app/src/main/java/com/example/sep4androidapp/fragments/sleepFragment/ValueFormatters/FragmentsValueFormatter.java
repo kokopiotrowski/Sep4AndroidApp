@@ -1,4 +1,4 @@
-package com.example.sep4androidapp.ValueFormatters;
+package com.example.sep4androidapp.fragments.sleepFragment.ValueFormatters;
 
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;

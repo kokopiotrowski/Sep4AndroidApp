@@ -12,7 +12,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.sep4androidapp.Adapter.FactAdapter;
 import com.example.sep4androidapp.R;
 import com.example.sep4androidapp.ViewModels.FactViewModel;
 

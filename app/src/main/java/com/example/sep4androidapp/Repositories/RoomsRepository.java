@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.sep4androidapp.Entities.Device;
 import com.example.sep4androidapp.Entities.NewDeviceModel;
-import com.example.sep4androidapp.connection.AccountDevicesApi;
+import com.example.sep4androidapp.connection.apis.AccountDevicesApi;
 import com.example.sep4androidapp.connection.ServiceGenerator;
 
 import java.util.List;

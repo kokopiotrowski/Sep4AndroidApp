@@ -1,4 +1,4 @@
-package com.example.sep4androidapp.connection;
+package com.example.sep4androidapp.connection.apis;
 
 import com.example.sep4androidapp.Entities.Preferences;
 import com.example.sep4androidapp.connection.responses.PreferencesResponse;

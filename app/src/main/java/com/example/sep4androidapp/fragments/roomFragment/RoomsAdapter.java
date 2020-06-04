@@ -1,4 +1,4 @@
-package com.example.sep4androidapp.Adapter;
+package com.example.sep4androidapp.fragments.roomFragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;

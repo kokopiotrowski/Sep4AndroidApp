@@ -2,11 +2,9 @@ package com.example.sep4androidapp.Repositories;
 
 import android.util.Log;
 
-import androidx.lifecycle.MutableLiveData;
-
-import com.example.sep4androidapp.connection.ApiCallBack;
+import com.example.sep4androidapp.connection.apis.ApiCallBack;
 import com.example.sep4androidapp.connection.ServiceGenerator;
-import com.example.sep4androidapp.connection.SleepTrackingApi;
+import com.example.sep4androidapp.connection.apis.SleepTrackingApi;
 import com.example.sep4androidapp.connection.responses.StartStopResponse;
 
 import retrofit2.Call;
