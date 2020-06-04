@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class SleepSession {
+public class SleepSession implements Comparable<SleepSession>{
     @SerializedName("sleepId")
     private int sleepId;
     @SerializedName("deviceId")
@@ -75,6 +75,12 @@ public class SleepSession {
 
     public double getAverageTemperature() {
         return averageTemperature;
+    }
+
+
+    @Override
+    public int compareTo(SleepSession o) {
+        return getTimeStart().compareTo(o.getTimeStart());
     }
 
 

@@ -30,6 +30,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.utils.EntryXComparator;
 
 
 import java.time.Duration;
@@ -134,6 +135,7 @@ public class SleepFragment extends Fragment {
         viewModel.getSleepSessions().observe(getViewLifecycleOwner(), sleepSessions -> {
             sleepDateList.clear();
             sleepIdList.clear();
+            Collections.sort(sleepSessions);
             for (int i = 0; i < sleepSessions.size(); i++) {
                 String date = sleepSessions.get(i).getTimeStart().getYear() + "/" + sleepSessions.get(i).getTimeStart().getMonthValue() + "/" + sleepSessions.get(i).getTimeStart().getDayOfMonth()
                         + "-" + sleepSessions.get(i).getTimeFinish().getYear() + "/" + sleepSessions.get(i).getTimeFinish().getMonthValue() + "/" + sleepSessions.get(i).getTimeFinish().getDayOfMonth();
@@ -212,9 +214,7 @@ public class SleepFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 Object item = parentView.getItemAtPosition(position).toString();
 
-                if (item.equals("-choose parameter-")) {
-                    dataSets.clear();
-                }
+                dataSets.clear();
 
                 if (item.equals("Temperature")) {
                     temperatureDataSet = new LineDataSet(getTemperatureValues(), "Temperature");
