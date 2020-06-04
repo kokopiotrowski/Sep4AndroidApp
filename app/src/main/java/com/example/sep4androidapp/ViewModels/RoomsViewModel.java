@@ -27,21 +27,6 @@ public class RoomsViewModel extends AndroidViewModel {
         databaseRepository = DatabaseRepository.getInstance(application);
     }
 
-//    public void deletePreferencesFromDb(Preferences preferences)
-//    {
-//        databaseRepository.deletePreferences(preferences);
-//    }
-//
-//    public void deleteDevicee(NewDeviceModel device)
-//    {
-//        databaseRepository.deleteDevice(device);
-//    }
-//
-//    public Preferences getPreferencesById(String deviceId)
-//    {
-//       return databaseRepository.getPreferencesById(deviceId);
-//    }
-
     public LiveData<List<Device>> getDevices()
     {
         return roomsRepository.getList();

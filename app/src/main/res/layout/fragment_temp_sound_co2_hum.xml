@@ -7,21 +7,21 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/deviceText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="20px"
-            android:text="Device"
+            android:layout_marginBottom="20dp"
+            android:text="@string/device"
             android:textSize="20sp" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:layout_marginBottom="20px">
+            android:layout_marginBottom="20dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -31,7 +31,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="39dp"
-                    android:text="Last Day"
+                    android:text="@string/last_day"
                     android:textSize="25sp"
                     app:layout_constraintBottom_toTopOf="@+id/relativeLayout"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -56,7 +56,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:layout_marginBottom="20px">
+            android:layout_marginBottom="20dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -66,7 +66,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="39dp"
-                    android:text="Last Week"
+                    android:text="@string/last_week"
                     android:textSize="25sp" />
 
                 <RelativeLayout
@@ -87,7 +87,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:layout_marginBottom="20px">
+            android:layout_marginBottom="20dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -97,7 +97,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="39dp"
-                    android:text="Last Month"
+                    android:text="@string/last_month"
                     android:textSize="25sp" />
 
                 <RelativeLayout

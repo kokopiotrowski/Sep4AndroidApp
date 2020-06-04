@@ -27,10 +27,9 @@
                     android:id="@+id/reportTextView"
                     android:layout_width="131dp"
                     android:layout_height="46dp"
-                    android:autoText="false"
-                    android:text="Report"
+                    android:text="@string/report"
                     android:textAlignment="center"
-                    android:textSize="30dp" />
+                    android:textSize="30sp" />
 
                 <Spinner
                     android:id="@+id/twojaStara"
@@ -52,14 +51,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
-                    android:text="Last sleep" />
+                    android:text="@string/last_sleep" />
 
                 <RadioButton
                     android:id="@+id/reportLastWeekRadioButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
 
-                    android:text="Last week" />
+                    android:text="@string/last_week" />
 
                 <RadioButton
                     android:id="@+id/reportLastMonthRadioButton"
@@ -67,7 +66,7 @@
                     android:layout_width="match_parent"
 
                     android:layout_height="wrap_content"
-                    android:text="Last month" />
+                    android:text="@string/last_month" />
 
             </RadioGroup>
         </LinearLayout>

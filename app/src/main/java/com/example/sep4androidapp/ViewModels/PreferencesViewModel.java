@@ -19,7 +19,6 @@ public class PreferencesViewModel extends AndroidViewModel {
     private DatabaseRepository databaseRepository;
     private PreferencesRepository preferencesRepository;
     private RoomsRepository roomsRepository;
-    // private Device deviceId;
     private String deviceId;
 
     public PreferencesViewModel(@NonNull Application application) {
@@ -44,7 +43,6 @@ public class PreferencesViewModel extends AndroidViewModel {
     public Preferences getPreferencesById(String deviceId) {
         return databaseRepository.getPreferencesById(deviceId);
     }
-
 
     public LiveData<List<NewDeviceModel>> getAllLocalDevices() {
         return databaseRepository.getAllDevices();

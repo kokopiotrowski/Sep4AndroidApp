@@ -39,7 +39,6 @@ public class FragmentFirstPageViewModel extends AndroidViewModel {
     private Handler handler = new Handler();
     private Timer timer = new Timer();
     private String deviceId;
-    private FactFragmentDialog factFragmentDialog = new FactFragmentDialog();
 
     public FragmentFirstPageViewModel(@NonNull Application application) {
         super(application);
@@ -142,17 +141,5 @@ public class FragmentFirstPageViewModel extends AndroidViewModel {
 
     public LiveData<List<NewDeviceModel>> getAllLocalDevices() {
         return databaseRepository.getAllDevices();
-    }
-
-
-    public void showDialogFragment(Fact fact, FragmentFirstPage fragmentFirstPage) {
-        Bundle args = new Bundle();
-        args.putString("title", fact.getTitle());
-        args.putString("content", fact.getContent());
-        args.putString("source", fact.getSource());
-        args.putString("url", fact.getSourceUrl());
-
-        factFragmentDialog.setArguments(args);
-        factFragmentDialog.show(fragmentFirstPage.getChildFragmentManager(), "Chosen");
     }
 }

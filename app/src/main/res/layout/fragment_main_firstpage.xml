@@ -43,8 +43,8 @@
                         android:layout_height="wrap_content"
 
                         android:gravity="center_vertical"
-                        android:paddingLeft="10dp"
-                        android:text="05/12  14:30" />
+                        android:paddingStart="10dp"
+                        tools:ignore="RtlSymmetry" />
 
                 </LinearLayout>
 
@@ -75,7 +75,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="20dp"
-                        android:text="Temperature:"
+                        android:text="@string/temperature"
                         android:textSize="30sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -96,7 +96,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="20dp"
-                        android:text="Expected:"
+                        android:text="@string/expected"
                         android:textSize="24sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tvCurrentTemperature" />
@@ -107,7 +107,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="20dp"
-                        android:text="-"
+                        android:text="@string/dash"
                         android:textSize="24sp"
                         app:layout_constraintStart_toEndOf="@+id/tvExpectedTemperature"
                         app:layout_constraintTop_toBottomOf="@+id/tvCurrentTemperature" />
@@ -143,7 +143,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="20dp"
-                        android:text="Co2:"
+                        android:text="@string/co2"
                         android:textSize="30sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -164,7 +164,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="20dp"
-                        android:text="Expected:"
+                        android:text="@string/expected"
                         android:textSize="24sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tvCurrentCo2" />
@@ -175,7 +175,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="20dp"
-                        android:text="-"
+                        android:text="@string/dash"
                         android:textSize="24sp"
                         app:layout_constraintStart_toEndOf="@+id/tvExpectedCo2"
                         app:layout_constraintTop_toBottomOf="@+id/tvCurrentCo2" />
@@ -211,7 +211,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="20dp"
-                        android:text="Humidity:"
+                        android:text="@string/humidity"
                         android:textSize="30sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -232,7 +232,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="20dp"
-                        android:text="Expected:"
+                        android:text="@string/expected"
                         android:textSize="24sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tvCurrentHumidity" />
@@ -243,7 +243,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="20dp"
-                        android:text="-"
+                        android:text="@string/dash"
                         android:textSize="24sp"
                         app:layout_constraintStart_toEndOf="@+id/tvExpectedHumidity"
                         app:layout_constraintTop_toBottomOf="@+id/tvCurrentHumidity" />

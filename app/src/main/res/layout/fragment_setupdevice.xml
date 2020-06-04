@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="10dp"
-            android:text="Currently available devices"
+            android:text="@string/currently_available_devices"
             tools:ignore="RtlSymmetry" />
 
         <TextView
@@ -43,7 +43,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="20dp"
         android:gravity="center_vertical"
-        android:text="Device id:"
+        android:text="@string/device_id"
         android:textSize="15sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -67,7 +67,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
         android:gravity="center_vertical"
-        android:text="New room's name: "
+        android:text="@string/new_room_s_name"
         android:textSize="15sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/deviceIdtext" />
@@ -89,7 +89,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="24dp"
-        android:text="Create device"
+        android:text="@string/create_device"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/newRoomName" />
 
@@ -100,7 +100,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="24dp"
-        android:text="Welcome! Please enter your device id, and the name of the room, where you have placed your device!"
+        android:text="@string/setup_welcome"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

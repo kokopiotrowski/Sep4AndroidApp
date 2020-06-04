@@ -76,22 +76,17 @@ public class RoomsFragment extends Fragment {
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 if (canDelete) {
 
-                    Log.i("ROOOOOMS", "CAN");
                     String id = adapter.getDeviceAt(viewHolder.getAdapterPosition()).getDeviceId();
                     String name = adapter.getDeviceAt(viewHolder.getAdapterPosition()).getName();
 
                     NewDeviceModel savedDevice = new NewDeviceModel(id, name);
-//                    viewModel.deletePreferencesFromDb(viewModel.getPreferencesById(id));
                     viewModel.deleteDevice(id, savedDevice);
                     Snackbar.make(recyclerView, id, Snackbar.LENGTH_LONG)
                             .setAction("Undo", v -> {
                                 viewModel.postDevice(savedDevice);
                                 viewModel.insertDevice(savedDevice);
-
-
                             }).show();
                 }else{
-                    Log.i("ROOOOOMS", "CANT");
                     viewModel.updateRooms();
                 }
             }

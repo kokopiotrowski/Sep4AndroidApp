@@ -1,7 +1,9 @@
 package com.example.sep4androidapp.fragments.factFragment;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -40,5 +42,12 @@ public class FactFragmentDialog extends AppCompatDialogFragment {
         }
         builder.setView(view);
         return builder.create();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.i("DIALOGFRA", "He");
+
     }
 }

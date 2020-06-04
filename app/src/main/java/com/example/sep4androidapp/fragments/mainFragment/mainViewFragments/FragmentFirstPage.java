@@ -2,6 +2,7 @@ package com.example.sep4androidapp.fragments.mainFragment.mainViewFragments;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,13 +16,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.sep4androidapp.Entities.Fact;
 import com.example.sep4androidapp.Entities.NewDeviceModel;
 import com.example.sep4androidapp.Entities.Preferences;
 import com.example.sep4androidapp.LocalStorage.ConnectionLiveData;
 import com.example.sep4androidapp.R;
 import com.example.sep4androidapp.ViewModels.FragmentFirstPageViewModel;
+import com.example.sep4androidapp.fragments.factFragment.FactFragmentDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -38,6 +42,7 @@ public class FragmentFirstPage extends Fragment {
 
     private FloatingActionButton randomFactButton;
     private ImageView temperatureStatus, humidityStatus, CO2Status;
+    private FactFragmentDialog factFragmentDialog = new FactFragmentDialog();
 
     private List<String> nameList = new ArrayList<>();
     private List<String> idList = new ArrayList<>();
@@ -98,7 +103,19 @@ public class FragmentFirstPage extends Fragment {
             refreshSpinner();
         });
 
-        viewModel.getFact().observe(getViewLifecycleOwner(), fact -> viewModel.showDialogFragment(fact, this));
+
+        randomFactButton.setOnClickListener(v1 -> {
+            viewModel.getFactRandomly();
+        });
+        viewModel.getFact().observe(getViewLifecycleOwner(), fact -> {
+            Bundle args = new Bundle();
+            args.putString("title", fact.getTitle());
+            args.putString("content", fact.getContent());
+            args.putString("source", fact.getSource());
+            args.putString("url", fact.getSourceUrl());;
+            factFragmentDialog.setArguments(args);
+            factFragmentDialog.show(getParentFragmentManager(), "Random");
+        });
 
         viewModel.getDevicesFromApi().observe(getViewLifecycleOwner(), devices -> {
 
@@ -221,7 +238,6 @@ public class FragmentFirstPage extends Fragment {
         });
 
         deviceSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> viewModel.switchCheck(isChecked));
-        randomFactButton.setOnClickListener(v1 -> viewModel.getFactRandomly());
     }
 
     @Override

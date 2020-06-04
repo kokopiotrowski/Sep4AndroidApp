@@ -108,7 +108,6 @@ public class PreferencesRepository {
                 }else{
                     Log.i("PreferencesRepo", "basszus " + response.code());
                 }
-
             }
 
             @Override
