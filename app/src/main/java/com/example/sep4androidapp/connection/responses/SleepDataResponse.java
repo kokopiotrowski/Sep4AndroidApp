@@ -22,7 +22,7 @@ public class SleepDataResponse {
     private double averageSound;
     private double averageTemperature;
 
-        public SleepData getSleepData() {
-        return new SleepData(roomConditions,sleepId, deviceId, timeStart, timeFinish, rating, averageCo2, averageHumidity, averageSound,  averageTemperature);
+    public SleepData getSleepData() {
+        return new SleepData(roomConditions, sleepId, deviceId, timeStart, timeFinish, rating, averageCo2, averageHumidity, averageSound, averageTemperature);
     }
 }
