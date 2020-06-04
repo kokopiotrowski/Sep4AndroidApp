@@ -14,7 +14,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="60dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -40,10 +41,10 @@
                         android:id="@+id/timeStamp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-
                         android:gravity="center_vertical"
-                        android:paddingLeft="10dp"
-                        android:text="05/12  14:30" />
+                        android:paddingStart="10dp"
+                        tools:ignore="RtlSymmetry"
+                        tools:text="No data" />
 
                 </LinearLayout>
 
@@ -74,7 +75,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="20dp"
-                        android:text="Temperature:"
+                        android:text="@string/temperature"
                         android:textSize="30sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -95,7 +96,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="20dp"
-                        android:text="Expected:"
+                        android:text="@string/expected"
                         android:textSize="24sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tvCurrentTemperature" />
@@ -106,7 +107,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="20dp"
-                        android:text="22 °C"
+                        android:text="@string/dash"
                         android:textSize="24sp"
                         app:layout_constraintStart_toEndOf="@+id/tvExpectedTemperature"
                         app:layout_constraintTop_toBottomOf="@+id/tvCurrentTemperature" />
@@ -116,9 +117,9 @@
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_marginTop="10dp"
-                        app:layout_constraintEnd_toEndOf="@+id/currentTemperature"
-                        app:layout_constraintTop_toBottomOf="@+id/currentTemperature"
-                        app:srcCompat="@drawable/lower" />
+                        android:layout_marginEnd="30dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/currentTemperature" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 
@@ -141,7 +142,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="20dp"
-                        android:text="Co2:"
+                        android:text="@string/co2"
                         android:textSize="30sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -162,7 +163,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="20dp"
-                        android:text="Expected:"
+                        android:text="@string/expected"
                         android:textSize="24sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tvCurrentCo2" />
@@ -173,7 +174,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="20dp"
-                        android:text="416"
+                        android:text="@string/dash"
                         android:textSize="24sp"
                         app:layout_constraintStart_toEndOf="@+id/tvExpectedCo2"
                         app:layout_constraintTop_toBottomOf="@+id/tvCurrentCo2" />
@@ -183,9 +184,9 @@
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_marginTop="10dp"
-                        app:layout_constraintEnd_toEndOf="@+id/currentCo2"
-                        app:layout_constraintTop_toBottomOf="@+id/currentCo2"
-                        app:srcCompat="@drawable/correct" />
+                        android:layout_marginEnd="30dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/currentCo2" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 
@@ -208,7 +209,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="20dp"
-                        android:text="Humidity:"
+                        android:text="@string/humidity"
                         android:textSize="30sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -229,7 +230,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="20dp"
-                        android:text="Expected:"
+                        android:text="@string/expected"
                         android:textSize="24sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tvCurrentHumidity" />
@@ -240,7 +241,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="20dp"
-                        android:text="35%"
+                        android:text="@string/dash"
                         android:textSize="24sp"
                         app:layout_constraintStart_toEndOf="@+id/tvExpectedHumidity"
                         app:layout_constraintTop_toBottomOf="@+id/tvCurrentHumidity" />
@@ -250,84 +251,16 @@
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_marginTop="10dp"
-                        app:layout_constraintEnd_toEndOf="@+id/currentHumidity"
-                        app:layout_constraintTop_toBottomOf="@+id/currentHumidity"
-                        app:srcCompat="@drawable/higher" />
+                        android:layout_marginEnd="30dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/currentHumidity" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
-
-<!--            <androidx.cardview.widget.CardView-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="130dp"-->
-<!--                android:layout_marginLeft="10dp"-->
-<!--                android:layout_marginTop="10dp"-->
-<!--                android:layout_marginRight="10dp"-->
-<!--                android:layout_marginBottom="5dp"-->
-<!--                app:cardBackgroundColor="#E3E3E3">-->
-
-<!--                <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="match_parent">-->
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/tvCurrentSound"-->
-<!--                        android:layout_width="190dp"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginStart="20dp"-->
-<!--                        android:layout_marginTop="20dp"-->
-<!--                        android:text="Sound:"-->
-<!--                        android:textSize="30sp"-->
-<!--                        app:layout_constraintStart_toStartOf="parent"-->
-<!--                        app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/currentSound"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginTop="20dp"-->
-<!--                        android:layout_marginEnd="40dp"-->
-<!--                        android:text="20dB"-->
-<!--                        android:textSize="30sp"-->
-<!--                        app:layout_constraintEnd_toEndOf="parent"-->
-<!--                        app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/tvExpectedSound"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginStart="20dp"-->
-<!--                        android:layout_marginTop="20dp"-->
-<!--                        android:text="Expected:"-->
-<!--                        android:textSize="24sp"-->
-<!--                        app:layout_constraintStart_toStartOf="parent"-->
-<!--                        app:layout_constraintTop_toBottomOf="@+id/tvCurrentSound" />-->
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/expectedSound"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginTop="20dp"-->
-<!--                        android:text="15dB"-->
-<!--                        android:textSize="24sp"-->
-<!--                        app:layout_constraintStart_toEndOf="@+id/tvExpectedSound"-->
-<!--                        app:layout_constraintTop_toBottomOf="@+id/tvCurrentSound" />-->
-
-<!--                    <ImageView-->
-<!--                        android:id="@+id/SoundStatus"-->
-<!--                        android:layout_width="50dp"-->
-<!--                        android:layout_height="50dp"-->
-<!--                        android:layout_marginTop="10dp"-->
-<!--                        app:layout_constraintEnd_toEndOf="@+id/currentSound"-->
-<!--                        app:layout_constraintTop_toBottomOf="@+id/currentSound"-->
-<!--                        app:srcCompat="@drawable/correct" />-->
-<!--                </androidx.constraintlayout.widget.ConstraintLayout>-->
-<!--            </androidx.cardview.widget.CardView>-->
-
         </LinearLayout>
     </ScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingButton"
+        android:id="@+id/randomFactButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"

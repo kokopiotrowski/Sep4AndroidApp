@@ -1,8 +1,6 @@
 package com.example.sep4androidapp.Entities;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
-
 
 public class RoomCondition implements Comparable<RoomCondition> {
     private int sleepId;
@@ -19,23 +17,14 @@ public class RoomCondition implements Comparable<RoomCondition> {
         this.co2 = co2;
         this.sound = sound;
         this.humidity = humidity;
-
     }
 
     public int getSleepId() {
         return sleepId;
     }
 
-    public void setSleepId(int sleepId) {
-        this.sleepId = sleepId;
-    }
-
     public LocalDateTime getTimestamp() {
         return timestamp;
-    }
-
-    public void setTimestamp(LocalDateTime timestamp) {
-        this.timestamp = timestamp;
     }
 
     public double getTemperature() {
@@ -50,24 +39,12 @@ public class RoomCondition implements Comparable<RoomCondition> {
         return co2;
     }
 
-    public void setCo2(double co2) {
-        this.co2 = co2;
-    }
-
     public double getSound() {
         return sound;
     }
 
-    public void setSound(double sound) {
-        this.sound = sound;
-    }
-
     public double getHumidity() {
         return humidity;
-    }
-
-    public void setHumidity(double humidity) {
-        this.humidity = humidity;
     }
 
     @Override

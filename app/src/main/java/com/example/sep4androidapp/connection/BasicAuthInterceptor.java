@@ -1,7 +1,5 @@
 package com.example.sep4androidapp.connection;
 
-import android.util.Log;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 

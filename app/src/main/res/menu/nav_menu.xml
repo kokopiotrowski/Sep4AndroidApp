@@ -22,9 +22,6 @@
         android:id="@+id/itemTipsFacts"
         android:title="Tips and Facts" />
     <item
-        android:id="@+id/itemAccount"
-        android:title="Account" />
-    <item
         android:id="@+id/itemSleep"
         android:title="Sleep Data" />
     <item

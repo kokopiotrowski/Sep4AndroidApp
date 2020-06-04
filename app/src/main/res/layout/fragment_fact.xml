@@ -5,9 +5,7 @@
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/blue_night"
-    >
-
+    android:background="@color/blue_night">
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
@@ -36,11 +34,11 @@
         android:id="@+id/factsTipsTextView"
         android:layout_width="416dp"
         android:layout_height="51dp"
-        android:text="Tips AND Facts"
+        android:text="@string/tips_and_facts"
         android:textAlignment="center"
+        android:textColor="@color/white"
         android:textSize="30sp"
         android:textStyle="bold"
-        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

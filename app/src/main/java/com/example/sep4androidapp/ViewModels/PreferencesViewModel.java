@@ -9,80 +9,62 @@ import androidx.lifecycle.LiveData;
 import com.example.sep4androidapp.Entities.Device;
 import com.example.sep4androidapp.Entities.NewDeviceModel;
 import com.example.sep4androidapp.Entities.Preferences;
+import com.example.sep4androidapp.Repositories.DatabaseRepository;
 import com.example.sep4androidapp.Repositories.PreferencesRepository;
 import com.example.sep4androidapp.Repositories.RoomsRepository;
 
 import java.util.List;
 
 public class PreferencesViewModel extends AndroidViewModel {
-
+    private DatabaseRepository databaseRepository;
     private PreferencesRepository preferencesRepository;
     private RoomsRepository roomsRepository;
-   // private Device deviceId;
     private String deviceId;
 
     public PreferencesViewModel(@NonNull Application application) {
         super(application);
         preferencesRepository = PreferencesRepository.getInstance(application);
         roomsRepository = RoomsRepository.getInstance();
+        databaseRepository = DatabaseRepository.getInstance(application);
     }
 
-    public LiveData< List< Preferences > > getAllPreferences() {
-        return preferencesRepository.getAllPreferences();
-    }
-
-    public void insert(final Preferences preferences) {
-        preferencesRepository.insert(preferences);
-    }
-
-    public void update(final Preferences preferences) {
-        preferencesRepository.update(preferences);
-    }
-
-    public void showPrefrences(String deviceId) {
+    public void showPreferences(String deviceId) {
         preferencesRepository.showPreferences(deviceId);
     }
 
-    public void updatePreferences(Preferences preference) {
-        preferencesRepository.updatePrefrences(preference);
+    public void savePreferencesToNetwork(Preferences preference) {
+        preferencesRepository.savePreferencesToNetwork(preference);
     }
 
-    public void insertDevice(final NewDeviceModel model){
-        preferencesRepository.insertDevice(model);
+    public void insertDevice(NewDeviceModel model) {
+        databaseRepository.insertDevice(model);
     }
 
-    public LiveData<List<NewDeviceModel>> getAllDevices(){
-        return preferencesRepository.getAllDevices();
-    }
-    public LiveData<List<NewDeviceModel>> getDeviceLocal(){
-        return preferencesRepository.getAllDevices();
+    public Preferences getPreferencesById(String deviceId) {
+        return databaseRepository.getPreferencesById(deviceId);
     }
 
-    public LiveData< List< Preferences > > getPrefrences() {
-        return preferencesRepository.getAllPreferences();
+    public LiveData<List<NewDeviceModel>> getAllLocalDevices() {
+        return databaseRepository.getAllDevices();
     }
 
-   public LiveData<Preferences> getLastPreference() {
-
+    public LiveData<Preferences> getPreferences() {
         return preferencesRepository.getPreferences();
-   }
+    }
 
     public void updateRooms() {
         roomsRepository.updateRooms();
     }
 
-    public LiveData<List< Device >> getDevices() {
-
+    public LiveData<List<Device>> getDevicesFromApi() {
         return roomsRepository.getList();
     }
-
 
     public void setDeviceId(String deviceId) {
         this.deviceId = deviceId;
     }
 
     public String getDeviceId() {
-
         return deviceId;
     }
 }

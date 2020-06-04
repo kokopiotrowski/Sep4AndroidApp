@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
@@ -51,28 +51,28 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="Temperature"
+                android:text="@string/temperature"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/temperatureImage"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
                 android:id="@+id/minTempEditText"
-                android:layout_width="38dp"
-                android:layout_height="wrap_content"
+                android:layout_width="45dp"
+                android:layout_height="40dp"
                 android:layout_marginStart="10dp"
                 android:inputType="number"
-                android:textSize="14dp"
+                android:textSize="14sp"
                 app:layout_constraintStart_toEndOf="@+id/TempMinTextView"
                 app:layout_constraintTop_toBottomOf="@+id/tempText" />
 
             <EditText
                 android:id="@+id/MaxTempEditText"
-                android:layout_width="44dp"
+                android:layout_width="45dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="10dp"
                 android:inputType="number"
-                android:textSize="14dp"
+                android:textSize="14sp"
                 app:layout_constraintStart_toEndOf="@+id/TempMaxTextView"
                 app:layout_constraintTop_toBottomOf="@+id/tempText" />
 
@@ -82,11 +82,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="24dp"
-                android:text="Minimum:"
+                android:text="@string/minimum"
                 android:textSize="10sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/temperatureImage"
-                app:layout_constraintTop_toBottomOf="@+id/tempText" />
+                app:layout_constraintTop_toBottomOf="@+id/tempText"
+                tools:ignore="SmallSp" />
 
             <TextView
                 android:id="@+id/TempMaxTextView"
@@ -94,12 +95,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="24dp"
-                android:paddingRight="2dp"
-                android:text="Maximum:"
+                android:paddingEnd="2dp"
+                android:text="@string/maximum"
                 android:textSize="10sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/minTempEditText"
-                app:layout_constraintTop_toBottomOf="@+id/tempText" />
+                app:layout_constraintTop_toBottomOf="@+id/tempText"
+                tools:ignore="RtlSymmetry,SmallSp" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -133,7 +135,7 @@
                 android:id="@+id/humText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Humidity"
+                android:text="@string/humidity"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/humImage"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -141,20 +143,20 @@
 
             <EditText
                 android:id="@+id/minHumEditText"
-                android:layout_width="38dp"
-                android:layout_height="wrap_content"
+                android:layout_width="45dp"
+                android:layout_height="40dp"
                 android:layout_marginStart="10dp"
                 android:inputType="number"
-                android:textSize="14dp"
+                android:textSize="14sp"
                 app:layout_constraintStart_toEndOf="@+id/HumMinTextView"
                 app:layout_constraintTop_toBottomOf="@+id/humText" />
 
             <EditText
                 android:id="@+id/MaxHumEditText"
-                android:layout_width="33dp"
-                android:layout_height="wrap_content"
+                android:layout_width="45dp"
+                android:layout_height="40dp"
                 android:inputType="number"
-                android:textSize="14dp"
+                android:textSize="14sp"
                 app:layout_constraintStart_toEndOf="@+id/HemMaxTextView"
                 app:layout_constraintTop_toBottomOf="@+id/humText" />
 
@@ -164,11 +166,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="24dp"
-                android:text="Minimum:"
+                android:text="@string/minimum"
                 android:textSize="10sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/humImage"
-                app:layout_constraintTop_toBottomOf="@+id/humText" />
+                app:layout_constraintTop_toBottomOf="@+id/humText"
+                tools:ignore="SmallSp" />
 
             <TextView
                 android:id="@+id/HemMaxTextView"
@@ -176,12 +179,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="24dp"
-                android:paddingRight="2dp"
-                android:text="Maximum:"
+                android:paddingEnd="2dp"
+                android:text="@string/maximum"
                 android:textSize="10sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/minHumEditText"
-                app:layout_constraintTop_toBottomOf="@+id/humText" />
+                app:layout_constraintTop_toBottomOf="@+id/humText"
+                tools:ignore="RtlSymmetry,SmallSp" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -216,29 +220,30 @@
                 android:id="@+id/co2Text"
                 android:layout_width="99dp"
                 android:layout_height="wrap_content"
-                android:text="CO2"
+                android:text="@string/co2"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/co2Image"
                 app:layout_constraintTop_toTopOf="parent" />
 
 
-            <EditText
+            <TextView
                 android:id="@+id/minCo2EditText"
                 android:layout_width="38dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:inputType="number"
-                android:textSize="14dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/_0"
+                android:textSize="14sp"
                 app:layout_constraintStart_toEndOf="@+id/Co2MinTextView"
                 app:layout_constraintTop_toBottomOf="@+id/co2Text" />
 
             <EditText
                 android:id="@+id/MaxCo2EditText"
-                android:layout_width="33dp"
-                android:layout_height="wrap_content"
+                android:layout_width="45dp"
+                android:layout_height="40dp"
                 android:layout_marginStart="10dp"
                 android:inputType="number"
-                android:textSize="14dp"
+                android:textSize="14sp"
                 app:layout_constraintStart_toEndOf="@+id/Co2MaxTextView"
                 app:layout_constraintTop_toBottomOf="@+id/co2Text" />
 
@@ -248,11 +253,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="24dp"
-                android:text="Minimum:"
+                android:text="@string/minimum"
                 android:textSize="10sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/co2Image"
-                app:layout_constraintTop_toBottomOf="@+id/co2Text" />
+                app:layout_constraintTop_toBottomOf="@+id/co2Text"
+                tools:ignore="SmallSp" />
 
             <TextView
                 android:id="@+id/Co2MaxTextView"
@@ -260,12 +266,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="24dp"
-                android:paddingRight="2dp"
-                android:text="Maximum:"
+                android:paddingEnd="2dp"
+                android:text="@string/maximum"
                 android:textSize="10sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/minCo2EditText"
-                app:layout_constraintTop_toBottomOf="@+id/co2Text" />
+                app:layout_constraintTop_toBottomOf="@+id/co2Text"
+                tools:ignore="RtlSymmetry,SmallSp" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -284,7 +291,7 @@
             android:id="@+id/buttonSave"
             android:layout_width="100dp"
             android:layout_height="50dp"
-            android:text="Save"
+            android:text="@string/save"
             android:textSize="10sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -292,7 +299,8 @@
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.32" />
+            app:layout_constraintVertical_bias="0.32"
+            tools:ignore="SmallSp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

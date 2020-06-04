@@ -3,15 +3,36 @@
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Spinner
+                android:id="@+id/deviceSpinner"
+                android:layout_width="181dp"
+                android:layout_height="match_parent">
+
+            </Spinner>
+
+            <Spinner
+                android:id="@+id/sleepSpinner"
+                android:layout_width="230dp"
+                android:layout_height="match_parent">
+
+            </Spinner>
+
+        </LinearLayout>
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -32,7 +53,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="56dp"
-                    android:text="20 °C"
+                    android:text="@string/dash"
                     android:textSize="23sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.983"
@@ -45,7 +66,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="56dp"
-                    android:text="20 °C"
+                    android:text="@string/dash"
                     android:textSize="23sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.966"
@@ -58,7 +79,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="32dp"
                     android:layout_marginEnd="56dp"
-                    android:text="20 °C"
+                    android:text="@string/dash"
                     android:textSize="23sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.949"
@@ -71,7 +92,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="32dp"
                     android:layout_marginTop="20dp"
-                    android:text="Average CO2:"
+                    android:text="@string/average_co2"
                     android:textSize="23sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/averageSound" />
@@ -82,7 +103,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="32dp"
                     android:layout_marginTop="20dp"
-                    android:text="Average sound:"
+                    android:text="@string/average_sound"
                     android:textSize="23sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/averageHumidity" />
@@ -93,7 +114,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="32dp"
                     android:layout_marginTop="20dp"
-                    android:text="Average humidity:"
+                    android:text="@string/average_humidity"
                     android:textSize="23sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/averageTemperature" />
@@ -104,7 +125,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="32dp"
                     android:layout_marginTop="24dp"
-                    android:text="Average temperature:"
+                    android:text="@string/average_temperature"
                     android:textSize="22sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -115,7 +136,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="36dp"
                     android:layout_marginEnd="56dp"
-                    android:text="20 °C"
+                    android:text="@string/dash"
                     android:textSize="23sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.966"
@@ -126,15 +147,14 @@
         </androidx.cardview.widget.CardView>
 
 
-        <Spinner android:id="@+id/spinnerSleepData"
+        <Spinner
+            android:id="@+id/spinnerSleepData"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-
+            android:layout_height="wrap_content" />
 
 
         <RelativeLayout
-                    android:layout_width="match_parent"
+            android:layout_width="match_parent"
             android:layout_height="418dp">
 
             <com.github.mikephil.charting.charts.LineChart
@@ -146,7 +166,6 @@
 
 
     </LinearLayout>
-
 
 
 </ScrollView>

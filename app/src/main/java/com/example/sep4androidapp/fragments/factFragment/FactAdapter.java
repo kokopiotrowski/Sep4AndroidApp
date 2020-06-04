@@ -1,10 +1,9 @@
-package com.example.sep4androidapp.Adapter;
+package com.example.sep4androidapp.fragments.factFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,9 +13,8 @@ import com.example.sep4androidapp.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FactAdapter extends RecyclerView.Adapter< FactAdapter.FactHolder > {
-    //private FactViewModel viewModel = new FactViewModel();
-    private List< Fact > facts = new ArrayList<>();
+public class FactAdapter extends RecyclerView.Adapter<FactAdapter.FactHolder> {
+    private List<Fact> facts = new ArrayList<>();
     private OnItemClickListener listener;
 
     @NonNull
@@ -39,12 +37,10 @@ public class FactAdapter extends RecyclerView.Adapter< FactAdapter.FactHolder > 
         return facts.size();
     }
 
-    public void setFacts(List< Fact > facts) {
+    public void setFacts(List<Fact> facts) {
         this.facts = facts;
         notifyDataSetChanged();
     }
-
-
 
     class FactHolder extends RecyclerView.ViewHolder {
         private TextView textViewTitle;
@@ -68,8 +64,7 @@ public class FactAdapter extends RecyclerView.Adapter< FactAdapter.FactHolder > 
         void onItemClick(Fact fact);
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener)
-    {
+    public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
     }
 }

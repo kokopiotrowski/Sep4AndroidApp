@@ -13,24 +13,4 @@ public class RatingResponse {
     int rating;
     @SerializedName("sleepId")
     int sleepId;
-
-    public String getDateTimeFinish() {
-        return dateTimeFinish;
-    }
-
-    public String getDateTimeStart() {
-        return dateTimeStart;
-    }
-
-    public String getDeviceId() {
-        return deviceId;
-    }
-
-    public int getRating() {
-        return rating;
-    }
-
-    public int getSleepId() {
-        return sleepId;
-    }
 }

@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="43dp"
         android:gravity="center_horizontal"
-        android:text="default_email"
+        android:text="@string/default_email"
         android:textColor="#FFFFFF"
         android:textSize="24sp" />
 
@@ -31,7 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="43dp"
         android:gravity="center_horizontal"
-        android:text="default_name"
+        android:text="@string/default_name"
         android:textColor="#FFFFFF"
         android:textSize="24sp" />
 

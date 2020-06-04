@@ -4,6 +4,12 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
+import com.example.sep4androidapp.connection.apis.AccountDevicesApi;
+import com.example.sep4androidapp.connection.apis.FactApi;
+import com.example.sep4androidapp.connection.apis.PreferenceApi;
+import com.example.sep4androidapp.connection.apis.ReportApi;
+import com.example.sep4androidapp.connection.apis.RoomConditionApi;
+import com.example.sep4androidapp.connection.apis.SleepTrackingApi;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializationContext;
@@ -12,10 +18,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 
 import java.lang.reflect.Type;
-import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 import okhttp3.OkHttpClient;

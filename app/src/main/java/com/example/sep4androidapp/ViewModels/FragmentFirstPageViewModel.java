@@ -10,14 +10,17 @@ import androidx.lifecycle.LiveData;
 
 import com.example.sep4androidapp.Entities.Device;
 import com.example.sep4androidapp.Entities.Fact;
+import com.example.sep4androidapp.Entities.NewDeviceModel;
 import com.example.sep4androidapp.Entities.Preferences;
 import com.example.sep4androidapp.Entities.RoomCondition;
+import com.example.sep4androidapp.Repositories.DatabaseRepository;
 import com.example.sep4androidapp.Repositories.FactRepository;
 import com.example.sep4androidapp.Repositories.PreferencesRepository;
 import com.example.sep4androidapp.Repositories.ReportRepository;
 import com.example.sep4androidapp.Repositories.RoomsRepository;
 import com.example.sep4androidapp.Repositories.StartStopRepository;
-import com.example.sep4androidapp.connection.ApiCallBack;
+import com.example.sep4androidapp.connection.apis.ApiCallBack;
+
 import java.util.Calendar;
 import java.util.List;
 import java.util.Timer;
@@ -29,6 +32,7 @@ public class FragmentFirstPageViewModel extends AndroidViewModel {
     private RoomsRepository roomsRepository;
     private FactRepository factRepository;
     private PreferencesRepository preferencesRepository;
+    private DatabaseRepository databaseRepository;
     private Handler handler = new Handler();
     private Timer timer = new Timer();
     private String deviceId;
@@ -40,24 +44,28 @@ public class FragmentFirstPageViewModel extends AndroidViewModel {
         roomsRepository = RoomsRepository.getInstance();
         factRepository = FactRepository.getInstance();
         preferencesRepository = PreferencesRepository.getInstance(application);
+        databaseRepository = DatabaseRepository.getInstance(application);
+    }
+
+    public void setChosenDeviceId(String deviceId) {
+        this.deviceId = deviceId;
+        roomsRepository.setChosenDeviceId(deviceId);
+    }
+
+    public Preferences getPreferencesById(String deviceId) {
+        return databaseRepository.getPreferencesById(deviceId);
     }
 
     public String getDeviceId() {
         return deviceId;
     }
 
-    public void setDeviceId(String deviceId) {
-        this.deviceId = deviceId;
-    }
-
-
-
     public LiveData<RoomCondition> getRoomCondition() {
 
         return reportRepository.getRoomCondition();
     }
 
-    private void updateRoomCondition(String deviceId) {
+    public void updateRoomCondition(String deviceId) {
         reportRepository.updateRoomCondition(deviceId);
     }
 
@@ -90,7 +98,7 @@ public class FragmentFirstPageViewModel extends AndroidViewModel {
         startStopRepository.receiveStatus(deviceId, callBack);
     }
 
-    public LiveData<List<Device>> getDevices() {
+    public LiveData<List<Device>> getDevicesFromApi() {
         return roomsRepository.getList();
     }
 
@@ -108,23 +116,23 @@ public class FragmentFirstPageViewModel extends AndroidViewModel {
         }
     }
 
-    public void getFactRandomly()
-    {
+    public void getFactRandomly() {
         factRepository.getFactRandomly();
     }
 
-    public LiveData<Fact> getFact()
-    {
+    public LiveData<Fact> getFact() {
         return factRepository.getFact();
     }
 
-    public void showPreferences(String deviceId)
-    {
+    public void showPreferences(String deviceId) {
         preferencesRepository.showPreferences(deviceId);
     }
 
-    public LiveData<Preferences> getPreferences()
-    {
+    public LiveData<Preferences> getPreferencesFromApi() {
         return preferencesRepository.getPreferences();
+    }
+
+    public LiveData<List<NewDeviceModel>> getAllLocalDevices() {
+        return databaseRepository.getAllDevices();
     }
 }
