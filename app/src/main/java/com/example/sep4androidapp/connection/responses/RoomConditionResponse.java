@@ -19,10 +19,8 @@ public class RoomConditionResponse {
     @SerializedName("humidity")
     private double humidity;
 
-
     public RoomCondition getRoomCondition(){
         return new RoomCondition(sleepId,timestamp,temperature,co2,sound,humidity);
-
     }
 
 }

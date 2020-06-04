@@ -15,8 +15,4 @@ public interface PreferenceApi {
 
     @PUT("preferences")
     Call <PreferencesResponse>updatePreferences(@Body Preferences preferences);
-
-
-
-
 }

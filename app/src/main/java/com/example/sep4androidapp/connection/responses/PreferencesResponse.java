@@ -1,6 +1,5 @@
 package com.example.sep4androidapp.connection.responses;
 
-import com.example.sep4androidapp.Entities.Preferences;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;

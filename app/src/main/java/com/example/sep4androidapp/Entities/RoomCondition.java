@@ -31,10 +31,6 @@ public class RoomCondition implements Comparable<RoomCondition> {
         return temperature;
     }
 
-    public void setTemperature(double temperature) {
-        this.temperature = temperature;
-    }
-
     public double getCo2() {
         return co2;
     }
