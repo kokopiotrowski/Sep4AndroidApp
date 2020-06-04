@@ -39,11 +39,6 @@ public class ChartsReportViewModel extends AndroidViewModel {
 
     public void rateSleep(int sleepId, int rating) { repository.rateSleep(sleepId, rating);}
 
-
-    public String getDeviceId() {
-        return deviceId;
-    }
-
     public void setDeviceId(String deviceId) {
         this.deviceId = deviceId;
     }
