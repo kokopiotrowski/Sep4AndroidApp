@@ -5,7 +5,6 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.example.sep4androidapp.Entities.NewDeviceModel;
 import com.example.sep4androidapp.Repositories.SetUpDeviceRepository;
@@ -20,24 +19,19 @@ public class SetUpDeviceViewModel extends AndroidViewModel {
         repository = SetUpDeviceRepository.getInstance();
     }
 
-
-    public void updateAvailableDevices()
-    {
+    public void updateAvailableDevices() {
         repository.updateAvailableDevices();
     }
 
-    public LiveData<List<String>> getAvailableDevices()
-    {
+    public LiveData<List<String>> getAvailableDevices() {
         return repository.getAvailableDevices();
     }
 
-    public LiveData<String> getMessage()
-    {
-        return  repository.getMessage();
+    public LiveData<String> getMessage() {
+        return repository.getMessage();
     }
 
-    public void postNewDevice(NewDeviceModel model)
-    {
+    public void postNewDevice(NewDeviceModel model) {
         repository.postNewDevice(model);
     }
 

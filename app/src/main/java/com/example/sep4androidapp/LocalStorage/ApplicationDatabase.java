@@ -1,6 +1,5 @@
 package com.example.sep4androidapp.LocalStorage;
 
-import android.app.Application;
 import android.content.Context;
 
 import androidx.room.Database;

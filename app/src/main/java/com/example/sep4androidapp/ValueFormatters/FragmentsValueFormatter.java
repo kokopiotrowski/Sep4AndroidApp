@@ -11,17 +11,18 @@ public class FragmentsValueFormatter implements IAxisValueFormatter {
     int days;
     int months;
     long newValue;
+
     @Override
     public String getFormattedValue(float value, AxisBase axis) {
 
         newValue = (long) value;
         year = LocalDate.now().getYear();
-        LocalDate firstDate = LocalDate.of(year,1,1);
-        LocalDate newDate  = firstDate.plusDays(newValue);
+        LocalDate firstDate = LocalDate.of(year, 1, 1);
+        LocalDate newDate = firstDate.plusDays(newValue);
         months = newDate.getMonthValue();
         days = newDate.getDayOfMonth();
 
-        String dateString = String.format(Locale.ENGLISH,"%02d/%02d", months, days);
+        String dateString = String.format(Locale.ENGLISH, "%02d/%02d", months, days);
 
         return dateString;
     }

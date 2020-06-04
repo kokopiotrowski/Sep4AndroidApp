@@ -1,7 +1,6 @@
 package com.example.sep4androidapp.ViewModels;
 
 import android.app.Application;
-import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 
@@ -21,8 +20,6 @@ import com.example.sep4androidapp.Repositories.ReportRepository;
 import com.example.sep4androidapp.Repositories.RoomsRepository;
 import com.example.sep4androidapp.Repositories.StartStopRepository;
 import com.example.sep4androidapp.connection.ApiCallBack;
-import com.example.sep4androidapp.fragments.factFragment.FactFragmentDialog;
-import com.example.sep4androidapp.fragments.mainFragment.mainViewFragments.FragmentFirstPage;
 
 import java.util.Calendar;
 import java.util.List;
@@ -119,23 +116,19 @@ public class FragmentFirstPageViewModel extends AndroidViewModel {
         }
     }
 
-    public void getFactRandomly()
-    {
+    public void getFactRandomly() {
         factRepository.getFactRandomly();
     }
 
-    public LiveData<Fact> getFact()
-    {
+    public LiveData<Fact> getFact() {
         return factRepository.getFact();
     }
 
-    public void showPreferences(String deviceId)
-    {
+    public void showPreferences(String deviceId) {
         preferencesRepository.showPreferences(deviceId);
     }
 
-    public LiveData<Preferences> getPreferencesFromApi()
-    {
+    public LiveData<Preferences> getPreferencesFromApi() {
         return preferencesRepository.getPreferences();
     }
 

@@ -8,7 +8,6 @@ import androidx.lifecycle.LiveData;
 
 import com.example.sep4androidapp.Entities.Device;
 import com.example.sep4androidapp.Entities.NewDeviceModel;
-import com.example.sep4androidapp.Entities.Preferences;
 import com.example.sep4androidapp.Repositories.DatabaseRepository;
 import com.example.sep4androidapp.Repositories.RoomsRepository;
 import com.example.sep4androidapp.Repositories.SetUpDeviceRepository;
@@ -27,17 +26,15 @@ public class RoomsViewModel extends AndroidViewModel {
         databaseRepository = DatabaseRepository.getInstance(application);
     }
 
-    public LiveData<List<Device>> getDevices()
-    {
+    public LiveData<List<Device>> getDevices() {
         return roomsRepository.getList();
     }
 
-    public void updateRooms(){
+    public void updateRooms() {
         roomsRepository.updateRooms();
     }
 
-    public void deleteDevice(String deviceId, NewDeviceModel device)
-    {
+    public void deleteDevice(String deviceId, NewDeviceModel device) {
         roomsRepository.deleteDevice(deviceId, device);
     }
 
@@ -45,8 +42,7 @@ public class RoomsViewModel extends AndroidViewModel {
         databaseRepository.insertDevice(model);
     }
 
-    public void postDevice(NewDeviceModel model)
-    {
+    public void postDevice(NewDeviceModel model) {
         setUpDeviceRepository.postNewDevice(model);
     }
 

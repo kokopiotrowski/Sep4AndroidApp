@@ -16,7 +16,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sep4androidapp.Firebase.Firebase_Login;
-import com.example.sep4androidapp.ViewModels.StartStopViewModel;
 import com.example.sep4androidapp.fragments.factFragment.FactFragment;
 import com.example.sep4androidapp.fragments.mainFragment.MainFragment;
 import com.example.sep4androidapp.fragments.preferencesFragment.PreferencesFragment;
@@ -25,21 +24,17 @@ import com.example.sep4androidapp.fragments.roomFragment.RoomsFragment;
 import com.example.sep4androidapp.fragments.setUpDeviceFragment.SetUpDeviceFragment;
 import com.example.sep4androidapp.fragments.sleepFragment.SleepFragment;
 import com.firebase.ui.auth.AuthUI;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    ActionBarDrawerToggle toggle;
-    NavigationView navigationView;
-    DrawerLayout drawerLayout;
-    TextView email;
-    TextView name;
-    ImageView profilePic;
-    FirebaseAuth mAuth;
+    private DrawerLayout drawerLayout;
+    private TextView email;
+    private TextView name;
+    private ImageView profilePic;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
 
         drawerLayout = findViewById(R.id.drawer);
-        navigationView = findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         View headerView = navigationView.getHeaderView(0);
@@ -58,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         name = headerView.findViewById(R.id.name);
         profilePic = headerView.findViewById(R.id.profilePic);
 
-        toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
@@ -70,11 +65,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         userInfoUpdate(mAuth.getCurrentUser());
     }
 
-    public void userInfoUpdate(FirebaseUser user)
-    {
+    public void userInfoUpdate(FirebaseUser user) {
         mAuth = FirebaseAuth.getInstance();
-        if(user != null)
-        {
+        if (user != null) {
             String name = user.getDisplayName();
             String email = user.getEmail();
             String photo = String.valueOf(user.getPhotoUrl());
@@ -82,10 +75,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             this.name.setText(name);
             this.email.setText(email);
 
-            if(user.getPhotoUrl() == null)
-            {
+            if (user.getPhotoUrl() == null) {
                 Picasso.get().load(R.drawable.sleep).into(this.profilePic);
-            }else {
+            } else {
                 Picasso.get().load(photo).into(this.profilePic);
             }
         }
@@ -117,18 +109,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.itemLogOut:
                 AuthUI.getInstance().signOut(this).addOnCompleteListener(
-                        new OnCompleteListener< Void >() {
-                            @Override
-                            public void onComplete(@NonNull Task< Void > task) {
-                                Toast.makeText(getApplicationContext(),"You are now signed out",
-                                        Toast.LENGTH_LONG).show();
-                                startActivity(new Intent(getApplicationContext(), Firebase_Login.class));
-                                finish();
-                            }
+                        task -> {
+                            Toast.makeText(getApplicationContext(), "You are now signed out",
+                                    Toast.LENGTH_LONG).show();
+                            startActivity(new Intent(getApplicationContext(), Firebase_Login.class));
+                            finish();
                         }
                 );
                 break;
-
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return false;

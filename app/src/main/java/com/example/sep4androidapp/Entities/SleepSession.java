@@ -1,10 +1,7 @@
 package com.example.sep4androidapp.Entities;
 
 import com.google.gson.annotations.SerializedName;
-
-import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 
 public class SleepSession implements Comparable<SleepSession>{
     @SerializedName("sleepId")
@@ -26,8 +23,6 @@ public class SleepSession implements Comparable<SleepSession>{
     @SerializedName("averageTemperature")
     private double averageTemperature;
 
-
-
     public SleepSession(int sleepId, String deviceId, LocalDateTime timeStart, LocalDateTime timeFinish, int rating, double averageCo2, double averageHumidity, double averageSound, double averageTemperature) {
         this.sleepId = sleepId;
         this.deviceId = deviceId;
@@ -38,7 +33,6 @@ public class SleepSession implements Comparable<SleepSession>{
         this.averageHumidity = averageHumidity;
         this.averageSound = averageSound;
         this.averageTemperature = averageTemperature;
-
     }
 
     public int getSleepId() {
@@ -76,7 +70,6 @@ public class SleepSession implements Comparable<SleepSession>{
     public double getAverageTemperature() {
         return averageTemperature;
     }
-
 
     @Override
     public int compareTo(SleepSession o) {

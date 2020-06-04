@@ -39,14 +39,12 @@ public class ConnectionLiveData extends LiveData<ConnectionModel> {
                 if (isConnected) {
                     switch (activeNetwork.getType()) {
                         case ConnectivityManager.TYPE_WIFI:
-                            postValue(new ConnectionModel(0, true));
-                            break;
                         case ConnectivityManager.TYPE_MOBILE:
-                            postValue(new ConnectionModel(1, true));
+                            postValue(new ConnectionModel(true));
                             break;
                     }
                 } else {
-                    postValue(new ConnectionModel(0, false));
+                    postValue(new ConnectionModel(false));
                 }
             }
         }
