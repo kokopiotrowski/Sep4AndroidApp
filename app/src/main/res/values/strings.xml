@@ -24,6 +24,7 @@
     <string name="temperature">Temperature</string>
     <string name="humidity">Humidity</string>
     <string name="co2">CO2</string>
+    <string name="sound">Sound</string>
     <string name="_0">0</string>
     <string name="minimum">Minimum:</string>
     <string name="maximum">Maximum:</string>
