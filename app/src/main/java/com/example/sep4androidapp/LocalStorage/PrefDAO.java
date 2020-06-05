@@ -22,9 +22,6 @@ public interface PrefDAO {
     @Delete
     void deletePreference(Preferences preferences);
 
-    @Query("SELECT * FROM preferences_table")
-    LiveData<List<Preferences>> getAllPreferences();
-
     @Query("SELECT * FROM preferences_table WHERE deviceId = :deviceId ")
     Preferences getPreferencesById(String deviceId);
 }

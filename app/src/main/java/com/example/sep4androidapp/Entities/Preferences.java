@@ -68,6 +68,4 @@ public class Preferences {
     public double getTemperatureMax() {
         return temperatureMax;
     }
-
-
 }

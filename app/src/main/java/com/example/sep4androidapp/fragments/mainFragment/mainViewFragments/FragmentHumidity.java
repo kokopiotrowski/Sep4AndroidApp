@@ -130,6 +130,7 @@ public class FragmentHumidity extends Fragment {
             xAxis.setValueFormatter(new FragmentsValueFormatter());
             dailyBarChart.invalidate();
         });
+
         viewModel.getSleepSessionsWeekly().observe(getViewLifecycleOwner(), sleepSessions -> {
             weeklyBarChart.clear();
             if(weeklyBarDataSet != null){

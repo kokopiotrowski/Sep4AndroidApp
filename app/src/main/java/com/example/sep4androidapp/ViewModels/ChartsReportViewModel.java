@@ -42,5 +42,4 @@ public class ChartsReportViewModel extends AndroidViewModel {
     public void setDeviceId(String deviceId) {
         this.deviceId = deviceId;
     }
-
 }

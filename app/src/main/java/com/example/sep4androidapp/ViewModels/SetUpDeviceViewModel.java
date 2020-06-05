@@ -34,5 +34,4 @@ public class SetUpDeviceViewModel extends AndroidViewModel {
     public void postNewDevice(NewDeviceModel model) {
         repository.postNewDevice(model);
     }
-
 }

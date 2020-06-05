@@ -45,6 +45,4 @@ public class RoomsViewModel extends AndroidViewModel {
     public void postDevice(NewDeviceModel model) {
         setUpDeviceRepository.postNewDevice(model);
     }
-
-
 }

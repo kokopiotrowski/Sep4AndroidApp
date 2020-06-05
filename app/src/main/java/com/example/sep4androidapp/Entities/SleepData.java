@@ -12,11 +12,6 @@ public class SleepData extends SleepSession {
     }
 
     public ArrayList<RoomCondition> getRoomConditions(){
-
         return roomConditions;
     }
-
-
-
-
 }

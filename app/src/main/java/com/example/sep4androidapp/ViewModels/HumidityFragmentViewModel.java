@@ -32,7 +32,6 @@ public class HumidityFragmentViewModel extends AndroidViewModel {
         return roomsRepository.getChosenDeviceId();
     }
 
-
     public LiveData<Preferences> getPreferences() {
         return preferencesRepository.getPreferences();
     }

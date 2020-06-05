@@ -56,5 +56,4 @@ public class TemperatureFragmentViewModel extends AndroidViewModel {
     public LiveData<List<Device>> getDevicesForFragments() {
         return roomsRepository.getListForFragments();
     }
-
 }

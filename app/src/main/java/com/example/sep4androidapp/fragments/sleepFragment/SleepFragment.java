@@ -242,7 +242,6 @@ public class SleepFragment extends Fragment {
         return temperatureValues;
     }
 
-
     private ArrayList<Entry> getCo2Values() {
         return co2Values;
     }

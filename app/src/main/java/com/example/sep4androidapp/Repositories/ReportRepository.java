@@ -276,7 +276,6 @@ public class ReportRepository {
         return roomCondition;
     }
 
-
     public List<SleepSession> setAverage(List<SleepSession> sleepSessions){
 
         List<SleepSession> finalSleepSessions = sleepSessions;

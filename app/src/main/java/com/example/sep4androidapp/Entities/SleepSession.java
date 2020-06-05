@@ -75,6 +75,4 @@ public class SleepSession implements Comparable<SleepSession>{
     public int compareTo(SleepSession o) {
         return getTimeStart().compareTo(o.getTimeStart());
     }
-
-
 }

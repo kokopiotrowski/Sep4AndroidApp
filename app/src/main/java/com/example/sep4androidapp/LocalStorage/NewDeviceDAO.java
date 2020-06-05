@@ -19,5 +19,4 @@ public interface NewDeviceDAO {
 
     @Query("SELECT*FROM newDevice_table")
     LiveData<List<NewDeviceModel>> getAllDevices();
-
 }

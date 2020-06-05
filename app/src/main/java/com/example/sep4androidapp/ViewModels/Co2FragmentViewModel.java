@@ -32,7 +32,6 @@ public class Co2FragmentViewModel extends AndroidViewModel {
         return roomsRepository.getChosenDeviceId();
     }
 
-
     public LiveData<Preferences> getPreferences()
     {
         return preferencesRepository.getPreferences();
@@ -51,5 +50,4 @@ public class Co2FragmentViewModel extends AndroidViewModel {
     public LiveData<List<Device>> getDevicesForFragments() {
         return roomsRepository.getListForFragments();
     }
-
 }

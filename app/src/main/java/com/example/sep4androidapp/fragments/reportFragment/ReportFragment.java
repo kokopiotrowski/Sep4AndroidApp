@@ -112,12 +112,6 @@ public class ReportFragment extends Fragment {
         return v;
     }
 
-//    @Override
-//    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-//        super.onActivityCreated(savedInstanceState);
-//        mViewModel = ViewModelProviders.of(this).get(ChartsReportViewModel.class);
-//    }
-
     private void updateCharts(int lastDays) {
         temperatureChart.clear();
         co2Chart.clear();

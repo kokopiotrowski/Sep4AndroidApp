@@ -236,5 +236,4 @@ public class FragmentTemperature extends Fragment {
         });
         return v;
     }
-
 }
