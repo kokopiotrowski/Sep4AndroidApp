@@ -13,6 +13,15 @@ import java.util.List;
 
 public class SetUpDeviceViewModel extends AndroidViewModel {
     private SetUpDeviceRepository repository;
+    NewDeviceModel model;
+
+    public NewDeviceModel getModel() {
+        return model;
+    }
+
+    public void setModel(NewDeviceModel model) {
+        this.model = model;
+    }
 
     public SetUpDeviceViewModel(@NonNull Application application) {
         super(application);
