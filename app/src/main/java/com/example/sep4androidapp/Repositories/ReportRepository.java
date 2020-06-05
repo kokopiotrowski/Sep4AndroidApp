@@ -51,6 +51,7 @@ public class ReportRepository {
         sleepSessionsWeekly = new MutableLiveData<>();
         sleepSessionsMonthly = new MutableLiveData<>();
         sleepSessionsForFragment = new MutableLiveData<>();
+        idealRoomConditions = new MutableLiveData<>();
     }
 
     public static synchronized ReportRepository getInstance() {
