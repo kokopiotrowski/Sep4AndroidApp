@@ -1,5 +1,6 @@
 package com.example.sep4androidapp.connection.apis;
 
+import com.example.sep4androidapp.Entities.IdealRoomConditions;
 import com.example.sep4androidapp.connection.responses.ReportResponse;
 import com.example.sep4androidapp.connection.responses.SleepDataResponse;
 
@@ -15,6 +16,9 @@ public interface ReportApi {
     @GET("reports/{deviceId}")
     Call<ReportResponse> getReport(@Path("deviceId") String deviceId, @Query("dateStart") String dateStart,
                                    @Query("dateFinish") String dateFinish);
+
+    @GET("reports/ideal/{deviceId}")
+    Call<IdealRoomConditions> getIdealConditions(@Path("deviceId") String deviceId);
 
     @GET("reports/sleeps/{sleepId}")
     Call<SleepDataResponse> getSleepData(@Path("sleepId") int sleepId);
