@@ -35,9 +35,8 @@ import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 public class FragmentFirstPage extends Fragment {
     private Spinner spinner;
     private FragmentFirstPageViewModel viewModel;
-    private TemperatureFragmentViewModel tempViewModel;
-    private TextView currentTemperature, currentHumidity,
-            currentCO2, timeStamp, expectedTemperature, expectedHumidity, expectedCO2;
+    private TextView currentTemperature, currentHumidity, currentCO2, currentSound,
+            timeStamp, expectedTemperature, expectedHumidity, expectedCO2;
     private Switch deviceSwitch;
 
     private FloatingActionButton randomFactButton;
@@ -63,6 +62,7 @@ public class FragmentFirstPage extends Fragment {
         currentTemperature = v.findViewById(R.id.currentTemperature);
         currentHumidity = v.findViewById(R.id.currentHumidity);
         currentCO2 = v.findViewById(R.id.currentCo2);
+        currentSound = v.findViewById(R.id.currentSound);
         timeStamp = v.findViewById(R.id.timeStamp);
         randomFactButton = v.findViewById(R.id.randomFactButton);
         expectedTemperature = v.findViewById(R.id.expectedTemperature);
@@ -73,9 +73,6 @@ public class FragmentFirstPage extends Fragment {
         CO2Status = v.findViewById(R.id.Co2Status);
 
         viewModel = new ViewModelProvider(this).get(FragmentFirstPageViewModel.class);
-
-        tempViewModel = new ViewModelProvider(this).get(TemperatureFragmentViewModel.class);
-
 
         viewModel.getFactRandomly();
         viewModel.getFact().observe(getViewLifecycleOwner(), fact -> {
@@ -152,9 +149,10 @@ public class FragmentFirstPage extends Fragment {
             currentTemperature.setText(String.format("%.0f", roomCondition.getTemperature()) + " °C");
             currentCO2.setText(String.format("%.0f", roomCondition.getCo2()) + " ppm");
             currentHumidity.setText(String.format("%.0f", roomCondition.getHumidity()) + "%");
+            currentSound.setText(String.format("%.0f", roomCondition.getSound()) + " dB");
             timeStamp.setText("Updated: " + roomCondition.getTimestamp());
-            temp = roomCondition.getTemperature();
 
+            temp = roomCondition.getTemperature();
             humidity = roomCondition.getHumidity();
             co2 = roomCondition.getHumidity();
 
@@ -218,6 +216,7 @@ public class FragmentFirstPage extends Fragment {
                 currentTemperature.setText("-");
                 currentCO2.setText("-");
                 currentHumidity.setText("-");
+                currentSound.setText("-");
                 timeStamp.setText("No data");
 
                 viewModel.updateRoomCondition(idList.get(position));
