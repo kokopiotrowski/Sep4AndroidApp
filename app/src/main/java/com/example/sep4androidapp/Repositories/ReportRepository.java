@@ -134,7 +134,7 @@ public class ReportRepository {
             @Override
             public void onResponse(Call<ReportResponse> call, Response<ReportResponse> response) {
                 if (response.code() == 200) {
-                    sleepSessions.setValue(response.body().getSleepSessions());
+                    sleepSessions.setValue(setAverage(response.body().getSleepSessions()));
                 } else {
                     Log.i("ReportRepo", "Response code received on updateSleepSessions: " + response.code());
                 }
