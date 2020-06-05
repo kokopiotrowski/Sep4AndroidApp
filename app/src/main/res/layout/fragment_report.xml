@@ -82,6 +82,13 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/temperatureChart"
+            android:layout_width="match_parent"
+            android:layout_height="200dp">
+
+        </com.github.mikephil.charting.charts.LineChart>
+
             <com.github.mikephil.charting.charts.HorizontalBarChart
                 android:id="@+id/co2Chart"
                 android:layout_width="match_parent"
@@ -90,7 +97,13 @@
             </com.github.mikephil.charting.charts.HorizontalBarChart>
 
             <com.github.mikephil.charting.charts.LineChart
-                android:id="@+id/temperatureChart"
+                android:id="@+id/soundChart"
+                android:layout_width="match_parent"
+                android:layout_height="200dp">
+
+            </com.github.mikephil.charting.charts.LineChart>
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/humidityChart"
                 android:layout_width="match_parent"
                 android:layout_height="200dp">
 

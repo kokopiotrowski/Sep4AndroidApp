@@ -3,6 +3,7 @@ package com.example.sep4androidapp.ViewModels;
 import android.app.Application;
 
 import com.example.sep4androidapp.Entities.Device;
+import com.example.sep4androidapp.Entities.IdealRoomConditions;
 import com.example.sep4androidapp.Entities.SleepSession;
 import com.example.sep4androidapp.Repositories.ReportRepository;
 import com.example.sep4androidapp.Repositories.RoomsRepository;
@@ -24,22 +25,30 @@ public class ChartsReportViewModel extends AndroidViewModel {
         roomsRepository = RoomsRepository.getInstance();
     }
 
-    public LiveData<List<SleepSession>> getSleepSessions(){
-        return repository.getSleepSessions();
-    }
-
-    public LiveData<List<Device>> getDevices() {
-        roomsRepository.updateRooms();
-        return roomsRepository.getList();}
-
-    public void updateSleepSessions()
+    public void updateSleepSessionsAndIdealRoomConditions()
     {
-        repository.updateSleepSessions(deviceId);
+        if(deviceId != null && deviceId!= "") {
+            repository.updateSleepSessions(deviceId);
+            repository.updateIdealConditions(deviceId);
+        }
     }
 
     public void rateSleep(int sleepId, int rating) { repository.rateSleep(sleepId, rating);}
 
     public void setDeviceId(String deviceId) {
         this.deviceId = deviceId;
+    }
+
+    public LiveData<List<SleepSession>> getSleepSessions(){
+        return repository.getSleepSessions();
+    }
+
+    public LiveData<List<Device>> getDevices() {
+        roomsRepository.updateRooms();
+        return roomsRepository.getList();
+    }
+
+    public LiveData<IdealRoomConditions> getIdealRoomConditions() {
+        return repository.getIdealRoomConditions();
     }
 }

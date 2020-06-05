@@ -20,12 +20,14 @@ import android.widget.RadioGroup;
 import android.widget.RatingBar;
 import android.widget.Spinner;
 
+import com.example.sep4androidapp.Entities.IdealRoomConditions;
 import com.example.sep4androidapp.Entities.SleepSession;
 import com.example.sep4androidapp.LocalStorage.ConnectionLiveData;
 import com.example.sep4androidapp.R;
 import com.example.sep4androidapp.ViewModels.ChartsReportViewModel;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
@@ -45,17 +47,25 @@ public class ReportFragment extends Fragment {
     private Spinner deviceReportSpinner;
     private RadioGroup radioGroup;
     private RadioButton yesterday, lastWeek, lastMonth;
-    private LineChart temperatureChart;
-    private HorizontalBarChart co2Chart;
     private RatingBar ratingBar;
     private Button rateSleepButton;
 
-    private List<Entry> temperatureEntries = new ArrayList<>();
-    private List<BarEntry> co2Entries = new ArrayList<>();
+    private LineChart temperatureChart;
+    private HorizontalBarChart co2Chart;
+    private LineChart humidityChart;
+    private LineChart soundChart;
+
+    private List<Entry> temperatureEntries;
+    private List<BarEntry> co2Entries;
+    private List<Entry> humidityEntries;
+    private List<Entry> soundEntries;
 
     private List<SleepSession> sleepSessionsData;
+
     private List<String> nameList = new ArrayList<>();
     private List<String> idList = new ArrayList<>();
+
+    private IdealRoomConditions idealRoomConditions;
 
     ArrayAdapter<String> adapter;
     private boolean isActiveFragment;
@@ -79,59 +89,57 @@ public class ReportFragment extends Fragment {
 
         temperatureChart = v.findViewById(R.id.temperatureChart);
         co2Chart = v.findViewById(R.id.co2Chart);
+        humidityChart = v.findViewById(R.id.humidityChart);
+        soundChart = v.findViewById(R.id.soundChart);
+
         ratingBar = v.findViewById(R.id.ratingBar);
         rateSleepButton = v.findViewById(R.id.rateYourSleepButton);
 
         temperatureEntries = new ArrayList<>();
         co2Entries = new ArrayList<>();
+        humidityEntries = new ArrayList<>();
+        soundEntries = new ArrayList<>();
 
         ratingBar.setStepSize(1);
         settingListenersAndObservers();
-        mViewModel.updateSleepSessions();
+        mViewModel.updateSleepSessionsAndIdealRoomConditions();
 
-        @SuppressLint("RestrictedApi") ConnectionLiveData connectionLiveData = new ConnectionLiveData(getApplicationContext());
-        connectionLiveData.observe(getActivity(), connection -> {
-            if (isActiveFragment && connection != null) {
-                if (connection.getIsConnected()) {
-                    yesterday.setEnabled(true);
-                    lastWeek.setEnabled(true);
-                    lastMonth.setEnabled(true);
-                    deviceReportSpinner.setEnabled(true);
-                    ratingBar.setEnabled(true);
-                    rateSleepButton.setEnabled(true);
-                } else {
-                    yesterday.setEnabled(false);
-                    lastWeek.setEnabled(false);
-                    lastMonth.setEnabled(false);
-                    deviceReportSpinner.setEnabled(false);
-                    ratingBar.setEnabled(false);
-                    rateSleepButton.setEnabled(false);
-                }
-            }
-        });
+        setElementsAccordingToInternet();
+
         return v;
     }
 
     private void updateCharts(int lastDays) {
         temperatureChart.clear();
         co2Chart.clear();
+        soundChart.clear();
+        humidityChart.clear();
 
         temperatureEntries.clear();
         co2Entries.clear();
+        humidityEntries.clear();
+        soundEntries.clear();
 
-        if (sleepSessionsData.size() != 0) {
+        if (sleepSessionsData != null && sleepSessionsData.size() != 0) {
             for (int i = 0; i < (sleepSessionsData.size() <= lastDays ? sleepSessionsData.size() : lastDays); i++) {
 
                 SleepSession cSleep = sleepSessionsData.get(i);
                 int dayOfMonth = cSleep.getTimeStart().getDayOfMonth();
                 temperatureEntries.add(new Entry(dayOfMonth, (float) cSleep.getAverageTemperature()));
                 co2Entries.add(new BarEntry(dayOfMonth, (float) cSleep.getAverageCo2()));
+                humidityEntries.add(new Entry(dayOfMonth, (float) cSleep.getAverageHumidity()));
+                soundEntries.add(new Entry(dayOfMonth, (float) cSleep.getAverageSound()));
             }
+
             Collections.sort(temperatureEntries, new EntryXComparator());
             Collections.sort(co2Entries, new EntryXComparator());
+            Collections.sort(humidityEntries, new EntryXComparator());
+            Collections.sort(soundEntries, new EntryXComparator());
 
             LineDataSet temperatureDataSet = new LineDataSet(temperatureEntries, "Temperature");
             BarDataSet co2DataSet = new BarDataSet(co2Entries, "Co2");
+            LineDataSet humidityDataSet = new LineDataSet(humidityEntries, "Humidity");
+            LineDataSet soundDataSet = new LineDataSet(soundEntries, "Sound");
 
             LineData temperatureData = new LineData(temperatureDataSet);
             temperatureChart.setData(temperatureData);
@@ -141,8 +149,28 @@ public class ReportFragment extends Fragment {
             co2Chart.setData(co2Data);
             co2Chart.setFitBars(true);
 
+            LineData humidityData = new LineData(humidityDataSet);
+            humidityChart.setData(humidityData);
+
+            LineData soundData = new LineData(soundDataSet);
+            soundChart.setData(soundData);
+
+            if(idealRoomConditions!=null){
+                LimitLine idealTemperature = new LimitLine((float) idealRoomConditions.getTemperature(), "Ideal temperature");
+                LimitLine idealCo2 = new LimitLine((float) idealRoomConditions.getCo2(), "Ideal co2");
+                LimitLine idealSound = new LimitLine((float) idealRoomConditions.getSound(), "Ideal sound");
+                LimitLine idealHumidity = new LimitLine((float) idealRoomConditions.getHumidity(), "Ideal humidity");
+
+                temperatureChart.getAxisLeft().addLimitLine(idealTemperature);
+                co2Chart.getAxisLeft().addLimitLine(idealCo2);
+                humidityChart.getAxisLeft().addLimitLine(idealHumidity);
+                soundChart.getAxisLeft().addLimitLine(idealSound);
+            }
+
             temperatureChart.invalidate();
             co2Chart.invalidate();
+            humidityChart.invalidate();
+            soundChart.invalidate();
             styleCharts();
         }
     }
@@ -157,8 +185,10 @@ public class ReportFragment extends Fragment {
     @SuppressLint("SetTextI18n")
     private void settingListenersAndObservers() {
         rateSleepButton.setOnClickListener(v -> {
-            mViewModel.rateSleep(sleepSessionsData.get(0).getSleepId(), (int) ratingBar.getRating());
-            mViewModel.updateSleepSessions();
+            if(sleepSessionsData!=null && sleepSessionsData.size()!=0) {
+                mViewModel.rateSleep(sleepSessionsData.get(0).getSleepId(), (int) ratingBar.getRating());
+                mViewModel.updateSleepSessionsAndIdealRoomConditions();
+            }
         });
 
         radioGroup.setOnCheckedChangeListener((radioGroup, i) -> {
@@ -202,6 +232,11 @@ public class ReportFragment extends Fragment {
             }
         });
 
+        mViewModel.getIdealRoomConditions().observe(getViewLifecycleOwner(), irc -> {
+            idealRoomConditions = irc;
+            updateCharts(1);
+        });
+
         mViewModel.getDevices().observe(getViewLifecycleOwner(), devices -> {
             nameList.clear();
             idList.clear();
@@ -219,11 +254,35 @@ public class ReportFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 mViewModel.setDeviceId(idList.get(position));
-                mViewModel.updateSleepSessions();
+                mViewModel.updateSleepSessionsAndIdealRoomConditions();
+                yesterday.toggle();
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+    }
+
+    private void setElementsAccordingToInternet(){
+        @SuppressLint("RestrictedApi") ConnectionLiveData connectionLiveData = new ConnectionLiveData(getApplicationContext());
+        connectionLiveData.observe(getActivity(), connection -> {
+            if (isActiveFragment && connection != null) {
+                if (connection.getIsConnected()) {
+                    yesterday.setEnabled(true);
+                    lastWeek.setEnabled(true);
+                    lastMonth.setEnabled(true);
+                    deviceReportSpinner.setEnabled(true);
+                    ratingBar.setEnabled(true);
+                    rateSleepButton.setEnabled(true);
+                } else {
+                    yesterday.setEnabled(false);
+                    lastWeek.setEnabled(false);
+                    lastMonth.setEnabled(false);
+                    deviceReportSpinner.setEnabled(false);
+                    ratingBar.setEnabled(false);
+                    rateSleepButton.setEnabled(false);
+                }
             }
         });
     }

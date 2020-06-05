@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.sep4androidapp.Entities.Device;
+import com.example.sep4androidapp.Entities.IdealRoomConditions;
 import com.example.sep4androidapp.Entities.RoomCondition;
 import com.example.sep4androidapp.Entities.SleepData;
 import com.example.sep4androidapp.Entities.SleepSession;
@@ -39,6 +40,7 @@ public class ReportRepository {
     private MutableLiveData<List<SleepSession>> sleepSessionsMonthly;
     private MutableLiveData<List<Device>> devices;
     private MutableLiveData<List<SleepSession>> sleepSessionsForFragment;
+    private MutableLiveData<IdealRoomConditions> idealRoomConditions;
 
     private ReportRepository() {
         roomCondition = new MutableLiveData<>();
@@ -246,6 +248,26 @@ public class ReportRepository {
         });
     }
 
+    public void updateIdealConditions(String deviceId) {
+        ReportApi reportApi = ServiceGenerator.getReportApi();
+        Call<IdealRoomConditions> call = reportApi.getIdealConditions(deviceId);
+        call.enqueue(new Callback<IdealRoomConditions>() {
+            @Override
+            public void onResponse(Call<IdealRoomConditions> call, Response<IdealRoomConditions> response) {
+                if (response.code() == 200) {
+                    idealRoomConditions.setValue(response.body());
+                } else {
+                    Log.i("ReportRepo", "Response code received on updateIdealConditions: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<IdealRoomConditions> call, Throwable t) {
+                Log.i("ReportRepo", "Failure at updateIdealConditions: " + t.getMessage());
+            }
+        });
+    }
+
     public LiveData<List<SleepSession>> getSleepSessionsDaily() {
         return sleepSessionsDaily;
     }
@@ -275,6 +297,9 @@ public class ReportRepository {
     public LiveData<RoomCondition> getRoomCondition() {
         return roomCondition;
     }
+
+    public LiveData<IdealRoomConditions> getIdealRoomConditions() { return idealRoomConditions;}
+
 
     public List<SleepSession> setAverage(List<SleepSession> sleepSessions){
 
