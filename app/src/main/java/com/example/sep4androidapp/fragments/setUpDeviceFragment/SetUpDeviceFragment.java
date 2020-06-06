@@ -86,13 +86,9 @@ public class SetUpDeviceFragment extends Fragment {
         setupDevice.setOnClickListener(v -> {
             if (!deviceId.getText().toString().isEmpty() && !newRoomName.getText().toString().isEmpty()) {
                 NewDeviceModel model = new NewDeviceModel(deviceId.getText().toString(), newRoomName.getText().toString());
-
                 deviceNameToSend = newRoomName.getText().toString();
                 viewModel.setModel(model);
                 viewModel.postNewDevice(model);
-
-                Toast.makeText(getActivity(), "Successfully set up device", Toast.LENGTH_LONG).show();
-
             } else {
                 Toast.makeText(getActivity(), "Fill up all the required fields", Toast.LENGTH_SHORT).show();
             }
