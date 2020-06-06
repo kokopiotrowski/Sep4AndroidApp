@@ -2,6 +2,7 @@ package com.example.sep4androidapp.fragments.sleepFragment;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -140,25 +141,51 @@ public class SleepFragment extends Fragment {
             Collections.sort(roomConditions);
             int size = roomConditions.size();
 
-            for (int i = 0; i < size; i++) {
-                RoomCondition temporary = roomConditions.get(i);
-                LocalDateTime ldt1 = roomConditions.get(0).getTimestamp();
-                LocalDateTime ldt2 = roomConditions.get(i).getTimestamp();
+            if(size > 0) {
+                dataSets.clear();
+                mpLineChart.clear();
+                temperatureValues.clear();
+                humidityValues.clear();
+                co2Values.clear();
+                soundValues.clear();
 
-                numberOfSeconds = Duration.between(ldt1, ldt2).toMillis() / 1000;
-                int seconds = ldt1.getHour() * 3600 + ldt1.getMinute() * 60 + ldt1.getSecond();
-                float totalSeconds = (float) seconds + (float) numberOfSeconds;
+                for (int i = 0; i < size; i++) {
+                    RoomCondition temporary = roomConditions.get(i);
+                    LocalDateTime ldt1 = roomConditions.get(0).getTimestamp();
+                    LocalDateTime ldt2 = roomConditions.get(i).getTimestamp();
 
-                float temperature = (float) temporary.getTemperature();
-                float humidity = (float) temporary.getHumidity();
-                float co2 = (float) temporary.getCo2();
-                float sound = (float) temporary.getSound();
+                    numberOfSeconds = Duration.between(ldt1, ldt2).toMillis() / 1000;
+                    int seconds = ldt1.getHour() * 3600 + ldt1.getMinute() * 60 + ldt1.getSecond();
+                    float totalSeconds = (float) seconds + (float) numberOfSeconds;
 
-                setTemperatureValues(temperature, totalSeconds);
-                setHumidityValues(humidity, totalSeconds);
-                setCo2Values(co2, totalSeconds);
-                setSoundValues(sound, totalSeconds);
+                    float temperature = (float) temporary.getTemperature();
+                    float humidity = (float) temporary.getHumidity();
+                    float co2 = (float) temporary.getCo2();
+                    float sound = (float) temporary.getSound();
+
+                    setTemperatureValues(temperature, totalSeconds);
+                    setHumidityValues(humidity, totalSeconds);
+                    setCo2Values(co2, totalSeconds);
+                    setSoundValues(sound, totalSeconds);
+                }
             }
+
+            else{
+
+                dataSets.clear();
+                mpLineChart.clear();
+                temperatureValues.clear();
+                humidityValues.clear();
+                co2Values.clear();
+                soundValues.clear();
+
+                setTemperatureValues(0,0);
+                setHumidityValues(0,0);
+                setCo2Values(0,0);
+                setSoundValues(0,0);
+
+                }
+
         });
 
         String[] arraySpinner = new String[]{
@@ -201,20 +228,26 @@ public class SleepFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 Object item = parentView.getItemAtPosition(position).toString();
                 dataSets.clear();
+                mpLineChart.clear();
+
                 if (item.equals("Temperature")) {
+
                     temperatureDataSet = new LineDataSet(getTemperatureValues(), "Temperature");
                     dataSets.add(temperatureDataSet);
                 }
 
                 if (item.equals("Humidity")) {
+
                     humidityDataSet = new LineDataSet(getHumidityValues(), "Humidity");
                     dataSets.add(humidityDataSet);
                 }
                 if (item.equals("Co2")) {
+
                     co2DataSet = new LineDataSet(getCo2Values(), "Co2");
                     dataSets.add(co2DataSet);
                 }
                 if(item.equals("Sound")) {
+
                     soundDataSet = new LineDataSet(getSoundValues(), "Sound");
                     dataSets.add(soundDataSet);
                 }
