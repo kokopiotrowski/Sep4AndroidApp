@@ -12,7 +12,6 @@ import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
 
 import com.example.sep4androidapp.Firebase.Firebase_Login;
-import com.example.sep4androidapp.R;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -665,7 +664,7 @@ public class UI_Test {
         navigationMenuItemView3.perform(click());
 
         ViewInteraction spinner2 = onView(
-                allOf(withId(R.id.prefrencesSpinner),
+                allOf(withId(R.id.preferencesSpinner),
                         childAtPosition(
                                 childAtPosition(
                                         IsInstanceOf.< View >instanceOf(androidx.appcompat.widget.LinearLayoutCompat.class),
@@ -903,7 +902,7 @@ public class UI_Test {
         viewGroup.check(matches(isDisplayed()));
 
         ViewInteraction appCompatSpinner5 = onView(
-                allOf(withId(R.id.prefrencesSpinner),
+                allOf(withId(R.id.preferencesSpinner),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("androidx.appcompat.widget.LinearLayoutCompat")),
@@ -920,7 +919,7 @@ public class UI_Test {
         appCompatCheckedTextView4.perform(click());
 
         ViewInteraction appCompatSpinner6 = onView(
-                allOf(withId(R.id.prefrencesSpinner),
+                allOf(withId(R.id.preferencesSpinner),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("androidx.appcompat.widget.LinearLayoutCompat")),
@@ -1053,7 +1052,7 @@ public class UI_Test {
         appCompatButton5.perform(click());
 
         ViewInteraction appCompatSpinner7 = onView(
-                allOf(withId(R.id.prefrencesSpinner),
+                allOf(withId(R.id.preferencesSpinner),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("androidx.appcompat.widget.LinearLayoutCompat")),
@@ -1134,7 +1133,7 @@ public class UI_Test {
         appCompatButton6.perform(click());
 
         ViewInteraction appCompatSpinner8 = onView(
-                allOf(withId(R.id.prefrencesSpinner),
+                allOf(withId(R.id.preferencesSpinner),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("androidx.appcompat.widget.LinearLayoutCompat")),
@@ -1151,7 +1150,7 @@ public class UI_Test {
         appCompatCheckedTextView7.perform(click());
 
         ViewInteraction appCompatSpinner9 = onView(
-                allOf(withId(R.id.prefrencesSpinner),
+                allOf(withId(R.id.preferencesSpinner),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("androidx.appcompat.widget.LinearLayoutCompat")),
@@ -1168,7 +1167,7 @@ public class UI_Test {
         appCompatCheckedTextView8.perform(click());
 
         ViewInteraction appCompatSpinner10 = onView(
-                allOf(withId(R.id.prefrencesSpinner),
+                allOf(withId(R.id.preferencesSpinner),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("androidx.appcompat.widget.LinearLayoutCompat")),

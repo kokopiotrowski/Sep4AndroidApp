@@ -2,6 +2,7 @@ package com.example.sep4androidapp.fragments.preferencesFragment;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Switch;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,6 +33,7 @@ public class PreferencesFragment extends Fragment {
     private Spinner spinner;
     private PreferencesViewModel viewModel;
     private Button save;
+    private Switch regulations;
     private EditText MintempEditText, MinhumEditText,
             MaxtempEditText, MaxhumEditText, Maxco2EditText;
     private List<String> nameList = new ArrayList<>();
@@ -44,12 +47,13 @@ public class PreferencesFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_preferences, container, false);
 
-        spinner = view.findViewById(R.id.prefrencesSpinner);
+        spinner = view.findViewById(R.id.preferencesSpinner);
         MintempEditText = view.findViewById(R.id.minTempEditText);
         MaxtempEditText = view.findViewById(R.id.MaxTempEditText);
         MinhumEditText = view.findViewById(R.id.minHumEditText);
         MaxhumEditText = view.findViewById(R.id.MaxHumEditText);
         Maxco2EditText = view.findViewById(R.id.MaxCo2EditText);
+        regulations = view.findViewById(R.id.regulationsSwitch);
         save = view.findViewById(R.id.buttonSave);
 
         viewModel = new ViewModelProvider(this).get(PreferencesViewModel.class);
@@ -58,7 +62,7 @@ public class PreferencesFragment extends Fragment {
         save.setOnClickListener(v -> {
             Preferences preference = new Preferences(
                     viewModel.getDeviceId(),
-                    true,
+                    regulations.isChecked(),
                     Integer.parseInt(Maxco2EditText.getText().toString()),
                     0,
                     Integer.parseInt(MaxhumEditText.getText().toString()),
@@ -87,6 +91,7 @@ public class PreferencesFragment extends Fragment {
                         MinhumEditText.setText(String.valueOf(prefs.getHumidityMin()));
                         MaxhumEditText.setText(String.valueOf(prefs.getHumidityMax()));
                         Maxco2EditText.setText(String.valueOf(prefs.getCo2Max()));
+                        regulations.setChecked(prefs.isRegulationEnabled());
                     }
                 }
             }
@@ -107,6 +112,7 @@ public class PreferencesFragment extends Fragment {
                     MaxhumEditText.setEnabled(true);
                     Maxco2EditText.setEnabled(true);
                     save.setEnabled(true);
+                    regulations.setClickable(true);
                 } else {
                     isConnected = false;
                     MintempEditText.setEnabled(false);
@@ -115,6 +121,7 @@ public class PreferencesFragment extends Fragment {
                     MaxhumEditText.setEnabled(false);
                     Maxco2EditText.setEnabled(false);
                     save.setEnabled(false);
+                    regulations.setClickable(false);
                 }
                 viewModel.updateRooms();
                 refreshSpinner();
@@ -145,6 +152,7 @@ public class PreferencesFragment extends Fragment {
                 MinhumEditText.setText(String.valueOf(preferences.getHumidityMin()));
                 MaxhumEditText.setText(String.valueOf(preferences.getHumidityMax()));
                 Maxco2EditText.setText(String.valueOf(preferences.getCo2Max()));
+                regulations.setChecked(preferences.isRegulationEnabled());
             }
         });
 
@@ -177,6 +185,7 @@ public class PreferencesFragment extends Fragment {
         MinhumEditText.setText("");
         MaxhumEditText.setText("");
         Maxco2EditText.setText("");
+        regulations.setChecked(false);
     }
 
     @Override
