@@ -173,10 +173,12 @@ public class ReportRepository {
     public void rateSleep(int sleepId, int rating) {
         SleepTrackingApi sleepTrackingApi = ServiceGenerator.getSleepTrackingApi();
         Call<RatingResponse> call = sleepTrackingApi.rateSleep(sleepId, rating);
+        Log.i("ReportRepo", "sleepId: " + sleepId);
         call.enqueue(new Callback<RatingResponse>() {
             @Override
             public void onResponse(Call<RatingResponse> call, Response<RatingResponse> response) {
                 if (response.code() == 200) {
+                    Log.i("ReportRepo", "Response code received on rateSleep: " + response.code() + " Object of with rating: " + response.body());
                 } else {
                     Log.i("ReportRepo", "Response code received on rateSleep: " + response.code());
                 }
